@@ -23,3 +23,8 @@ web-report/
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
+
+logs
+*.log
+yarn-debug.log*
+yarn-error.log*

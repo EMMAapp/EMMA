@@ -20,7 +20,6 @@ firebase.initializeApp(firebaseConfig);
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
   const [patient, setPatient] = useState(null);
-  console.log(patient);
   if (!isLoadingComplete && !props.skipLoadingScreen) {
     return (
       <AppLoading

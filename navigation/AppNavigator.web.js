@@ -1,5 +1,5 @@
 import {createBrowserApp} from '@react-navigation/web';
-import {createAppContainer, createSwitchNavigator} from 'react-navigation';
+import {createSwitchNavigator} from 'react-navigation';
 
 import {routeConfigMap, switchConfig} from './Routing';
 

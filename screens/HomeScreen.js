@@ -12,8 +12,13 @@ import {
 
 import { MonoText } from '../components/StyledText';
 import * as firebase from "firebase";
+import {REGISTER} from "../navigation/Routes";
 
-export default function HomeScreen() {
+export default function HomeScreen({navigation}) {
+  if (!firebase.auth().currentUser) {
+    navigation.navigate(REGISTER); // should be handled by AppNavigator conditional pick, but doesn't work in web
+  }
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -29,7 +34,7 @@ export default function HomeScreen() {
             style={styles.welcomeImage}
           />
         </View>
-        <MonoText>Hi {firebase.auth().currentUser.email}!</MonoText>
+        <MonoText>Hi {firebase.auth().currentUser?.email}!</MonoText>
         <TouchableOpacity onPress={async () => await firebase.auth().signOut()}><Text>Logout</Text></TouchableOpacity>
 
       </ScrollView>

@@ -4,8 +4,8 @@ import {REGISTER} from "../navigation/Routes";
 import * as firebase from "firebase";
 
 export default function LoginScreen({navigation}) {
-    const [email, setEmail] = useState(null);
-    const [password, setPassword] = useState(null);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState(null);
 
     const handleLogin = async () => {

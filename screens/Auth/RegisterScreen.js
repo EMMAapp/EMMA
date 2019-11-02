@@ -3,6 +3,7 @@ import {StyleSheet, Text, TextInput, View, Button} from 'react-native'
 import {LOGIN} from "../../navigation/Routes";
 import {registerPatient} from '../../store';
 import RouteGuard from "../../navigation/RouteGuard";
+import localization from "../../utils/localization";
 
 export default function RegisterScreen({navigation}) {
     const [email, setEmail] = useState('');
@@ -21,13 +22,13 @@ export default function RegisterScreen({navigation}) {
 
     return (
         <View style={styles.container}>
-            <Text style={{color: '#e93766', fontSize: 40}}>Sign Up</Text>
+            <Text style={{color: '#e93766', fontSize: 40}}>{localization('auth.signup')}</Text>
             {errorMessage &&
             <Text style={{color: 'red'}}>
                 {errorMessage}
             </Text>}
             <TextInput
-                placeholder="Email"
+                placeholder={localization('auth.email-placeholder')}
                 autoCapitalize="none"
                 style={styles.textInput}
                 onChangeText={(newEmail) => setEmail(newEmail)}
@@ -35,17 +36,17 @@ export default function RegisterScreen({navigation}) {
             />
             <TextInput
                 secureTextEntry
-                placeholder="Password"
+                placeholder={localization('auth.password-placeholder')}
                 autoCapitalize="none"
                 style={styles.textInput}
                 onChangeText={(newPassword) => setPassword(newPassword)}
                 value={password}
             />
-            <Button title="Sign Up" color="#e93766" onPress={handleSignUp}/>
+            <Button title={localization('auth.signup')} color="#e93766" onPress={handleSignUp}/>
             <View>
                 <Text>
-                    Already have an account?
-                    <Text onPress={() => navigation.navigate(LOGIN)} style={{color: '#e93766', fontSize: 18}}> Login </Text>
+                    {localization('auth.already-have-an-account')}
+                    <Text onPress={() => navigation.navigate(LOGIN)} style={{color: '#e93766', fontSize: 18}}> {localization('auth.signin')} </Text>
                 </Text>
             </View>
         </View>

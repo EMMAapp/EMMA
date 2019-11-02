@@ -3,6 +3,7 @@ import {StyleSheet, Text, TextInput, View, Button} from 'react-native'
 import {REGISTER} from "../../navigation/Routes";
 import {loginPatient} from '../../store';
 import RouteGuard from "../../navigation/RouteGuard";
+import localization from "../../utils/localization";
 
 export default function LoginScreen({navigation}) {
     const [email, setEmail] = useState('');
@@ -21,7 +22,7 @@ export default function LoginScreen({navigation}) {
 
     return (
         <View style={styles.container}>
-            <Text style={{color: '#e93766', fontSize: 40}}>Login</Text>
+            <Text style={{color: '#e93766', fontSize: 40}}>{localization('auth.signin')}</Text>
             {errorMessage &&
             <Text style={{color: 'red'}}>
                 {errorMessage}
@@ -29,7 +30,7 @@ export default function LoginScreen({navigation}) {
             <TextInput
                 style={styles.textInput}
                 autoCapitalize="none"
-                placeholder="Email"
+                placeholder={localization('auth.email-placeholder')}
                 onChangeText={newEmail => setEmail(newEmail)}
                 value={email}
             />
@@ -37,15 +38,15 @@ export default function LoginScreen({navigation}) {
                 secureTextEntry
                 style={styles.textInput}
                 autoCapitalize="none"
-                placeholder="Password"
+                placeholder={localization('auth.password-placeholder')}
                 onChangeText={newPassword => setPassword(newPassword)}
                 value={password}
             />
-            <Button title="Login" color="#e93766" onPress={handleLogin}/>
+            <Button title={localization('auth.signin')} color="#e93766" onPress={handleLogin}/>
             <View>
                 <Text>
-                    Don't have an account?
-                    <Text onPress={() => navigation.navigate(REGISTER)} style={{color: '#e93766', fontSize: 18}}> Sign Up </Text
+                    {localization('auth.dont-have-an-account')}
+                    <Text onPress={() => navigation.navigate(REGISTER)} style={{color: '#e93766', fontSize: 18}}> {localization('auth.signup')} </Text
                     ></Text>
             </View>
         </View>

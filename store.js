@@ -1,6 +1,7 @@
 import * as firebase from "firebase";
 import '@firebase/firestore';
 import {logInfo, logWarn} from "./utils/log";
+import localization from "./utils/localization";
 
 export const store = {
     isAuthenticated: false,
@@ -54,15 +55,15 @@ export async function registerPatient(email, password) {
         store.patientId = userCredential.user.uid;
         return {success: true, error: null};
     } catch (e) {
-        let errorMessage = "Something went wrong";
+        let errorMessage = localization('error.generic');
         // https://firebase.google.com/docs/reference/js/firebase.auth.Auth.html#createuserwithemailandpassword
         switch (e.code) {
             case "auth/email-already-in-use":
             case "auth/invalid-email":
-                errorMessage = "Email is invalid or already in use";
+                errorMessage = localization('error.mail-in-use');
                 break;
             case "auth/weak-password":
-                errorMessage = "Password is too weak";
+                errorMessage = localization('error.weak-password');
                 break;
             default:
                 logWarn(e.message);
@@ -83,14 +84,14 @@ export async function loginPatient(email, password) {
         await retrievePatientData();
         return {success: true, errorMessage: null};
     } catch (e) {
-        let errorMessage = "Something went wrong";
+        let errorMessage = localization('error.generic');
         // https://firebase.google.com/docs/reference/js/firebase.auth.Auth.html#sign-inwith-email-and-password
         switch (e.code) {
             case "auth/invalid-email":
             case "auth/user-disabled":
             case "auth/user-not-found":
             case "auth/wrong-password":
-                errorMessage = "Email or password are incorrect";
+                errorMessage = localization('error.login-generic');
                 break;
             default:
                 logWarn(e.message);

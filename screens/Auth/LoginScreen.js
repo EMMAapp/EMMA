@@ -11,8 +11,6 @@ export default function LoginScreen({navigation}) {
 
     const handleLogin = async () => {
         const {success, errorMessage} = await loginPatient(email, password);
-        console.log(success);
-        console.log(errorMessage);
         if (success) {
             RouteGuard(navigation);
         }

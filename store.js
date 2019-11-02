@@ -1,5 +1,6 @@
 import * as firebase from "firebase";
 import '@firebase/firestore';
+import {logInfo, logWarn} from "./utils/log";
 
 export const store = {
     isAuthenticated: false,
@@ -33,10 +34,11 @@ export async function retrievePatientData() {
             store.patientData = doc.data();
             store.completedOnBoarding = false; // TODO!
         }
+        logInfo(store.patientData);
         return store.patientData;
     }
     catch (e) {
-        console.warn(e.message);
+        logWarn(e.message);
         return null;
     }
 }
@@ -63,7 +65,7 @@ export async function registerPatient(email, password) {
                 errorMessage = "Password is too weak";
                 break;
             default:
-                console.warn(e.message);
+                logWarn(e.message);
         }
         return {success: false, error: errorMessage};
     }
@@ -91,7 +93,7 @@ export async function loginPatient(email, password) {
                 errorMessage = "Email or password are incorrect";
                 break;
             default:
-                console.warn(e.message);
+                logWarn(e.message);
         }
         return {success: false, errorMessage: errorMessage};
     }

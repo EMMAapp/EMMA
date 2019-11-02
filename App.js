@@ -9,6 +9,7 @@ import * as firebase from 'firebase';
 import {AppNavigator} from './navigation/AppNavigator';
 import {retrievePatient} from './store';
 import firebaseConfig from "./firebaseConfig";
+import {logError} from "./utils/log";
 
 firebase.initializeApp(firebaseConfig);
 
@@ -50,8 +51,7 @@ async function loadResourcesAsync() {
 }
 
 function handleLoadingError(error) {
-    // In this case, you might want to report the error to your error reporting service, for example Sentry
-    console.warn(error);
+    logError(error);
 }
 
 function handleFinishLoading(setLoadingComplete) {

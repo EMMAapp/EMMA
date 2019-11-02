@@ -1,50 +1,54 @@
 import React, {useState} from 'react'
 import {StyleSheet, Text, TextInput, View, Button} from 'react-native'
-import firebase from "firebase";
-import {LOGIN} from "../navigation/Routes";
+import {REGISTER} from "../../navigation/Routes";
+import {loginPatient} from '../../store';
+import RouteGuard from "../../navigation/RouteGuard";
 
-export default function RegisterScreen({navigation}) {
+export default function LoginScreen({navigation}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState(null);
-    
-    const handleSignUp = async () => {
-        try {
-            await firebase.auth().createUserWithEmailAndPassword(email, password);
+
+    const handleLogin = async () => {
+        const {success, errorMessage} = await loginPatient(email, password);
+        console.log(success);
+        console.log(errorMessage);
+        if (success) {
+            RouteGuard(navigation);
         }
-        catch (e) {
-            setErrorMessage(e.message);
+        else {
+            setErrorMessage(errorMessage);
         }
     };
 
     return (
         <View style={styles.container}>
-            <Text style={{color: '#e93766', fontSize: 40}}>Sign Up</Text>
+            <Text style={{color: '#e93766', fontSize: 40}}>Login</Text>
             {errorMessage &&
             <Text style={{color: 'red'}}>
                 {errorMessage}
             </Text>}
             <TextInput
-                placeholder="Email"
-                autoCapitalize="none"
                 style={styles.textInput}
-                onChangeText={(newEmail) => setEmail(newEmail)}
+                autoCapitalize="none"
+                placeholder="Email"
+                onChangeText={newEmail => setEmail(newEmail)}
                 value={email}
             />
             <TextInput
                 secureTextEntry
-                placeholder="Password"
-                autoCapitalize="none"
                 style={styles.textInput}
-                onChangeText={(newPassword) => setPassword(newPassword)}
+                autoCapitalize="none"
+                placeholder="Password"
+                onChangeText={newPassword => setPassword(newPassword)}
                 value={password}
             />
-            <Button title="Sign Up" color="#e93766" onPress={handleSignUp}/>
+            <Button title="Login" color="#e93766" onPress={handleLogin}/>
             <View>
                 <Text>
-                    Already have an account?
-                    <Text onPress={() => navigation.navigate(LOGIN)} style={{color: '#e93766', fontSize: 18}}> Login </Text>
-                </Text>
+                    Don't have an account?
+                    <Text onPress={() => navigation.navigate(REGISTER)} style={{color: '#e93766', fontSize: 18}}> Sign Up </Text
+                    ></Text>
             </View>
         </View>
     )

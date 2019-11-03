@@ -15,8 +15,30 @@ const en = {
         'already-have-an-account': 'Already have an account?',
         'signup': 'Sign Up',
         'signin': 'Login',
+        'signout': 'Logout',
     },
 
+    'tabs': {
+        'calendar': 'Calendar',
+        'profile': 'Profile',
+        'adding': 'Add',
+    },
+
+    'diagnosis': {
+        'cos': "COS (Anovulatory)",
+        'diminished-reserve': "Diminished reserve",
+        'unexplained': "Unexplained",
+        'endometriosis': "Endometriosis",
+        'tubal-factor': "Tubal factor",
+        'male-low-count': "Male - low count",
+        'male-low-motility': "Male - low motility",
+        'male-morphology': "Male - morphology",
+        'uterine': "Uterine",
+        'pgd': "PGD",
+        'rec-pregnancy-loss': "Recurrent pregnancy loss",
+        'fertility-preservation': "Fertility preservation",
+        'other': "Other"
+    }
 };
 
 i18n.fallbacks = true;

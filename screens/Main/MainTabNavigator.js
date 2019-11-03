@@ -3,24 +3,25 @@ import {Platform} from 'react-native';
 import {createStackNavigator, createBottomTabNavigator} from 'react-navigation';
 
 import TabBarIcon from '../../components/TabBarIcon';
-import HomeScreen from './HomeScreen';
-import LinksScreen from './LinksScreen';
-import SettingsScreen from './SettingsScreen';
+import CalendarTab from './CalendarTab';
+import AddingScreen from './AddingScreen';
+import ProfileScreen from './ProfileScreen';
+import localization from "../../utils/localization";
 
 const config = Platform.select({
     web: {headerMode: 'screen'},
     default: {},
 });
 
-const HomeStack = createStackNavigator(
+const CalendarStack = createStackNavigator(
     {
-        Home: HomeScreen,
+        Calendar: CalendarTab,
     },
     config
 );
 
-HomeStack.navigationOptions = {
-    tabBarLabel: 'Home',
+CalendarStack.navigationOptions = {
+    tabBarLabel: localization('tabs.calendar'),
     tabBarIcon: ({focused}) => (
         <TabBarIcon
             focused={focused}
@@ -33,17 +34,17 @@ HomeStack.navigationOptions = {
     ),
 };
 
-HomeStack.path = '';
+CalendarStack.path = '';
 
-const LinksStack = createStackNavigator(
+const AddingStack = createStackNavigator(
     {
-        Links: LinksScreen,
+        Links: AddingScreen,
     },
     config
 );
 
-LinksStack.navigationOptions = {
-    tabBarLabel: 'Links',
+AddingStack.navigationOptions = {
+    tabBarLabel: localization('tabs.adding'),
     tabBarIcon: ({focused}) => (
         <TabBarIcon focused={focused} name={
             Platform.OS === 'ios'
@@ -53,17 +54,17 @@ LinksStack.navigationOptions = {
     ),
 };
 
-LinksStack.path = '';
+AddingStack.path = '';
 
-const SettingsStack = createStackNavigator(
+const ProfileStack = createStackNavigator(
     {
-        Settings: SettingsScreen,
+        Profile: ProfileScreen,
     },
     config
 );
 
-SettingsStack.navigationOptions = {
-    tabBarLabel: 'Settings',
+ProfileStack.navigationOptions = {
+    tabBarLabel: localization('tabs.profile'),
     tabBarIcon: ({focused}) => (
         <TabBarIcon focused={focused} name={
             Platform.OS === 'ios'
@@ -73,12 +74,12 @@ SettingsStack.navigationOptions = {
     ),
 };
 
-SettingsStack.path = '';
+ProfileStack.path = '';
 
 const tabNavigator = createBottomTabNavigator({
-    HomeStack,
-    LinksStack,
-    SettingsStack,
+    CalendarStack,
+    AddingStack,
+    ProfileStack,
 });
 
 tabNavigator.path = '';

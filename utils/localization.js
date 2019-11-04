@@ -1,5 +1,6 @@
 import * as Localization from 'expo-localization';
 import i18n from 'i18n-js';
+
 const en = {
     'error': {
         'generic': 'Something went wrong',
@@ -24,6 +25,14 @@ const en = {
         'adding': 'Add',
     },
 
+    'ovulationCalendar': 'Ovulation Calender',
+    'timeOfEvent': 'Time of event',
+    'reminder': 'Reminder',
+    'drugOrSupplement': 'Drug/Supplement',
+    'dailyDose': 'Daily dose (iu/pills)',
+    'timesPerDay': 'Times a day',
+    'selectDaysOfMedicine': 'Select the days of medicine administration',
+
     'diagnosis': {
         'cos': "COS (Anovulatory)",
         'diminished-reserve': "Diminished reserve",
@@ -42,7 +51,7 @@ const en = {
 };
 
 i18n.fallbacks = true;
-i18n.translations = { en };
+i18n.translations = {en};
 i18n.locale = Localization.locale;
 
 export default (key, options) => i18n.translate(key, options);

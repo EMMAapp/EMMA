@@ -32,6 +32,7 @@ const en = {
     'dailyDose': 'Daily dose (iu/pills)',
     'timesPerDay': 'Times a day',
     'selectDaysOfMedicine': 'Select the days of medicine administration',
+    'note': 'Note',
 
     'diagnosis': {
         'cos': "COS (Anovulatory)",

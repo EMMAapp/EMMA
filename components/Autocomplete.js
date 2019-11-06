@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useRef} from 'react'
 import {Text, TouchableOpacity} from "react-native";
 import Autocomplete from "react-native-autocomplete-input";
 
@@ -6,6 +6,7 @@ export default ({data, selectedItem, setSelectedItem}) => {
 
     const [query, setQuery] = useState('');
     const [hideAutoComplete, setHideAutoComplete] = useState(true);
+    const ref = useRef(null);
 
     const filteredData = data.filter(
         item => item.aliases.some(
@@ -17,12 +18,13 @@ export default ({data, selectedItem, setSelectedItem}) => {
         data={filteredData.map(medication => medication.title)}
         defaultValue={selectedItem?.title}
         onChangeText={text => setQuery(text.toLowerCase())}
-        renderItem={({item, i}) => (
+        ref={ref}
+        renderItem={({item}) => (
             <TouchableOpacity
                 onPress={() => {
-                    setQuery('');
+                    setQuery(item);
                     setSelectedItem(data.filter(it => it.title === item)[0]);
-                    setHideAutoComplete(true);
+                    ref.current.blur();
                 }}
             >
                 <Text>{item}</Text>

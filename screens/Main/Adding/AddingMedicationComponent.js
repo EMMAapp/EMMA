@@ -54,7 +54,7 @@ const DEFAULT_MIN_HOUR = 8;
 
 export default function AddingMedicationComponent({navigation}) {
 
-    const [state, setState] = useState(initialState);
+    const [state, setState] = useState({...initialState});
 
     if (store.currentEditedEventId === null) {
         store.currentEditedEventId = id();
@@ -87,6 +87,8 @@ export default function AddingMedicationComponent({navigation}) {
         setState({...state, eventsAndReminders: eventsAndReminders});
     };
 
+    const canSave = state.medication && state.selectedDays && state.selectedDays.length;
+
     const save = async () => {
         const {patientData} = store;
         patientData.prescribedMedications[state.id] = {...state};
@@ -96,10 +98,11 @@ export default function AddingMedicationComponent({navigation}) {
     const close = () => {
         store.currentEditedEventId = null;
         navigation.navigate(CALENDAR);
+        setState({...initialState});
     };
 
     const reset = () => {
-        store.currentEditedEventId = id();
+        store.currentEditedEventId = null;
         setState({...state, id: null})
     };
 
@@ -155,15 +158,27 @@ export default function AddingMedicationComponent({navigation}) {
                     value={state.note}
                     onChangeText={note => setState({...state, note: note})}
                 />
-                <Button title={localization('imDone')} color="#e93766" onPress={async () => {
+                <Button
+                    title={localization('imDone')}
+                    color="#e93766"
+                    disabled={!canSave}
+                    onPress={async () => {
                     await save();
                     close();
                 }}/>
-                <Button title={localization('addAnotherMedication')} color="#e93766" onPress={async () => {
+                <Button
+                    title={localization('addAnotherMedication')}
+                    color="#e93766"
+                    disabled={!canSave}
+                    onPress={async () => {
                     await save();
                     reset();
                 }}/>
-                <Button title={localization('clearEvent')} color="#e93766" onPress={close}/>
+                <Button
+                    title={localization('clearEvent')}
+                    color="#e93766"
+                    onPress={close}
+                />
             </ScrollView>
         </SafeAreaView>
     )
@@ -174,7 +189,6 @@ const styles = StyleSheet.create({
         flex: 1
     },
     scrollView: {
-        backgroundColor: 'pink',
         marginHorizontal: 20,
     },
     textInput: {

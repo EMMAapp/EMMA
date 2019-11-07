@@ -4,9 +4,10 @@ import React from "react";
 export default ({onDayPress, coloredDays}) => {
 
     let markedDates = {};
-    for (const day in coloredDays) {
-        markedDates[day] = {textColor: 'green'};
-    }
+    coloredDays.forEach(day => {
+        markedDates[day] = {color: 'pink', startingDay: true, endingDay: true};
+    });
+    console.log(markedDates);
 
     return <Calendar
         current={Date()}

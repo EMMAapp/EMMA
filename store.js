@@ -1,13 +1,25 @@
 import * as firebase from "firebase";
 import '@firebase/firestore';
-import {logInfo, logWarn} from "./utils/log";
+import {logError, logInfo, logWarn} from "./utils/log";
 import localization from "./utils/localization";
+
+const initialPatientData = {
+    age: null,
+    diagnosis: null,
+    isPeriodRegular: false,
+    periods: {},
+    averagePeriodCycleDays: 28,
+    averagePeriodBleedingDays: 5,
+    protocol: null,
+    prescribedMedications: {},
+    scheduledCheckups: {}
+};
 
 export const store = {
     isAuthenticated: false,
     patientId: null,
     patientData: null,
-    completedOnBoarding: false
+    currentEditedEventId: null
 };
 export default store;
 
@@ -35,12 +47,23 @@ export async function retrievePatientData() {
             store.patientData = doc.data();
             store.completedOnBoarding = false; // TODO!
         }
+        logInfo("Patient data:");
         logInfo(store.patientData);
         return store.patientData;
     }
     catch (e) {
         logWarn(e.message);
         return null;
+    }
+}
+
+export async function syncPatientData(updatedPatientData) {
+    try {
+        store.patientData = updatedPatientData;
+        await firebase.firestore().collection('patients').doc(store.patientId).set(store.patientData);
+    }
+    catch (e) {
+        logError(e.message);
     }
 }
 
@@ -53,6 +76,7 @@ export async function registerPatient(email, password) {
         const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
         store.isAuthenticated = true;
         store.patientId = userCredential.user.uid;
+        await syncPatientData({...initialPatientData});
         return {success: true, error: null};
     } catch (e) {
         let errorMessage = localization('error.generic');

@@ -33,6 +33,9 @@ const en = {
     'timesPerDay': 'Times a day',
     'selectDaysOfMedicine': 'Select the days of medicine administration',
     'note': 'Note',
+    'imDone': 'I\'m Done',
+    'addAnotherMedication': 'Add Another Medication',
+    'clearEvent': 'Clear Event',
 
     'diagnosis': {
         'cos': "COS (Anovulatory)",

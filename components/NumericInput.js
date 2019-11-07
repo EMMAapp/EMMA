@@ -6,8 +6,8 @@ export default ({value, setValue, style}) => {
         <TextInput
             style={style}
             autoCapitalize="none"
-            onChangeText={val => setValue(Number(val))}
-            value={value.toString()}
+            onChangeText={val => val ? setValue(Number(val)) : setValue(null)}
+            value={value ? value.toString() : ''}
             keyboardType='numeric'
         />
     )

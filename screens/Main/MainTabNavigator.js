@@ -15,7 +15,7 @@ const config = Platform.select({
 
 const CalendarStack = createStackNavigator(
     {
-        Calendar: CalendarTab,
+        calendar: CalendarTab,
     },
     config
 );
@@ -38,7 +38,7 @@ CalendarStack.path = '';
 
 const AddingStack = createStackNavigator(
     {
-        Links: AddingScreen,
+        adding: AddingScreen,
     },
     config
 );
@@ -58,7 +58,7 @@ AddingStack.path = '';
 
 const ProfileStack = createStackNavigator(
     {
-        Profile: ProfileScreen,
+        profile: ProfileScreen,
     },
     config
 );

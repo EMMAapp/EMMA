@@ -1,11 +1,14 @@
-import React, {useState, useEffect} from 'react'
-import {StyleSheet, Text, TextInput, View, Button, TouchableOpacity, Switch, ScrollView} from 'react-native'
+import React, {useState} from 'react'
+import {StyleSheet, Text, TextInput, View, Button, Switch, ScrollView, SafeAreaView} from 'react-native'
 import localization from "../../../utils/localization";
 import Autocomplete from "../../../components/Autocomplete";
 import Medications from '../../../constants/Medications';
 import NumericInput from "../../../components/NumericInput";
 import Calendar from "../../../components/Calendar";
 import DayTimeInput from "../../../components/DayTimeInput";
+import {CALENDAR} from "../../../navigation/Routes";
+import id from "../../../utils/id";
+import {store, syncPatientData} from "../../../store";
 
 const EventAndReminderPicker = ({eventAndReminder, setEventAndReminder}) => {
 
@@ -13,7 +16,7 @@ const EventAndReminderPicker = ({eventAndReminder, setEventAndReminder}) => {
 
     return (
         <View>
-            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Text style={{color: '#e93766', flex: 1}}>{localization('timeOfEvent')}</Text>
                 <DayTimeInput
                     style={{flex: 1}}
@@ -37,73 +40,110 @@ const EventAndReminderPicker = ({eventAndReminder, setEventAndReminder}) => {
     )
 };
 
+const initialState = {
+    id: null,
+    medication: null,
+    dailyDose: null,
+    timesPerDay: 1,
+    selectedDays: [],
+    eventsAndReminders: [],
+    note: ''
+};
 
-export default function AddingMedicationComponent() {
+const DEFAULT_MIN_HOUR = 8;
 
-    const [medication, setMedication] = useState(null);
-    const [dailyDose, setDailyDose] = useState(300);
-    const [timesPerDay, setTimesPerDay] = useState(3);
-    const [selectedDays, setSelectedDays] = useState([]);
-    const [eventsAndReminders, setEventsAndReminders] = useState([]);
-    const [note, setNote] = useState('');
+export default function AddingMedicationComponent({navigation}) {
 
-    const DEFAULT_MIN_HOUR = 8;
+    const [state, setState] = useState(initialState);
 
-    if (timesPerDay !== eventsAndReminders.length) {
-        let newEventsAndReminders = [];
-        for (let i = 0; i < timesPerDay; i++) {
-            const hour = (DEFAULT_MIN_HOUR + i) % 24;
-            newEventsAndReminders.push({event: {hour: hour, minute: 0}, reminder: {hour: 0, minute: 0}, reminderDisabled: true});
+    if (store.currentEditedEventId === null) {
+        store.currentEditedEventId = id();
+        setState({...initialState, id: store.currentEditedEventId});
+        return <View/>;
+    }
+
+    if (state.id !== store.currentEditedEventId) {
+        let storedState = store.patientData.prescribedMedications[store.currentEditedEventId];
+        if (storedState) {
+            storedState = initialState;
         }
-        setEventsAndReminders(newEventsAndReminders);
-        return <View/>; // TODO - loading
+        setState({...storedState});
+        return <View/>;
+    }
+
+    if (state.timesPerDay !== state.eventsAndReminders.length) {
+        let eventsAndReminders = [];
+        for (let i = 0; i < state.timesPerDay; i++) {
+            const hour = (DEFAULT_MIN_HOUR + i) % 24;
+            eventsAndReminders.push({event: {hour: hour, minute: 0}, reminder: {hour: 0, minute: 0}, reminderDisabled: true});
+        }
+        setState({...state, eventsAndReminders: eventsAndReminders});
+        return <View/>;
     }
 
     const setEventsAndReminder = (eventAndReminder, i) => {
-        let newEventsAndReminders = [...eventsAndReminders];
-        newEventsAndReminders[i] = eventAndReminder;
-        setEventsAndReminders(newEventsAndReminders);
+        const {eventsAndReminders} = state;
+        eventsAndReminders[i] = eventAndReminder;
+        setState({...state, eventsAndReminders: eventsAndReminders});
+    };
+
+    const save = async () => {
+        const {patientData} = store;
+        patientData.prescribedMedications[state.id] = {...state};
+        await syncPatientData(patientData);
+    };
+
+    const close = () => {
+        store.currentEditedEventId = null;
+        navigation.navigate(CALENDAR);
+    };
+
+    const reset = () => {
+        store.currentEditedEventId = id();
+        setState({...state, id: null})
     };
 
     return (
-        <ScrollView style={styles.container}>
-            <View style={styles.autocompleteContainer}>
+        <SafeAreaView style={styles.container}>
+            <ScrollView style={styles.scrollView}>
                 <Text style={{color: '#e93766'}}>{localization('drugOrSupplement')}</Text>
                 <Autocomplete
                     data={Medications}
-                    selectedItem={medication}
-                    setSelectedItem={setMedication}
+                    selectedItem={state.medication}
+                    setSelectedItem={medication => setState({...state, medication: medication})}
                 />
                 <Text style={{color: '#e93766'}}>{localization('dailyDose')}</Text>
                 <NumericInput
                     style={styles.textInput}
-                    setValue={setDailyDose}
-                    value={dailyDose}
+                    value={state.dailyDose}
+                    setValue={dailyDose => setState({...state, dailyDose: dailyDose})}
                 />
                 <Text style={{color: '#e93766'}}>{localization('timesPerDay')}</Text>
                 <NumericInput
                     style={styles.textInput}
-                    setValue={setTimesPerDay}
-                    value={timesPerDay}
+                    value={state.timesPerDay}
+                    setValue={timesPerDay => setState({...state, timesPerDay})}
                 />
                 <Text style={{color: '#e93766'}}>{localization('ovulationCalendar')}</Text>
                 <Calendar
                     onDayPress={(day) => {
+                        const {selectedDays} = state;
                         const index = selectedDays.indexOf(day.dateString);
                         if (index === -1) {
-                            setSelectedDays(selectedDays.push(day.dateString));
+                            setState({...state, selectedDays: [...selectedDays, day.dateString]});
                         } else {
-                            setSelectedDays(selectedDays.splice(index, 1))
+                            selectedDays.splice(index, 1);
+                            setState({...state, selectedDays: [...selectedDays]});
                         }
                     }}
-                    coloredDays={selectedDays}
+                    coloredDays={state.selectedDays}
                 />
                 {
-                    [...Array(timesPerDay).keys()].map(i => {
+                    [...Array(state.timesPerDay).keys()].map(i => {
                         return (
                             <EventAndReminderPicker
                                 key={i}
-                                eventAndReminder={eventsAndReminders[i]}
+                                eventAndReminder={state.eventsAndReminders[i]}
                                 setEventAndReminder={(eventAndReminder) => setEventsAndReminder(eventAndReminder, i)}
                             />
                         )
@@ -112,11 +152,20 @@ export default function AddingMedicationComponent() {
                 <Text style={{color: '#e93766'}}>{localization('note')}</Text>
                 <TextInput
                     autoCapitalize="none"
-                    onChangeText={val => setNote(val)}
-                    value={note}
+                    value={state.note}
+                    onChangeText={note => setState({...state, note: note})}
                 />
-            </View>
-        </ScrollView>
+                <Button title={localization('imDone')} color="#e93766" onPress={async () => {
+                    await save();
+                    close();
+                }}/>
+                <Button title={localization('addAnotherMedication')} color="#e93766" onPress={async () => {
+                    await save();
+                    reset();
+                }}/>
+                <Button title={localization('clearEvent')} color="#e93766" onPress={close}/>
+            </ScrollView>
+        </SafeAreaView>
     )
 }
 
@@ -124,14 +173,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1
     },
-    autocompleteContainer: {
-        padding: 30,
-        flex: 1,
-        left: 0,
-        position: 'absolute',
-        right: 0,
-        top: 0,
-        zIndex: 1
+    scrollView: {
+        backgroundColor: 'pink',
+        marginHorizontal: 20,
     },
     textInput: {
         height: 40,

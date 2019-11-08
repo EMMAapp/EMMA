@@ -5,13 +5,16 @@ import {loginPatient} from '../../store';
 import RouteGuard from "../../navigation/RouteGuard";
 import localization from "../../utils/localization";
 
-export default function LoginScreen({navigation}) {
+export default function LoginScreen({navigation, screenProps}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState(null);
+    const {setIsLoading} = screenProps;
 
     const handleLogin = async () => {
+        setIsLoading(true);
         const {success, errorMessage} = await loginPatient(email, password);
+        setIsLoading(false);
         if (success) {
             RouteGuard(navigation);
         }

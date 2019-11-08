@@ -25,7 +25,8 @@ const DEFAULT_MIN_HOUR = 8;
 export default function EditMedicationComponent({navigation, screenProps}) {
 
     const [state, setState] = useState({...initialState});
-    const {setMainCalendarSelectedDay, currentEditedEventId, setCurrentEditedEventId} = screenProps;
+    const [isNewEvent, setIsNewEvent] = useState(true);
+    const {setMainCalendarSelectedDay, currentEditedEventId, setCurrentEditedEventId, setIsLoading} = screenProps;
 
     if (!currentEditedEventId) {
         setCurrentEditedEventId(shortid.generate());
@@ -37,6 +38,7 @@ export default function EditMedicationComponent({navigation, screenProps}) {
             setState({...initialState, id: currentEditedEventId});
         }
         else {
+            setIsNewEvent(false);
             setState({...storedState});
         }
         return <View/>;
@@ -67,7 +69,9 @@ export default function EditMedicationComponent({navigation, screenProps}) {
         const {patientData} = store;
         patientData.prescribedMedications[state.id] = {...state};
         setMainCalendarSelectedDay(null); // to refresh main calendar
+        setIsLoading(true);
         await syncPatientData(patientData);
+        setIsLoading(false);
     };
 
     const close = () => {
@@ -152,7 +156,7 @@ export default function EditMedicationComponent({navigation, screenProps}) {
                     reset();
                 }}/>
                 <Button
-                    title={localization('clearEvent')}
+                    title={localization(isNewEvent ? 'clearEvent' : 'deleteEvent')}
                     color="#e93766"
                     onPress={close}
                 />

@@ -10,20 +10,22 @@ import {AppNavigator} from './navigation/AppNavigator';
 import {retrievePatient} from './store';
 import firebaseConfig from "./firebaseConfig";
 import {logError} from "./utils/log";
+import LoadingModal from "./components/LoadingModal";
 
 firebase.initializeApp(firebaseConfig);
 
 export default function App(props) {
-    const [isLoadingComplete, setLoadingComplete] = useState(false);
+    const [isStartupLoadingComplete, setStartupLoadingComplete] = useState(false);
     const [mainCalendarSelectedDay, setMainCalendarSelectedDay] = useState(null);
     const [currentEditedEventId, setCurrentEditedEventId] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
-    if (!isLoadingComplete && !props.skipLoadingScreen) {
+    if (!isStartupLoadingComplete && !props.skipLoadingScreen) {
         return (
             <AppLoading
                 startAsync={async () => loadResourcesAsync()}
                 onError={handleLoadingError}
-                onFinish={() => handleFinishLoading(setLoadingComplete)}
+                onFinish={() => handleFinishLoading(setStartupLoadingComplete)}
             />
         );
     } else {
@@ -32,12 +34,14 @@ export default function App(props) {
                 {Platform.OS === 'ios' && <StatusBar barStyle="default"/>}
                 <AppNavigator
                     screenProps={{
-                        mainCalendarSelectedDay: mainCalendarSelectedDay,
-                        setMainCalendarSelectedDay: setMainCalendarSelectedDay,
-                        currentEditedEventId:currentEditedEventId,
-                        setCurrentEditedEventId: setCurrentEditedEventId
+                        mainCalendarSelectedDay,
+                        setMainCalendarSelectedDay,
+                        currentEditedEventId,
+                        setCurrentEditedEventId,
+                        setIsLoading
                     }}
                 />
+                <LoadingModal isVisible={isLoading}/>
             </View>
         );
     }

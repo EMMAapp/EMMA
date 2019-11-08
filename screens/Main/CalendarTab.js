@@ -16,8 +16,7 @@ function collectByDay(events, eventsByDay) {
                 const group = eventsByDay[selectedDay];
                 if (group) {
                     eventsByDay[selectedDay] = [...group, event];
-                }
-                else {
+                } else {
                     eventsByDay[selectedDay] = [event];
                 }
             });
@@ -46,13 +45,17 @@ function eventsForSelected(eventsByDay, selectedDay) {
     return eventsForSelected;
 }
 
-const medicationDot = {key:'workout', color: 'pink'};
-const checkupDot = {key:'workout', color: 'green'};
+const medicationDot = {key: 'workout', color: 'pink'};
+const checkupDot = {key: 'workout', color: 'green'};
 
 export default function CalendarTab({navigation, screenProps}) {
     RouteGuard(navigation);
 
     const {mainCalendarSelectedDay, setMainCalendarSelectedDay, setCurrentEditedEventId} = screenProps;
+
+    if (!mainCalendarSelectedDay) {
+        setMainCalendarSelectedDay(Date());
+    }
 
     let eventsByDay = {};
     const {prescribedMedications, scheduledCheckups} = store.patientData;
@@ -100,18 +103,20 @@ export default function CalendarTab({navigation, screenProps}) {
                 />
                 <Text>{wrappedSelectedDate.format("dddd, MMM D")}</Text>
                 {
-                    eventsForSelectedDate.map(({dayTime, details}) => (
-                        <View key={shortid.generate()}>
-                            <Text>
-                                {dayTimeToString(dayTime)} - {details.medication ? details.medication : details.checkup}
-                            </Text>
-                            <TouchableOpacity onPress={() => onEventPressed(details.id)}>
+                    eventsForSelectedDate.length ?
+                        eventsForSelectedDate.map(({dayTime, details}) => (
+                            <View key={shortid.generate()}>
                                 <Text>
-                                    Note: {details.note}
+                                    {dayTimeToString(dayTime)} - {details.medication ? details.medication : details.checkup}
                                 </Text>
-                            </TouchableOpacity>
-                        </View>
-                    ))
+                                <TouchableOpacity onPress={() => onEventPressed(details.id)}>
+                                    <Text>
+                                        Note: {details.note}
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+                        ))
+                        : <Text>Nothing for this day, click below to add!</Text>
                 }
             </ScrollView>
         </SafeAreaView>

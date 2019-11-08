@@ -1,14 +1,14 @@
 import React, {useState} from 'react'
-import {StyleSheet, Text, TextInput, View, Button, Switch, ScrollView, SafeAreaView} from 'react-native'
+import {StyleSheet, Text, TextInput, View, Button, ScrollView, SafeAreaView} from 'react-native'
 import localization from "../../../utils/localization";
 import Autocomplete from "../../../components/Autocomplete";
 import Medications from '../../../constants/Medications';
 import NumericInput from "../../../components/NumericInput";
-import Calendar from "../../../components/Calendar";
+import Calendar from "../../../components/CalendarDayPicker";
 import {CALENDAR} from "../../../navigation/Routes";
-import id from "../../../utils/id";
 import {store, syncPatientData} from "../../../store";
 import EventDetailsPicker from "./EventDetailsPicker";
+import shortid from 'shortid';
 
 const initialState = {
     id: null,
@@ -22,23 +22,23 @@ const initialState = {
 
 const DEFAULT_MIN_HOUR = 8;
 
-export default function AddingMedicationComponent({navigation}) {
+export default function EditMedicationComponent({navigation, screenProps}) {
 
     const [state, setState] = useState({...initialState});
-    console.info(state);
+    const {setMainCalendarSelectedDay, currentEditedEventId, setCurrentEditedEventId} = screenProps;
 
-    if (store.currentEditedEventId === null) {
-        store.currentEditedEventId = id();
-        setState({...initialState, id: store.currentEditedEventId});
+    if (!currentEditedEventId) {
+        setCurrentEditedEventId(shortid.generate());
         return <View/>;
     }
-
-    if (state.id !== store.currentEditedEventId) {
-        let storedState = store.patientData.prescribedMedications[store.currentEditedEventId];
-        if (storedState) {
-            storedState = initialState;
+    if (state.id !== currentEditedEventId) {
+        let storedState = store.patientData.prescribedMedications[currentEditedEventId];
+        if (!storedState) {
+            setState({...initialState, id: currentEditedEventId});
         }
-        setState({...storedState});
+        else {
+            setState({...storedState});
+        }
         return <View/>;
     }
 
@@ -66,18 +66,19 @@ export default function AddingMedicationComponent({navigation}) {
     const save = async () => {
         const {patientData} = store;
         patientData.prescribedMedications[state.id] = {...state};
+        setMainCalendarSelectedDay(null); // to refresh main calendar
         await syncPatientData(patientData);
     };
 
     const close = () => {
-        store.currentEditedEventId = null;
+        setCurrentEditedEventId(null);
+        setState({...state, id: null});
         navigation.navigate(CALENDAR);
-        setState({...initialState});
     };
 
     const reset = () => {
-        store.currentEditedEventId = null;
-        setState({...state, id: null})
+        setCurrentEditedEventId(null);
+        setState({...state, id: null});
     };
 
     return (
@@ -102,6 +103,7 @@ export default function AddingMedicationComponent({navigation}) {
                     setValue={timesPerDay => setState({...state, timesPerDay})}
                 />
                 <Text style={{color: '#e93766'}}>{localization('ovulationCalendar')}</Text>
+                <Text>{localization('selectDaysOfMedicine')}</Text>
                 <Calendar
                     onDayPress={(day) => {
                         const {selectedDays} = state;
@@ -128,6 +130,7 @@ export default function AddingMedicationComponent({navigation}) {
                 }
                 <Text style={{color: '#e93766'}}>{localization('note')}</Text>
                 <TextInput
+                    style={{backgroundColor: '#e93766', height: 40}}
                     autoCapitalize="none"
                     value={state.note}
                     onChangeText={note => setState({...state, note: note})}

@@ -34,6 +34,9 @@ export async function retrievePatient() {
     if (store.isAuthenticated) {
         await retrievePatientData();
     }
+    else {
+        store.patientData = initialPatientData;
+    }
     return store.isAuthenticated;
 }
 
@@ -45,7 +48,9 @@ export async function retrievePatientData() {
         const doc = await firebase.firestore().collection('patients').doc(store.patientId).get();
         if (doc.exists) {
             store.patientData = doc.data();
-            store.completedOnBoarding = false; // TODO!
+        }
+        else {
+            store.patientData = initialPatientData;
         }
         logInfo("Patient data:");
         logInfo(store.patientData);
@@ -128,6 +133,5 @@ export async function logoutPatient() {
     await firebase.auth().signOut();
     store.isAuthenticated = false;
     store.patientId = null;
-    store.completedOnBoarding = false;
     store.patientData = null;
 }

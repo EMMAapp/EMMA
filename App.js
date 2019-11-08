@@ -15,6 +15,9 @@ firebase.initializeApp(firebaseConfig);
 
 export default function App(props) {
     const [isLoadingComplete, setLoadingComplete] = useState(false);
+    const [mainCalendarSelectedDay, setMainCalendarSelectedDay] = useState(null);
+    const [currentEditedEventId, setCurrentEditedEventId] = useState(null);
+
     if (!isLoadingComplete && !props.skipLoadingScreen) {
         return (
             <AppLoading
@@ -27,7 +30,14 @@ export default function App(props) {
         return (
             <View style={styles.container}>
                 {Platform.OS === 'ios' && <StatusBar barStyle="default"/>}
-                <AppNavigator/>
+                <AppNavigator
+                    screenProps={{
+                        mainCalendarSelectedDay: mainCalendarSelectedDay,
+                        setMainCalendarSelectedDay: setMainCalendarSelectedDay,
+                        currentEditedEventId:currentEditedEventId,
+                        setCurrentEditedEventId: setCurrentEditedEventId
+                    }}
+                />
             </View>
         );
     }

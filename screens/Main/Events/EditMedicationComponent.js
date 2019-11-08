@@ -9,6 +9,7 @@ import {CALENDAR} from "../../../navigation/Routes";
 import {store, syncPatientData} from "../../../store";
 import EventDetailsPicker from "./EventDetailsPicker";
 import shortid from 'shortid';
+import DeleteValidationModal from "../../../components/DeleteValidationModal";
 
 const initialState = {
     id: null,
@@ -27,6 +28,7 @@ export default function EditMedicationComponent({navigation, screenProps}) {
     const [state, setState] = useState({...initialState});
     const [isNewEvent, setIsNewEvent] = useState(true);
     const {setMainCalendarSelectedDay, currentEditedEventId, setCurrentEditedEventId, setIsLoading} = screenProps;
+    const [showDeleteValidationModal, setShowDeleteValidationModal] = useState(false);
 
     if (!currentEditedEventId) {
         setCurrentEditedEventId(shortid.generate());
@@ -65,13 +67,17 @@ export default function EditMedicationComponent({navigation, screenProps}) {
         state.selectedDays && state.selectedDays.length &&
         state.timesPerDay;
 
-    const save = async () => {
-        const {patientData} = store;
-        patientData.prescribedMedications[state.id] = {...state};
+    const flush = async (patientData) => {
         setMainCalendarSelectedDay(null); // to refresh main calendar
         setIsLoading(true);
         await syncPatientData(patientData);
         setIsLoading(false);
+    };
+
+    const save = async () => {
+        const {patientData} = store;
+        patientData.prescribedMedications[state.id] = {...state};
+        await flush(patientData);
     };
 
     const close = () => {
@@ -85,9 +91,27 @@ export default function EditMedicationComponent({navigation, screenProps}) {
         setState({...state, id: null});
     };
 
+    const deleteEvent = async () => {
+        const {patientData} = store;
+        delete patientData.prescribedMedications[state.id];
+        await flush(patientData);
+    };
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView} keyboardShouldPersistTaps="handled">
+                <DeleteValidationModal
+                    isVisible={showDeleteValidationModal}
+                    setResult={async (shouldDelete) => {
+                        if (!shouldDelete) {
+                            setShowDeleteValidationModal(false);
+                        }
+                        else {
+                            await deleteEvent();
+                            close();
+                        }
+                    }}
+                    />
                 <Text style={{color: '#e93766'}}>{localization('drugOrSupplement')}</Text>
                 <Autocomplete
                     items={Medications}
@@ -158,7 +182,14 @@ export default function EditMedicationComponent({navigation, screenProps}) {
                 <Button
                     title={localization(isNewEvent ? 'clearEvent' : 'deleteEvent')}
                     color="#e93766"
-                    onPress={close}
+                    onPress={() => {
+                        if (isNewEvent) {
+                            close();
+                        }
+                        else {
+                            setShowDeleteValidationModal(true);
+                        }
+                    }}
                 />
             </ScrollView>
         </SafeAreaView>

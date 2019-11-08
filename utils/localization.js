@@ -36,6 +36,7 @@ const en = {
     'imDone': 'I\'m Done',
     'addAnotherMedication': 'Add Another Medication',
     'clearEvent': 'Clear Event',
+    'autocompletePlaceholder': 'Start typing or choose from list',
 
     'diagnosis': {
         'cos': "COS (Anovulatory)",

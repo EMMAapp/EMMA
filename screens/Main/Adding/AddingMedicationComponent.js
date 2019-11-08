@@ -25,6 +25,7 @@ const DEFAULT_MIN_HOUR = 8;
 export default function AddingMedicationComponent({navigation}) {
 
     const [state, setState] = useState({...initialState});
+    console.info(state);
 
     if (store.currentEditedEventId === null) {
         store.currentEditedEventId = id();
@@ -41,9 +42,10 @@ export default function AddingMedicationComponent({navigation}) {
         return <View/>;
     }
 
-    if (state.timesPerDay !== state.eventsAndReminders.length) {
+    const timesPerDayNormalized = state.timesPerDay ? state.timesPerDay : 0;
+    if (timesPerDayNormalized !== state.eventsAndReminders.length) {
         let eventsAndReminders = [];
-        for (let i = 0; i < state.timesPerDay; i++) {
+        for (let i = 0; i < timesPerDayNormalized; i++) {
             const hour = (DEFAULT_MIN_HOUR + i) % 24;
             eventsAndReminders.push({event: {hour: hour, minute: 0}, reminder: {hour: 0, minute: 0}, reminderDisabled: true});
         }
@@ -57,7 +59,9 @@ export default function AddingMedicationComponent({navigation}) {
         setState({...state, eventsAndReminders: eventsAndReminders});
     };
 
-    const canSave = state.medication && state.selectedDays && state.selectedDays.length;
+    const canSave = state.medication &&
+        state.selectedDays && state.selectedDays.length &&
+        state.timesPerDay;
 
     const save = async () => {
         const {patientData} = store;
@@ -78,10 +82,10 @@ export default function AddingMedicationComponent({navigation}) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView style={styles.scrollView}>
+            <ScrollView style={styles.scrollView} keyboardShouldPersistTaps="handled">
                 <Text style={{color: '#e93766'}}>{localization('drugOrSupplement')}</Text>
                 <Autocomplete
-                    data={Medications}
+                    items={Medications}
                     selectedItem={state.medication}
                     setSelectedItem={medication => setState({...state, medication: medication})}
                 />
@@ -112,7 +116,7 @@ export default function AddingMedicationComponent({navigation}) {
                     coloredDays={state.selectedDays}
                 />
                 {
-                    [...Array(state.timesPerDay).keys()].map(i => {
+                    [...Array(timesPerDayNormalized).keys()].map(i => {
                         return (
                             <EventDetailsPicker
                                 key={i}

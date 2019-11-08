@@ -1,10 +1,10 @@
 export default [
     {
-        title: 'Med1',
+        name: 'Med1',
         aliases: ['med1', 'm3d1']
     },
     {
-        title: 'Med2',
+        name: 'Med2',
         aliases: ['med2']
     }
 ]

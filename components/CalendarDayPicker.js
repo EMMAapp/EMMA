@@ -7,7 +7,6 @@ export default ({onDayPress, coloredDays}) => {
     coloredDays.forEach(day => {
         markedDates[day] = {color: 'pink', startingDay: true, endingDay: true};
     });
-    console.log(markedDates);
 
     return <Calendar
         current={Date()}

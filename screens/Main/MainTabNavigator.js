@@ -4,7 +4,7 @@ import {createStackNavigator, createBottomTabNavigator} from 'react-navigation';
 
 import TabBarIcon from '../../components/TabBarIcon';
 import CalendarTab from './CalendarTab';
-import AddingScreen from './Adding/AddingScreen';
+import EditEventTab from './Events/EditEventTab';
 import ProfileScreen from './ProfileScreen';
 import localization from "../../utils/localization";
 
@@ -36,14 +36,13 @@ CalendarStack.navigationOptions = {
 
 CalendarStack.path = '';
 
-const AddingStack = createStackNavigator(
+const EditEventStack = createStackNavigator(
     {
-        adding: AddingScreen,
+        edit: EditEventTab,
     },
     config
 );
-
-AddingStack.navigationOptions = {
+EditEventStack.navigationOptions = {
     tabBarLabel: localization('tabs.adding'),
     tabBarIcon: ({focused}) => (
         <TabBarIcon focused={focused} name={
@@ -54,7 +53,7 @@ AddingStack.navigationOptions = {
     ),
 };
 
-AddingStack.path = '';
+EditEventStack.path = '';
 
 const ProfileStack = createStackNavigator(
     {
@@ -78,7 +77,7 @@ ProfileStack.path = '';
 
 const tabNavigator = createBottomTabNavigator({
     CalendarStack,
-    AddingStack,
+    EditEventStack,
     ProfileStack,
 });
 

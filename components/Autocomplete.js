@@ -9,13 +9,13 @@ export default ({items, selectedItem, setSelectedItem}) => {
     const [query, setQuery] = useState('');
 
     if (selectedItem !== null && !query.length) {
-        setQuery(selectedItem.name);
+        setQuery(selectedItem);
         return <View/>;
     }
 
     return <SearchableDropdown
         onItemSelect={(item) => {
-            setSelectedItem(item);
+            setSelectedItem(item.name);
             setQuery(item.name);
         }}
         containerStyle={{padding: 5}}

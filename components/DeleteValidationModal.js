@@ -1,22 +1,23 @@
 import React from 'react';
 import Modal from "react-native-modal";
 import {Text, View, TouchableOpacity, StyleSheet} from "react-native";
+import localization from "../utils/localization";
 
 export default ({isVisible, setResult}) => {
     return <Modal isVisible={isVisible}>
         <View style={styles.content}>
-            <Text>Are you sure you want to delete?</Text>
+            <Text>{localization('areYouSureDelete')}</Text>
             <TouchableOpacity
                 style={{color: 'red'}}
                 onPress={() => setResult(true)}
             >
-                <Text>Yes</Text>
+                <Text>{localization('deleteEvent')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 style={{color: 'blue'}}
                 onPress={() => setResult(false)}
             >
-                <Text>No</Text>
+                <Text>{localization('cancel')}</Text>
             </TouchableOpacity>
         </View>
     </Modal>

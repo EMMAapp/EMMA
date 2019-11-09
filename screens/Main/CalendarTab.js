@@ -9,6 +9,7 @@ import {dayTimeToString} from "../../utils/dayTime";
 import shortid from 'shortid';
 import {EDIT_EVENT} from "../../navigation/Routes";
 import {collectByDay, eventsForDay} from '../../utils/collectDays'
+import _ from 'lodash'
 
 const medicationDot = {key: 'workout', color: 'pink'};
 const checkupDot = {key: 'workout', color: 'green'};
@@ -28,19 +29,16 @@ export default function CalendarTab({navigation, screenProps}) {
     collectByDay(scheduledCheckups, eventsByDay);
 
     const markedDates = {};
-    for (const day in eventsByDay) {
-        if (Object.prototype.hasOwnProperty.call(eventsByDay, day)) {
-            let dots = [];
-            const events = eventsByDay[day];
-            if (events.some(event => !!event.medication)) {
-                dots.push(medicationDot);
-            }
-            if (events.some(event => !!event.checkup)) {
-                dots.push(checkupDot);
-            }
-            markedDates[day] = {dots: dots};
+    _.forOwn(eventsByDay, (events, day) => {
+        let dots = [];
+        if (events.some(event => !!event.medication)) {
+            dots.push(medicationDot);
         }
-    }
+        if (events.some(event => !!event.checkup)) {
+            dots.push(checkupDot);
+        }
+        markedDates[day] = {dots: dots};
+    });
 
     const wrappedSelectedDate = moment(mainCalendarSelectedDay);
     const eventsForSelectedDate = eventsForDay(eventsByDay, wrappedSelectedDate.format("YYYY-MM-DD"));

@@ -1,17 +1,16 @@
+import _ from 'lodash'
+
 export function collectByDay(events, eventsByDay) {
-    for (const eventId in events) {
-        if (Object.prototype.hasOwnProperty.call(events, eventId)) {
-            const event = events[eventId];
-            event.selectedDays.forEach(selectedDay => {
-                const group = eventsByDay[selectedDay];
-                if (group) {
-                    eventsByDay[selectedDay] = [...group, event];
-                } else {
-                    eventsByDay[selectedDay] = [event];
-                }
-            });
-        }
-    }
+    _.forOwn(events, (event, eventId) => {
+        event.selectedDays.forEach(selectedDay => {
+            const group = eventsByDay[selectedDay];
+            if (group) {
+                eventsByDay[selectedDay] = [...group, event];
+            } else {
+                eventsByDay[selectedDay] = [event];
+            }
+        });
+    });
 }
 
 export function eventsForDay(eventsByDay, selectedDay) {

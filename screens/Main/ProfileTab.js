@@ -4,7 +4,7 @@ import RouteGuard from "../../navigation/RouteGuard";
 import {Text} from "react-native";
 import localization from "../../utils/localization";
 
-export default function ProfileScreen({navigation}) {
+export default function ProfileTab({navigation}) {
 
   const logout = async () => {
     await logoutPatient();

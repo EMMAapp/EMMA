@@ -40,6 +40,8 @@ const en = {
     'autocompletePlaceholder': 'Start typing or choose from list',
     'pickTime': 'Pick time of day',
     'loading': 'Loading...',
+    'areYouSureDelete': 'Are you sure you want to remove this event?',
+    'cancel': 'Cancel',
 
     'diagnosis': {
         'cos': "COS (Anovulatory)",

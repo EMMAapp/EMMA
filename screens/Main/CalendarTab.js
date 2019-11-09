@@ -4,46 +4,11 @@ import RouteGuard from "../../navigation/RouteGuard";
 import store from "../../store";
 import {SafeAreaView, ScrollView, StyleSheet, Text, View, TouchableOpacity} from "react-native";
 import {Calendar} from "react-native-calendars";
+import MultiDot from "react-native-calendars/src/calendar/day/multi-dot";
 import {dayTimeToString} from "../../utils/dayTime";
 import shortid from 'shortid';
 import {EDIT_EVENT} from "../../navigation/Routes";
-
-function collectByDay(events, eventsByDay) {
-    for (const eventId in events) {
-        if (Object.prototype.hasOwnProperty.call(events, eventId)) {
-            const event = events[eventId];
-            event.selectedDays.forEach(selectedDay => {
-                const group = eventsByDay[selectedDay];
-                if (group) {
-                    eventsByDay[selectedDay] = [...group, event];
-                } else {
-                    eventsByDay[selectedDay] = [event];
-                }
-            });
-        }
-    }
-}
-
-function eventsForSelected(eventsByDay, selectedDay) {
-    const eventsForDay = eventsByDay[selectedDay];
-    if (!eventsForDay || !eventsForDay.length) {
-        return [];
-    }
-    let eventsForSelected = [];
-    eventsForDay.forEach(calendarEvent => {
-        calendarEvent.eventsAndReminders.forEach(eventAndReminder => {
-            eventsForSelected.push({dayTime: eventAndReminder.event, details: calendarEvent});
-        });
-    });
-    const comparer = (dt1, dt2) => {
-        if (dt1.hour !== dt2.hour) {
-            return dt1.hour - dt2.hour;
-        }
-        return dt1.minute - dt2.minute;
-    };
-    eventsForSelected.sort((event1, event2) => comparer(event1.dayTime, event2.dayTime));
-    return eventsForSelected;
-}
+import {collectByDay, eventsForDay} from '../../utils/collectDays'
 
 const medicationDot = {key: 'workout', color: 'pink'};
 const checkupDot = {key: 'workout', color: 'green'};
@@ -78,7 +43,7 @@ export default function CalendarTab({navigation, screenProps}) {
     }
 
     const wrappedSelectedDate = moment(mainCalendarSelectedDay);
-    const eventsForSelectedDate = eventsForSelected(eventsByDay, wrappedSelectedDate.format("YYYY-MM-DD"));
+    const eventsForSelectedDate = eventsForDay(eventsByDay, wrappedSelectedDate.format("YYYY-MM-DD"));
 
     const onEventPressed = (eventId) => {
         setCurrentEditedEventId(eventId);
@@ -100,6 +65,14 @@ export default function CalendarTab({navigation, screenProps}) {
                     markingType={'multi-dot'}
                     monthFormat={'yyyy MM'}
                     firstDay={0} // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
+                    dayComponent={
+                        (props) => (
+                            <View>
+                                <MultiDot {...props}/>
+                                {props.date.day % 14 == 0 ? <Text style={styles.periodDay}>ov</Text> : null}
+                            </View>
+                        )
+                    }
                 />
                 <Text>{wrappedSelectedDate.format("dddd, MMM D")}</Text>
                 {
@@ -129,5 +102,10 @@ const styles = StyleSheet.create({
     },
     scrollView: {
         marginHorizontal: 20,
+    },
+    periodDay: {
+        textAlign: 'center',
+        fontSize: 11,
+        color: 'red'
     }
 });

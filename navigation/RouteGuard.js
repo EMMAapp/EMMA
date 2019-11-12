@@ -1,11 +1,14 @@
 import store from "../store";
-import {MAIN, REGISTER} from "./Routes";
+import {MAIN, ONBOARDING, REGISTER} from "./Routes";
 
 export default function RouteGuard(navigation) {
-    if (!store.isAuthenticated) {
+    if (!store.patientId) {
         navigation.navigate(REGISTER);
         return;
     }
-    // TODO
+    if (!store.patientData.age) {
+        navigation.navigate(ONBOARDING);
+        return;
+    }
     navigation.navigate(MAIN);
 }

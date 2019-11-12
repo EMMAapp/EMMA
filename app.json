@@ -24,7 +24,17 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.emma.app",
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.1091629470495-bojd6ud8nfu85ku7b0vkng1uam23isl1"
+        }
+      }
+    },
+    "android": {
+      "package": "com.emma.app",
+      "googleServicesFile": "./google-services.json"
     }
   }
 }

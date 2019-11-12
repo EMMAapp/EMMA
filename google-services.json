@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1091629470495",
+    "firebase_url": "https://emma-emma.firebaseio.com",
+    "project_id": "emma-emma",
+    "storage_bucket": "emma-emma.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1091629470495:android:a3f56d8aa919d55d8bd62a",
+        "android_client_info": {
+          "package_name": "com.emma.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1091629470495-uk5bf5o5qhsue72b542ollfsm2orrb41.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGdS4lryU884r4ZQ_HTrV7h7wvHDjHshI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1091629470495-uk5bf5o5qhsue72b542ollfsm2orrb41.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1091629470495-bojd6ud8nfu85ku7b0vkng1uam23isl1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.emma.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

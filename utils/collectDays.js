@@ -1,6 +1,7 @@
 import _ from 'lodash'
 
-export function collectByDay(events, eventsByDay) {
+export function collectByDay(events) {
+    let eventsByDay = {};
     _.forOwn(events, (event, eventId) => {
         event.selectedDays.forEach(selectedDay => {
             const group = eventsByDay[selectedDay];
@@ -11,6 +12,7 @@ export function collectByDay(events, eventsByDay) {
             }
         });
     });
+    return eventsByDay;
 }
 
 export function eventsForDay(eventsByDay, selectedDay) {

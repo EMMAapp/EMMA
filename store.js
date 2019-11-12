@@ -11,8 +11,7 @@ const initialPatientData = {
     averagePeriodCycleDays: 28,
     averagePeriodBleedingDays: 5,
     protocol: null,
-    prescribedMedications: {},
-    scheduledCheckups: {}
+    events: {}
 };
 
 export const store = {

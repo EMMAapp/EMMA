@@ -7,41 +7,38 @@ const initialPatientData = {
     age: null,
     diagnosis: null,
     isPeriodRegular: false,
-    periods: {},
+    periods: [],
     averagePeriodCycleDays: 28,
-    averagePeriodBleedingDays: 5,
     protocol: null,
     events: {}
 };
 
 export const store = {
-    isAuthenticated: false,
     patientId: null,
-    patientData: null,
-    currentEditedEventId: null
+    patientData: null
 };
 export default store;
 
 export async function retrievePatient() {
     await new Promise((resolve => {
         firebase.auth().onAuthStateChanged(patient => {
-            store.isAuthenticated = !!patient;
             store.patientId = patient?.uid;
             resolve();
         })
     }));
-    if (store.isAuthenticated) {
+    const isAuthenticated = !!store.patientId;
+    if (isAuthenticated) {
         await retrievePatientData();
     }
     else {
-        store.patientData = initialPatientData;
+        store.patientData = {...initialPatientData};
     }
-    return store.isAuthenticated;
+    return isAuthenticated;
 }
 
 export async function retrievePatientData() {
     try {
-        if (!store.isAuthenticated || !store.patientId) {
+        if (!store.patientId) {
             return;
         }
         const doc = await firebase.firestore().collection('patients').doc(store.patientId).get();
@@ -49,7 +46,7 @@ export async function retrievePatientData() {
             store.patientData = doc.data();
         }
         else {
-            store.patientData = initialPatientData;
+            store.patientData = {...initialPatientData};
         }
         logInfo("Patient data:");
         logInfo(store.patientData);
@@ -72,13 +69,11 @@ export async function syncPatientData(updatedPatientData) {
 }
 
 export async function registerPatient(email, password) {
-    if (store.isAuthenticated || store.patientId) {
-        store.isAuthenticated = false;
+    if (store.patientId) {
         store.patientId = null;
     }
     try {
         const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
-        store.isAuthenticated = true;
         store.patientId = userCredential.user.uid;
         await syncPatientData({...initialPatientData});
         return {success: true, error: null};
@@ -101,13 +96,11 @@ export async function registerPatient(email, password) {
 }
 
 export async function loginPatient(email, password) {
-    if (store.isAuthenticated || store.patientId) {
-        store.isAuthenticated = false;
+    if (store.patientId) {
         store.patientId = null;
     }
     try {
         const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
-        store.isAuthenticated = true;
         store.patientId = userCredential.user.uid;
         await retrievePatientData();
         return {success: true, errorMessage: null};
@@ -130,7 +123,6 @@ export async function loginPatient(email, password) {
 
 export async function logoutPatient() {
     await firebase.auth().signOut();
-    store.isAuthenticated = false;
     store.patientId = null;
     store.patientData = null;
 }

@@ -25,6 +25,8 @@ const en = {
         'adding': 'Add',
     },
 
+    'yes': 'Yes',
+    'no': 'No',
     'medicationTitle': 'MEDICATION',
     'checkupTitle': 'CHECKUP',
     'medicationSubTitle': 'Drug/Supplement',
@@ -47,6 +49,22 @@ const en = {
     'loading': 'Loading...',
     'areYouSureDelete': 'Are you sure you want to remove this event?',
     'cancel': 'Cancel',
+    'onboardingTitle': 'Ready to Begin? Exciting!',
+    'onboardingSubTitle': 'Just a few short questions',
+    'onboardingSubmit': 'OK, Let\'s go!',
+    'yourProtocol': 'Your protocol',
+    'howOldAreYou': 'How old are you?',
+    'lastPeriod': 'Last menstruation date',
+    'regularPeriod': 'Do you have a regular menstrual cycle?',
+    'periodCyclePrefix': 'I usually get my period once in',
+    'periodCycleSuffix': 'days.',
+    'selectDay': 'Click to pick a date from calendar',
+
+    'protocol': {
+        'ICI': 'Intra Cervical Insemination',
+        'IUI': 'Intra Uterine Insemination',
+        'IVF': 'In Vitro Fertilization',
+    },
 
     'diagnosis': {
         'cos': "COS (Anovulatory)",

@@ -4,7 +4,7 @@ import {createStackNavigator, createBottomTabNavigator} from 'react-navigation';
 
 import TabBarIcon from '../../components/TabBarIcon';
 import CalendarTab from './CalendarTab';
-import EditEventTab from './Events/EditEventTab';
+import EditEventTab from './EditEventTab';
 import ProfileTab from './ProfileTab';
 import localization from "../../utils/localization";
 

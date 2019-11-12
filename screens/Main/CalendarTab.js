@@ -20,13 +20,11 @@ export default function CalendarTab({navigation, screenProps}) {
     const {mainCalendarSelectedDay, setMainCalendarSelectedDay, setCurrentEditedEventId} = screenProps;
 
     if (!mainCalendarSelectedDay) {
-        setMainCalendarSelectedDay(Date());
+        setMainCalendarSelectedDay(moment());
+        return <View/>;
     }
 
-    let eventsByDay = {};
-    const {prescribedMedications, scheduledCheckups} = store.patientData;
-    collectByDay(prescribedMedications, eventsByDay);
-    collectByDay(scheduledCheckups, eventsByDay);
+    let eventsByDay = collectByDay(store.patientData.events);
 
     const markedDates = {};
     _.forOwn(eventsByDay, (events, day) => {
@@ -40,8 +38,7 @@ export default function CalendarTab({navigation, screenProps}) {
         markedDates[day] = {dots: dots};
     });
 
-    const wrappedSelectedDate = moment(mainCalendarSelectedDay);
-    const eventsForSelectedDate = eventsForDay(eventsByDay, wrappedSelectedDate.format("YYYY-MM-DD"));
+    const eventsForSelectedDate = eventsForDay(eventsByDay, mainCalendarSelectedDay.format("YYYY-MM-DD"));
 
     const onEventPressed = (eventId) => {
         setCurrentEditedEventId(eventId);
@@ -53,17 +50,16 @@ export default function CalendarTab({navigation, screenProps}) {
             <ScrollView style={styles.scrollView} keyboardShouldPersistTaps="handled">
                 <Calendar
                     style={{paddingTop: 100, paddingBottom: 10}}
-                    current={mainCalendarSelectedDay}
+                    current={mainCalendarSelectedDay.toDate()}
                     onDayPress={(day) => {
-                        const selected = Date.parse(day.dateString);
-                        store.calendarSelectedDate = selected;
-                        setMainCalendarSelectedDay(selected);
+                        setMainCalendarSelectedDay(moment(day.dateString, 'YYYY-MM-DD'));
                     }}
                     markedDates={markedDates}
                     markingType={'multi-dot'}
                     monthFormat={'yyyy MM'}
                     firstDay={0} // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
                     dayComponent={
+                        // TODO
                         (props) => (
                             <View>
                                 <MultiDot {...props}/>
@@ -72,7 +68,7 @@ export default function CalendarTab({navigation, screenProps}) {
                         )
                     }
                 />
-                <Text>{wrappedSelectedDate.format("dddd, MMM D")}</Text>
+                <Text>{mainCalendarSelectedDay.format("dddd, MMM D")}</Text>
                 {
                     eventsForSelectedDate.length ?
                         eventsForSelectedDate.map(({dayTime, details}) => (

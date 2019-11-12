@@ -1,7 +1,7 @@
 import React from 'react'
 import {Text, View, Switch} from 'react-native'
-import localization from "../../../utils/localization";
-import DayTimeInput from "../../../components/DayTimeInput";
+import localization from "../utils/localization";
+import DayTimeInput from "./DayTimeInput";
 
 export default ({eventAndReminder, setEventAndReminder}) => {
 

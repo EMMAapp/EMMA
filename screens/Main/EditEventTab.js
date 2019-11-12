@@ -1,19 +1,21 @@
 import React, {useState} from 'react'
-import {StyleSheet, Text, TextInput, View, Button, ScrollView, SafeAreaView} from 'react-native'
-import localization from "../../../utils/localization";
-import Autocomplete from "../../../components/Autocomplete";
-import Medications from '../../../constants/Medications';
-import NumericInput from "../../../components/NumericInput";
-import Calendar from "../../../components/CalendarDayPicker";
-import {CALENDAR} from "../../../navigation/Routes";
-import {store, syncPatientData} from "../../../store";
-import EventDetailsPicker from "./EventDetailsPicker";
+import {StyleSheet, Text, TextInput, View, Button, ScrollView, SafeAreaView, TouchableOpacity} from 'react-native'
+import localization from "../../utils/localization";
+import Autocomplete from "../../components/Autocomplete";
+import Medications from '../../constants/Medications';
+import Checkups from '../../constants/Checkups';
+import NumericInput from "../../components/NumericInput";
+import Calendar from "../../components/CalendarDayPicker";
+import {CALENDAR} from "../../navigation/Routes";
+import {store, syncPatientData} from "../../store";
+import EventDetailsPicker from "../../components/EventDetailsPicker";
 import shortid from 'shortid';
-import DeleteValidationModal from "../../../components/DeleteValidationModal";
+import DeleteValidationModal from "../../components/DeleteValidationModal";
 
 const initialState = {
     id: null,
     medication: null,
+    checkup: null,
     dailyDose: null,
     timesPerDay: 1,
     selectedDays: [],
@@ -22,24 +24,27 @@ const initialState = {
 };
 
 const DEFAULT_MIN_HOUR = 8;
+const EVENT_TYPE_MEDICATION = 'MEDICATION';
+const EVENT_TYPE_CHECKUP = 'CHECKUP';
 
-export default function EditMedicationComponent({navigation, screenProps}) {
+export default function EditEventTab({navigation, screenProps}) {
 
+    const [eventType, setEventType] = useState(EVENT_TYPE_MEDICATION);
     const [state, setState] = useState({...initialState});
     const [isNewEvent, setIsNewEvent] = useState(true);
     const {setMainCalendarSelectedDay, currentEditedEventId, setCurrentEditedEventId, setIsLoading} = screenProps;
     const [showDeleteValidationModal, setShowDeleteValidationModal] = useState(false);
+    const isMedicationEvent = eventType === EVENT_TYPE_MEDICATION;
 
     if (!currentEditedEventId) {
         setCurrentEditedEventId(shortid.generate());
         return <View/>;
     }
     if (state.id !== currentEditedEventId) {
-        let storedState = store.patientData.prescribedMedications[currentEditedEventId];
+        let storedState = store.patientData.events[currentEditedEventId];
         if (!storedState) {
             setState({...initialState, id: currentEditedEventId});
-        }
-        else {
+        } else {
             setIsNewEvent(false);
             setState({...storedState});
         }
@@ -63,7 +68,8 @@ export default function EditMedicationComponent({navigation, screenProps}) {
         setState({...state, eventsAndReminders: eventsAndReminders});
     };
 
-    const canSave = state.medication &&
+    const canSave =
+        ((eventType === EVENT_TYPE_MEDICATION && state.medication) || (eventType === EVENT_TYPE_CHECKUP && state.checkup)) &&
         state.selectedDays && state.selectedDays.length &&
         state.timesPerDay;
 
@@ -76,7 +82,7 @@ export default function EditMedicationComponent({navigation, screenProps}) {
 
     const save = async () => {
         const {patientData} = store;
-        patientData.prescribedMedications[state.id] = {...state};
+        patientData.events[state.id] = {...state};
         await flush(patientData);
     };
 
@@ -93,8 +99,21 @@ export default function EditMedicationComponent({navigation, screenProps}) {
 
     const deleteEvent = async () => {
         const {patientData} = store;
-        delete patientData.prescribedMedications[state.id];
+        delete patientData.events[state.id];
         await flush(patientData);
+    };
+
+    const eventTypeButton = (targetEventType, titleKey) => {
+        return <TouchableOpacity
+            style={{backgroundColor: eventType === targetEventType ? 'pink' : 'gray', width: '50%', margin: 10}}
+            disabled={eventType === targetEventType}
+            onPress={() => {
+                setState({...initialState, id: currentEditedEventId});
+                setEventType(targetEventType);
+            }}
+        >
+            <Text>{localization(titleKey)}</Text>
+        </TouchableOpacity>;
     };
 
     return (
@@ -105,33 +124,45 @@ export default function EditMedicationComponent({navigation, screenProps}) {
                     setResult={async (shouldDelete) => {
                         if (!shouldDelete) {
                             setShowDeleteValidationModal(false);
-                        }
-                        else {
+                        } else {
                             await deleteEvent();
                             close();
                         }
                     }}
-                    />
-                <Text style={{color: '#e93766'}}>{localization('drugOrSupplement')}</Text>
+                />
+                {
+                    isNewEvent ?
+                        <View style={{flexDirection: 'row'}}>
+                            {eventTypeButton(EVENT_TYPE_MEDICATION, 'medicationTitle')}
+                            {eventTypeButton(EVENT_TYPE_CHECKUP, 'checkupTitle')}
+                        </View>
+                        : null
+                }
+                <Text style={{color: '#e93766'}}>{localization(isMedicationEvent ? 'medicationSubTitle' : 'checkupSubTitle')}</Text>
                 <Autocomplete
-                    items={Medications}
-                    selectedItem={state.medication}
-                    setSelectedItem={medication => setState({...state, medication: medication})}
+                    items={isMedicationEvent ? Medications : Checkups}
+                    selectedItem={isMedicationEvent ? state.medication : state.checkup}
+                    setSelectedItem={item => setState(isMedicationEvent ? {...state, medication: item} : {...state, checkup: item})}
                 />
-                <Text style={{color: '#e93766'}}>{localization('dailyDose')}</Text>
-                <NumericInput
-                    style={styles.textInput}
-                    value={state.dailyDose}
-                    setValue={dailyDose => setState({...state, dailyDose: dailyDose})}
-                />
-                <Text style={{color: '#e93766'}}>{localization('timesPerDay')}</Text>
-                <NumericInput
-                    style={styles.textInput}
-                    value={state.timesPerDay}
-                    setValue={timesPerDay => setState({...state, timesPerDay})}
-                />
+                {
+                    isMedicationEvent ?
+                        <View>
+                            <Text style={{color: '#e93766'}}>{localization('dailyDose')}</Text>
+                            <NumericInput
+                                style={styles.textInput}
+                                value={state.dailyDose}
+                                setValue={dailyDose => setState({...state, dailyDose: dailyDose})}
+                            />
+                            <Text style={{color: '#e93766'}}>{localization('timesPerDay')}</Text>
+                            <NumericInput
+                                style={styles.textInput}
+                                value={state.timesPerDay}
+                                setValue={timesPerDay => setState({...state, timesPerDay})}
+                            />
+                        </View> : null
+                }
                 <Text style={{color: '#e93766'}}>{localization('ovulationCalendar')}</Text>
-                <Text>{localization('selectDaysOfMedicine')}</Text>
+                <Text>{localization(isMedicationEvent ? 'selectDaysOfMedicine' : 'selectDaysOfCheckup')}</Text>
                 <Calendar
                     onDayPress={(day) => {
                         const {selectedDays} = state;
@@ -168,25 +199,24 @@ export default function EditMedicationComponent({navigation, screenProps}) {
                     color="#e93766"
                     disabled={!canSave}
                     onPress={async () => {
-                    await save();
-                    close();
-                }}/>
+                        await save();
+                        close();
+                    }}/>
                 <Button
-                    title={localization('addAnotherMedication')}
+                    title={localization(isMedicationEvent ? 'addAnotherMedication' : 'addAnotherCheckup')}
                     color="#e93766"
                     disabled={!canSave}
                     onPress={async () => {
-                    await save();
-                    reset();
-                }}/>
+                        await save();
+                        reset();
+                    }}/>
                 <Button
                     title={localization(isNewEvent ? 'clearEvent' : 'deleteEvent')}
                     color="#e93766"
                     onPress={() => {
                         if (isNewEvent) {
                             close();
-                        }
-                        else {
+                        } else {
                             setShowDeleteValidationModal(true);
                         }
                     }}

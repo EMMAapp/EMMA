@@ -31,6 +31,7 @@ const en = {
     'checkupTitle': 'CHECKUP',
     'medicationSubTitle': 'Drug/Supplement',
     'checkupSubTitle': 'Process',
+    'calendar': 'Calender',
     'ovulationCalendar': 'Ovulation Calender',
     'timeOfEvent': 'Time of event',
     'reminder': 'Reminder',

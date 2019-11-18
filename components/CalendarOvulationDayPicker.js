@@ -4,17 +4,18 @@ import {momentToWixDate, wixDateToMoment} from "../utils/dayTime";
 
 export default ({onDayPress, coloredDays}) => {
 
+    const hackyMoment = wixDateToMoment('2016-05-01'); // month with 31 days and sunday the 1st :)
+
     let markedDates = {};
     coloredDays.forEach(day => {
-        let momentDate = wixDateToMoment('2016-05-01');
-        momentDate.add(day - 1, 'days');
-        markedDates[momentToWixDate(momentDate)] = {color: 'pink', startingDay: true, endingDay: true};
+        markedDates[momentToWixDate(hackyMoment.clone().add(day - 1, 'days'))]
+            = {color: 'pink', startingDay: true, endingDay: true};
     });
 
     return <Calendar
-        current={'2016-05-01'}
-        minDate={'2016-05-01'}
-        maxDate={'2016-05-31'}
+        current={momentToWixDate(hackyMoment)}
+        minDate={momentToWixDate(hackyMoment)}
+        maxDate={momentToWixDate(hackyMoment.clone().add(30, 'days'))}
         onDayPress={day => onDayPress(day.day)}
         firstDay={0}
         hideArrows={true}

@@ -5,8 +5,8 @@ import RouteGuard from "../navigation/RouteGuard";
 import localization from "../utils/localization";
 import Protocols from "../constants/Protocols";
 import NumericInput from "../components/NumericInput";
-import moment from "moment";
 import CalendarModalPicker from "../components/CalendarModalPicker";
+import {wixDateToMoment, momentToDisplayString} from "../utils/dayTime";
 
 export default function LoginScreen({navigation, screenProps}) {
 
@@ -20,7 +20,7 @@ export default function LoginScreen({navigation, screenProps}) {
 
     const submit = async () => {
         setIsLoading(true);
-        const periods = [{startDate: lastPeriodDate, isEstimated: false}];
+        const periods = [lastPeriodDate];
         const patientData = {...store.patientData, age, protocol: selectedProtocol, averagePeriodCycleDays, isPeriodRegular, periods};
         await syncPatientData(patientData);
         setIsLoading(false);
@@ -63,7 +63,7 @@ export default function LoginScreen({navigation, screenProps}) {
 
             <Text>{localization('lastPeriod')}</Text>
             <TouchableOpacity onPress={() => setCalendarPickerVisible(true)} style={{borderColor: 'pink', borderWidth: 5, width: 300}}>
-                <Text>{lastPeriodDate ? moment(lastPeriodDate, 'YYYY-MM-DD').format("dddd, MMM D") : localization('selectDay')}</Text>
+                <Text>{lastPeriodDate ? momentToDisplayString(wixDateToMoment(lastPeriodDate)) : localization('selectDay')}</Text>
             </TouchableOpacity>
             <CalendarModalPicker
                 isVisible={isCalendarPickerVisible}

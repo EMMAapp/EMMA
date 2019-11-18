@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const dayTimeToDate = (dt) => {
     if (!dt) {
         return Date.now();
@@ -14,9 +16,15 @@ export const dateToDayTime = (date) => {
     return {hour: date.getHours(), minute: date.getMinutes()};
 };
 
-export const dayTimeToString = (dt) => {
+export const dayTimeToDisplayString = (dt) => {
     let {hour, minute} = dt;
     const suffix = hour <= 11 ? 'AM' : 'PM';
     hour = hour % 12;
     return `${hour <= 9 ? '0' + hour : hour}:${minute <= 9 ? '0' + minute : minute} ${suffix}`;
 };
+
+export const momentToDisplayString = (momentDate) => momentDate.format("dddd, MMM D");
+
+export const momentToWixDate = (momentDate) => momentDate.format("YYYY-MM-DD");
+
+export const wixDateToMoment = (wixDate) => moment(wixDate, 'YYYY-MM-DD');

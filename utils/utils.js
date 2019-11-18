@@ -7,3 +7,12 @@ export function addOrRemove(items, item) {
         return [...items];
     }
 }
+
+export function pushByKey(obj, key, item) {
+    const group = obj[key];
+    if (group) {
+        obj[key] = [...group, item];
+    } else {
+        obj[key] = [item];
+    }
+}

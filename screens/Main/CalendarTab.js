@@ -9,35 +9,50 @@ import {EDIT_EVENT} from "../../navigation/Routes";
 import _ from 'lodash'
 import localization from "../../utils/localization";
 import SetPeriodModal from "../../components/SetPeriodModal";
-import {eventsForDay} from "../../utils/collectDays";
 
 const selectedDayColoring = {selected: true, marked: true, selectedColor: 'pink'};
+
+function eventsForDay(eventsByDay, selectedDay) {
+    const eventsForDay = eventsByDay[selectedDay];
+    if (!eventsForDay || !eventsForDay.length) {
+        return [];
+    }
+    let eventsForSelected = [];
+    eventsForDay.forEach(calendarEvent => {
+        calendarEvent.eventsAndReminders.forEach(eventAndReminder => {
+            eventsForSelected.push({dayTime: eventAndReminder.event, details: calendarEvent});
+        });
+    });
+    const comparer = (dt1, dt2) => {
+        if (dt1.hour !== dt2.hour) {
+            return dt1.hour - dt2.hour;
+        }
+        return dt1.minute - dt2.minute;
+    };
+    eventsForSelected.sort((event1, event2) => comparer(event1.dayTime, event2.dayTime));
+    return eventsForSelected;
+}
 
 export default function CalendarTab({
                                         navigation,
                                         setCurrentEditedEventId,
                                         setIsLoading,
-                                        nextPeriodEstimation,
                                         markedDates,
                                         eventsByDay,
                                         dayRender
                                     }) {
 
     const [isPeriodModalVisible, setPeriodModalVisible] = useState(false);
-    const [displayedMonth, setDisplayedMonth] = useState(moment().month());
     const [selectedDayMoment, setSelectedDay] = useState(moment());
 
     const selectedDayStr = momentToWixDate(selectedDayMoment);
     if (_.has(markedDates, selectedDayStr)) {
         markedDates[selectedDayStr] = {...markedDates[selectedDayStr], ...selectedDayColoring};
-    }
-    else {
+    } else {
         markedDates[selectedDayStr] = selectedDayColoring;
     }
 
     const eventsForSelectedDate = eventsForDay(eventsByDay, selectedDayStr);
-
-    const nextPeriodEstimationDisplayed = nextPeriodEstimation.month() === displayedMonth && nextPeriodEstimation.year() === moment().year();
 
     const onEventPressed = (eventId) => {
         setCurrentEditedEventId(eventId);
@@ -65,16 +80,12 @@ export default function CalendarTab({
                     lastPeriod={_.last(store.patientData.periods)}
                     setPeriod={setPeriod}
                 />
-                {
-                    nextPeriodEstimationDisplayed ?
-                        <TouchableOpacity onPress={() => setPeriodModalVisible(true)} style={{backgroundColor: 'pink'}}>
-                            <Text>{localization('editPeriod')}</Text>
-                        </TouchableOpacity>
-                        : null
-                }
+                <TouchableOpacity onPress={() => setPeriodModalVisible(true)} style={{backgroundColor: 'pink'}}>
+                    <Text>{localization('editPeriod')}</Text>
+                </TouchableOpacity>
                 <Calendar
                     style={{paddingTop: 100, paddingBottom: 10}}
-                    current={Date()}
+                    current={selectedDayStr}
                     onDayPress={(day) => setSelectedDay(wixDateToMoment(day.dateString))}
                     markedDates={markedDates}
                     markingType={'multi-dot'}

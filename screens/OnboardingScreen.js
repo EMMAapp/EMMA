@@ -7,6 +7,7 @@ import Protocols from "../constants/Protocols";
 import NumericInput from "../components/NumericInput";
 import CalendarModalPicker from "../components/CalendarModalPicker";
 import {wixDateToMoment, momentToDisplayString} from "../utils/dayTime";
+import ProtocolPicker from "../components/ProtocolPicker";
 
 export default function LoginScreen({navigation, screenProps}) {
 
@@ -20,8 +21,8 @@ export default function LoginScreen({navigation, screenProps}) {
 
     const submit = async () => {
         setIsLoading(true);
-        const periods = [lastPeriodDate];
-        const patientData = {...store.patientData, age, protocol: selectedProtocol, averagePeriodCycleDays, isPeriodRegular, periods};
+        const periods = [{date: lastPeriodDate, protocol: selectedProtocol}];
+        const patientData = {...store.patientData, age, averagePeriodCycleDays, isPeriodRegular, periods};
         await syncPatientData(patientData);
         setIsLoading(false);
         RouteGuard(navigation);
@@ -34,25 +35,7 @@ export default function LoginScreen({navigation, screenProps}) {
             <Text style={{color: '#e93766', fontSize: 40}}>{localization('onboardingTitle')}</Text>
             <Text style={{color: '#e93766', fontSize: 20}}>{localization('onboardingSubTitle')}</Text>
 
-            <Text>{localization('yourProtocol')}</Text>
-            <View style={{flexDirection: 'row'}}>
-                {
-                    Protocols.map(protocol =>
-                        <View key={protocol} style={{maxWidth: 150}} margin={10}>
-                            <TouchableOpacity
-                                style={{backgroundColor: protocol === selectedProtocol ? 'pink' : 'white'}}
-                                disabled={protocol === selectedProtocol}
-                                onPress={() => setSelectedProtocol(protocol)}
-                            >
-                                <Text>{protocol}</Text>
-                            </TouchableOpacity>
-                            <Text>
-                                {localization(`protocol.${protocol}`)}
-                            </Text>
-                        </View>
-                    )
-                }
-            </View>
+            <ProtocolPicker selectedProtocol={selectedProtocol} setSelectedProtocol={setSelectedProtocol} />
 
             <Text>{localization('howOldAreYou')}</Text>
             <NumericInput

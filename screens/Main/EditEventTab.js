@@ -39,6 +39,7 @@ export default function EditEventTab({navigation, screenProps}) {
     const {setMainCalendarSelectedDay, currentEditedEventId, setCurrentEditedEventId, setIsLoading} = screenProps;
     const [showDeleteValidationModal, setShowDeleteValidationModal] = useState(false);
     const isMedicationEvent = eventType === EVENT_TYPE_MEDICATION;
+    const showOvulationCalendar = isMedicationEvent && _.isEmpty(state.selectedDates);
 
     if (!currentEditedEventId) {
         setCurrentEditedEventId(shortid.generate());
@@ -165,10 +166,10 @@ export default function EditEventTab({navigation, screenProps}) {
                             />
                         </View> : null
                 }
-                <Text style={{color: '#e93766'}}>{localization('ovulationCalendar')}</Text>
+                <Text style={{color: '#e93766'}}>{localization(showOvulationCalendar ? 'ovulationCalendar' : 'calendar')}</Text>
                 <Text>{localization(isMedicationEvent ? 'selectDaysOfMedicine' : 'selectDaysOfCheckup')}</Text>
                 {
-                    isMedicationEvent ?
+                    showOvulationCalendar ?
                         <CalendarOvulationDayPicker
                             onDayPress={(day) => {
                                 const selectedOvulationDays = addOrRemove(state.selectedOvulationDays, day);

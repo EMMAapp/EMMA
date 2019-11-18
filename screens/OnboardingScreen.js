@@ -3,11 +3,11 @@ import {StyleSheet, Text, TouchableOpacity, View, Button} from 'react-native'
 import {syncPatientData, store} from '../store';
 import RouteGuard from "../navigation/RouteGuard";
 import localization from "../utils/localization";
-import Protocols from "../constants/Protocols";
 import NumericInput from "../components/NumericInput";
 import CalendarModalPicker from "../components/CalendarModalPicker";
 import {wixDateToMoment, momentToDisplayString} from "../utils/dayTime";
 import ProtocolPicker from "../components/ProtocolPicker";
+
 
 export default function LoginScreen({navigation, screenProps}) {
 
@@ -35,7 +35,7 @@ export default function LoginScreen({navigation, screenProps}) {
             <Text style={{color: '#e93766', fontSize: 40}}>{localization('onboardingTitle')}</Text>
             <Text style={{color: '#e93766', fontSize: 20}}>{localization('onboardingSubTitle')}</Text>
 
-            <ProtocolPicker selectedProtocol={selectedProtocol} setSelectedProtocol={setSelectedProtocol} />
+            <ProtocolPicker selectedProtocol={selectedProtocol} setSelectedProtocol={setSelectedProtocol}/>
 
             <Text>{localization('howOldAreYou')}</Text>
             <NumericInput
@@ -72,7 +72,7 @@ export default function LoginScreen({navigation, screenProps}) {
                         setValue={setAveragePeriodCycleDays}
                     />
                     <Text>{localization('periodCycleSuffix')}</Text>
-                </View>: null
+                </View> : null
             }
 
             <Button title={localization('onboardingSubmit')} color="#e93766" onPress={submit} disabled={!canSubmit}/>

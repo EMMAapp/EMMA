@@ -2,16 +2,29 @@ import React from 'react';
 import moment from "moment";
 import RouteGuard from "../../navigation/RouteGuard";
 import store from "../../store";
-import {daysBetween, isAfterOrEquals, momentsEquals, wixDateToMoment} from "../../utils/dayTime";
-import {collectByDay} from '../../utils/collectDays'
+import {daysBetween, isAfterOrEquals, momentsEquals, momentToWixDate, wixDateToMoment} from "../../utils/dayTime";
 import _ from 'lodash'
 import CalendarTab from "./CalendarTab";
 import MultiDot from "react-native-calendars/src/calendar/day/multi-dot";
 import localization from "../../utils/localization";
 import {StyleSheet, Text, View} from "react-native";
+import {pushByKey} from '../../utils/utils'
 
 const medicationDot = {key: 'workout', color: 'pink'};
 const checkupDot = {key: 'workout', color: 'green'};
+
+function collectByDay(events, nextPeriodEstimation) {
+    let eventsByDay = {};
+    _.forOwn(events, (event, eventId) => {
+        event.selectedDates.forEach(selectedDay => {
+            pushByKey(eventsByDay, selectedDay, event);
+        });
+        event.selectedOvulationDays.forEach(day => {
+            pushByKey(eventsByDay, momentToWixDate(nextPeriodEstimation.clone().add(day - 1, 'days')), event);
+        });
+    });
+    return eventsByDay;
+}
 
 export default function CalendarTabWrapper({navigation, screenProps}) {
     RouteGuard(navigation);
@@ -28,7 +41,7 @@ export default function CalendarTabWrapper({navigation, screenProps}) {
     periodsMoments.push(nextPeriodEstimation);
     const nextPeriodEndEstimation = nextPeriodEstimation.clone().add(patientData.averagePeriodCycleDays - 1, 'days');
 
-    let eventsByDay = collectByDay(patientData.events);
+    let eventsByDay = collectByDay(patientData.events, nextPeriodEstimation);
 
     const markedDates = {};
     _.forOwn(eventsByDay, (events, day) => {
@@ -83,7 +96,6 @@ export default function CalendarTabWrapper({navigation, screenProps}) {
         navigation={navigation}
         setCurrentEditedEventId={setCurrentEditedEventId}
         setIsLoading={setIsLoading}
-        nextPeriodEstimation={nextPeriodEstimation}
         markedDates={markedDates}
         eventsByDay={eventsByDay}
         dayRender={dayRender}

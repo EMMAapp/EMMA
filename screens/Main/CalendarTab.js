@@ -5,7 +5,7 @@ import store from "../../store";
 import {SafeAreaView, ScrollView, StyleSheet, Text, View, TouchableOpacity} from "react-native";
 import {Calendar} from "react-native-calendars";
 import MultiDot from "react-native-calendars/src/calendar/day/multi-dot";
-import {dayTimeToString} from "../../utils/dayTime";
+import {dayTimeToDisplayString, momentToWixDate, wixDateToMoment, momentToDisplayString} from "../../utils/dayTime";
 import shortid from 'shortid';
 import {EDIT_EVENT} from "../../navigation/Routes";
 import {collectByDay, eventsForDay} from '../../utils/collectDays'
@@ -38,7 +38,7 @@ export default function CalendarTab({navigation, screenProps}) {
         markedDates[day] = {dots: dots};
     });
 
-    const eventsForSelectedDate = eventsForDay(eventsByDay, mainCalendarSelectedDay.format("YYYY-MM-DD"));
+    const eventsForSelectedDate = eventsForDay(eventsByDay, momentToWixDate(mainCalendarSelectedDay));
 
     const onEventPressed = (eventId) => {
         setCurrentEditedEventId(eventId);
@@ -52,7 +52,7 @@ export default function CalendarTab({navigation, screenProps}) {
                     style={{paddingTop: 100, paddingBottom: 10}}
                     current={mainCalendarSelectedDay.toDate()}
                     onDayPress={(day) => {
-                        setMainCalendarSelectedDay(moment(day.dateString, 'YYYY-MM-DD'));
+                        setMainCalendarSelectedDay(wixDateToMoment(day.dateString));
                     }}
                     markedDates={markedDates}
                     markingType={'multi-dot'}
@@ -68,13 +68,13 @@ export default function CalendarTab({navigation, screenProps}) {
                         )
                     }
                 />
-                <Text>{mainCalendarSelectedDay.format("dddd, MMM D")}</Text>
+                <Text>{momentToDisplayString(mainCalendarSelectedDay)}</Text>
                 {
                     eventsForSelectedDate.length ?
                         eventsForSelectedDate.map(({dayTime, details}) => (
                             <View key={shortid.generate()}>
                                 <Text>
-                                    {dayTimeToString(dayTime)} - {details.medication ? details.medication : details.checkup}
+                                    {dayTimeToDisplayString(dayTime)} - {details.medication ? details.medication : details.checkup}
                                 </Text>
                                 <TouchableOpacity onPress={() => onEventPressed(details.id)}>
                                     <Text>

@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {View, TouchableOpacity, Text} from "react-native";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import localization from "../utils/localization";
-import {dateToDayTime, dayTimeToDate, dayTimeToString} from "../utils/dayTime";
+import {dateToDayTime, dayTimeToDate, dayTimeToDisplayString} from "../utils/dayTime";
 
 export default ({dayTime, setDayTime, disabled}) => {
     const [isVisible, setIsVisible] = useState(false);
@@ -16,7 +16,7 @@ export default ({dayTime, setDayTime, disabled}) => {
                 setIsVisible(true);
             }}
         >
-            <Text>{disabled ? '-' : dayTimeToString(dayTime)}</Text>
+            <Text>{disabled ? '-' : dayTimeToDisplayString(dayTime)}</Text>
         </TouchableOpacity>
         <DateTimePicker
             mode='time'

@@ -5,12 +5,15 @@ import Autocomplete from "../../components/Autocomplete";
 import Medications from '../../constants/Medications';
 import Checkups from '../../constants/Checkups';
 import NumericInput from "../../components/NumericInput";
-import Calendar from "../../components/CalendarDayPicker";
+import CalendarDayPicker from "../../components/CalendarDayPicker";
+import CalendarOvulationDayPicker from "../../components/CalendarOvulationDayPicker";
 import {CALENDAR} from "../../navigation/Routes";
 import {store, syncPatientData} from "../../store";
 import EventDetailsPicker from "../../components/EventDetailsPicker";
 import shortid from 'shortid';
 import DeleteValidationModal from "../../components/DeleteValidationModal";
+import _ from "lodash";
+import {addOrRemove} from "../../utils/utils";
 
 const initialState = {
     id: null,
@@ -18,7 +21,8 @@ const initialState = {
     checkup: null,
     dailyDose: null,
     timesPerDay: 1,
-    selectedDays: [],
+    selectedDates: [],
+    selectedOvulationDays: [],
     eventsAndReminders: [],
     note: ''
 };
@@ -70,7 +74,7 @@ export default function EditEventTab({navigation, screenProps}) {
 
     const canSave =
         ((eventType === EVENT_TYPE_MEDICATION && state.medication) || (eventType === EVENT_TYPE_CHECKUP && state.checkup)) &&
-        state.selectedDays && state.selectedDays.length &&
+        (!_.isEmpty(state.selectedDates) || !_.isEmpty(state.selectedOvulationDays)) &&
         state.timesPerDay;
 
     const flush = async (patientData) => {
@@ -163,30 +167,37 @@ export default function EditEventTab({navigation, screenProps}) {
                 }
                 <Text style={{color: '#e93766'}}>{localization('ovulationCalendar')}</Text>
                 <Text>{localization(isMedicationEvent ? 'selectDaysOfMedicine' : 'selectDaysOfCheckup')}</Text>
-                <Calendar
-                    onDayPress={(day) => {
-                        const {selectedDays} = state;
-                        const index = selectedDays.indexOf(day.dateString);
-                        if (index === -1) {
-                            setState({...state, selectedDays: [...selectedDays, day.dateString]});
-                        } else {
-                            selectedDays.splice(index, 1);
-                            setState({...state, selectedDays: [...selectedDays]});
-                        }
-                    }}
-                    coloredDays={state.selectedDays}
-                />
                 {
-                    [...Array(timesPerDayNormalized).keys()].map(i => {
-                        return (
-                            <EventDetailsPicker
-                                key={i}
-                                eventAndReminder={state.eventsAndReminders[i]}
-                                setEventAndReminder={(eventAndReminder) => setEventsAndReminder(eventAndReminder, i)}
-                            />
-                        )
-                    })
+                    isMedicationEvent ?
+                        <CalendarOvulationDayPicker
+                            onDayPress={(day) => {
+                                const selectedOvulationDays = addOrRemove(state.selectedOvulationDays, day);
+                                setState({...state, selectedOvulationDays});
+                            }}
+                            coloredDays={state.selectedOvulationDays}
+                        />
+                        :
+                        <CalendarDayPicker
+                            onDayPress={(day) => {
+                                const selectedDates = addOrRemove(state.selectedDates, day.dateString);
+                                setState({...state, selectedDates});
+                            }}
+                            coloredDays={state.selectedDates}
+                        />
                 }
+                <View>
+                    {
+                        [...Array(timesPerDayNormalized).keys()].map(i => {
+                            return (
+                                <EventDetailsPicker
+                                    key={i}
+                                    eventAndReminder={state.eventsAndReminders[i]}
+                                    setEventAndReminder={(eventAndReminder) => setEventsAndReminder(eventAndReminder, i)}
+                                />
+                            )
+                        })
+                    }
+                </View>
                 <Text style={{color: '#e93766'}}>{localization('note')}</Text>
                 <TextInput
                     style={{backgroundColor: '#e93766', height: 40}}

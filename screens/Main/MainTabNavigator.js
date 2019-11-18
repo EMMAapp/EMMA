@@ -3,7 +3,7 @@ import {Platform} from 'react-native';
 import {createStackNavigator, createBottomTabNavigator} from 'react-navigation';
 
 import TabBarIcon from '../../components/TabBarIcon';
-import CalendarTab from './CalendarTab';
+import CalendarTabWrapper from './CalendarTabWrapper';
 import EditEventTab from './EditEventTab';
 import ProfileTab from './ProfileTab';
 import localization from "../../utils/localization";
@@ -15,7 +15,7 @@ const config = Platform.select({
 
 const CalendarStack = createStackNavigator(
     {
-        calendar: CalendarTab,
+        calendar: CalendarTabWrapper,
     },
     config
 );

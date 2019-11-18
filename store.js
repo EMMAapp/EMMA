@@ -5,7 +5,6 @@ import localization from "./utils/localization";
 
 const initialPatientData = {
     age: null,
-    diagnosis: null,
     isPeriodRegular: false,
     periods: [],
     averagePeriodCycleDays: 28,

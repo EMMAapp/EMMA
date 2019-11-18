@@ -25,8 +25,12 @@ const en = {
         'adding': 'Add',
     },
 
+    'treatmentPlan': 'Treatment Plan',
+    'editPeriod': 'Period/Protocol',
+    'editPeriodMessage': 'Please Update Period!',
     'yes': 'Yes',
     'no': 'No',
+    'save': 'Save',
     'medicationTitle': 'MEDICATION',
     'checkupTitle': 'CHECKUP',
     'medicationSubTitle': 'Drug/Supplement',

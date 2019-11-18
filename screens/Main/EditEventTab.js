@@ -36,7 +36,7 @@ export default function EditEventTab({navigation, screenProps}) {
     const [eventType, setEventType] = useState(EVENT_TYPE_MEDICATION);
     const [state, setState] = useState({...initialState});
     const [isNewEvent, setIsNewEvent] = useState(true);
-    const {setMainCalendarSelectedDay, currentEditedEventId, setCurrentEditedEventId, setIsLoading} = screenProps;
+    const {setMainCalendarRefresh, currentEditedEventId, setCurrentEditedEventId, setIsLoading} = screenProps;
     const [showDeleteValidationModal, setShowDeleteValidationModal] = useState(false);
     const isMedicationEvent = eventType === EVENT_TYPE_MEDICATION;
     const showOvulationCalendar = isMedicationEvent && _.isEmpty(state.selectedDates);
@@ -79,7 +79,7 @@ export default function EditEventTab({navigation, screenProps}) {
         state.timesPerDay;
 
     const flush = async (patientData) => {
-        setMainCalendarSelectedDay(null); // to refresh main calendar
+        setMainCalendarRefresh(shortid.generate()); // to refresh main calendar
         setIsLoading(true);
         await syncPatientData(patientData);
         setIsLoading(false);

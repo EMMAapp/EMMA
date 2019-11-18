@@ -10,6 +10,8 @@ import shortid from 'shortid';
 import {EDIT_EVENT} from "../../navigation/Routes";
 import {collectByDay, eventsForDay} from '../../utils/collectDays'
 import _ from 'lodash'
+import localization from "../../utils/localization";
+import {daysBetween, isAfterOrEquals, momentsEquals} from "../../utils/dayTime";
 
 const medicationDot = {key: 'workout', color: 'pink'};
 const checkupDot = {key: 'workout', color: 'green'};
@@ -18,13 +20,23 @@ export default function CalendarTab({navigation, screenProps}) {
     RouteGuard(navigation);
 
     const {mainCalendarSelectedDay, setMainCalendarSelectedDay, setCurrentEditedEventId} = screenProps;
+    const {patientData} = store;
 
     if (!mainCalendarSelectedDay) {
         setMainCalendarSelectedDay(moment());
         return <View/>;
     }
 
-    let eventsByDay = collectByDay(store.patientData.events);
+    const periodsMoments = patientData.periods.map(wixDateToMoment);
+    let nextPeriodEstimation = _.last(periodsMoments).clone().add(patientData.averagePeriodCycleDays, 'days');
+    const tomorrow = moment().startOf('day').add(1, 'days');
+    if (nextPeriodEstimation.isBefore(tomorrow)) {
+        nextPeriodEstimation = tomorrow;
+    }
+    periodsMoments.push(nextPeriodEstimation);
+    const nextPeriodEndEstimation = nextPeriodEstimation.clone().add(patientData.averagePeriodCycleDays - 1, 'days');
+
+    let eventsByDay = collectByDay(patientData.events);
 
     const markedDates = {};
     _.forOwn(eventsByDay, (events, day) => {
@@ -45,6 +57,33 @@ export default function CalendarTab({navigation, screenProps}) {
         navigation.navigate(EDIT_EVENT);
     };
 
+    const dayRender = (props) => {
+        const currentDayMoment = wixDateToMoment(props.date.dateString);
+        if (currentDayMoment.isBefore(_.first(periodsMoments)) || currentDayMoment.isAfter(nextPeriodEndEstimation)) {
+            return <MultiDot {...props}/>;
+        }
+        let containingPeriodIndex = _.findLastIndex(periodsMoments, periodMoment => isAfterOrEquals(currentDayMoment, periodMoment));
+        const isEstimatedPeriod = containingPeriodIndex === periodsMoments.length - 1; // is last index
+        let title = "";
+        if (momentsEquals(currentDayMoment, periodsMoments[containingPeriodIndex])) { // day 1 of period
+            title = localization(`calendarTitles.${isEstimatedPeriod ? 'periodEst' : 'period'}`);
+        } else if (!isEstimatedPeriod) { // add ov if not estimated period
+            const nextPeriodMoment = periodsMoments[containingPeriodIndex + 1];
+            const daysFromEnd = daysBetween(currentDayMoment, nextPeriodMoment) - 1;
+            if (daysFromEnd === 14) {
+                title = localization('calendarTitles.ovulationEst');
+            }
+        }
+        if (!title) {
+            const daysFromStart = daysBetween(periodsMoments[containingPeriodIndex], currentDayMoment) + 1;
+            title = daysFromStart.toString();
+        }
+        return <View>
+            <MultiDot {...props}/>
+            <Text style={styles.periodDay}>{title}</Text>
+        </View>;
+    };
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView} keyboardShouldPersistTaps="handled">
@@ -58,15 +97,7 @@ export default function CalendarTab({navigation, screenProps}) {
                     markingType={'multi-dot'}
                     monthFormat={'yyyy MM'}
                     firstDay={0} // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
-                    dayComponent={
-                        // TODO
-                        (props) => (
-                            <View>
-                                <MultiDot {...props}/>
-                                {props.date.day % 14 == 0 ? <Text style={styles.periodDay}>ov</Text> : null}
-                            </View>
-                        )
-                    }
+                    dayComponent={dayRender}
                 />
                 <Text>{momentToDisplayString(mainCalendarSelectedDay)}</Text>
                 {

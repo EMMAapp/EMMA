@@ -3,7 +3,7 @@ import _ from 'lodash'
 export function collectByDay(events) {
     let eventsByDay = {};
     _.forOwn(events, (event, eventId) => {
-        event.selectedDays.forEach(selectedDay => {
+        event.selectedDates.forEach(selectedDay => {
             const group = eventsByDay[selectedDay];
             if (group) {
                 eventsByDay[selectedDay] = [...group, event];

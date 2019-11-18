@@ -61,6 +61,12 @@ const en = {
     'periodCycleSuffix': 'days.',
     'selectDay': 'Click to pick a date from calendar',
 
+    'calendarTitles': {
+        'period': 'period',
+        'periodEst': 'est period',
+        'ovulationEst': 'est ovu'
+    },
+
     'protocol': {
         'ICI': 'Intra Cervical Insemination',
         'IUI': 'Intra Uterine Insemination',

@@ -28,3 +28,11 @@ export const momentToDisplayString = (momentDate) => momentDate.format("dddd, MM
 export const momentToWixDate = (momentDate) => momentDate.format("YYYY-MM-DD");
 
 export const wixDateToMoment = (wixDate) => moment(wixDate, 'YYYY-MM-DD');
+
+export const daysBetween = (earlier, later) =>  moment.duration(later.diff(earlier)).asDays();
+
+export const momentsEquals = (moment1, moment2) =>
+    moment1.year() === moment2.year() &&
+    moment1.dayOfYear() === moment2.dayOfYear();
+
+export const isAfterOrEquals = (current, compared) => current.isAfter(compared) || momentsEquals(current, compared);

@@ -14,6 +14,7 @@ import shortid from 'shortid';
 import DeleteValidationModal from "../../components/DeleteValidationModal";
 import _ from "lodash";
 import {addOrRemove} from "../../utils/utils";
+import {wixDateToMoment, momentToWixDate, daysBetween, addDays} from "../../utils/dayTime";
 
 const initialState = {
     id: null,
@@ -22,7 +23,6 @@ const initialState = {
     dailyDose: null,
     timesPerDay: 1,
     selectedDates: [],
-    selectedOvulationDays: [],
     eventsAndReminders: [],
     note: ''
 };
@@ -39,7 +39,7 @@ export default function EditEventTab({navigation, screenProps}) {
     const {setMainCalendarRefresh, currentEditedEventId, setCurrentEditedEventId, setIsLoading} = screenProps;
     const [showDeleteValidationModal, setShowDeleteValidationModal] = useState(false);
     const isMedicationEvent = eventType === EVENT_TYPE_MEDICATION;
-    const showOvulationCalendar = isMedicationEvent && _.isEmpty(state.selectedDates);
+    const lastPeriodMoment = wixDateToMoment(_.last(store.patientData.periods).date);
 
     if (!currentEditedEventId) {
         setCurrentEditedEventId(shortid.generate());
@@ -75,8 +75,7 @@ export default function EditEventTab({navigation, screenProps}) {
 
     const canSave =
         ((eventType === EVENT_TYPE_MEDICATION && state.medication) || (eventType === EVENT_TYPE_CHECKUP && state.checkup)) &&
-        (!_.isEmpty(state.selectedDates) || !_.isEmpty(state.selectedOvulationDays)) &&
-        state.timesPerDay;
+        !_.isEmpty(state.selectedDates) && state.timesPerDay;
 
     const flush = async (patientData) => {
         setMainCalendarRefresh(shortid.generate()); // to refresh main calendar
@@ -120,6 +119,10 @@ export default function EditEventTab({navigation, screenProps}) {
             <Text>{localization(titleKey)}</Text>
         </TouchableOpacity>;
     };
+
+    const ovulationDayToDate = (day) => momentToWixDate(addDays(lastPeriodMoment, day - 1));
+
+    const dateToOvulationDay = (date) => daysBetween(lastPeriodMoment, wixDateToMoment(date)) + 1;
 
     return (
         <SafeAreaView style={styles.container}>
@@ -166,16 +169,16 @@ export default function EditEventTab({navigation, screenProps}) {
                             />
                         </View> : null
                 }
-                <Text style={{color: '#e93766'}}>{localization(showOvulationCalendar ? 'ovulationCalendar' : 'calendar')}</Text>
+                <Text style={{color: '#e93766'}}>{localization(isMedicationEvent ? 'ovulationCalendar' : 'calendar')}</Text>
                 <Text>{localization(isMedicationEvent ? 'selectDaysOfMedicine' : 'selectDaysOfCheckup')}</Text>
                 {
-                    showOvulationCalendar ?
+                    isMedicationEvent ?
                         <CalendarOvulationDayPicker
                             onDayPress={(day) => {
-                                const selectedOvulationDays = addOrRemove(state.selectedOvulationDays, day);
-                                setState({...state, selectedOvulationDays});
+                                const selectedDates = addOrRemove(state.selectedDates, ovulationDayToDate(day));
+                                setState({...state, selectedDates});
                             }}
-                            coloredDays={state.selectedOvulationDays}
+                            coloredDays={state.selectedDates.map(date => dateToOvulationDay(date))}
                         />
                         :
                         <CalendarDayPicker

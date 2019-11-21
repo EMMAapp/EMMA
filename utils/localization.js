@@ -67,7 +67,6 @@ const en = {
 
     'calendarTitles': {
         'period': 'period',
-        'periodEst': 'est period',
         'ovulationEst': 'est ovu'
     },
 

@@ -1,8 +1,7 @@
 import React from 'react';
-import moment from "moment";
 import RouteGuard from "../../navigation/RouteGuard";
 import store from "../../store";
-import {daysBetween, isAfterOrEquals, momentsEquals, momentToWixDate, wixDateToMoment} from "../../utils/dayTime";
+import {addDays, daysBetween, isAfterOrEquals, momentsEquals, wixDateToMoment} from "../../utils/dayTime";
 import _ from 'lodash'
 import CalendarTab from "./CalendarTab";
 import MultiDot from "react-native-calendars/src/calendar/day/multi-dot";
@@ -13,14 +12,11 @@ import {pushByKey} from '../../utils/utils'
 const medicationDot = {key: 'workout', color: 'pink'};
 const checkupDot = {key: 'workout', color: 'green'};
 
-function collectByDay(events, nextPeriodEstimation) {
+function collectByDay(events) {
     let eventsByDay = {};
     _.forOwn(events, (event, eventId) => {
         event.selectedDates.forEach(selectedDay => {
             pushByKey(eventsByDay, selectedDay, event);
-        });
-        event.selectedOvulationDays.forEach(day => {
-            pushByKey(eventsByDay, momentToWixDate(nextPeriodEstimation.clone().add(day - 1, 'days')), event);
         });
     });
     return eventsByDay;
@@ -33,15 +29,12 @@ export default function CalendarTabWrapper({navigation, screenProps}) {
     const {mainCalendarRefresh, setCurrentEditedEventId, setIsLoading} = screenProps;
 
     const periodsMoments = patientData.periods.map(period => wixDateToMoment(period.date));
-    let nextPeriodEstimation = _.last(periodsMoments).clone().add(patientData.averagePeriodCycleDays, 'days');
-    const tomorrow = moment().startOf('day').add(1, 'days');
-    if (nextPeriodEstimation.isBefore(tomorrow)) {
-        nextPeriodEstimation = tomorrow;
+    if (_.isEmpty(periodsMoments)) {
+        return <View/>
     }
-    periodsMoments.push(nextPeriodEstimation);
-    const nextPeriodEndEstimation = nextPeriodEstimation.clone().add(patientData.averagePeriodCycleDays - 1, 'days');
+    const lastPeriodEndEstimation = addDays(_.last(periodsMoments), patientData.averagePeriodCycleDays);
 
-    let eventsByDay = collectByDay(patientData.events, nextPeriodEstimation);
+    let eventsByDay = collectByDay(patientData.events);
 
     const markedDates = {};
     _.forOwn(eventsByDay, (events, day) => {
@@ -57,16 +50,17 @@ export default function CalendarTabWrapper({navigation, screenProps}) {
 
     const dayRenderImpl = (props) => {
         const currentDayMoment = wixDateToMoment(props.date.dateString);
-        if (currentDayMoment.isBefore(_.first(periodsMoments)) || currentDayMoment.isAfter(nextPeriodEndEstimation)) {
+        if (currentDayMoment.isBefore(_.first(periodsMoments)) || currentDayMoment.isAfter(lastPeriodEndEstimation)) {
             return <MultiDot {...props}/>;
         }
         let containingPeriodIndex = _.findLastIndex(periodsMoments, periodMoment => isAfterOrEquals(currentDayMoment, periodMoment));
-        const isEstimatedPeriod = containingPeriodIndex === periodsMoments.length - 1; // is last index
         let title = "";
         if (momentsEquals(currentDayMoment, periodsMoments[containingPeriodIndex])) { // day 1 of period
-            title = localization(`calendarTitles.${isEstimatedPeriod ? 'periodEst' : 'period'}`);
-        } else if (!isEstimatedPeriod) { // add ov if not estimated period
-            const nextPeriodMoment = periodsMoments[containingPeriodIndex + 1];
+            title = localization('calendarTitles.period');
+        } else {
+            const nextPeriodMoment = containingPeriodIndex === periodsMoments.length - 1 ?
+                addDays(lastPeriodEndEstimation, 1) :
+                periodsMoments[containingPeriodIndex + 1];
             const daysFromEnd = daysBetween(currentDayMoment, nextPeriodMoment) - 1;
             if (daysFromEnd === 14) {
                 title = localization('calendarTitles.ovulationEst');

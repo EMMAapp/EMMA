@@ -2,7 +2,7 @@ import {Calendar} from "react-native-calendars";
 import React, {useState} from "react";
 import Modal from "react-native-modal";
 import {Button, StyleSheet, View} from "react-native";
-import {momentToWixDate, wixDateToMoment} from "../utils/dayTime";
+import {addDays, momentToWixDate, wixDateToMoment} from "../utils/dayTime";
 import moment from "moment";
 import ProtocolPicker from "./ProtocolPicker";
 import localization from "../utils/localization";
@@ -16,7 +16,7 @@ export default ({isVisible, lastPeriod, setPeriod}) => {
         <View style={styles.content}>
             <Calendar
                 current={Date()}
-                minDate={momentToWixDate(wixDateToMoment(lastPeriod.date).add(1, 'days'))}
+                minDate={momentToWixDate(addDays(wixDateToMoment(lastPeriod.date), 1))}
                 maxDate={momentToWixDate(moment())}
                 onDayPress={day => setSelectedDate(day.dateString)}
                 markedDates={markedDates}

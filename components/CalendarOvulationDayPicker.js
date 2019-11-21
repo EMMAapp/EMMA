@@ -1,6 +1,6 @@
 import {Calendar} from "react-native-calendars";
 import React from "react";
-import {momentToWixDate, wixDateToMoment} from "../utils/dayTime";
+import {addDays, momentToWixDate, wixDateToMoment} from "../utils/dayTime";
 
 export default ({onDayPress, coloredDays}) => {
 
@@ -8,14 +8,14 @@ export default ({onDayPress, coloredDays}) => {
 
     let markedDates = {};
     coloredDays.forEach(day => {
-        markedDates[momentToWixDate(hackyMoment.clone().add(day - 1, 'days'))]
+        markedDates[momentToWixDate(addDays(hackyMoment, day - 1))]
             = {color: 'pink', startingDay: true, endingDay: true};
     });
 
     return <Calendar
         current={momentToWixDate(hackyMoment)}
         minDate={momentToWixDate(hackyMoment)}
-        maxDate={momentToWixDate(hackyMoment.clone().add(30, 'days'))}
+        maxDate={momentToWixDate(addDays(hackyMoment, 30))}
         onDayPress={day => onDayPress(day.day)}
         firstDay={0}
         hideArrows={true}

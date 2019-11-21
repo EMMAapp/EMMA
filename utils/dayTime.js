@@ -36,3 +36,5 @@ export const momentsEquals = (moment1, moment2) =>
     moment1.dayOfYear() === moment2.dayOfYear();
 
 export const isAfterOrEquals = (current, compared) => current.isAfter(compared) || momentsEquals(current, compared);
+
+export const addDays = (momentDate, days) => momentDate.clone().add(days, 'days');

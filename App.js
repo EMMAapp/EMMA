@@ -11,6 +11,7 @@ import {retrievePatient} from './store';
 import firebaseConfig from "./firebaseConfig";
 import {logError} from "./utils/log";
 import LoadingModal from "./components/LoadingModal";
+import * as fix from './utils/androidWarningFix';
 
 firebase.initializeApp(firebaseConfig);
 

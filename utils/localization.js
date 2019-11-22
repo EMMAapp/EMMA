@@ -64,6 +64,9 @@ const en = {
     'periodCyclePrefix': 'I usually get my period once in',
     'periodCycleSuffix': 'days.',
     'selectDay': 'Click to pick a date from calendar',
+    'medicationReminder': 'Medication reminder',
+    'checkupReminder': 'Checkup reminder',
+    'reminderAt': 'at',
 
     'calendarTitles': {
         'period': 'period',

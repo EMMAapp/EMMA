@@ -14,7 +14,8 @@ import shortid from 'shortid';
 import DeleteValidationModal from "../../components/DeleteValidationModal";
 import _ from "lodash";
 import {addOrRemove} from "../../utils/utils";
-import {wixDateToMoment, momentToWixDate, daysBetween, addDays} from "../../utils/dayTime";
+import {wixDateToMoment, momentToWixDate, daysBetween, addDays, dayTimeToDisplayString} from "../../utils/dayTime";
+import {setNotification, unsetNotification} from "../../utils/notifications";
 
 const initialState = {
     id: null,
@@ -24,6 +25,7 @@ const initialState = {
     timesPerDay: 1,
     selectedDates: [],
     eventsAndReminders: [],
+    notificationIds: [],
     note: ''
 };
 
@@ -79,15 +81,42 @@ export default function EditEventTab({navigation, screenProps}) {
 
     const flush = async (patientData) => {
         setMainCalendarRefresh(shortid.generate()); // to refresh main calendar
-        setIsLoading(true);
         await syncPatientData(patientData);
-        setIsLoading(false);
+    };
+
+    const unsetAllNotifications = async () => {
+        for (const id of state.notificationIds) {
+            await unsetNotification(id);
+        }
+    };
+
+    const setNewNotifications = async () => {
+        const notificationIds = [];
+        for (const date of state.selectedDates) {
+            for (const eventAndReminder of state.eventsAndReminders) {
+                if (!eventAndReminder.reminderDisabled) {
+                    const {hour, minute} = eventAndReminder.reminder;
+                    const reminderMoment = wixDateToMoment(date).add(hour, 'hours').add(minute, "minutes");
+                    const id = await setNotification(
+                        localization(isMedicationEvent ? 'medicationReminder' : 'checkupReminder'),
+                        `${localization('reminderAt')} ${dayTimeToDisplayString(eventAndReminder.event)}`,
+                        reminderMoment
+                    );
+                    notificationIds.push(id);
+                }
+            }
+        }
+        return notificationIds;
     };
 
     const save = async () => {
         const {patientData} = store;
+        setIsLoading(true);
+        await unsetAllNotifications();
+        state.notificationIds = await setNewNotifications();
         patientData.events[state.id] = {...state};
         await flush(patientData);
+        setIsLoading(false);
     };
 
     const close = () => {
@@ -103,8 +132,11 @@ export default function EditEventTab({navigation, screenProps}) {
 
     const deleteEvent = async () => {
         const {patientData} = store;
+        setIsLoading(true);
         delete patientData.events[state.id];
+        await unsetAllNotifications();
         await flush(patientData);
+        setIsLoading(false);
     };
 
     const eventTypeButton = (targetEventType, titleKey) => {

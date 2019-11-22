@@ -1,17 +1,12 @@
-import React, {useState} from 'react'
-import {Text, TouchableOpacity} from "react-native";
+import React, {useState, useEffect} from 'react'
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import localization from "../utils/localization";
-import View from "react-native-web/dist/exports/View";
 
 export default ({items, selectedItem, setSelectedItem}) => {
 
     const [query, setQuery] = useState('');
 
-    if (selectedItem !== null && !query.length) {
-        setQuery(selectedItem);
-        return <View/>;
-    }
+    useEffect(() => setQuery(selectedItem ? selectedItem : ''), [selectedItem, setQuery]);
 
     return <SearchableDropdown
         onItemSelect={(item) => {

@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {StyleSheet, Text, TouchableOpacity, View, Button} from 'react-native'
+import {StyleSheet, Text, TouchableOpacity, View, Button, Switch} from 'react-native'
 import {syncPatientData, store} from '../store';
 import RouteGuard from "../navigation/RouteGuard";
 import localization from "../utils/localization";
@@ -7,7 +7,7 @@ import NumericInput from "../components/NumericInput";
 import CalendarModalPicker from "../components/CalendarModalPicker";
 import {wixDateToMoment, momentToDisplayString} from "../utils/dayTime";
 import ProtocolPicker from "../components/ProtocolPicker";
-
+import TermsModal from "../components/TermsModal";
 
 export default function LoginScreen({navigation, screenProps}) {
 
@@ -17,6 +17,8 @@ export default function LoginScreen({navigation, screenProps}) {
     const [isPeriodRegular, setIsPeriodRegular] = useState(false);
     const [averagePeriodCycleDays, setAveragePeriodCycleDays] = useState(28);
     const [isCalendarPickerVisible, setCalendarPickerVisible] = useState(false);
+    const [agreeTerms, setAgreeTerms] = useState(false);
+    const [termsIsVisible, setTermsIsVisible] = useState(false);
     const {setIsLoading} = screenProps;
 
     const submit = async () => {
@@ -28,7 +30,7 @@ export default function LoginScreen({navigation, screenProps}) {
         RouteGuard(navigation);
     };
 
-    const canSubmit = selectedProtocol && age && lastPeriodDate;
+    const canSubmit = selectedProtocol && age && lastPeriodDate && agreeTerms;
 
     return (
         <View style={styles.container}>
@@ -74,6 +76,16 @@ export default function LoginScreen({navigation, screenProps}) {
                     <Text>{localization('periodCycleSuffix')}</Text>
                 </View> : null
             }
+            <TermsModal isVisible={termsIsVisible} toClose={() => setTermsIsVisible(false)}/>
+            <View style={{flexDirection: 'row'}}>
+                <Switch style={{flex: 1}}
+                        value={agreeTerms}
+                        onValueChange={(enabled) => setAgreeTerms(enabled)}
+                />
+                <TouchableOpacity style={{backgroundColor: 'red'}} onPress={() => setTermsIsVisible(true)}>
+                    <Text>{localization('acceptTerms')}</Text>
+                </TouchableOpacity>
+            </View>
 
             <Button title={localization('onboardingSubmit')} color="#e93766" onPress={submit} disabled={!canSubmit}/>
         </View>

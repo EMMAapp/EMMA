@@ -54,6 +54,7 @@ const en = {
     'loading': 'Loading...',
     'areYouSureDelete': 'Are you sure you want to remove this event?',
     'cancel': 'Cancel',
+    'close': 'Close',
     'onboardingTitle': 'Ready to Begin? Exciting!',
     'onboardingSubTitle': 'Just a few short questions',
     'onboardingSubmit': 'OK, Let\'s go!',
@@ -67,6 +68,7 @@ const en = {
     'medicationReminder': 'Medication reminder',
     'checkupReminder': 'Checkup reminder',
     'reminderAt': 'at',
+    'acceptTerms': 'I agree to the Terms and Conditions',
 
     'calendarTitles': {
         'period': 'period',

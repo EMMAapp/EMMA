@@ -14,7 +14,7 @@ import shortid from 'shortid';
 import DeleteValidationModal from "../../components/DeleteValidationModal";
 import _ from "lodash";
 import {addOrRemove} from "../../utils/utils";
-import {wixDateToMoment, momentToWixDate, daysBetween, addDays, dayTimeToDisplayString} from "../../utils/dayTime";
+import {wixDateToMoment, momentToWixDate, daysBetween, addDays, dayTimeToDisplayString, isInFuture} from "../../utils/dayTime";
 import {setNotification, unsetNotification} from "../../utils/notifications";
 
 const initialState = {
@@ -97,6 +97,9 @@ export default function EditEventTab({navigation, screenProps}) {
                 if (!eventAndReminder.reminderDisabled) {
                     const {hour, minute} = eventAndReminder.reminder;
                     const reminderMoment = wixDateToMoment(date).add(hour, 'hours').add(minute, "minutes");
+                    if (!isInFuture(reminderMoment)) {
+                        continue;
+                    }
                     const id = await setNotification(
                         localization(isMedicationEvent ? 'medicationReminder' : 'checkupReminder'),
                         `${localization('reminderAt')} ${dayTimeToDisplayString(eventAndReminder.event)}`,

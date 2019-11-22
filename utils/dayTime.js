@@ -46,3 +46,5 @@ export const momentsEquals = (moment1, moment2) =>
 export const isAfterOrEquals = (current, compared) => current.isAfter(compared) || momentsEquals(current, compared);
 
 export const addDays = (momentDate, days) => momentDate.clone().add(days, 'days');
+
+export const isInFuture = (momentDate) => momentDate.isAfter(moment());

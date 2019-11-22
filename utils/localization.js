@@ -53,6 +53,7 @@ const en = {
     'pickTime': 'Pick time of day',
     'loading': 'Loading...',
     'areYouSureDelete': 'Are you sure you want to remove this event?',
+    'areYouSurePast': 'Some dates have already passed, are you sure?',
     'cancel': 'Cancel',
     'close': 'Close',
     'onboardingTitle': 'Ready to Begin? Exciting!',

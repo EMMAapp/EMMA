@@ -11,7 +11,7 @@ import {CALENDAR} from "../../navigation/Routes";
 import {store, syncPatientData} from "../../store";
 import EventDetailsPicker from "../../components/EventDetailsPicker";
 import shortid from 'shortid';
-import DeleteValidationModal from "../../components/DeleteValidationModal";
+import ValidationModal from "../../components/ValidationModal";
 import _ from "lodash";
 import {addOrRemove} from "../../utils/utils";
 import {wixDateToMoment, momentToWixDate, daysBetween, addDays, dayTimeToDisplayString, isInFuture} from "../../utils/dayTime";
@@ -40,6 +40,8 @@ export default function EditEventTab({navigation, screenProps}) {
     const [isNewEvent, setIsNewEvent] = useState(true);
     const {setMainCalendarRefresh, currentEditedEventId, setCurrentEditedEventId, setIsLoading} = screenProps;
     const [showDeleteValidationModal, setShowDeleteValidationModal] = useState(false);
+    const [showPastValidationModal, setShowPastValidationModal] = useState(false);
+    const [closeAfterPastValidation, setCloseAfterPastValidation] = useState(false);
     const isMedicationEvent = eventType === EVENT_TYPE_MEDICATION;
     const lastPeriodMoment = wixDateToMoment(_.last(store.patientData.periods).date);
 
@@ -159,17 +161,52 @@ export default function EditEventTab({navigation, screenProps}) {
 
     const dateToOvulationDay = (date) => daysBetween(lastPeriodMoment, wixDateToMoment(date)) + 1;
 
+    const submit = async (shouldClose) => {
+        if (state.selectedDates.some(date => !isInFuture(wixDateToMoment(date)))) {
+            setShowPastValidationModal(true);
+            setCloseAfterPastValidation(shouldClose);
+        }
+        else {
+            await save();
+            if (shouldClose) {
+                close();
+            }
+            else {
+                reset();
+            }
+        }
+    };
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView} keyboardShouldPersistTaps="handled">
-                <DeleteValidationModal
+                <ValidationModal
                     isVisible={showDeleteValidationModal}
+                    title={localization('areYouSureDelete')}
+                    positive={localization('deleteEvent')}
                     setResult={async (shouldDelete) => {
                         if (!shouldDelete) {
                             setShowDeleteValidationModal(false);
                         } else {
                             await deleteEvent();
                             close();
+                        }
+                    }}
+                />
+                <ValidationModal
+                    isVisible={showPastValidationModal}
+                    title={localization('areYouSurePast')}
+                    positive={localization('yes')}
+                    setResult={async (approve) => {
+                        setShowPastValidationModal(false);
+                        if (approve) {
+                            await save();
+                            if (closeAfterPastValidation) {
+                                close();
+                            }
+                            else {
+                                reset();
+                            }
                         }
                     }}
                 />
@@ -249,18 +286,12 @@ export default function EditEventTab({navigation, screenProps}) {
                     title={localization('imDone')}
                     color="#e93766"
                     disabled={!canSave}
-                    onPress={async () => {
-                        await save();
-                        close();
-                    }}/>
+                    onPress={async () => await submit(true)}/>
                 <Button
                     title={localization(isMedicationEvent ? 'addAnotherMedication' : 'addAnotherCheckup')}
                     color="#e93766"
                     disabled={!canSave}
-                    onPress={async () => {
-                        await save();
-                        reset();
-                    }}/>
+                    onPress={async () => await submit(false)}/>
                 <Button
                     title={localization(isNewEvent ? 'clearEvent' : 'deleteEvent')}
                     color="#e93766"

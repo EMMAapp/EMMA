@@ -93,6 +93,7 @@ export default function CalendarTabWrapper({navigation, screenProps}) {
         markedDates={markedDates}
         eventsByDay={eventsByDay}
         dayRender={dayRender}
+        eventedDateMoments={_.sortBy(_.keys(eventsByDay).map(date => wixDateToMoment(date)), _ => _)}
     />
 }
 

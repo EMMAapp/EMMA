@@ -2,10 +2,16 @@ import React from 'react'
 import {Text, View, Switch} from 'react-native'
 import localization from "../utils/localization";
 import DayTimeInput from "./DayTimeInput";
+import {dayTimeSubtract} from "../utils/dayTime";
 
-export default ({eventAndReminder, setEventAndReminder}) => {
+export default ({eventAndReminder, setEventAndReminder, defaultRemindMinutes}) => {
 
     const {event, reminder, reminderDisabled} = eventAndReminder;
+
+    const toggleReminder = (enabled) => {
+        let reminder = enabled ? dayTimeSubtract(event, defaultRemindMinutes) : null;
+        setEventAndReminder({...eventAndReminder, reminderDisabled: !enabled, reminder})
+    };
 
     return (
         <View>
@@ -26,7 +32,7 @@ export default ({eventAndReminder, setEventAndReminder}) => {
                 />
                 <Switch style={{flex: 1}}
                         value={!reminderDisabled}
-                        onValueChange={(enabled) => setEventAndReminder({...eventAndReminder, reminderDisabled: !enabled})}
+                        onValueChange={(enabled) => toggleReminder(enabled)}
                 />
             </View>
         </View>

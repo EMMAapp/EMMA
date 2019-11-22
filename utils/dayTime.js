@@ -2,7 +2,7 @@ import moment from "moment";
 
 export const dayTimeToDate = (dt) => {
     if (!dt) {
-        return Date.now();
+        return new Date();
     }
     let dateTime = new Date();
     dateTime.setHours(dt.hour);
@@ -21,6 +21,14 @@ export const dayTimeToDisplayString = (dt) => {
     const suffix = hour <= 11 ? 'AM' : 'PM';
     hour = hour % 12;
     return `${hour <= 9 ? '0' + hour : hour}:${minute <= 9 ? '0' + minute : minute} ${suffix}`;
+};
+
+export const dayTimeSubtract = (dt, minutes) => {
+    if (minutes === 0) {
+        return {...dt};
+    }
+    const asMoment = moment(dayTimeToDate(dt)).subtract(minutes, "minutes");
+    return {hour: asMoment.hour(), minute: asMoment.minute()};
 };
 
 export const momentToDisplayString = (momentDate) => momentDate.format("dddd, MMM D");

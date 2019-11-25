@@ -2,13 +2,13 @@ import React, {useState, useRef} from 'react';
 import moment from "moment";
 import {SafeAreaView, ScrollView, StyleSheet, Text, View, TouchableOpacity, FlatList} from "react-native";
 import {Calendar} from "react-native-calendars";
-import {dayTimeToDisplayString, wixDateToMoment, momentToDisplayString, momentToWixDate, momentsEquals, isAfterOrEquals} from "../../utils/dayTime";
+import {dayTimeToDisplayString, wixDateToMoment, momentToDisplayString, momentToWixDate, momentsEquals, isAfterOrEquals} from "../../../utils/dayTime";
 import shortid from 'shortid';
-import {EDIT_EVENT} from "../../navigation/Routes";
+import {EDIT_EVENT} from "../../../navigation/Routes";
 import _ from 'lodash'
-import localization from "../../utils/localization";
-import SetAndSyncPeriodModal from "../../components/SetAndSyncPeriodModal";
-import {store} from "../../store";
+import localization from "../../../utils/localization";
+import SetAndSyncPeriodModal from "./SetAndSyncPeriodModal";
+import {store} from "../../../store";
 
 const selectedDayColoring = {selected: true, marked: true, selectedColor: 'pink'};
 

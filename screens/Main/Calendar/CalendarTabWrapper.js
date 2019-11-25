@@ -1,13 +1,13 @@
 import React from 'react';
-import RouteGuard from "../../navigation/RouteGuard";
-import store from "../../store";
-import {addDays, daysBetween, isAfterOrEquals, momentsEquals, wixDateToMoment} from "../../utils/dayTime";
+import RouteGuard from "../../../navigation/RouteGuard";
+import store from "../../../store";
+import {addDays, daysBetween, isAfterOrEquals, momentsEquals, wixDateToMoment} from "../../../utils/dayTime";
 import _ from 'lodash'
 import CalendarTab from "./CalendarTab";
 import MultiDot from "react-native-calendars/src/calendar/day/multi-dot";
-import localization from "../../utils/localization";
+import localization from "../../../utils/localization";
 import {StyleSheet, Text, View} from "react-native";
-import {pushByKey} from '../../utils/utils'
+import {pushByKey} from '../../../utils/utils'
 
 const medicationDot = {key: 'workout', color: 'pink'};
 const checkupDot = {key: 'workout', color: 'green'};

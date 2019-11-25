@@ -1,6 +1,6 @@
 import {Calendar} from "react-native-calendars";
 import React from "react";
-import {addDays, momentToWixDate, wixDateToMoment} from "../utils/dayTime";
+import {addDays, momentToWixDate, wixDateToMoment} from "../../../utils/dayTime";
 
 export default ({onDayPress, coloredDays}) => {
 

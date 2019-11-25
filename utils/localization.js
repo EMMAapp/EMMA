@@ -70,6 +70,12 @@ const en = {
     'checkupReminder': 'Checkup reminder',
     'reminderAt': 'at',
     'acceptTerms': 'I agree to the Terms and Conditions',
+    'syncEventsTitle': 'You\'ve Changed Your Period Date',
+    'syncEventsSubTitle': 'Select the events you wish to sync with the new date*',
+    'syncEventsNote': '*Unselected events will remain at original date',
+    'sync': 'Synchronize',
+    'selectAllEvents': 'Select all events',
+    'eventsCountSuffix': 'events',
 
     'calendarTitles': {
         'period': 'period',

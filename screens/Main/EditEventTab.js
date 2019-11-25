@@ -56,6 +56,7 @@ export default function EditEventTab({navigation, screenProps}) {
         } else {
             setIsNewEvent(false);
             setState({...storedState});
+            setEventType(storedState.medication ? EVENT_TYPE_MEDICATION : EVENT_TYPE_CHECKUP);
         }
         return <View/>;
     }
@@ -70,8 +71,6 @@ export default function EditEventTab({navigation, screenProps}) {
         setState({...state, eventsAndReminders: eventsAndReminders});
         return <View/>;
     }
-
-    alert(state.selectedDates);
 
     const setEventsAndReminder = (eventAndReminder, i) => {
         const {eventsAndReminders} = state;

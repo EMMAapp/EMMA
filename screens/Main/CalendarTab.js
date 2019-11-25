@@ -8,6 +8,7 @@ import {EDIT_EVENT} from "../../navigation/Routes";
 import _ from 'lodash'
 import localization from "../../utils/localization";
 import SetAndSyncPeriodModal from "../../components/SetAndSyncPeriodModal";
+import {store} from "../../store";
 
 const selectedDayColoring = {selected: true, marked: true, selectedColor: 'pink'};
 
@@ -46,6 +47,7 @@ export default function CalendarTab({
     const [isAgendaExpanded, setAgendaExpanded] = useState(false);
     const [isEditingPeriod, setEditingPeriod] = useState(false);
     const agendaListRef = useRef(null);
+    const lastPeriodMoment = wixDateToMoment(_.last(store.patientData.periods).date);
 
     const selectedDayStr = momentToWixDate(selectedDayMoment);
     if (_.has(markedDates, selectedDayStr)) {
@@ -62,8 +64,11 @@ export default function CalendarTab({
         return eventsForDate[date];
     };
 
-    const onEventPressed = (eventId) => {
-        setCurrentEditedEventId(eventId);
+    const onEventPressed = (event) => {
+        if (event.medication && !isAfterOrEquals(wixDateToMoment(event.selectedDates[0]), lastPeriodMoment)) {
+            return; // show message?
+        }
+        setCurrentEditedEventId(event.id);
         navigation.navigate(EDIT_EVENT);
     };
 
@@ -84,7 +89,7 @@ export default function CalendarTab({
             <Text>
                 {dayTimeToDisplayString(dayTime)} - {details.medication ? details.medication : details.checkup}
             </Text>
-            <TouchableOpacity onPress={() => onEventPressed(details.id)}>
+            <TouchableOpacity onPress={() => onEventPressed(details)}>
                 <Text>
                     Note: {details.note}
                 </Text>

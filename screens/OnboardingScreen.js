@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {StyleSheet, TouchableOpacity, View, Button, Switch} from 'react-native'
+import {TouchableOpacity, View, Button, Switch} from 'react-native'
 import {syncPatientData, store} from '../store';
 import RouteGuard from "../navigation/RouteGuard";
 import localization from "../utils/localization";
@@ -14,6 +14,10 @@ import Colors from "../constants/Colors";
 import Box from "../components/Box";
 import Icon from "../components/Icon";
 import Row from "../components/Row";
+import YesNoBoxes from "../components/YesNoBoxes";
+import ButtonPrimary from "../components/ButtonPrimary";
+
+const QuestionText = ({children}) => <Text style={{paddingTop: 20, paddingBottom: 10}}>{children}</Text>;
 
 export default function LoginScreen({navigation, screenProps}) {
 
@@ -40,14 +44,14 @@ export default function LoginScreen({navigation, screenProps}) {
 
     return (
         <Container marginHorizontal={30}>
-            <Text bold={true} color={Colors.purple} size={16}>{localization('onboardingTitle')}</Text>
+            <Text bold color={Colors.purple} size={16}>{localization('onboardingTitle')}</Text>
             <Text size={12} style={{paddingTop: 6}}>{localization('onboardingSubTitle')}</Text>
 
-            <Text style={{paddingTop: 20, paddingBottom: 10}}>{localization('howOldAreYou')}</Text>
+            <QuestionText>{localization('howOldAreYou')}</QuestionText>
             <NumericInput value={age} setValue={setAge}/>
 
-            <Text style={{paddingTop: 20, paddingBottom: 10}}>{localization('lastPeriod')}</Text>
-            <Box height={40} width={'85%'}>
+            <QuestionText>{localization('lastPeriod')}</QuestionText>
+            <Box height={40} width={'95%'}>
                 <TouchableOpacity onPress={() => setCalendarPickerVisible(true)}>
                     <Row>
                         <Icon name='calendar'/>
@@ -66,24 +70,19 @@ export default function LoginScreen({navigation, screenProps}) {
                 }}
             />
 
-            <Text>{localization('regularPeriod')}</Text>
-            <View style={{flexDirection: 'row'}}>
-                <Button title={localization('yes')} color={isPeriodRegular ? 'pink' : 'gray'} onPress={() => setIsPeriodRegular(true)}/>
-                <Button title={localization('no')} color={!isPeriodRegular ? 'pink' : 'gray'} onPress={() => setIsPeriodRegular(false)}/>
-            </View>
+            <QuestionText>{localization('regularPeriod')}</QuestionText>
+            <YesNoBoxes selected={isPeriodRegular} setSelected={setIsPeriodRegular}/>
 
             {
-                isPeriodRegular ? <View style={{flexDirection: 'row'}}>
-                    <Text>{localization('periodCyclePrefix')}</Text>
-                    <NumericInput
-                        margin={10}
-                        style={{borderColor: 'pink', borderWidth: 5, width: 300}}
-                        value={averagePeriodCycleDays}
-                        setValue={setAveragePeriodCycleDays}
-                    />
-                    <Text>{localization('periodCycleSuffix')}</Text>
-                </View> : null
+                isPeriodRegular ? <Row>
+                    <QuestionText>{localization('periodCyclePrefix')}</QuestionText>
+                    <NumericInput value={averagePeriodCycleDays} setValue={setAveragePeriodCycleDays} style={{margin: 10}}/>
+                    <QuestionText>{localization('periodCycleSuffix')}</QuestionText>
+                </Row> : null
             }
+
+            <ProtocolPicker selectedProtocol={selectedProtocol} setSelectedProtocol={setSelectedProtocol}/>
+
             <TermsModal isVisible={termsIsVisible} toClose={() => setTermsIsVisible(false)}/>
             <View style={{flexDirection: 'row'}}>
                 <Switch style={{flex: 1}}
@@ -95,9 +94,9 @@ export default function LoginScreen({navigation, screenProps}) {
                 </TouchableOpacity>
             </View>
 
-            <ProtocolPicker selectedProtocol={selectedProtocol} setSelectedProtocol={setSelectedProtocol}/>
-
-            <Button title={localization('onboardingSubmit')} color="#e93766" onPress={submit} disabled={!canSubmit}/>
+            <ButtonPrimary onPress={submit} disabled={!canSubmit} style={{marginTop: 20}}>
+                {localization('onboardingSubmit')}
+            </ButtonPrimary>
         </Container>
     )
 }

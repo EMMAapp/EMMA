@@ -1,28 +1,39 @@
 import React from 'react'
 import Protocols from "../constants/Protocols";
-import {Text, TouchableOpacity, View} from "react-native";
+import {TouchableOpacity, View} from "react-native";
 import localization from "../utils/localization";
+import Text from "./Text";
+import Row from "./Row";
+import Layout from "../constants/Layout";
+import Box from "./Box";
+import Colors from "../constants/Colors";
+
+const ProtocolBox = ({isSelected, text}) =>
+    <Box height={50} width={60} style={{
+        borderRadius: 14,
+        backgroundColor: isSelected ? Colors.purpleDimmed : Colors.grayLight,
+        borderColor: isSelected ? Colors.purple : Colors.gray
+    }}>
+        <Text alignCenter color={isSelected ? Colors.purple : Colors.grayDark}>{text}</Text>
+    </Box>;
+
+const Protocol = ({protocol, selectedProtocol, setSelectedProtocol}) =>
+    <View key={protocol} margin={10} style={{width: 80, height: 120}}>
+        <TouchableOpacity disabled={protocol === selectedProtocol} onPress={() => setSelectedProtocol(protocol)} style={{alignItems: 'center'}}>
+            <ProtocolBox isSelected={protocol === selectedProtocol} text={protocol}/>
+        </TouchableOpacity>
+        <Text size={8} alignCenter style={{paddingTop: 4}}>
+            {localization(`protocol.${protocol}`)}
+        </Text>
+    </View>;
 
 export default ({selectedProtocol, setSelectedProtocol}) => (
     <View>
-        <Text>{localization('yourProtocol')}</Text>
-        <View style={{flexDirection: 'row'}}>
+        <Text style={{paddingTop: 20, paddingBottom: 10}}>{localization('yourProtocol')}</Text>
+        <Row>
             {
-                Protocols.map(protocol =>
-                    <View key={protocol} style={{maxWidth: 150}} margin={10}>
-                        <TouchableOpacity
-                            style={{backgroundColor: protocol === selectedProtocol ? 'pink' : 'white'}}
-                            disabled={protocol === selectedProtocol}
-                            onPress={() => setSelectedProtocol(protocol)}
-                        >
-                            <Text>{protocol}</Text>
-                        </TouchableOpacity>
-                        <Text>
-                            {localization(`protocol.${protocol}`)}
-                        </Text>
-                    </View>
-                )
+                Protocols.map(protocol => <Protocol protocol={protocol} selectedProtocol={selectedProtocol} setSelectedProtocol={setSelectedProtocol}/>)
             }
-        </View>
+        </Row>
     </View>
 )

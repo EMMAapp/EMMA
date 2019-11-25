@@ -1,6 +1,5 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef} from 'react';
 import moment from "moment";
-import store, {syncPatientData} from "../../store";
 import {SafeAreaView, ScrollView, StyleSheet, Text, View, TouchableOpacity, FlatList} from "react-native";
 import {Calendar} from "react-native-calendars";
 import {dayTimeToDisplayString, wixDateToMoment, momentToDisplayString, momentToWixDate, momentsEquals, isAfterOrEquals} from "../../utils/dayTime";
@@ -8,7 +7,7 @@ import shortid from 'shortid';
 import {EDIT_EVENT} from "../../navigation/Routes";
 import _ from 'lodash'
 import localization from "../../utils/localization";
-import SetPeriodModal from "../../components/SetPeriodModal";
+import SetAndSyncPeriodModal from "../../components/SetAndSyncPeriodModal";
 
 const selectedDayColoring = {selected: true, marked: true, selectedColor: 'pink'};
 
@@ -36,16 +35,16 @@ function collectEventsForDate(eventsByDay, selectedDay) {
 export default function CalendarTab({
                                         navigation,
                                         setCurrentEditedEventId,
-                                        setIsLoading,
                                         markedDates,
                                         eventsByDay,
                                         dayRender,
-                                        eventedDateMoments
+                                        eventedDateMoments,
+                                        setMainCalendarRefresh
                                     }) {
 
-    const [isPeriodModalVisible, setPeriodModalVisible] = useState(false);
     const [selectedDayMoment, setSelectedDay] = useState(moment());
     const [isAgendaExpanded, setAgendaExpanded] = useState(false);
+    const [isEditingPeriod, setEditingPeriod] = useState(false);
     const agendaListRef = useRef(null);
 
     const selectedDayStr = momentToWixDate(selectedDayMoment);
@@ -66,18 +65,6 @@ export default function CalendarTab({
     const onEventPressed = (eventId) => {
         setCurrentEditedEventId(eventId);
         navigation.navigate(EDIT_EVENT);
-    };
-
-    const setPeriod = async (period) => {
-        setPeriodModalVisible(false);
-        if (period === null) {
-            return;
-        }
-        setIsLoading(true);
-        const {patientData} = store;
-        patientData.periods.push(period);
-        await syncPatientData(patientData);
-        setIsLoading(false);
     };
 
     const agendaDayRender = (momentDate) => {
@@ -109,12 +96,12 @@ export default function CalendarTab({
         <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView} keyboardShouldPersistTaps="handled">
                 <Text>{localization('treatmentPlan')}</Text>
-                <SetPeriodModal
-                    isVisible={isPeriodModalVisible}
-                    lastPeriod={_.last(store.patientData.periods)}
-                    setPeriod={setPeriod}
+                <SetAndSyncPeriodModal
+                    isVisible={isEditingPeriod}
+                    dismiss={() => setEditingPeriod(false)}
+                    setMainCalendarRefresh={setMainCalendarRefresh}
                 />
-                <TouchableOpacity onPress={() => setPeriodModalVisible(true)} style={{backgroundColor: 'pink'}}>
+                <TouchableOpacity onPress={() => setEditingPeriod(true)} style={{backgroundColor: 'pink'}}>
                     <Text>{localization('editPeriod')}</Text>
                 </TouchableOpacity>
                 {

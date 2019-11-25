@@ -1,11 +1,12 @@
 import React from 'react';
-import {StyleSheet} from "react-native";
-import Loading from "./Loading";
-import Modal from "./Modal";
+import Modal from "react-native-modal";
+import {StyleSheet, View} from "react-native";
 
-export default ({isVisible}) => {
+export default ({isVisible, children}) => {
     return <Modal isVisible={isVisible}>
-        <Loading/>
+        <View style={styles.content}>
+            {children}
+        </View>
     </Modal>
 }
 

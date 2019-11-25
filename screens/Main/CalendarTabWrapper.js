@@ -26,7 +26,7 @@ export default function CalendarTabWrapper({navigation, screenProps}) {
     RouteGuard(navigation);
 
     const {patientData} = store;
-    const {mainCalendarRefresh, setCurrentEditedEventId, setIsLoading} = screenProps;
+    const {mainCalendarRefresh, setCurrentEditedEventId, setMainCalendarRefresh} = screenProps;
 
     const periodsMoments = patientData.periods.map(period => wixDateToMoment(period.date));
     if (_.isEmpty(periodsMoments)) {
@@ -89,11 +89,11 @@ export default function CalendarTabWrapper({navigation, screenProps}) {
         key={mainCalendarRefresh}
         navigation={navigation}
         setCurrentEditedEventId={setCurrentEditedEventId}
-        setIsLoading={setIsLoading}
         markedDates={markedDates}
         eventsByDay={eventsByDay}
         dayRender={dayRender}
         eventedDateMoments={_.sortBy(_.keys(eventsByDay).map(date => wixDateToMoment(date)), _ => _)}
+        setMainCalendarRefresh={setMainCalendarRefresh}
     />
 }
 

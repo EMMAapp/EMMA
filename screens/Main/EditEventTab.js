@@ -14,8 +14,8 @@ import shortid from 'shortid';
 import ValidationModal from "../../components/ValidationModal";
 import _ from "lodash";
 import {addOrRemove} from "../../utils/utils";
-import {wixDateToMoment, momentToWixDate, daysBetween, addDays, dayTimeToDisplayString, isInFuture} from "../../utils/dayTime";
-import {setNotification, unsetNotification} from "../../utils/notifications";
+import {wixDateToMoment, momentToWixDate, daysBetween, addDays, isInFuture} from "../../utils/dayTime";
+import {syncEvents, unsetAllNotifications} from "../../utils/eventsSync";
 
 const initialState = {
     id: null,
@@ -71,6 +71,8 @@ export default function EditEventTab({navigation, screenProps}) {
         return <View/>;
     }
 
+    alert(state.selectedDates);
+
     const setEventsAndReminder = (eventAndReminder, i) => {
         const {eventsAndReminders} = state;
         eventsAndReminders[i] = eventAndReminder;
@@ -84,44 +86,6 @@ export default function EditEventTab({navigation, screenProps}) {
     const flush = async (patientData) => {
         setMainCalendarRefresh(shortid.generate()); // to refresh main calendar
         await syncPatientData(patientData);
-    };
-
-    const unsetAllNotifications = async () => {
-        for (const id of state.notificationIds) {
-            await unsetNotification(id);
-        }
-    };
-
-    const setNewNotifications = async () => {
-        const notificationIds = [];
-        for (const date of state.selectedDates) {
-            for (const eventAndReminder of state.eventsAndReminders) {
-                if (!eventAndReminder.reminderDisabled) {
-                    const {hour, minute} = eventAndReminder.reminder;
-                    const reminderMoment = wixDateToMoment(date).add(hour, 'hours').add(minute, "minutes");
-                    if (!isInFuture(reminderMoment)) {
-                        continue;
-                    }
-                    const id = await setNotification(
-                        localization(isMedicationEvent ? 'medicationReminder' : 'checkupReminder'),
-                        `${localization('reminderAt')} ${dayTimeToDisplayString(eventAndReminder.event)}`,
-                        reminderMoment
-                    );
-                    notificationIds.push(id);
-                }
-            }
-        }
-        return notificationIds;
-    };
-
-    const save = async () => {
-        const {patientData} = store;
-        setIsLoading(true);
-        await unsetAllNotifications();
-        state.notificationIds = await setNewNotifications();
-        patientData.events[state.id] = {...state};
-        await flush(patientData);
-        setIsLoading(false);
     };
 
     const close = () => {
@@ -139,7 +103,7 @@ export default function EditEventTab({navigation, screenProps}) {
         const {patientData} = store;
         setIsLoading(true);
         delete patientData.events[state.id];
-        await unsetAllNotifications();
+        await unsetAllNotifications(state);
         await flush(patientData);
         setIsLoading(false);
     };
@@ -167,7 +131,7 @@ export default function EditEventTab({navigation, screenProps}) {
             setCloseAfterPastValidation(shouldClose);
         }
         else {
-            await save();
+            await syncEvents(setIsLoading, flush, [state]);
             if (shouldClose) {
                 close();
             }
@@ -200,7 +164,7 @@ export default function EditEventTab({navigation, screenProps}) {
                     setResult={async (approve) => {
                         setShowPastValidationModal(false);
                         if (approve) {
-                            await save();
+                            await syncEvents(setIsLoading, flush, [state]);
                             if (closeAfterPastValidation) {
                                 close();
                             }

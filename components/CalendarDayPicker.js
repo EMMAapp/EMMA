@@ -1,7 +1,8 @@
 import {Calendar} from "react-native-calendars";
-import React from "react";
+import React, {useState} from "react";
 
 export default ({onDayPress, coloredDays}) => {
+    const [current, setCurrent] = useState(Date());
 
     let markedDates = {};
     coloredDays.forEach(day => {
@@ -9,8 +10,11 @@ export default ({onDayPress, coloredDays}) => {
     });
 
     return <Calendar
-        current={Date()}
-        onDayPress={onDayPress}
+        current={current}
+        onDayPress={day => {
+            setCurrent(day.dateString);
+            onDayPress(day);
+        }}
         firstDay={0} // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
         markedDates={markedDates}
         markingType={'period'}

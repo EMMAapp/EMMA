@@ -1,10 +1,10 @@
 import {Calendar} from "react-native-calendars";
 import React, {useState} from "react";
 import {Button, View} from "react-native";
-import {addDays, momentToWixDate, wixDateToMoment} from "../utils/dayTime";
+import {addDays, momentToWixDate, wixDateToMoment} from "../../../utils/dayTime";
 import moment from "moment";
-import ProtocolPicker from "./ProtocolPicker";
-import localization from "../utils/localization";
+import ProtocolPicker from "../../../components/ProtocolPicker";
+import localization from "../../../utils/localization";
 
 export default ({lastPeriod, setPeriod}) => {
     const [selectedProtocol, setSelectedProtocol] = useState(lastPeriod.protocol);

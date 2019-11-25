@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
-import {addDays, daysBetween, isAfterOrEquals, momentsEquals, momentToWixDate, wixDateToMoment} from "../utils/dayTime";
+import {addDays, daysBetween, isAfterOrEquals, momentsEquals, momentToWixDate, wixDateToMoment} from "../../../utils/dayTime";
 import _ from "lodash";
-import store, {syncPatientData} from "../store";
+import store, {syncPatientData} from "../../../store";
 import SetPeriodComponent from "./SetPeriodComponent";
 import SyncEventsModal from "./SyncEventsComponent";
-import {syncEvents} from "../utils/eventsSync";
-import Modal from "./Modal";
-import Loading from "./Loading";
-import {logInfo} from "../utils/log";
+import {syncEvents} from "../../../utils/eventsSync";
+import Modal from "../../../components/Modal";
+import Loading from "../../../components/Loading";
+import {logInfo} from "../../../utils/log";
 import shortid from "shortid";
 
 export default function SetAndSyncPeriodModal({isVisible, dismiss, setMainCalendarRefresh}) {

@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import {View, Text, Switch, TouchableOpacity} from "react-native";
-import localization from "../utils/localization";
+import localization from "../../../utils/localization";
 import _ from 'lodash'
-import {addOrRemove} from "../utils/utils";
+import {addOrRemove} from "../../../utils/utils";
 import shortid from 'shortid';
 
 export default ({dismiss, potentialSyncEvents, syncEventsWithNewPeriod}) => {

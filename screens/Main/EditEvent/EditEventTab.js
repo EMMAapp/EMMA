@@ -1,21 +1,21 @@
 import React, {useState} from 'react'
 import {StyleSheet, Text, TextInput, View, Button, ScrollView, SafeAreaView, TouchableOpacity} from 'react-native'
-import localization from "../../utils/localization";
-import Autocomplete from "../../components/Autocomplete";
-import Medications from '../../constants/Medications';
-import Checkups from '../../constants/Checkups';
-import NumericInput from "../../components/NumericInput";
-import CalendarDayPicker from "../../components/CalendarDayPicker";
-import CalendarOvulationDayPicker from "../../components/CalendarOvulationDayPicker";
-import {CALENDAR} from "../../navigation/Routes";
-import {store, syncPatientData} from "../../store";
-import EventDetailsPicker from "../../components/EventDetailsPicker";
+import localization from "../../../utils/localization";
+import Autocomplete from "../../../components/Autocomplete";
+import Medications from '../../../constants/Medications';
+import Checkups from '../../../constants/Checkups';
+import NumericInput from "../../../components/NumericInput";
+import CalendarDayPicker from "./CalendarDayPicker";
+import CalendarOvulationDayPicker from "./CalendarOvulationDayPicker";
+import {CALENDAR} from "../../../navigation/Routes";
+import {store, syncPatientData} from "../../../store";
+import EventDetailsPicker from "./EventDetailsPicker";
 import shortid from 'shortid';
-import ValidationModal from "../../components/ValidationModal";
+import ValidationModal from "../../../components/ValidationModal";
 import _ from "lodash";
-import {addOrRemove} from "../../utils/utils";
-import {wixDateToMoment, momentToWixDate, daysBetween, addDays, isInFuture} from "../../utils/dayTime";
-import {syncEvents, unsetAllNotifications} from "../../utils/eventsSync";
+import {addOrRemove} from "../../../utils/utils";
+import {wixDateToMoment, momentToWixDate, daysBetween, addDays, isInFuture} from "../../../utils/dayTime";
+import {syncEvents, unsetAllNotifications} from "../../../utils/eventsSync";
 
 const initialState = {
     id: null,

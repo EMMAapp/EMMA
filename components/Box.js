@@ -13,7 +13,6 @@ font-size: ${actuatedNormalize(10)};
 border-color: ${Colors.gray};
 border-width: 1px;
 padding: 8px;
-flex-direction: row;
 `;
 
 export default ({style, children, height, width}) => {

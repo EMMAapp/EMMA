@@ -13,6 +13,7 @@ import Container from "../components/Container";
 import Colors from "../constants/Colors";
 import Box from "../components/Box";
 import Icon from "../components/Icon";
+import Row from "../components/Row";
 
 export default function LoginScreen({navigation, screenProps}) {
 
@@ -46,18 +47,22 @@ export default function LoginScreen({navigation, screenProps}) {
             <NumericInput value={age} setValue={setAge}/>
 
             <Text style={{paddingTop: 20, paddingBottom: 10}}>{localization('lastPeriod')}</Text>
-            <Box height={40} width={'80%'}>
+            <Box height={40} width={'85%'}>
                 <TouchableOpacity onPress={() => setCalendarPickerVisible(true)}>
-                    <Icon name='calendar'/>
-                    <Text bold={true}>{lastPeriodDate ? momentToDisplayString(wixDateToMoment(lastPeriodDate)) : localization('selectDay')}</Text>
+                    <Row>
+                        <Icon name='calendar'/>
+                        <Text bold={true} style={{paddingLeft: 6}}>{lastPeriodDate ? momentToDisplayString(wixDateToMoment(lastPeriodDate)) : localization('selectDay')}</Text>
+                    </Row>
                 </TouchableOpacity>
             </Box>
 
             <CalendarModalPicker
                 isVisible={isCalendarPickerVisible}
                 onDayPress={dateString => {
-                    setLastPeriodDate(dateString);
                     setCalendarPickerVisible(false);
+                    if (dateString) {
+                        setLastPeriodDate(dateString);
+                    }
                 }}
             />
 

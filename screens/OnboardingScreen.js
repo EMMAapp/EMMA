@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {StyleSheet, Text, TouchableOpacity, View, Button, Switch} from 'react-native'
+import {StyleSheet, TouchableOpacity, View, Button, Switch} from 'react-native'
 import {syncPatientData, store} from '../store';
 import RouteGuard from "../navigation/RouteGuard";
 import localization from "../utils/localization";
@@ -8,6 +8,11 @@ import CalendarModalPicker from "../components/CalendarModalPicker";
 import {wixDateToMoment, momentToDisplayString} from "../utils/dayTime";
 import ProtocolPicker from "../components/ProtocolPicker";
 import TermsModal from "../components/TermsModal";
+import Text from "../components/Text";
+import Container from "../components/Container";
+import Colors from "../constants/Colors";
+import Box from "../components/Box";
+import Icon from "../components/Icon";
 
 export default function LoginScreen({navigation, screenProps}) {
 
@@ -33,23 +38,21 @@ export default function LoginScreen({navigation, screenProps}) {
     const canSubmit = selectedProtocol && age && lastPeriodDate && agreeTerms;
 
     return (
-        <View style={styles.container}>
-            <Text style={{color: '#e93766', fontSize: 40}}>{localization('onboardingTitle')}</Text>
-            <Text style={{color: '#e93766', fontSize: 20}}>{localization('onboardingSubTitle')}</Text>
+        <Container marginHorizontal={30}>
+            <Text bold={true} color={Colors.purple} size={16}>{localization('onboardingTitle')}</Text>
+            <Text size={12} style={{paddingTop: 6}}>{localization('onboardingSubTitle')}</Text>
 
-            <ProtocolPicker selectedProtocol={selectedProtocol} setSelectedProtocol={setSelectedProtocol}/>
+            <Text style={{paddingTop: 20, paddingBottom: 10}}>{localization('howOldAreYou')}</Text>
+            <NumericInput value={age} setValue={setAge}/>
 
-            <Text>{localization('howOldAreYou')}</Text>
-            <NumericInput
-                style={{borderColor: 'pink', borderWidth: 5, width: 100}}
-                value={age}
-                setValue={setAge}
-            />
+            <Text style={{paddingTop: 20, paddingBottom: 10}}>{localization('lastPeriod')}</Text>
+            <Box height={40} width={'80%'}>
+                <TouchableOpacity onPress={() => setCalendarPickerVisible(true)}>
+                    <Icon name='calendar'/>
+                    <Text bold={true}>{lastPeriodDate ? momentToDisplayString(wixDateToMoment(lastPeriodDate)) : localization('selectDay')}</Text>
+                </TouchableOpacity>
+            </Box>
 
-            <Text>{localization('lastPeriod')}</Text>
-            <TouchableOpacity onPress={() => setCalendarPickerVisible(true)} style={{borderColor: 'pink', borderWidth: 5, width: 300}}>
-                <Text>{lastPeriodDate ? momentToDisplayString(wixDateToMoment(lastPeriodDate)) : localization('selectDay')}</Text>
-            </TouchableOpacity>
             <CalendarModalPicker
                 isVisible={isCalendarPickerVisible}
                 onDayPress={dateString => {
@@ -87,15 +90,10 @@ export default function LoginScreen({navigation, screenProps}) {
                 </TouchableOpacity>
             </View>
 
+            <ProtocolPicker selectedProtocol={selectedProtocol} setSelectedProtocol={setSelectedProtocol}/>
+
             <Button title={localization('onboardingSubmit')} color="#e93766" onPress={submit} disabled={!canSubmit}/>
-        </View>
+        </Container>
     )
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
-});

@@ -1,22 +1,13 @@
-import {View} from "react-native";
 import React from "react";
-import styled from "styled-components"
 import CalendarIcon from "../assets/icons/calendar.svg"
 
-
-const StyledView = styled(View)`
-height: 32px;
-width: 32px;
-`;
-
-const getIconByName = (name) => {
+const getIconByName = (name, style) => {
     switch (name) {
         case "calendar":
-            return <CalendarIcon/>;
+            return <CalendarIcon style={style}/>;
         default:
             return null;
     }
 };
 
-export default ({name}) => <CalendarIcon width={32} height={32}/>
-
+export default ({name}) => getIconByName(name, {height: 32, width: 32})

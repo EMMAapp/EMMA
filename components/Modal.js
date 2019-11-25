@@ -1,22 +1,27 @@
 import React from 'react';
 import Modal from "react-native-modal";
-import {StyleSheet, View} from "react-native";
+import {View} from "react-native";
+import styled from "styled-components"
+import Colors from "../constants/Colors";
 
-export default ({isVisible, children}) => {
-    return <Modal isVisible={isVisible}>
-        <View style={styles.content}>
+const StyledView = styled(View)`
+background-color: white;
+padding: 22px;
+justify-content: center;
+align-items: center;
+border-radius: 4px;
+border-color: ${Colors.grayDark};
+`;
+
+export default ({isVisible, children, onBackdropPress}) => {
+    return <Modal
+        animationIn='fadeIn'
+        animationOut='fadeOut'
+        isVisible={isVisible}
+        onBackdropPress={onBackdropPress}
+    >
+        <StyledView>
             {children}
-        </View>
+        </StyledView>
     </Modal>
 }
-
-const styles = StyleSheet.create({
-    content: {
-        backgroundColor: 'white',
-        padding: 22,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 4,
-        borderColor: 'rgba(0, 0, 0, 0.1)',
-    }
-});

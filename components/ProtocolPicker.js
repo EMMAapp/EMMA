@@ -17,7 +17,7 @@ const ProtocolBox = ({isSelected, text}) =>
     </Box>;
 
 const Protocol = ({protocol, selectedProtocol, setSelectedProtocol}) =>
-    <View margin={10} style={{width: 80, height: 120}}>
+    <View margin={10} style={{width: 80, height: 50}}>
         <TouchableOpacity disabled={protocol === selectedProtocol} onPress={() => setSelectedProtocol(protocol)} style={{alignItems: 'center'}}>
             <ProtocolBox isSelected={protocol === selectedProtocol} text={protocol}/>
         </TouchableOpacity>

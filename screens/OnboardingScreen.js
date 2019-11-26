@@ -18,7 +18,7 @@ import YesNoBoxes from "../components/YesNoBoxes";
 import ButtonPrimary from "../components/ButtonPrimary";
 import Checkbox from "../components/Checkbox";
 
-const QuestionText = ({children}) => <Text style={{paddingTop: 20, paddingBottom: 10}}>{children}</Text>;
+const QuestionText = (props) => <Text style={{paddingTop: 20, paddingBottom: 10}} {...props}>{props.children}</Text>;
 
 export default function LoginScreen({navigation, screenProps}) {
 
@@ -84,16 +84,19 @@ export default function LoginScreen({navigation, screenProps}) {
 
             <ProtocolPicker selectedProtocol={selectedProtocol} setSelectedProtocol={setSelectedProtocol}/>
 
-            <TermsModal isVisible={termsIsVisible} toClose={() => setTermsIsVisible(false)}/>
-            <View style={{flexDirection: 'row'}}>
+            <TermsModal isVisible={termsIsVisible} dismiss={() => setTermsIsVisible(false)}/>
+            <Row style={{marginTop: 30}}>
                 <Checkbox
                         value={agreeTerms}
                         setValue={(enabled) => setAgreeTerms(enabled)}
                 />
-                <TouchableOpacity style={{backgroundColor: 'red'}} onPress={() => setTermsIsVisible(true)}>
-                    <Text>{localization('acceptTerms')}</Text>
-                </TouchableOpacity>
-            </View>
+                <Row style={{paddingBottom: 10, width: '100%'}}>
+                    <QuestionText>{localization('acceptTermsPrefix')}</QuestionText>
+                    <TouchableOpacity onPress={() => setTermsIsVisible(true)} style={{paddingLeft: 3}}>
+                        <QuestionText color={Colors.purple} underline>{localization('acceptTermsLink')}</QuestionText>
+                    </TouchableOpacity>
+                </Row>
+            </Row>
 
             <ButtonPrimary onPress={submit} disabled={!canSubmit} style={{marginTop: 20}}>
                 {localization('onboardingSubmit')}
@@ -101,4 +104,3 @@ export default function LoginScreen({navigation, screenProps}) {
         </Container>
     )
 }
-

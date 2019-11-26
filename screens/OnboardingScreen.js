@@ -16,6 +16,7 @@ import Icon from "../components/Icon";
 import Row from "../components/Row";
 import YesNoBoxes from "../components/YesNoBoxes";
 import ButtonPrimary from "../components/ButtonPrimary";
+import Checkbox from "../components/Checkbox";
 
 const QuestionText = ({children}) => <Text style={{paddingTop: 20, paddingBottom: 10}}>{children}</Text>;
 
@@ -85,9 +86,9 @@ export default function LoginScreen({navigation, screenProps}) {
 
             <TermsModal isVisible={termsIsVisible} toClose={() => setTermsIsVisible(false)}/>
             <View style={{flexDirection: 'row'}}>
-                <Switch style={{flex: 1}}
+                <Checkbox
                         value={agreeTerms}
-                        onValueChange={(enabled) => setAgreeTerms(enabled)}
+                        setValue={(enabled) => setAgreeTerms(enabled)}
                 />
                 <TouchableOpacity style={{backgroundColor: 'red'}} onPress={() => setTermsIsVisible(true)}>
                     <Text>{localization('acceptTerms')}</Text>

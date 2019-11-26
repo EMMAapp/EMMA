@@ -17,8 +17,9 @@ import Row from "../components/Row";
 import YesNoBoxes from "../components/YesNoBoxes";
 import ButtonPrimary from "../components/ButtonPrimary";
 import Checkbox from "../components/Checkbox";
+import styles from "../constants/Styles"
 
-const QuestionText = (props) => <Text style={{paddingTop: 20, paddingBottom: 10}} {...props}>{props.children}</Text>;
+const QuestionText = (props) => <Text style={[styles.pt3, styles.pb1]} {...props}>{props.children}</Text>;
 
 export default function LoginScreen({navigation, screenProps}) {
 
@@ -46,7 +47,7 @@ export default function LoginScreen({navigation, screenProps}) {
     return (
         <Container marginHorizontal={30}>
             <Text bold color={Colors.purple} size={16}>{localization('onboardingTitle')}</Text>
-            <Text size={12} style={{paddingTop: 6}}>{localization('onboardingSubTitle')}</Text>
+            <Text size={12} style={styles.pt1}>{localization('onboardingSubTitle')}</Text>
 
             <QuestionText>{localization('howOldAreYou')}</QuestionText>
             <NumericInput value={age} setValue={setAge}/>

@@ -8,7 +8,7 @@ import Colors from "../constants/Colors";
 
 const YesNoBox = ({isSelected, textKey}) =>
     <Box height={50} width={50} style={isSelected ? {
-        backgroundColor: Colors.purpleDimmed,
+        backgroundColor: Colors.purpleLight,
         borderColor: Colors.purple
     } : {}}>
         <Text alignCenter bold color={isSelected ? Colors.purple : Colors.grayDark}>{localization(textKey)}</Text>

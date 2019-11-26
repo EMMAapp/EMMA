@@ -6,10 +6,9 @@ const StyledView = styled(View)`
 flex-direction: row;
 justify-content: flex-start;
 align-items: center;
-text-align: justify;
 `;
 
 export default ({children, style}) =>
-    <StyledView style={style}>
+    <StyledView style={[style, {textAlignVertical: 'center'}]}>
         {children}
     </StyledView>

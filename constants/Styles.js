@@ -27,6 +27,13 @@ export const getBorderRadiusStyle = (borderRadius) =>
         }
     }).borderRadiusStyle;
 
+export const getFontSizeStyle = (fontSize) =>
+    EStyleSheet.create({
+        fontSizeStyle: {
+            fontSize: toRem(fontSize)
+        }
+    }).fontSizeStyle;
+
 const styles = EStyleSheet.create({
     // padding
     p5: {

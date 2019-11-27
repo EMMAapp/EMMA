@@ -46,8 +46,8 @@ export default function LoginScreen({navigation, screenProps}) {
 
     return (
         <Container marginHorizontal={30}>
-            <Text bold color={Colors.purple} size={16}>{localization('onboardingTitle')}</Text>
-            <Text size={12} style={styles.pt5}>{localization('onboardingSubTitle')}</Text>
+            <Text bold color={Colors.purple} size={13}>{localization('onboardingTitle')}</Text>
+            <Text size={9} style={styles.pt5}>{localization('onboardingSubTitle')}</Text>
 
             <QuestionText>{localization('howOldAreYou')}</QuestionText>
             <NumericInput value={age} setValue={setAge}/>

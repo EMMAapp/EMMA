@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {TouchableOpacity, View, Button, Switch} from 'react-native'
+import {TouchableOpacity} from 'react-native'
 import {syncPatientData, store} from '../store';
 import RouteGuard from "../navigation/RouteGuard";
 import localization from "../utils/localization";
@@ -19,7 +19,7 @@ import ButtonPrimary from "../components/ButtonPrimary";
 import Checkbox from "../components/Checkbox";
 import styles from "../constants/Styles"
 
-const QuestionText = (props) => <Text style={[styles.pt3, styles.pb1]} {...props}>{props.children}</Text>;
+const QuestionText = (props) => <Text style={[styles.pt15, styles.pb5]} {...props}>{props.children}</Text>;
 
 export default function LoginScreen({navigation, screenProps}) {
 
@@ -47,17 +47,17 @@ export default function LoginScreen({navigation, screenProps}) {
     return (
         <Container marginHorizontal={30}>
             <Text bold color={Colors.purple} size={16}>{localization('onboardingTitle')}</Text>
-            <Text size={12} style={styles.pt1}>{localization('onboardingSubTitle')}</Text>
+            <Text size={12} style={styles.pt5}>{localization('onboardingSubTitle')}</Text>
 
             <QuestionText>{localization('howOldAreYou')}</QuestionText>
             <NumericInput value={age} setValue={setAge}/>
 
             <QuestionText>{localization('lastPeriod')}</QuestionText>
-            <Box height={40} width={'95%'}>
+            <Box height={25} width={'90%'}>
                 <TouchableOpacity onPress={() => setCalendarPickerVisible(true)}>
                     <Row>
                         <Icon name='calendar'/>
-                        <Text bold={true} style={{paddingLeft: 6}}>{lastPeriodDate ? momentToDisplayString(wixDateToMoment(lastPeriodDate)) : localization('selectDay')}</Text>
+                        <Text bold={true} style={styles.pl5}>{lastPeriodDate ? momentToDisplayString(wixDateToMoment(lastPeriodDate)) : localization('selectDay')}</Text>
                     </Row>
                 </TouchableOpacity>
             </Box>
@@ -77,29 +77,29 @@ export default function LoginScreen({navigation, screenProps}) {
 
             {
                 isPeriodRegular ? <Row>
-                    <QuestionText>{localization('periodCyclePrefix')}</QuestionText>
-                    <NumericInput value={averagePeriodCycleDays} setValue={setAveragePeriodCycleDays} style={{margin: 10}}/>
-                    <QuestionText>{localization('periodCycleSuffix')}</QuestionText>
+                    <QuestionText style={styles.pb2}>{localization('periodCyclePrefix')}</QuestionText>
+                    <NumericInput value={averagePeriodCycleDays} setValue={setAveragePeriodCycleDays} style={styles.m5}/>
+                    <QuestionText style={styles.pb2}>{localization('periodCycleSuffix')}</QuestionText>
                 </Row> : null
             }
 
             <ProtocolPicker selectedProtocol={selectedProtocol} setSelectedProtocol={setSelectedProtocol}/>
 
             <TermsModal isVisible={termsIsVisible} dismiss={() => setTermsIsVisible(false)}/>
-            <Row style={{marginTop: 30}}>
+            <Row style={styles.mt40}>
                 <Checkbox
                         value={agreeTerms}
                         setValue={(enabled) => setAgreeTerms(enabled)}
                 />
-                <Row style={{paddingBottom: 10, width: '100%'}}>
+                <Row style={[styles.pb10, styles.fullWidth]}>
                     <QuestionText>{localization('acceptTermsPrefix')}</QuestionText>
-                    <TouchableOpacity onPress={() => setTermsIsVisible(true)} style={{paddingLeft: 3}}>
+                    <TouchableOpacity onPress={() => setTermsIsVisible(true)} style={styles.pl2}>
                         <QuestionText color={Colors.purple} underline>{localization('acceptTermsLink')}</QuestionText>
                     </TouchableOpacity>
                 </Row>
             </Row>
 
-            <ButtonPrimary onPress={submit} disabled={!canSubmit} style={{marginTop: 20}}>
+            <ButtonPrimary onPress={submit} disabled={!canSubmit} style={styles.mt15}>
                 {localization('onboardingSubmit')}
             </ButtonPrimary>
         </Container>

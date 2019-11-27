@@ -7,7 +7,7 @@ import Text from "./Text";
 import Colors from "../constants/Colors";
 
 const YesNoBox = ({isSelected, textKey}) =>
-    <Box height={50} width={50} style={isSelected ? {
+    <Box height={30} width={30} style={isSelected ? {
         backgroundColor: Colors.purpleLight,
         borderColor: Colors.purple
     } : {}}>

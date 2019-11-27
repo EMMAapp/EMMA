@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components"
 import Colors from "../constants/Colors";
 import {actuatedNormalize} from "../constants/Layout";
+import {getHeightWidthStyle} from "../constants/Styles";
 
 const StyledView = styled(View)`
 font-family: 'sf-pro-bold';
@@ -17,8 +18,9 @@ padding: 8px;
 `;
 
 export default ({style, children, height, width}) => {
+
     return (
-        <StyledView style={[style, {height: height, width: width}]}>
+        <StyledView style={[style, getHeightWidthStyle(height, width)]}>
             {children}
         </StyledView>
     )

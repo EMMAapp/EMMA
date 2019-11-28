@@ -59,7 +59,7 @@ const en = {
     'onboardingTitle': 'Let\'s Begin Our Journey!',
     'onboardingSubTitle': 'Just a few short questions',
     'onboardingSubmit': 'OK, Done',
-    'yourProtocol': 'Your protocol:',
+    'yourPlan': 'The current cycle plan:',
     'howOldAreYou': 'How old are you?',
     'lastPeriod': 'Last period date:',
     'regularPeriod': 'Do you have a regular menstrual cycle?',
@@ -83,10 +83,17 @@ const en = {
         'ovulationEst': 'est ovu'
     },
 
-    'protocol': {
+    'plan': {
+        'ICI_title': 'ICI',
+        'IUI_title': 'IUI',
+        'IVF_title': 'IVF',
+        'Intercourse_title': 'Intercourse',
+        'MedicalExploration_title': 'Medical Exploration',
         'ICI': 'Intra Cervical Insemination',
         'IUI': 'Intra Uterine Insemination',
         'IVF': 'In Vitro Fertilization',
+        'Intercourse': '',
+        'MedicalExploration': ''
     },
 
     'diagnosis': {

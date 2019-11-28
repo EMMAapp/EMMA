@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import {Button, View} from "react-native";
 import {addDays, momentToWixDate, wixDateToMoment} from "../../../utils/dayTime";
 import moment from "moment";
-import ProtocolPicker from "../../../components/ProtocolPicker";
+import ProtocolPicker from "../../../components/PlanPicker";
 import localization from "../../../utils/localization";
 
 export default ({lastPeriod, setPeriod}) => {

@@ -8,7 +8,7 @@ const initialPatientData = {
     isPeriodRegular: false,
     periods: [],
     averagePeriodCycleDays: 28,
-    protocol: null,
+    plan: null,
     events: {}
 };
 

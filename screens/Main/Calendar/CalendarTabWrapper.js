@@ -92,6 +92,7 @@ export default function CalendarTabWrapper({navigation, screenProps}) {
         markedDates={markedDates}
         eventsByDay={eventsByDay}
         dayRender={dayRender}
+        clearDayFromCache={(day) => dayRenderCache = _.omit(dayRenderCache, day)}
         eventedDateMoments={_.sortBy(_.keys(eventsByDay).map(date => wixDateToMoment(date)), _ => _)}
         setMainCalendarRefresh={setMainCalendarRefresh}
     />

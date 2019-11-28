@@ -16,7 +16,7 @@ import androidWarningFix from './utils/androidWarningFix';
 import Layout from "./constants/Layout";
 
 EStyleSheet.build({
-    $rem: Layout.window.width > 340 ? 16 : 14
+    $rem: Layout.width > 340 ? 16 : 14
 });
 
 androidWarningFix();

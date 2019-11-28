@@ -1,6 +1,7 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
 import _ from "lodash"
 import Colors from "./Colors";
+import {capitalizeFirstLetter} from "../utils/utils";
 
 export const calendarTheme = {
     textDayFontFamily: 'sf-pro-regular',
@@ -12,7 +13,7 @@ export const calendarTheme = {
 
 const toRem = (number) => `${number/10}rem`;
 
-export const getHeightWidthStyle = (height, width) =>
+export const hwStyle = (height, width) =>
     EStyleSheet.create({
         heightWidthStyle: {
             height: _.includes(height, "%") ? height : toRem(height),
@@ -20,72 +21,30 @@ export const getHeightWidthStyle = (height, width) =>
         }
     }).heightWidthStyle;
 
-export const getBorderRadiusStyle = (borderRadius) =>
+export const borderRadiusStyle = (borderRadius) =>
     EStyleSheet.create({
         borderRadiusStyle: {
             borderRadius: toRem(borderRadius)
         }
     }).borderRadiusStyle;
 
-export const getFontSizeStyle = (fontSize) =>
+export const fontSizeStyle = (fontSize) =>
     EStyleSheet.create({
         fontSizeStyle: {
             fontSize: toRem(fontSize)
         }
     }).fontSizeStyle;
 
-const styles = EStyleSheet.create({
-    // padding
-    p5: {
-        padding: '0.5rem'
-    },
+export const paddingStyle = (padding, direction) =>
+    EStyleSheet.create({
+        fontSizeStyle: {
+            [direction ? `padding${capitalizeFirstLetter(direction)}` : 'padding']: toRem(padding)
+        }
+    }).fontSizeStyle;
 
-    // padding-left
-    pl2: {
-        paddingLeft: '0.2rem'
-    },
-    pl5: {
-        paddingLeft: '0.5rem'
-    },
-
-    // padding-top
-    pt5: {
-        paddingTop: '0.5rem'
-    },
-    pt15: {
-        paddingTop: '1.5rem'
-    },
-
-    // padding-bottom
-    pb2: {
-        paddingBottom: '0.2rem'
-    },
-    pb5: {
-        paddingBottom: '0.5rem'
-    },
-    pb10: {
-        paddingBottom: '1rem'
-    },
-
-    // margin-top
-    mt15: {
-        marginTop: '1.5rem'
-    },
-    mt40: {
-        marginTop: '4rem'
-    },
-
-    // margin
-    m5: {
-        margin: '0.5rem'
-    },
-    m7: {
-        margin: '0.7rem'
-    },
-
-    fullWidth: {
-        width: '100%'
-    }
-});
-
-export default styles;
+export const marginStyle = (margin, direction) =>
+    EStyleSheet.create({
+        fontSizeStyle: {
+            [direction ? `margin${capitalizeFirstLetter(direction)}` : 'margin']: toRem(margin)
+        }
+    }).fontSizeStyle;

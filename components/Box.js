@@ -2,7 +2,7 @@ import {View} from "react-native";
 import React from "react";
 import styled from "styled-components"
 import Colors from "../constants/Colors";
-import {getHeightWidthStyle, getFontSizeStyle} from "../constants/Styles";
+import {hwStyle, fontSizeStyle} from "../constants/Styles";
 
 const StyledView = styled(View)`
 font-family: 'sf-pro-bold';
@@ -18,7 +18,7 @@ padding: 8px;
 export default ({style, children, height, width}) => {
 
     return (
-        <StyledView style={[getHeightWidthStyle(height, width), getFontSizeStyle(8), style]}>
+        <StyledView style={[hwStyle(height, width), fontSizeStyle(8), style]}>
             {children}
         </StyledView>
     )

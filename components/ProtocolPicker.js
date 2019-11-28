@@ -6,11 +6,11 @@ import Text from "./Text";
 import Row from "./Row";
 import Box from "./Box";
 import Colors from "../constants/Colors";
-import styles, {getHeightWidthStyle, getBorderRadiusStyle} from "../constants/Styles";
+import {hwStyle, borderRadiusStyle, paddingStyle, marginStyle} from "../constants/Styles";
 
 const ProtocolBox = ({isSelected, text}) =>
     <Box height={30} width={35} style={[
-        getBorderRadiusStyle(10),
+        borderRadiusStyle(10),
         {
             backgroundColor: isSelected ? Colors.purpleLight : Colors.grayLight,
             borderColor: isSelected ? Colors.purple : Colors.gray
@@ -20,18 +20,18 @@ const ProtocolBox = ({isSelected, text}) =>
     </Box>;
 
 const Protocol = ({protocol, selectedProtocol, setSelectedProtocol}) =>
-    <View style={[getHeightWidthStyle(35, 50), styles.m7]}>
+    <View style={[hwStyle(35, 50), marginStyle(7)]}>
         <TouchableOpacity disabled={protocol === selectedProtocol} onPress={() => setSelectedProtocol(protocol)} style={{alignItems: 'center'}}>
             <ProtocolBox isSelected={protocol === selectedProtocol} text={protocol}/>
         </TouchableOpacity>
-        <Text size={8} alignCenter style={styles.pt5}>
+        <Text size={8} alignCenter style={paddingStyle(5, 'top')}>
             {localization(`protocol.${protocol}`)}
         </Text>
     </View>;
 
 export default ({selectedProtocol, setSelectedProtocol}) => (
     <View>
-        <Text style={[styles.pt15, styles.pb5]}>{localization('yourProtocol')}</Text>
+        <Text style={[paddingStyle(15, 'top'), paddingStyle(5, 'bottom')]}>{localization('yourProtocol')}</Text>
         <Row>
             {
                 Protocols.map(protocol => <Protocol

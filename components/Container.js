@@ -1,15 +1,15 @@
 import React from 'react'
 import {SafeAreaView, ScrollView} from 'react-native'
 import styled from "styled-components"
+import {marginStyle} from "../constants/Styles";
 
 const StyledView = styled(SafeAreaView)`
 flex: 1;
 align-items: flex-start;
-margin-top: 100px;
 `;
 
 export default ({marginHorizontal, children}) =>
-    <StyledView>
+    <StyledView style={[marginStyle(40, 'top'), marginStyle(35, 'bottom')]}>
         <ScrollView
             keyboardShouldPersistTaps="handled"
             style={{marginHorizontal: marginHorizontal}}

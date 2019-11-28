@@ -6,11 +6,13 @@ import _ from 'lodash'
 import CalendarTab from "./CalendarTab";
 import MultiDot from "react-native-calendars/src/calendar/day/multi-dot";
 import localization from "../../../utils/localization";
-import {StyleSheet, Text, View} from "react-native";
+import {View} from "react-native";
 import {pushByKey} from '../../../utils/utils'
+import Text from "../../../components/Text";
+import Colors from "../../../constants/Colors";
 
-const medicationDot = {key: 'workout', color: 'pink'};
-const checkupDot = {key: 'workout', color: 'green'};
+const medicationDot = {key: 'workout', color: Colors.fuchsia};
+const checkupDot = {key: 'workout', color: Colors.turquoise};
 
 function collectByDay(events) {
     let eventsByDay = {};
@@ -72,7 +74,7 @@ export default function CalendarTabWrapper({navigation, screenProps}) {
         }
         return <View>
             <MultiDot {...props}/>
-            <Text style={styles.periodDay}>{title}</Text>
+            <Text alignCenter color={Colors.pink} size={7}>{title}</Text>
         </View>;
     };
 
@@ -97,11 +99,3 @@ export default function CalendarTabWrapper({navigation, screenProps}) {
         setMainCalendarRefresh={setMainCalendarRefresh}
     />
 }
-
-const styles = StyleSheet.create({
-    periodDay: {
-        textAlign: 'center',
-        fontSize: 11,
-        color: 'red'
-    }
-});

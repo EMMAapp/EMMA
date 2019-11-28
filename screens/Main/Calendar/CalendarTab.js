@@ -17,6 +17,7 @@ import Container from "../../../components/Container";
 import Row from "../../../components/Row";
 import Icon from "../../../components/Icon";
 import IconAndText from "../../../components/IconAndText";
+import Drawer from "../../../components/Drawer";
 
 const selectedDayColoring = {selected: true, marked: true, selectedColor: Colors.purple};
 
@@ -130,23 +131,19 @@ export default function CalendarTab({
                         clearDayFromCache={clearDayFromCache}
                     />
             }
-            <TouchableOpacity style={{backgroundColor: 'gray'}} onPress={() => setAgendaExpanded(!isAgendaExpanded)}>
-                <Text>
-                    {isAgendaExpanded ? "CLOSE" : "OPEN"}
-                </Text>
-            </TouchableOpacity>
-            {
-                isAgendaExpanded ?
-                    <FlatList
-                        ref={agendaListRef}
-                        data={_.filter(eventedDateMoments, dateMoment =>
-                            isAfterOrEquals(dateMoment, moment()) || isAfterOrEquals(dateMoment, wixDateToMoment(selectedDay))
-                        )}
-                        renderItem={({item}) => agendaDayRender(item)}
-                        keyExtractor={item => item.toString()}
-                    />
-                    : agendaDayRender(wixDateToMoment(selectedDay))
-            }
+            <Drawer
+                isExpanded={isAgendaExpanded}
+                setIsExpanded={setAgendaExpanded}
+                renderCollapsed={() => agendaDayRender(wixDateToMoment(selectedDay))}
+                renderExpanded={() => <FlatList
+                    ref={agendaListRef}
+                    data={_.filter(eventedDateMoments, dateMoment =>
+                        isAfterOrEquals(dateMoment, moment()) || isAfterOrEquals(dateMoment, wixDateToMoment(selectedDay))
+                    )}
+                    renderItem={({item}) => agendaDayRender(item)}
+                    keyExtractor={item => item.toString()}
+                />}
+            />
         </Container>
     );
 }

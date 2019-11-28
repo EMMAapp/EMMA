@@ -6,7 +6,7 @@
 	.st0{fill-rule:evenodd;clip-rule:evenodd;}
 </style>
 <g>
-	<g id="Fill" transform="translate(15.703125, 16.000000) rotate(-180.000000) translate(-15.703125, -16.000000) ">
+	<g id="Fill" transform="translate(-1,1)">
 		<polygon class="st0" points="15.7031,19.7031 9.7031,13.7031 11.1094,12.2969 15.7031,16.8906 20.2969,12.2969 21.7031,13.7031 		
 			"/>
 	</g>

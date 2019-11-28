@@ -6,7 +6,7 @@ import localization from "../utils/localization";
 import NumericInput from "../components/NumericInput";
 import CalendarModalPicker from "../components/CalendarModalPicker";
 import {wixDateToMoment, momentToDisplayString} from "../utils/dayTime";
-import ProtocolPicker from "../components/ProtocolPicker";
+import PlanPicker from "../components/PlanPicker";
 import TermsModal from "../components/TermsModal";
 import Text from "../components/Text";
 import Container from "../components/Container";
@@ -23,7 +23,7 @@ const QuestionText = (props) => <Text style={[paddingStyle(15, 'top'), paddingSt
 
 export default function LoginScreen({navigation, screenProps}) {
 
-    const [selectedProtocol, setSelectedProtocol] = useState(null);
+    const [selectedPlan, setSelectedPlan] = useState(null);
     const [age, setAge] = useState(null);
     const [lastPeriodDate, setLastPeriodDate] = useState(null);
     const [isPeriodRegular, setIsPeriodRegular] = useState(false);
@@ -35,14 +35,14 @@ export default function LoginScreen({navigation, screenProps}) {
 
     const submit = async () => {
         setIsLoading(true);
-        const periods = [{date: lastPeriodDate, protocol: selectedProtocol}];
+        const periods = [{date: lastPeriodDate, plan: selectedPlan}];
         const patientData = {...store.patientData, age, averagePeriodCycleDays, isPeriodRegular, periods};
         await syncPatientData(patientData);
         setIsLoading(false);
         RouteGuard(navigation);
     };
 
-    const canSubmit = selectedProtocol && age && lastPeriodDate && agreeTerms;
+    const canSubmit = selectedPlan && age && lastPeriodDate && agreeTerms;
 
     return (
         <Container marginHorizontal={30}>
@@ -83,10 +83,10 @@ export default function LoginScreen({navigation, screenProps}) {
                 </Row> : null
             }
 
-            <ProtocolPicker selectedProtocol={selectedProtocol} setSelectedProtocol={setSelectedProtocol}/>
+            <PlanPicker selectedPlan={selectedPlan} setSelectedPlan={setSelectedPlan}/>
 
             <TermsModal isVisible={termsIsVisible} dismiss={() => setTermsIsVisible(false)}/>
-            <Row style={marginStyle(40, 'top')}>
+            <Row>
                 <Checkbox
                         value={agreeTerms}
                         setValue={(enabled) => setAgreeTerms(enabled)}

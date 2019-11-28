@@ -9,6 +9,7 @@ export const calendarTheme = {
     textDayHeaderFontFamily: 'sf-pro-regular',
     todayTextColor: Colors.purple,
     arrowColor: Colors.purple,
+    calendarBackground: 'transparent'
 };
 
 const toRem = (number) => `${number/10}rem`;

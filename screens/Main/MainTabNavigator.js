@@ -10,7 +10,12 @@ import localization from "../../utils/localization";
 
 const config = Platform.select({
     web: {headerMode: 'screen'},
-    default: {},
+    default: {
+        headerMode: 'none',
+        navigationOptions: {
+            headerVisible: false,
+        }
+    },
 });
 
 const CalendarStack = createStackNavigator(
@@ -79,6 +84,9 @@ const tabNavigator = createBottomTabNavigator({
     CalendarStack,
     EditEventStack,
     ProfileStack,
+}, {
+    tabBarOptions: {
+    }
 });
 
 tabNavigator.path = '';

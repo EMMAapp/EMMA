@@ -18,8 +18,14 @@ import YesNoBoxes from "../components/YesNoBoxes";
 import ButtonPrimary from "../components/ButtonPrimary";
 import Checkbox from "../components/Checkbox";
 import {paddingStyle, marginStyle} from "../constants/Styles"
+import IconAndText from "../components/IconAndText";
 
-const QuestionText = (props) => <Text style={[paddingStyle(15, 'top'), paddingStyle(5, 'bottom')]} {...props}>{props.children}</Text>;
+const QuestionText = (props) =>
+    <Text
+        style={[paddingStyle(15, 'top'), paddingStyle(5, 'bottom')]}
+        {...props}>
+        {props.children}
+    </Text>;
 
 export default function LoginScreen({navigation, screenProps}) {
 
@@ -45,7 +51,7 @@ export default function LoginScreen({navigation, screenProps}) {
     const canSubmit = selectedPlan && age && lastPeriodDate && agreeTerms;
 
     return (
-        <Container marginHorizontal={30}>
+        <Container>
             <Text bold color={Colors.purple} size={13}>{localization('onboardingTitle')}</Text>
             <Text size={9} style={paddingStyle(5, 'top')}>{localization('onboardingSubTitle')}</Text>
 
@@ -55,10 +61,9 @@ export default function LoginScreen({navigation, screenProps}) {
             <QuestionText>{localization('lastPeriod')}</QuestionText>
             <Box height={25} width={'90%'}>
                 <TouchableOpacity onPress={() => setCalendarPickerVisible(true)}>
-                    <Row>
-                        <Icon name='calendar'/>
-                        <Text bold={true} style={paddingStyle(5, 'left')}>{lastPeriodDate ? momentToDisplayString(wixDateToMoment(lastPeriodDate)) : localization('selectDay')}</Text>
-                    </Row>
+                    <IconAndText name='calendar' bold>
+                        {lastPeriodDate ? momentToDisplayString(wixDateToMoment(lastPeriodDate)) : localization('selectDay')}
+                    </IconAndText>
                 </TouchableOpacity>
             </Box>
 
@@ -88,8 +93,8 @@ export default function LoginScreen({navigation, screenProps}) {
             <TermsModal isVisible={termsIsVisible} dismiss={() => setTermsIsVisible(false)}/>
             <Row>
                 <Checkbox
-                        value={agreeTerms}
-                        setValue={(enabled) => setAgreeTerms(enabled)}
+                    value={agreeTerms}
+                    setValue={(enabled) => setAgreeTerms(enabled)}
                 />
                 <Row style={[paddingStyle(10, 'bottom'), {width: '100%'}]}>
                     <QuestionText>{localization('acceptTermsPrefix')}</QuestionText>

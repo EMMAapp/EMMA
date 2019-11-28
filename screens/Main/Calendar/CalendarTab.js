@@ -1,6 +1,6 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import moment from "moment";
-import {SafeAreaView, ScrollView, StyleSheet, Text, View, TouchableOpacity, FlatList} from "react-native";
+import {SafeAreaView, ScrollView, StyleSheet, View, TouchableOpacity, FlatList} from "react-native";
 import {Calendar} from "react-native-calendars";
 import {dayTimeToDisplayString, wixDateToMoment, momentToDisplayString, momentToWixDate, momentsEquals, isAfterOrEquals} from "../../../utils/dayTime";
 import shortid from 'shortid';
@@ -9,8 +9,16 @@ import _ from 'lodash'
 import localization from "../../../utils/localization";
 import SetAndSyncPeriodModal from "./SetAndSyncPeriodModal";
 import {store} from "../../../store";
+import Colors from "../../../constants/Colors";
+import {pushByMapKey} from "../../../utils/utils";
+import MainCalendar from "./MainCalendar";
+import Text from '../../../components/Text'
+import Container from "../../../components/Container";
+import Row from "../../../components/Row";
+import Icon from "../../../components/Icon";
+import IconAndText from "../../../components/IconAndText";
 
-const selectedDayColoring = {selected: true, marked: true, selectedColor: 'pink'};
+const selectedDayColoring = {selected: true, marked: true, selectedColor: Colors.purple};
 
 function collectEventsForDate(eventsByDay, selectedDay) {
     const eventsForDay = eventsByDay[selectedDay];
@@ -34,27 +42,24 @@ function collectEventsForDate(eventsByDay, selectedDay) {
 }
 
 export default function CalendarTab({
-                                        navigation,
-                                        setCurrentEditedEventId,
-                                        markedDates,
-                                        eventsByDay,
-                                        dayRender,
-                                        eventedDateMoments,
-                                        setMainCalendarRefresh
-                                    }) {
+    navigation,
+    setCurrentEditedEventId,
+    markedDates,
+    eventsByDay,
+    dayRender,
+    clearDayFromCache,
+    eventedDateMoments,
+    setMainCalendarRefresh
+}) {
 
-    const [selectedDayMoment, setSelectedDay] = useState(moment());
+    const [selectedDay, setSelectedDay] = useState(momentToWixDate(moment()));
     const [isAgendaExpanded, setAgendaExpanded] = useState(false);
     const [isEditingPeriod, setEditingPeriod] = useState(false);
     const agendaListRef = useRef(null);
     const lastPeriodMoment = wixDateToMoment(_.last(store.patientData.periods).date);
 
-    const selectedDayStr = momentToWixDate(selectedDayMoment);
-    if (_.has(markedDates, selectedDayStr)) {
-        markedDates[selectedDayStr] = {...markedDates[selectedDayStr], ...selectedDayColoring};
-    } else {
-        markedDates[selectedDayStr] = selectedDayColoring;
-    }
+    const currentMarkedDates = {...markedDates};
+    pushByMapKey(currentMarkedDates, selectedDay, selectedDayColoring);
 
     const eventsForDate = {};
     const getEventsForDate = (date) => {
@@ -98,49 +103,51 @@ export default function CalendarTab({
     );
 
     return (
-        <SafeAreaView style={styles.container}>
-            <ScrollView style={styles.scrollView} keyboardShouldPersistTaps="handled">
-                <Text>{localization('treatmentPlan')}</Text>
-                <SetAndSyncPeriodModal
-                    isVisible={isEditingPeriod}
-                    dismiss={() => setEditingPeriod(false)}
-                    setMainCalendarRefresh={setMainCalendarRefresh}
-                />
-                <TouchableOpacity onPress={() => setEditingPeriod(true)} style={{backgroundColor: 'pink'}}>
-                    <Text>{localization('editPeriod')}</Text>
+        <Container style={{backgroundColor: Colors.grayLight}}>
+            <Row>
+                <Text size={11}>{localization('treatmentPlan')}</Text>
+                <View style={{flex: 1}}/>
+                <TouchableOpacity onPress={() => setEditingPeriod(true)}>
+                    <IconAndText name='edit' color={Colors.purple} paddingBetween={1}>
+                        {localization('editPeriod')}
+                    </IconAndText>
                 </TouchableOpacity>
-                {
-                    isAgendaExpanded ? null :
-                        <Calendar
-                            style={{paddingTop: 100, paddingBottom: 10}}
-                            current={selectedDayStr}
-                            onDayPress={(day) => setSelectedDay(wixDateToMoment(day.dateString))}
-                            markedDates={markedDates}
-                            markingType={'multi-dot'}
-                            monthFormat={'yyyy MM'}
-                            firstDay={0} // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
-                            dayComponent={dayRender}
-                        />
-                }
-                <TouchableOpacity style={{backgroundColor: 'gray'}} onPress={() => setAgendaExpanded(!isAgendaExpanded)}>
-                    <Text>
-                        {isAgendaExpanded ? "CLOSE" : "OPEN"}
-                    </Text>
-                </TouchableOpacity>
-                {
-                    isAgendaExpanded ?
-                        <FlatList
-                            ref={agendaListRef}
-                            data={_.filter(eventedDateMoments, dateMoment =>
-                                isAfterOrEquals(dateMoment, moment()) || isAfterOrEquals(dateMoment, selectedDayMoment)
-                            )}
-                            renderItem={({item}) => agendaDayRender(item)}
-                            keyExtractor={item => item.toString()}
-                        />
-                        : agendaDayRender(selectedDayMoment)
-                }
-            </ScrollView>
-        </SafeAreaView>
+            </Row>
+
+            <SetAndSyncPeriodModal
+                isVisible={isEditingPeriod}
+                dismiss={() => setEditingPeriod(false)}
+                setMainCalendarRefresh={setMainCalendarRefresh}
+            />
+
+            {
+                isAgendaExpanded ? null :
+                    <MainCalendar
+                        selectedDay={selectedDay}
+                        setSelectedDay={setSelectedDay}
+                        markedDates={markedDates}
+                        dayRender={dayRender}
+                        clearDayFromCache={clearDayFromCache}
+                    />
+            }
+            <TouchableOpacity style={{backgroundColor: 'gray'}} onPress={() => setAgendaExpanded(!isAgendaExpanded)}>
+                <Text>
+                    {isAgendaExpanded ? "CLOSE" : "OPEN"}
+                </Text>
+            </TouchableOpacity>
+            {
+                isAgendaExpanded ?
+                    <FlatList
+                        ref={agendaListRef}
+                        data={_.filter(eventedDateMoments, dateMoment =>
+                            isAfterOrEquals(dateMoment, moment()) || isAfterOrEquals(dateMoment, wixDateToMoment(selectedDay))
+                        )}
+                        renderItem={({item}) => agendaDayRender(item)}
+                        keyExtractor={item => item.toString()}
+                    />
+                    : agendaDayRender(wixDateToMoment(selectedDay))
+            }
+        </Container>
     );
 }
 

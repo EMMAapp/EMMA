@@ -2,7 +2,7 @@ import React from 'react'
 import {Text} from 'react-native'
 import styled from "styled-components"
 import Colors from "../constants/Colors";
-import {getFontSizeStyle} from "../constants/Styles";
+import {fontSizeStyle} from "../constants/Styles";
 
 const StyledText = styled(Text)`
 font-family: ${props => props.bold ? 'sf-pro-bold' : 'sf-pro-regular'};
@@ -12,6 +12,6 @@ text-decoration-line: ${props => props.underline ? 'underline' : 'none'};
 `;
 
 export default ({style, bold, color, size, children, alignCenter, underline}) =>
-    <StyledText style={[getFontSizeStyle(size || 8), style]} bold={bold} color={color} size={size} alignCenter={alignCenter} underline={underline}>
+    <StyledText style={[fontSizeStyle(size || 8), style]} bold={bold} color={color} size={size} alignCenter={alignCenter} underline={underline}>
         {children}
     </StyledText>

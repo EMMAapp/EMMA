@@ -17,9 +17,9 @@ import Row from "../components/Row";
 import YesNoBoxes from "../components/YesNoBoxes";
 import ButtonPrimary from "../components/ButtonPrimary";
 import Checkbox from "../components/Checkbox";
-import styles from "../constants/Styles"
+import {paddingStyle, marginStyle} from "../constants/Styles"
 
-const QuestionText = (props) => <Text style={[styles.pt15, styles.pb5]} {...props}>{props.children}</Text>;
+const QuestionText = (props) => <Text style={[paddingStyle(15, 'top'), paddingStyle(5, 'bottom')]} {...props}>{props.children}</Text>;
 
 export default function LoginScreen({navigation, screenProps}) {
 
@@ -47,7 +47,7 @@ export default function LoginScreen({navigation, screenProps}) {
     return (
         <Container marginHorizontal={30}>
             <Text bold color={Colors.purple} size={13}>{localization('onboardingTitle')}</Text>
-            <Text size={9} style={styles.pt5}>{localization('onboardingSubTitle')}</Text>
+            <Text size={9} style={paddingStyle(5, 'top')}>{localization('onboardingSubTitle')}</Text>
 
             <QuestionText>{localization('howOldAreYou')}</QuestionText>
             <NumericInput value={age} setValue={setAge}/>
@@ -57,7 +57,7 @@ export default function LoginScreen({navigation, screenProps}) {
                 <TouchableOpacity onPress={() => setCalendarPickerVisible(true)}>
                     <Row>
                         <Icon name='calendar'/>
-                        <Text bold={true} style={styles.pl5}>{lastPeriodDate ? momentToDisplayString(wixDateToMoment(lastPeriodDate)) : localization('selectDay')}</Text>
+                        <Text bold={true} style={paddingStyle(5, 'left')}>{lastPeriodDate ? momentToDisplayString(wixDateToMoment(lastPeriodDate)) : localization('selectDay')}</Text>
                     </Row>
                 </TouchableOpacity>
             </Box>
@@ -77,29 +77,29 @@ export default function LoginScreen({navigation, screenProps}) {
 
             {
                 isPeriodRegular ? <Row>
-                    <QuestionText style={styles.pb2}>{localization('periodCyclePrefix')}</QuestionText>
-                    <NumericInput value={averagePeriodCycleDays} setValue={setAveragePeriodCycleDays} style={styles.m5}/>
-                    <QuestionText style={styles.pb2}>{localization('periodCycleSuffix')}</QuestionText>
+                    <QuestionText style={paddingStyle(2, 'bottom')}>{localization('periodCyclePrefix')}</QuestionText>
+                    <NumericInput value={averagePeriodCycleDays} setValue={setAveragePeriodCycleDays} style={marginStyle(5)}/>
+                    <QuestionText style={paddingStyle(2, 'bottom')}>{localization('periodCycleSuffix')}</QuestionText>
                 </Row> : null
             }
 
             <ProtocolPicker selectedProtocol={selectedProtocol} setSelectedProtocol={setSelectedProtocol}/>
 
             <TermsModal isVisible={termsIsVisible} dismiss={() => setTermsIsVisible(false)}/>
-            <Row style={styles.mt40}>
+            <Row style={marginStyle(40, 'top')}>
                 <Checkbox
                         value={agreeTerms}
                         setValue={(enabled) => setAgreeTerms(enabled)}
                 />
-                <Row style={[styles.pb10, styles.fullWidth]}>
+                <Row style={[paddingStyle(10, 'bottom'), {width: '100%'}]}>
                     <QuestionText>{localization('acceptTermsPrefix')}</QuestionText>
-                    <TouchableOpacity onPress={() => setTermsIsVisible(true)} style={styles.pl2}>
+                    <TouchableOpacity onPress={() => setTermsIsVisible(true)} style={paddingStyle(2, 'left')}>
                         <QuestionText color={Colors.purple} underline>{localization('acceptTermsLink')}</QuestionText>
                     </TouchableOpacity>
                 </Row>
             </Row>
 
-            <ButtonPrimary onPress={submit} disabled={!canSubmit} style={styles.mt15}>
+            <ButtonPrimary onPress={submit} disabled={!canSubmit} style={marginStyle(15, 'top')}>
                 {localization('onboardingSubmit')}
             </ButtonPrimary>
         </Container>

@@ -3,24 +3,24 @@ import Modal from "react-native-modal";
 import {View} from "react-native";
 import styled from "styled-components"
 import Colors from "../constants/Colors";
+import {marginStyle, borderRadiusStyle, paddingStyle} from "../constants/Styles";
 
 const StyledView = styled(View)`
 background-color: white;
-padding: 22px;
 justify-content: center;
 align-items: center;
-border-radius: 4px;
 border-color: ${Colors.grayDark};
 `;
 
 export default ({isVisible, children, onBackdropPress}) => {
     return <Modal
+        style={marginStyle(20)}
         animationIn='fadeIn'
         animationOut='fadeOut'
         isVisible={isVisible}
         onBackdropPress={onBackdropPress}
     >
-        <StyledView>
+        <StyledView style={[borderRadiusStyle(6), paddingStyle(10), marginStyle(2)]}>
             {children}
         </StyledView>
     </Modal>

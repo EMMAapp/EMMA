@@ -1,12 +1,15 @@
-import {Dimensions} from 'react-native';
+import {Dimensions, Platform} from 'react-native';
 
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
+const width = Platform.OS === "ios"
+    ? Dimensions.get("window").width
+    : require("react-native-extra-dimensions-android").get("REAL_WINDOW_WIDTH");
+
+const height = Platform.OS === "ios"
+    ? Dimensions.get("window").height
+    : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
 
 export default {
-    window: {
-        width,
-        height,
-    },
+    width,
+    height,
     isSmallDevice: width < 375,
 };

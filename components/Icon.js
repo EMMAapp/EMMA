@@ -26,4 +26,4 @@ const getIconByName = (name, style) => {
     }
 };
 
-export default ({name, color}) => getIconByName(name, {fill: color || Colors.grayDark, height: 32, width: 32})
+export default ({name, color, scale}) => getIconByName(name, {fill: color || Colors.grayDark, height: 32, width: 32, scale: scale || 1})

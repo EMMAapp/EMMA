@@ -18,6 +18,7 @@ import Row from "../../../components/Row";
 import Icon from "../../../components/Icon";
 import IconAndText from "../../../components/IconAndText";
 import Drawer from "../../../components/Drawer";
+import {Agenda, AgendaDay} from "../../../components/AgendaDay";
 
 const selectedDayColoring = {selected: true, marked: true, selectedColor: Colors.purple};
 
@@ -77,30 +78,12 @@ export default function CalendarTab({
         navigation.navigate(EDIT_EVENT);
     };
 
-    const agendaDayRender = (momentDate) => {
-        const events = getEventsForDate(momentToWixDate(momentDate));
-        return <View>
-            <Text>{momentToDisplayString(momentDate)}</Text>
-            {
-                !_.isEmpty(events) ?
-                    events.map(({dayTime, details}) => agendaItemRender(dayTime, details))
-                    : <Text>Nothing for this day, click below to add!</Text>
-            }
-        </View>
-    };
-
-    const agendaItemRender = (dayTime, details) => (
-        <View key={shortid.generate()}>
-            <Text>
-                {dayTimeToDisplayString(dayTime)} - {details.medication ? details.medication : details.checkup}
-            </Text>
-            <TouchableOpacity onPress={() => onEventPressed(details)}>
-                <Text>
-                    Note: {details.note}
-                </Text>
-            </TouchableOpacity>
-        </View>
-    );
+    const agendaDayRender = (momentDate) =>
+        <AgendaDay
+            momentDate={momentDate}
+            events={getEventsForDate(momentToWixDate(momentDate))}
+            onEventPressed={onEventPressed}
+        />;
 
     return (
         <Container style={{backgroundColor: Colors.grayLight}}>
@@ -134,23 +117,8 @@ export default function CalendarTab({
                 isExpanded={isAgendaExpanded}
                 setIsExpanded={setAgendaExpanded}
                 renderCollapsed={() => agendaDayRender(wixDateToMoment(selectedDay))}
-                renderExpanded={() => <FlatList
-                    data={_.filter(eventedDateMoments, dateMoment =>
-                        isAfterOrEquals(dateMoment, moment()) || isAfterOrEquals(dateMoment, wixDateToMoment(selectedDay))
-                    )}
-                    renderItem={({item}) => agendaDayRender(item)}
-                    keyExtractor={item => item.toString()}
-                />}
+                renderExpanded={() => <Agenda selectedDay={selectedDay} eventedDateMoments={eventedDateMoments} agendaDayRender={agendaDayRender}/>}
             />
         </Container>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1
-    },
-    scrollView: {
-        marginHorizontal: 20,
-    }
-});

@@ -20,7 +20,7 @@ import IconAndText from "../../../components/IconAndText";
 import Drawer from "../../../components/Drawer";
 import {Agenda, AgendaDay} from "../../../components/AgendaDay";
 
-const selectedDayColoring = {selected: true, marked: true, selectedColor: Colors.purple};
+const selectedDayColoring = {selected: true, marked: true, selectedColor: Colors.gray};
 
 function collectEventsForDate(eventsByDay, selectedDay) {
     const eventsForDay = eventsByDay[selectedDay];

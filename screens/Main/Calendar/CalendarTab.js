@@ -56,7 +56,6 @@ export default function CalendarTab({
     const [selectedDay, setSelectedDay] = useState(momentToWixDate(moment()));
     const [isAgendaExpanded, setAgendaExpanded] = useState(false);
     const [isEditingPeriod, setEditingPeriod] = useState(false);
-    const agendaListRef = useRef(null);
     const lastPeriodMoment = wixDateToMoment(_.last(store.patientData.periods).date);
 
     const currentMarkedDates = {...markedDates};
@@ -136,7 +135,6 @@ export default function CalendarTab({
                 setIsExpanded={setAgendaExpanded}
                 renderCollapsed={() => agendaDayRender(wixDateToMoment(selectedDay))}
                 renderExpanded={() => <FlatList
-                    ref={agendaListRef}
                     data={_.filter(eventedDateMoments, dateMoment =>
                         isAfterOrEquals(dateMoment, moment()) || isAfterOrEquals(dateMoment, wixDateToMoment(selectedDay))
                     )}

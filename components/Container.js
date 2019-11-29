@@ -14,7 +14,6 @@ export default ({children, style}) =>
                 keyboardShouldPersistTaps="handled"
                 style={[
                     marginStyle(40, 'top'),
-                    marginStyle(35, 'bottom'),
                     {width: '90%'},
                 ]}
                 bounces={false}>

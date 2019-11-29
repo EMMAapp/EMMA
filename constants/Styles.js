@@ -22,10 +22,10 @@ export const hwStyle = (height, width) =>
         }
     }).heightWidthStyle;
 
-export const borderRadiusStyle = (borderRadius) =>
+export const borderRadiusStyle = (borderRadius, position) =>
     EStyleSheet.create({
         borderRadiusStyle: {
-            borderRadius: toRem(borderRadius)
+            [position ? `border${capitalizeFirstLetter(position)}Radius` : 'borderRadius']: toRem(borderRadius)
         }
     }).borderRadiusStyle;
 

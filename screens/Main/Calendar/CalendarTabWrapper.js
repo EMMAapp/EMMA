@@ -10,9 +10,10 @@ import {View} from "react-native";
 import {pushByKey} from '../../../utils/utils'
 import Text from "../../../components/Text";
 import Colors from "../../../constants/Colors";
+import shortid from 'shortid'
 
-const medicationDot = {key: 'workout', color: Colors.fuchsia};
-const checkupDot = {key: 'workout', color: Colors.turquoise};
+const medicationDot = {key: shortid.generate(), color: Colors.fuchsia};
+const checkupDot = {key: shortid.generate(), color: Colors.turquoise};
 
 function collectByDay(events) {
     let eventsByDay = {};

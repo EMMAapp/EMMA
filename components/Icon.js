@@ -1,11 +1,14 @@
 import React from "react";
+import Colors from "../constants/Colors";
+
 import Calendar from "../assets/icons/calendar.svg"
 import CheckboxOff from "../assets/icons/checkbox-off.svg"
 import CheckboxOn from "../assets/icons/checkbox-on.svg"
 import Edit from "../assets/icons/edit.svg"
 import Up from "../assets/icons/up.svg"
 import Down from "../assets/icons/down.svg"
-import Colors from "../constants/Colors";
+import Add from "../assets/icons/add.svg"
+import Profile from "../assets/icons/profile.svg"
 
 const getIconByName = (name, style) => {
     switch (name) {
@@ -21,6 +24,10 @@ const getIconByName = (name, style) => {
             return <Up style={style}/>;
         case "down":
             return <Down style={style}/>;
+        case "add":
+            return <Add style={style}/>;
+        case "profile":
+            return <Profile style={style}/>;
         default:
             return null;
     }

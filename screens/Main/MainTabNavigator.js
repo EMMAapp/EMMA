@@ -1,12 +1,12 @@
 import React from 'react';
 import {Platform} from 'react-native';
 import {createStackNavigator, createBottomTabNavigator} from 'react-navigation';
-
-import TabBarIcon from '../../components/TabBarIcon';
 import CalendarTabWrapper from './Calendar/CalendarTabWrapper';
 import EditEventTab from './EditEvent/EditEventTab';
 import ProfileTab from './ProfileTab';
-import localization from "../../utils/localization";
+import Icon from "../../components/Icon";
+import Colors from "../../constants/Colors";
+import {paddingStyle} from "../../constants/Styles";
 
 const config = Platform.select({
     web: {headerMode: 'screen'},
@@ -26,15 +26,10 @@ const CalendarStack = createStackNavigator(
 );
 
 CalendarStack.navigationOptions = {
-    tabBarLabel: localization('tabs.calendar'),
     tabBarIcon: ({focused}) => (
-        <TabBarIcon
-            focused={focused}
-            name={
-                Platform.OS === 'ios'
-                    ? `ios-information-circle${focused ? '' : '-outline'}`
-                    : 'md-information-circle'
-            }
+        <Icon
+            color={focused ? Colors.purple : Colors.grayDark}
+            name='calendar'
         />
     ),
 };
@@ -48,13 +43,11 @@ const EditEventStack = createStackNavigator(
     config
 );
 EditEventStack.navigationOptions = {
-    tabBarLabel: localization('tabs.adding'),
     tabBarIcon: ({focused}) => (
-        <TabBarIcon focused={focused} name={
-            Platform.OS === 'ios'
-                ? 'ios-link'
-                : 'md-link'
-        }/>
+        <Icon
+            color={focused ? Colors.purple : Colors.grayDark}
+            name='add'
+        />
     ),
 };
 
@@ -68,13 +61,11 @@ const ProfileStack = createStackNavigator(
 );
 
 ProfileStack.navigationOptions = {
-    tabBarLabel: localization('tabs.profile'),
     tabBarIcon: ({focused}) => (
-        <TabBarIcon focused={focused} name={
-            Platform.OS === 'ios'
-                ? 'ios-options'
-                : 'md-options'
-        }/>
+        <Icon
+            color={focused ? Colors.purple : Colors.grayDark}
+            name='profile'
+        />
     ),
 };
 
@@ -86,6 +77,8 @@ const tabNavigator = createBottomTabNavigator({
     ProfileStack,
 }, {
     tabBarOptions: {
+        style: paddingStyle(10, 'top'),
+        showLabel: false
     }
 });
 

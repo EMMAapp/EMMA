@@ -51,10 +51,10 @@ export default function CalendarTabWrapper({navigation, screenProps}) {
         markedDates[day] = {dots: dots};
     });
 
-    const dayRenderImpl = (props) => {
-        const currentDayMoment = wixDateToMoment(props.date.dateString);
+    const getDayTitle = (dateString) => {
+        const currentDayMoment = wixDateToMoment(dateString);
         if (currentDayMoment.isBefore(_.first(periodsMoments)) || currentDayMoment.isAfter(lastPeriodEndEstimation)) {
-            return <MultiDot {...props}/>;
+            return null;
         }
         let containingPeriodIndex = _.findLastIndex(periodsMoments, periodMoment => isAfterOrEquals(currentDayMoment, periodMoment));
         let title = "";
@@ -73,19 +73,22 @@ export default function CalendarTabWrapper({navigation, screenProps}) {
             const daysFromStart = daysBetween(periodsMoments[containingPeriodIndex], currentDayMoment) + 1;
             title = daysFromStart.toString();
         }
-        return <View>
-            <MultiDot {...props}/>
-            <Text alignCenter color={Colors.pink} size={7}>{title}</Text>
-        </View>;
+        return title;
     };
 
-    let dayRenderCache = {};
+    let titlesCache = {};
     const dayRender = (props) => {
         const {dateString} = props.date;
-        if (!_.has(dayRenderCache, dateString)) {
-            dayRenderCache[dateString] = dayRenderImpl(props);
+        if (!_.has(titlesCache, dateString)) {
+            titlesCache[dateString] = getDayTitle(dateString);
         }
-        return dayRenderCache[dateString];
+        const title = titlesCache[dateString];
+        return <View>
+            <MultiDot {...props}/>
+            {
+                _.isEmpty(title) ? null : <Text alignCenter color={Colors.pink} size={7}>{title}</Text>
+            }
+        </View>
     };
 
     return <CalendarTab
@@ -95,7 +98,6 @@ export default function CalendarTabWrapper({navigation, screenProps}) {
         markedDates={markedDates}
         eventsByDay={eventsByDay}
         dayRender={dayRender}
-        clearDayFromCache={(day) => dayRenderCache = _.omit(dayRenderCache, day)}
         eventedDateMoments={_.sortBy(_.keys(eventsByDay).map(date => wixDateToMoment(date)), _ => _)}
         setMainCalendarRefresh={setMainCalendarRefresh}
     />

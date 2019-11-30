@@ -49,7 +49,6 @@ export default function CalendarTab({
     markedDates,
     eventsByDay,
     dayRender,
-    clearDayFromCache,
     eventedDateMoments,
     setMainCalendarRefresh
 }) {
@@ -110,7 +109,6 @@ export default function CalendarTab({
                         setSelectedDay={setSelectedDay}
                         markedDates={markedDates}
                         dayRender={dayRender}
-                        clearDayFromCache={clearDayFromCache}
                     />
             }
             <Drawer

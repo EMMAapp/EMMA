@@ -13,7 +13,7 @@ import moment from "moment";
 import Row from "./Row";
 import Divider from "./Divider";
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import IconCircle from "./IconCircle";
+import IconButton from "./IconButton";
 
 const eventColor = (event) => event.medication ? Colors.turquoise : Colors.fuchsia;
 
@@ -24,16 +24,12 @@ const NoItems = () =>
         <Icon name='down' color={Colors.pink} scale={1.5}/>
     </View>;
 
-const AgendaItemButtons = () =>
-    <Row>
-        <IconCircle name='calendar' backgroundColor={Colors.purple} iconColor='white'/>
-        <IconCircle name='edit' backgroundColor={Colors.purple} iconColor='white'/>
-    </Row>;
-
 const AgendaItem = ({dayTime, details, onEventPressed, noDivider}) => (
     <View>
-        <Swipeable renderRightActions={() => <AgendaItemButtons/>}>
-            <Row style={{minHeight: 35}}>
+        <Swipeable renderRightActions={() =>
+            <IconButton name='edit' backgroundColor={Colors.purple} iconColor='white' onPress={() => onEventPressed(details)}/>
+        }>
+            <Row style={{minHeight: 37}}>
                 <View>
                     <Row>
                         <Text color={eventColor(details)}>
@@ -51,11 +47,9 @@ const AgendaItem = ({dayTime, details, onEventPressed, noDivider}) => (
                     </Row>
                     {
                         details.note ?
-                            <TouchableOpacity onPress={() => onEventPressed(details)}>
-                                <Text size={7} color={Colors.gray} style={marginStyle(2, 'top')}>
-                                    {details.note}
-                                </Text>
-                            </TouchableOpacity>
+                            <Text size={7} color={Colors.gray} style={marginStyle(2, 'top')}>
+                                {details.note}
+                            </Text>
                             : null
                     }
                 </View>

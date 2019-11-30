@@ -5,13 +5,15 @@ import React from "react";
 import shortid from "shortid";
 import Text from "./Text";
 import Colors from "../constants/Colors";
-import {marginStyle} from "../constants/Styles";
+import {marginStyle, absoluteStyle} from "../constants/Styles";
 import Image from "./Image";
 import localization from "../utils/localization";
 import Icon from "./Icon";
 import moment from "moment";
 import Row from "./Row";
 import Divider from "./Divider";
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+import IconCircle from "./IconCircle";
 
 const eventColor = (event) => event.medication ? Colors.turquoise : Colors.fuchsia;
 
@@ -22,31 +24,47 @@ const NoItems = () =>
         <Icon name='down' color={Colors.pink} scale={1.5}/>
     </View>;
 
+const AgendaItemButtons = () =>
+    <Row>
+        <IconCircle name='calendar' backgroundColor={Colors.purple} iconColor='white'/>
+        <IconCircle name='edit' backgroundColor={Colors.purple} iconColor='white'/>
+    </Row>;
+
 const AgendaItem = ({dayTime, details, onEventPressed, noDivider}) => (
     <View>
-        <Row>
-            <Text color={eventColor(details)}>
-                {dayTimeToDisplayString(dayTime)}
-            </Text>
-            <Text
-                color={eventColor(details)}
-                size={9}
-                style={[marginStyle(5, 'right'), marginStyle(5, 'left')]}>
-                •
-            </Text>
-            <Text bold>
-                {details.medication ? details.medication : details.checkup}
-            </Text>
-        </Row>
-        {
-            details.note ?
-                <TouchableOpacity onPress={() => onEventPressed(details)}>
-                    <Text size={7} color={Colors.gray} style={marginStyle(2, 'top')}>
-                        {details.note}
-                    </Text>
-                </TouchableOpacity>
-                : null
-        }
+        <Swipeable renderRightActions={() => <AgendaItemButtons/>}>
+            <Row style={{minHeight: 35}}>
+                <View>
+                    <Row>
+                        <Text color={eventColor(details)}>
+                            {dayTimeToDisplayString(dayTime)}
+                        </Text>
+                        <Text
+                            color={eventColor(details)}
+                            size={9}
+                            style={[marginStyle(5, 'right'), marginStyle(5, 'left')]}>
+                            •
+                        </Text>
+                        <Text bold>
+                            {details.medication ? details.medication : details.checkup}
+                        </Text>
+                    </Row>
+                    {
+                        details.note ?
+                            <TouchableOpacity onPress={() => onEventPressed(details)}>
+                                <Text size={7} color={Colors.gray} style={marginStyle(2, 'top')}>
+                                    {details.note}
+                                </Text>
+                            </TouchableOpacity>
+                            : null
+                    }
+                </View>
+                <View style={[absoluteStyle(175, 0), {opacity: 0.5}]}>
+                    <Icon name='right' color={Colors.gray}/>
+                </View>
+            </Row>
+        </Swipeable>
+
         {
             noDivider ? null : <Divider/>
         }

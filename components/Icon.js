@@ -9,6 +9,7 @@ import Up from "../assets/icons/up.svg"
 import Down from "../assets/icons/down.svg"
 import Add from "../assets/icons/add.svg"
 import Profile from "../assets/icons/profile.svg"
+import Right from "../assets/icons/right.svg"
 
 const getIconByName = (name, style) => {
     switch (name) {
@@ -24,6 +25,8 @@ const getIconByName = (name, style) => {
             return <Up style={style}/>;
         case "down":
             return <Down style={style}/>;
+        case "right":
+            return <Right style={style}/>;
         case "add":
             return <Add style={style}/>;
         case "profile":
@@ -33,4 +36,10 @@ const getIconByName = (name, style) => {
     }
 };
 
-export default ({name, color, scale}) => getIconByName(name, {fill: color || Colors.grayDark, height: 32, width: 32, scale: scale || 1})
+export default ({name, color, scale, style}) => getIconByName(name, {
+    fill: color || Colors.grayDark,
+    height: 32,
+    width: 32,
+    scale: scale || 1,
+    ...style
+})

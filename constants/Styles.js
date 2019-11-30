@@ -49,3 +49,12 @@ export const marginStyle = (margin, direction) =>
             [direction ? `margin${capitalizeFirstLetter(direction)}` : 'margin']: toRem(margin)
         }
     }).fontSizeStyle;
+
+export const absoluteStyle = (left, right) =>
+    EStyleSheet.create({
+        absoluteStyle: {
+            position: 'absolute',
+            left: toRem(left),
+            right: toRem(right)
+        }
+    }).absoluteStyle;

@@ -13,5 +13,5 @@ opacity: 0.5;
 export default ({color}) =>
     <StyledView color={color} style={[
         marginStyle(10, 'top'),
-        marginStyle(10, 'bottom')
+        marginStyle(10, 'bottom'),
     ]}/>;

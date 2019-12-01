@@ -61,6 +61,8 @@ async function loadResourcesAsync() {
         Asset.loadAsync([
             require('./assets/images/beach.gif'),
             require('./assets/images/beach.png'),
+            require('./assets/images/motorcycle.jpg'),
+            require('./assets/images/wonder.png'),
         ]),
         Font.loadAsync({
             ...Ionicons.font,

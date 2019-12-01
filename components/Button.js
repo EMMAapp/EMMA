@@ -8,7 +8,7 @@ import {hwStyle, borderRadiusStyle, paddingStyle} from "../constants/Styles";
 const StyledTouchable = styled(TouchableOpacity)`
 justify-content: center;
 background-color: ${props => props.disabled ? (props.disabledColor || Colors.gray) : (props.color || Colors.grayLight)};
-border-color: ${Colors.gray};
+border-color: ${Colors.grayMedium};
 border-width: ${props => props.noBorder ? 0 : '1px'};
 `;
 

@@ -1,9 +1,7 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState} from 'react';
 import moment from "moment";
-import {SafeAreaView, ScrollView, StyleSheet, View, TouchableOpacity, FlatList} from "react-native";
-import {Calendar} from "react-native-calendars";
-import {dayTimeToDisplayString, wixDateToMoment, momentToDisplayString, momentToWixDate, momentsEquals, isAfterOrEquals} from "../../../utils/dayTime";
-import shortid from 'shortid';
+import {View, TouchableOpacity} from "react-native";
+import {wixDateToMoment, momentToWixDate, isAfterOrEquals} from "../../../utils/dayTime";
 import {EDIT_EVENT} from "../../../navigation/Routes";
 import _ from 'lodash'
 import localization from "../../../utils/localization";
@@ -15,12 +13,9 @@ import MainCalendar from "./MainCalendar";
 import Text from '../../../components/Text'
 import Container from "../../../components/Container";
 import Row from "../../../components/Row";
-import Icon from "../../../components/Icon";
 import IconAndText from "../../../components/IconAndText";
 import Drawer from "../../../components/Drawer";
 import {Agenda, AgendaDay} from "../../../components/AgendaDay";
-
-const selectedDayColoring = {selected: true, marked: true, selectedColor: Colors.gray};
 
 function collectEventsForDate(eventsByDay, selectedDay) {
     const eventsForDay = eventsByDay[selectedDay];
@@ -57,9 +52,6 @@ export default function CalendarTab({
     const [isAgendaExpanded, setAgendaExpanded] = useState(false);
     const [isEditingPeriod, setEditingPeriod] = useState(false);
     const lastPeriodMoment = wixDateToMoment(_.last(store.patientData.periods).date);
-
-    const currentMarkedDates = {...markedDates};
-    pushByMapKey(currentMarkedDates, selectedDay, selectedDayColoring);
 
     const eventsForDate = {};
     const getEventsForDate = (date) => {

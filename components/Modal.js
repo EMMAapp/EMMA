@@ -14,7 +14,12 @@ border-color: ${Colors.grayDark};
 
 export default ({isVisible, children, onBackdropPress}) => {
     return <Modal
-        style={marginStyle(20)}
+        style={[
+            marginStyle(20, 'left'),
+            marginStyle(20, 'right'),
+            marginStyle(10, 'top'),
+            marginStyle(10, 'bottom')
+        ]}
         animationIn='fadeIn'
         animationOut='fadeOut'
         isVisible={isVisible}

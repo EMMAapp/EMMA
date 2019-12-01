@@ -15,7 +15,7 @@ const PLanBox = ({isSelected, text}) =>
         borderRadiusStyle(10),
         {
             backgroundColor: isSelected ? Colors.purpleLight : Colors.grayLight,
-            borderColor: isSelected ? Colors.purple : Colors.gray
+            borderColor: isSelected ? Colors.purple : Colors.grayMedium
         }
     ]}>
         <Text alignCenter color={isSelected ? Colors.purple : Colors.grayDark}>{text}</Text>

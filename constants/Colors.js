@@ -9,5 +9,6 @@ export default Colors = {
   turquoiseLight: '#ebf8fa',
   grayDark: '#4A4A4A',
   gray: '#727272',
+  grayMedium: '#e4e4e4',
   grayLight: '#f9f9f9'
 };

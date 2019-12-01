@@ -27,7 +27,7 @@ const en = {
 
     'treatmentPlan': 'Treatment Plan',
     'addTreatmentPlan': 'Add Your Treatment Plan',
-    'editPeriod': 'Period/Protocol',
+    'editPeriod': 'Period/Plan',
     'editPeriodMessage': 'Please Update Period!',
     'yes': 'Yes',
     'no': 'No',

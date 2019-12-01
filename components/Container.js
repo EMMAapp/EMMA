@@ -1,7 +1,7 @@
 import React from 'react'
-import {SafeAreaView, ScrollView, View} from 'react-native'
+import {SafeAreaView, ScrollView, Platform} from 'react-native'
 import styled from "styled-components"
-import {marginStyle, paddingStyle} from "../constants/Styles";
+import {marginStyle} from "../constants/Styles";
 
 const StyledView = styled(SafeAreaView)`
 flex: 1;
@@ -13,7 +13,7 @@ export default ({children, style}) =>
             <ScrollView
                 keyboardShouldPersistTaps="handled"
                 style={[
-                    marginStyle(40, 'top'),
+                    marginStyle(Platform.OS === 'ios' ? 10 : 25, 'top'),
                     {width: '90%'},
                 ]}
                 bounces={false}>

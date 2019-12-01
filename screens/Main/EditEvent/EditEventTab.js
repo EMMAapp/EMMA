@@ -257,12 +257,12 @@ export default function EditEventTab({navigation, screenProps}) {
                     })
                 }
             </View>
-            <Text>{localization('note')}</Text>
+            <Text style={marginStyle(5, 'top')}>{localization('note')}</Text>
             <TextInput
                 style={[
                     marginStyle(5, 'top'),
                     borderRadiusStyle(5),
-                    {backgroundColor: Colors.grayLight, borderColor: Colors.grayMedium, borderWidth: 1, width: '100%', minHeight: 100}
+                    {backgroundColor: Colors.grayLight, borderColor: Colors.grayMedium, borderWidth: 1, width: '100%', minHeight: 85}
                 ]}
                 alignLeft
                 multiline
@@ -279,16 +279,16 @@ export default function EditEventTab({navigation, screenProps}) {
             </Row>
             <Row center>
                 <ButtonPrimary
-                    style={marginStyle(5, 'top')}
+                    style={marginStyle(3, 'top')}
                     width={125}
                     disabled={!canSave}
                     onPress={async () => await submit(false)}>
                     {localization(isMedicationEvent ? 'addAnotherMedication' : 'addAnotherCheckup')}
                 </ButtonPrimary>
             </Row>
-            <Row center style={marginStyle(45, 'bottom')}>
+            <Row center style={marginStyle(40, 'bottom')}>
                 <Button
-                    style={marginStyle(5, 'top')}
+                    style={marginStyle(3, 'top')}
                     onPress={() => {
                         if (isNewEvent) {
                             close();

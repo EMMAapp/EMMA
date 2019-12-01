@@ -1,13 +1,23 @@
 import React, {useState} from "react";
-import {View, TouchableOpacity, Text} from "react-native";
+import styled from 'styled-components'
+import {View, TouchableOpacity} from "react-native";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import localization from "../utils/localization";
 import {dateToDayTime, dayTimeToDate, dayTimeToDisplayString} from "../utils/dayTime";
+import Colors from "../constants/Colors";
+import {hwStyle} from "../constants/Styles";
+import Text from "./Text";
+
+const StyledView = styled(View)`
+justify-content: center;
+align-items: center;
+text-align: center;
+`;
 
 export default ({dayTime, setDayTime, disabled}) => {
     const [isVisible, setIsVisible] = useState(false);
 
-    return <View>
+    return <StyledView style={hwStyle(25, 60)}>
         <TouchableOpacity
             onPress={() => {
                 if (disabled) {
@@ -16,7 +26,7 @@ export default ({dayTime, setDayTime, disabled}) => {
                 setIsVisible(true);
             }}
         >
-            <Text>{disabled ? '-' : dayTimeToDisplayString(dayTime)}</Text>
+            <Text bold>{disabled ? '-' : dayTimeToDisplayString(dayTime)}</Text>
         </TouchableOpacity>
         <DateTimePicker
             mode='time'
@@ -29,6 +39,12 @@ export default ({dayTime, setDayTime, disabled}) => {
             }}
             onCancel={() => setIsVisible(false)}
             titleIOS={localization('pickTime')}
+            cancelTextIOS={localization('cancel')}
+            cancelTextStyle={{fontSize: 16, color: Colors.grayDark, fontFamily: 'sf-pro-regular'}}
+            confirmTextIOS={localization('confirm')}
+            confirmTextStyle={{fontSize: 16, color: Colors.purple, fontFamily: 'sf-pro-regular'}}
+            titleStyle={{fontSize: 16, color: Colors.purple, fontFamily: 'sf-pro-regular'}}
+            datePickerModeAndroid='spinner'
         />
-    </View>;
+    </StyledView>;
 }

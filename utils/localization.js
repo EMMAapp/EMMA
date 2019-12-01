@@ -57,6 +57,7 @@ const en = {
     'areYouSurePast': 'Some dates have already passed, are you sure?',
     'cancel': 'Cancel',
     'close': 'Close',
+    'confirm': 'Confirm',
     'onboardingTitle': 'Let\'s Begin Our Journey!',
     'onboardingSubTitle': 'Just a few short questions',
     'onboardingSubmit': 'OK, Done',

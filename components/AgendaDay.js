@@ -15,7 +15,7 @@ import Divider from "./Divider";
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import IconButton from "./IconButton";
 
-const eventColor = (event) => event.medication ? Colors.turquoise : Colors.fuchsia;
+const eventColor = (event) => event.medication ? Colors.fuchsia : Colors.turquoise;
 
 const NoItems = () =>
     <View style={{flex: 1, alignItems: 'center'}}>

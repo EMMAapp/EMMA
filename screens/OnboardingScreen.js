@@ -104,7 +104,7 @@ export default function LoginScreen({navigation, screenProps}) {
                 </Row>
             </Row>
 
-            <ButtonPrimary onPress={submit} disabled={!canSubmit} style={marginStyle(15, 'top')}>
+            <ButtonPrimary onPress={submit} disabled={!canSubmit} style={[marginStyle(15, 'top'), marginStyle(15, 'bottom')]}>
                 {localization('onboardingSubmit')}
             </ButtonPrimary>
         </Container>

@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import localization from "../utils/localization";
+import {borderRadiusStyle, marginStyle, paddingStyle} from "../constants/Styles";
+import Colors from "../constants/Colors";
 
 export default ({items, selectedItem, setSelectedItem}) => {
 
@@ -8,33 +10,28 @@ export default ({items, selectedItem, setSelectedItem}) => {
 
     useEffect(() => setQuery(selectedItem ? selectedItem : ''), [selectedItem, setQuery]);
 
+    const itemStyle = {
+        backgroundColor: Colors.grayLight,
+        borderColor: Colors.grayMedium,
+        color: Colors.grayDark,
+        ...paddingStyle(5)
+    };
+
     return <SearchableDropdown
         onItemSelect={(item) => {
             setSelectedItem(item.name);
             setQuery(item.name);
         }}
-        containerStyle={{padding: 5}}
-        itemStyle={{
-            padding: 10,
-            marginTop: 2,
-            backgroundColor: '#ddd',
-            borderColor: '#bbb',
-            borderWidth: 1,
-            borderRadius: 5,
-        }}
-        itemTextStyle={{color: '#222'}}
-        itemsContainerStyle={{maxHeight: 140}}
+        containerStyle={marginStyle(5, 'top')}
+        itemStyle={itemStyle}
+        itemTextStyle={{color: Colors.grayDark}}
+        itemsContainerStyle={{borderColor: Colors.grayMedium, borderWidth: 1, ...borderRadiusStyle(5), ...marginStyle(1, 'top')}}
         items={items}
         textInputProps={
             {
                 placeholder: localization('autocompletePlaceholder'),
                 underlineColorAndroid: "transparent",
-                style: {
-                    padding: 12,
-                    borderWidth: 1,
-                    borderColor: '#ccc',
-                    borderRadius: 5,
-                },
+                style: {...itemStyle, ...borderRadiusStyle(5), borderWidth: 1},
                 value: query,
                 onChangeText: text => {
                     setQuery(text);
@@ -44,7 +41,7 @@ export default ({items, selectedItem, setSelectedItem}) => {
         }
         listProps={
             {
-                nestedScrollEnabled: true
+                nestedScrollEnabled: true,
             }
         }
         setSort={(item, searchedText) =>

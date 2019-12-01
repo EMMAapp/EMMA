@@ -1,24 +1,10 @@
-import {TextInput} from "react-native";
 import React from "react";
-import styled from "styled-components"
-import Box from "./Box";
-import {fontSizeStyle} from "../constants/Styles";
+import TextInput from "./TextInput";
 
-const StyledTextInput = styled(TextInput)`
-font-family: 'sf-pro-bold';
-text-align: center;
-justify-content: center;
-`;
-
-export default ({value, setValue, style}) => {
-    return (
-        <Box style={[fontSizeStyle(8), style]} height={25} width={25}>
-            <StyledTextInput
-                autoCapitalize="none"
-                onChangeText={val => val ? setValue(Number(val)) : setValue(null)}
-                value={value ? value.toString() : ''}
-                keyboardType='numeric'
-            />
-        </Box>
-    )
-}
+export default (props) =>
+    <TextInput
+        {...props}
+        keyboardType='numeric'
+        onChangeText={val => val ? props.setValue(Number(val)) : props.setValue(null)}
+        value={props.value ? props.value.toString() : ''}
+    />

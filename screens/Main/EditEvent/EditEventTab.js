@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {StyleSheet, Text, TextInput, View, Button, ScrollView, SafeAreaView, TouchableOpacity} from 'react-native'
+import {View, TouchableOpacity} from 'react-native'
 import localization from "../../../utils/localization";
 import Autocomplete from "../../../components/Autocomplete";
 import Medications from '../../../constants/Medications';
@@ -16,6 +16,15 @@ import _ from "lodash";
 import {addOrRemove} from "../../../utils/utils";
 import {wixDateToMoment, momentToWixDate, daysBetween, addDays, isInFuture} from "../../../utils/dayTime";
 import {syncEvents, unsetAllNotifications} from "../../../utils/eventsSync";
+import Text from "../../../components/Text";
+import ButtonPrimary from "../../../components/ButtonPrimary";
+import Button from "../../../components/Button";
+import Colors from "../../../constants/Colors";
+import {eventColor, marginStyle, borderRadiusStyle} from "../../../constants/Styles";
+import Divider from "../../../components/Divider";
+import Row from "../../../components/Row";
+import Container from "../../../components/Container";
+import TextInput from "../../../components/TextInput";
 
 const initialState = {
     id: null,
@@ -61,7 +70,7 @@ export default function EditEventTab({navigation, screenProps}) {
         return <View/>;
     }
 
-    const timesPerDayNormalized = state.timesPerDay ? state.timesPerDay : 0;
+    const timesPerDayNormalized = state.timesPerDay ? Number(state.timesPerDay) : 0;
     if (timesPerDayNormalized !== state.eventsAndReminders.length) {
         let eventsAndReminders = [];
         for (let i = 0; i < timesPerDayNormalized; i++) {
@@ -107,17 +116,24 @@ export default function EditEventTab({navigation, screenProps}) {
         setIsLoading(false);
     };
 
-    const eventTypeButton = (targetEventType, titleKey) => {
-        return <TouchableOpacity
-            style={{backgroundColor: eventType === targetEventType ? 'pink' : 'gray', width: '50%', margin: 10}}
-            disabled={eventType === targetEventType}
-            onPress={() => {
-                setState({...initialState, id: currentEditedEventId});
-                setEventType(targetEventType);
-            }}
-        >
-            <Text>{localization(titleKey)}</Text>
-        </TouchableOpacity>;
+    const EventTypeButton = ({targetEventType, titleKey}) => {
+        const isSelected = eventType === targetEventType;
+        const contextColor = eventColor(targetEventType === EVENT_TYPE_MEDICATION);
+        return (
+            <TouchableOpacity
+                style={{width: '50%'}}
+                disabled={eventType === targetEventType}
+                onPress={() => {
+                    setState({...initialState, id: currentEditedEventId});
+                    setEventType(targetEventType);
+                }}
+            >
+                <Text alignCenter bold size={10} color={isSelected ? contextColor : Colors.grayDark}>
+                    {localization(titleKey)}
+                </Text>
+                <Divider color={isSelected ? contextColor : 'transparent'} bright bold style={{width: '60%', alignSelf: 'center', marginBottom: 0}}/>
+            </TouchableOpacity>
+        );
     };
 
     const ovulationDayToDate = (day) => momentToWixDate(addDays(lastPeriodMoment, day - 1));
@@ -128,136 +144,151 @@ export default function EditEventTab({navigation, screenProps}) {
         if (state.selectedDates.some(date => !isInFuture(wixDateToMoment(date)))) {
             setShowPastValidationModal(true);
             setCloseAfterPastValidation(shouldClose);
-        }
-        else {
+        } else {
             await syncEvents(setIsLoading, flush, [state]);
             if (shouldClose) {
                 close();
-            }
-            else {
+            } else {
                 reset();
             }
         }
     };
 
+    const numericInputStyle = [borderRadiusStyle(5), marginStyle(3, 'top'), {backgroundColor: Colors.grayLight, borderColor: Colors.grayMedium}];
+
     return (
-        <SafeAreaView style={styles.container}>
-            <ScrollView style={styles.scrollView} keyboardShouldPersistTaps="handled">
-                <ValidationModal
-                    isVisible={showDeleteValidationModal}
-                    title={localization('areYouSureDelete')}
-                    positive={localization('deleteEvent')}
-                    setResult={async (shouldDelete) => {
-                        if (!shouldDelete) {
-                            setShowDeleteValidationModal(false);
-                        } else {
-                            await deleteEvent();
+        <Container>
+            <ValidationModal
+                isVisible={showDeleteValidationModal}
+                title={localization('areYouSureDelete')}
+                positive={localization('deleteEvent')}
+                setResult={async (shouldDelete) => {
+                    if (!shouldDelete) {
+                        setShowDeleteValidationModal(false);
+                    } else {
+                        await deleteEvent();
+                        close();
+                    }
+                }}
+            />
+            <ValidationModal
+                isVisible={showPastValidationModal}
+                title={localization('areYouSurePast')}
+                positive={localization('yes')}
+                setResult={async (approve) => {
+                    setShowPastValidationModal(false);
+                    if (approve) {
+                        await syncEvents(setIsLoading, flush, [state]);
+                        if (closeAfterPastValidation) {
                             close();
+                        } else {
+                            reset();
                         }
-                    }}
-                />
-                <ValidationModal
-                    isVisible={showPastValidationModal}
-                    title={localization('areYouSurePast')}
-                    positive={localization('yes')}
-                    setResult={async (approve) => {
-                        setShowPastValidationModal(false);
-                        if (approve) {
-                            await syncEvents(setIsLoading, flush, [state]);
-                            if (closeAfterPastValidation) {
-                                close();
-                            }
-                            else {
-                                reset();
-                            }
-                        }
-                    }}
-                />
-                {
-                    isNewEvent ?
-                        <View style={{flexDirection: 'row'}}>
-                            {eventTypeButton(EVENT_TYPE_MEDICATION, 'medicationTitle')}
-                            {eventTypeButton(EVENT_TYPE_CHECKUP, 'checkupTitle')}
-                        </View>
-                        : null
-                }
-                <Text style={{color: '#e93766'}}>{localization(isMedicationEvent ? 'medicationSubTitle' : 'checkupSubTitle')}</Text>
-                <Autocomplete
-                    items={isMedicationEvent ? Medications : Checkups}
-                    selectedItem={isMedicationEvent ? state.medication : state.checkup}
-                    setSelectedItem={item => setState(isMedicationEvent ? {...state, medication: item} : {...state, checkup: item})}
-                />
-                {
-                    isMedicationEvent ?
-                        <View>
-                            <Text style={{color: '#e93766'}}>{localization('dailyDose')}</Text>
+                    }
+                }}
+            />
+            {
+                isNewEvent ?
+                    <Row style={[{shadowOpacity: 0.2, shadowOffset: {height: 2}, shadowTopRadius: 10, shadowColor: 'black', backgroundColor: 'white'}, marginStyle(15, 'bottom')]}>
+                        <EventTypeButton targetEventType={EVENT_TYPE_MEDICATION} titleKey='medicationTitle'/>
+                        <EventTypeButton targetEventType={EVENT_TYPE_CHECKUP} titleKey='checkupTitle'/>
+                    </Row>
+                    : null
+            }
+            <Text>{localization(isMedicationEvent ? 'medicationSubTitle' : 'checkupSubTitle')}</Text>
+            <Autocomplete
+                items={isMedicationEvent ? Medications : Checkups}
+                selectedItem={isMedicationEvent ? state.medication : state.checkup}
+                setSelectedItem={item => setState(isMedicationEvent ? {...state, medication: item} : {...state, checkup: item})}
+            />
+            {
+                isMedicationEvent ?
+                    <Row style={marginStyle(10, 'top')}>
+                        <View style={marginStyle(25, 'right')}>
+                            <Text>{localization('dailyDose')}</Text>
                             <NumericInput
-                                style={styles.textInput}
+                                width={65}
+                                style={numericInputStyle}
                                 value={state.dailyDose}
                                 setValue={dailyDose => setState({...state, dailyDose: dailyDose})}
                             />
-                            <Text style={{color: '#e93766'}}>{localization('timesPerDay')}</Text>
+                        </View>
+                        <View>
+                            <Text>{localization('timesPerDay')}</Text>
                             <NumericInput
-                                style={styles.textInput}
+                                style={numericInputStyle}
                                 value={state.timesPerDay}
                                 setValue={timesPerDay => setState({...state, timesPerDay})}
                             />
-                        </View> : null
-                }
-                <Text style={{color: '#e93766'}}>{localization(isMedicationEvent ? 'ovulationCalendar' : 'calendar')}</Text>
-                <Text>{localization(isMedicationEvent ? 'selectDaysOfMedicine' : 'selectDaysOfCheckup')}</Text>
+                        </View>
+                    </Row> : null
+            }
+            <Text style={marginStyle(10, 'top')}>{localization(isMedicationEvent ? 'ovulationCalendar' : 'calendar')}</Text>
+            <Text style={marginStyle(5, 'top')} color={eventColor(isMedicationEvent)}>{localization(isMedicationEvent ? 'selectDaysOfMedicine' : 'selectDaysOfCheckup')}</Text>
+            {
+                isMedicationEvent ?
+                    <CalendarOvulationDayPicker
+                        onDayPress={(day) => {
+                            const selectedDates = addOrRemove(state.selectedDates, ovulationDayToDate(day));
+                            setState({...state, selectedDates});
+                        }}
+                        coloredDays={state.selectedDates.map(date => dateToOvulationDay(date))}
+                    />
+                    :
+                    <CalendarDayPicker
+                        onDayPress={(day) => {
+                            const selectedDates = addOrRemove(state.selectedDates, day.dateString);
+                            setState({...state, selectedDates});
+                        }}
+                        coloredDays={state.selectedDates}
+                    />
+            }
+            <View style={marginStyle(10, 'top')}>
                 {
-                    isMedicationEvent ?
-                        <CalendarOvulationDayPicker
-                            onDayPress={(day) => {
-                                const selectedDates = addOrRemove(state.selectedDates, ovulationDayToDate(day));
-                                setState({...state, selectedDates});
-                            }}
-                            coloredDays={state.selectedDates.map(date => dateToOvulationDay(date))}
-                        />
-                        :
-                        <CalendarDayPicker
-                            onDayPress={(day) => {
-                                const selectedDates = addOrRemove(state.selectedDates, day.dateString);
-                                setState({...state, selectedDates});
-                            }}
-                            coloredDays={state.selectedDates}
-                        />
+                    [...Array(timesPerDayNormalized).keys()].map(i => {
+                        return (
+                            <EventDetailsPicker
+                                key={i}
+                                eventAndReminder={state.eventsAndReminders[i]}
+                                setEventAndReminder={(eventAndReminder) => setEventsAndReminder(eventAndReminder, i)}
+                                defaultRemindMinutes={isMedicationEvent ? 0 : 60}
+                            />
+                        )
+                    })
                 }
-                <View>
-                    {
-                        [...Array(timesPerDayNormalized).keys()].map(i => {
-                            return (
-                                <EventDetailsPicker
-                                    key={i}
-                                    eventAndReminder={state.eventsAndReminders[i]}
-                                    setEventAndReminder={(eventAndReminder) => setEventsAndReminder(eventAndReminder, i)}
-                                    defaultRemindMinutes={isMedicationEvent ? 0 : 60}
-                                />
-                            )
-                        })
-                    }
-                </View>
-                <Text style={{color: '#e93766'}}>{localization('note')}</Text>
-                <TextInput
-                    style={{backgroundColor: '#e93766', height: 40}}
-                    autoCapitalize="none"
-                    value={state.note}
-                    onChangeText={note => setState({...state, note: note})}
-                />
-                <Button
-                    title={localization('imDone')}
-                    color="#e93766"
+            </View>
+            <Text>{localization('note')}</Text>
+            <TextInput
+                style={[
+                    marginStyle(5, 'top'),
+                    borderRadiusStyle(5),
+                    {backgroundColor: Colors.grayLight, borderColor: Colors.grayMedium, borderWidth: 1, width: '100%', minHeight: 100}
+                ]}
+                alignLeft
+                multiline
+                value={state.note}
+                setValue={note => setState({...state, note: note})}
+            />
+            <Row center>
+                <ButtonPrimary
+                    style={marginStyle(5, 'top')}
                     disabled={!canSave}
-                    onPress={async () => await submit(true)}/>
-                <Button
-                    title={localization(isMedicationEvent ? 'addAnotherMedication' : 'addAnotherCheckup')}
-                    color="#e93766"
+                    onPress={async () => await submit(true)}>
+                    {localization('imDone')}
+                </ButtonPrimary>
+            </Row>
+            <Row center>
+                <ButtonPrimary
+                    style={marginStyle(5, 'top')}
+                    width={125}
                     disabled={!canSave}
-                    onPress={async () => await submit(false)}/>
+                    onPress={async () => await submit(false)}>
+                    {localization(isMedicationEvent ? 'addAnotherMedication' : 'addAnotherCheckup')}
+                </ButtonPrimary>
+            </Row>
+            <Row center style={marginStyle(45, 'bottom')}>
                 <Button
-                    title={localization(isNewEvent ? 'clearEvent' : 'deleteEvent')}
-                    color="#e93766"
+                    style={marginStyle(5, 'top')}
                     onPress={() => {
                         if (isNewEvent) {
                             close();
@@ -265,26 +296,10 @@ export default function EditEventTab({navigation, screenProps}) {
                             setShowDeleteValidationModal(true);
                         }
                     }}
-                />
-            </ScrollView>
-        </SafeAreaView>
+                >
+                    {localization(isNewEvent ? 'clearEvent' : 'deleteEvent')}
+                </Button>
+            </Row>
+        </Container>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1
-    },
-    scrollView: {
-        marginHorizontal: 20,
-    },
-    textInput: {
-        height: 40,
-        fontSize: 20,
-        width: '90%',
-        borderColor: '#9b9b9b',
-        borderBottomWidth: 1,
-        marginTop: 8,
-        marginVertical: 15
-    }
-});

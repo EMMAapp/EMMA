@@ -5,7 +5,7 @@ import {pushByMapKey} from "../../../utils/utils";
 import {calendarTheme} from "../../../constants/Styles";
 import {marginStyle} from "../../../constants/Styles";
 
-const selectedDayColoring = {selected: true, marked: true, selectedColor: Colors.purple};
+const selectedDayColoring = {selected: true, marked: true, selectedColor: Colors.gray};
 
 export default function CalendarTab({
     selectedDay,

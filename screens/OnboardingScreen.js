@@ -12,7 +12,6 @@ import Text from "../components/Text";
 import Container from "../components/Container";
 import Colors from "../constants/Colors";
 import Box from "../components/Box";
-import Icon from "../components/Icon";
 import Row from "../components/Row";
 import YesNoBoxes from "../components/YesNoBoxes";
 import ButtonPrimary from "../components/ButtonPrimary";

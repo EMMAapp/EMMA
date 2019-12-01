@@ -9,7 +9,7 @@ font-family: 'sf-pro-bold';
 text-align: center;
 justify-content: center;
 color: ${Colors.grayDark};
-border-color: ${Colors.gray};
+border-color: ${Colors.grayMedium};
 background-color: white;
 border-width: 1px;
 padding: 8px;

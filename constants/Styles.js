@@ -12,6 +12,8 @@ export const calendarTheme = {
     calendarBackground: 'transparent',
 };
 
+export const eventColor = (isMedication) => isMedication ? Colors.fuchsia : Colors.turquoise;
+
 const toRem = (number) => `${number/10}rem`;
 
 export const hwStyle = (height, width) =>

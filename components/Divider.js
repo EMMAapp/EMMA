@@ -5,13 +5,14 @@ import Colors from "../constants/Colors";
 import {marginStyle} from "../constants/Styles";
 
 const StyledView = styled(View)`
-border-width: 0.5px;
+border-width: ${props => props.bold ? '1px' : '0.5px'};
 border-color: ${props => props.color || Colors.gray};
-opacity: 0.5;
+opacity: ${props => props.bright ? 1 : 0.5};
 `;
 
-export default ({color}) =>
-    <StyledView color={color} style={[
+export default ({color, bright, bold, style}) =>
+    <StyledView color={color} bright={bright} bold={bold} style={[
         marginStyle(10, 'top'),
         marginStyle(10, 'bottom'),
+        style
     ]}/>;

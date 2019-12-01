@@ -1,6 +1,8 @@
 import {Calendar} from "react-native-calendars";
 import React from "react";
 import {addDays, momentToWixDate, wixDateToMoment} from "../../../utils/dayTime";
+import Colors from "../../../constants/Colors";
+import {borderRadiusStyle, calendarTheme, marginStyle} from "../../../constants/Styles";
 
 export default ({onDayPress, coloredDays}) => {
 
@@ -9,7 +11,7 @@ export default ({onDayPress, coloredDays}) => {
     let markedDates = {};
     coloredDays.forEach(day => {
         markedDates[momentToWixDate(addDays(hackyMoment, day - 1))]
-            = {color: 'pink', startingDay: true, endingDay: true};
+            = {startingDay: true, endingDay: true, color: Colors.fuchsia, textColor: 'white'};
     });
 
     return <Calendar
@@ -25,5 +27,18 @@ export default ({onDayPress, coloredDays}) => {
         markedDates={markedDates}
         markingType={'period'}
         monthFormat={''}
+        style={[borderRadiusStyle(5), marginStyle(5, 'top'), {borderWidth: 1, borderColor: Colors.grayMedium}]}
+        theme={{
+            ...calendarTheme,
+            textDayFontSize: 14,
+            calendarBackground: Colors.grayLight,
+            dayTextColor: Colors.pink,
+            "stylesheet.calendar.header": {
+                header: {
+                    height: 0,
+                    opacity: 0
+                }
+            }
+        }}
     />
 }

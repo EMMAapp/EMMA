@@ -12,10 +12,10 @@ border-color: ${Colors.grayMedium};
 border-width: ${props => props.noBorder ? 0 : '1px'};
 `;
 
-export default ({style, children, onPress, disabled, noBorder, color, disabledColor, textColor}) => {
+export default ({style, children, onPress, disabled, noBorder, color, disabledColor, textColor, height, width}) => {
     return (
         <StyledTouchable
-            style={[hwStyle(25, 75), borderRadiusStyle(12), paddingStyle(5), style]}
+            style={[hwStyle(height || 25, width || 75), borderRadiusStyle(12), paddingStyle(5), style]}
             onPress={onPress} disabled={disabled} noBorder={noBorder} color={color} disabledColor={disabledColor}
         >
             <Text color={textColor || Colors.grayDark} size={9} alignCenter>

@@ -1,11 +1,11 @@
-import {FlatList, TouchableOpacity, View} from "react-native";
+import {FlatList, View} from "react-native";
 import {dayTimeToDisplayString, isAfterOrEquals, momentToDisplayString, wixDateToMoment} from "../utils/dayTime";
 import _ from "lodash";
 import React from "react";
 import shortid from "shortid";
 import Text from "./Text";
 import Colors from "../constants/Colors";
-import {marginStyle, absoluteStyle} from "../constants/Styles";
+import {marginStyle, absoluteStyle, eventColor} from "../constants/Styles";
 import Image from "./Image";
 import localization from "../utils/localization";
 import Icon from "./Icon";
@@ -14,8 +14,6 @@ import Row from "./Row";
 import Divider from "./Divider";
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import IconButton from "./IconButton";
-
-const eventColor = (event) => event.medication ? Colors.fuchsia : Colors.turquoise;
 
 const NoItems = () =>
     <View style={{flex: 1, alignItems: 'center'}}>
@@ -32,11 +30,11 @@ const AgendaItem = ({dayTime, details, onEventPressed, noDivider}) => (
             <Row style={{minHeight: 37}}>
                 <View>
                     <Row>
-                        <Text color={eventColor(details)}>
+                        <Text color={eventColor(!!details.medication)}>
                             {dayTimeToDisplayString(dayTime)}
                         </Text>
                         <Text
-                            color={eventColor(details)}
+                            color={eventColor(!!details.medication)}
                             size={9}
                             style={[marginStyle(5, 'right'), marginStyle(5, 'left')]}>
                             •

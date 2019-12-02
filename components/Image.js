@@ -6,6 +6,7 @@ import Beach from "../assets/images/beach.png"
 import BeachAnimation from "../assets/images/beach.gif"
 import Motorcycle from "../assets/images/motorcycle.jpg"
 import Wonder from "../assets/images/wonder.png"
+import Confused from "../assets/images/confused.jpg"
 
 const getImageByName = (name) => {
     switch (name) {
@@ -17,6 +18,8 @@ const getImageByName = (name) => {
             return Motorcycle;
         case "wonder":
             return Wonder;
+        case "confused":
+            return Confused;
         default:
             return null;
     }

@@ -53,7 +53,7 @@ const en = {
     'autocompletePlaceholder': 'Start typing or choose from list',
     'pickTime': 'Pick time of day',
     'loading': 'Loading...',
-    'areYouSureDelete': 'Are you sure you want to remove this event?',
+    'areYouSureDelete': 'Are you sure you want to delete this event?',
     'areYouSurePast': 'Some dates have already passed, are you sure?',
     'cancel': 'Cancel',
     'close': 'Close',

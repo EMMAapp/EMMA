@@ -1,35 +1,27 @@
 import React from 'react';
-import Modal from "react-native-modal";
-import {Text, View, TouchableOpacity, StyleSheet} from "react-native";
 import localization from "../utils/localization";
+import Modal from "./Modal";
+import Text from './Text';
+import ButtonPrimary from "./ButtonPrimary";
+import Button from "./Button";
+import Image from './Image';
+import {marginStyle} from "../constants/Styles";
 
 export default ({title, positive, isVisible, setResult}) => {
-    return <Modal isVisible={isVisible}>
-        <View style={styles.content}>
-            <Text>{title}</Text>
-            <TouchableOpacity
-                style={{color: 'red'}}
-                onPress={() => setResult(true)}
-            >
-                <Text>{positive}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={{color: 'blue'}}
-                onPress={() => setResult(false)}
-            >
-                <Text>{localization('cancel')}</Text>
-            </TouchableOpacity>
-        </View>
+    return <Modal isVisible={isVisible} onBackdropPress={() => setResult(false)}>
+        <Image name='confused' height={100} width={100}/>
+        <Text size={12} style={marginStyle(10, 'top')}>{title}</Text>
+        <ButtonPrimary
+            style={marginStyle(20, 'top')}
+            onPress={() => setResult(true)}
+        >
+            {positive}
+        </ButtonPrimary>
+        <Button
+            style={marginStyle(10, 'top')}
+            onPress={() => setResult(false)}
+        >
+            {localization('cancel')}
+        </Button>
     </Modal>
 }
-
-const styles = StyleSheet.create({
-    content: {
-        backgroundColor: 'white',
-        padding: 22,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 4,
-        borderColor: 'rgba(0, 0, 0, 0.1)',
-    }
-});

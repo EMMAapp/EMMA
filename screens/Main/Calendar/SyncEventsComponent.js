@@ -26,7 +26,7 @@ export default ({dismiss, potentialSyncEvents, syncEventsWithNewPeriod}) => {
     const SyncRow = ({mainTitle, subTitle, enabled, onToggle}) => (
         <Row style={{width: '100%'}}>
             <Checkbox value={enabled} setValue={(enabled) => onToggle(enabled)}/>
-            <TouchableOpacity onPress={() => onToggle(!enabled)}>
+            <TouchableOpacity activeOpacity={1} onPress={() => onToggle(!enabled)}>
                 <Row>
                     <Text color={Colors.purple} bold>{mainTitle}</Text>
                     <Text>{subTitle}</Text>

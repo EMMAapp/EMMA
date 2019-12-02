@@ -97,7 +97,7 @@ export default function LoginScreen({navigation, screenProps}) {
                 />
                 <Row style={[paddingStyle(10, 'bottom'), {width: '100%'}]}>
                     <QuestionText>{localization('acceptTermsPrefix')}</QuestionText>
-                    <TouchableOpacity onPress={() => setTermsIsVisible(true)} style={paddingStyle(2, 'left')}>
+                    <TouchableOpacity  activeOpacity={1} onPress={() => setTermsIsVisible(true)} style={paddingStyle(2, 'left')}>
                         <QuestionText color={Colors.purple} underline>{localization('acceptTermsLink')}</QuestionText>
                     </TouchableOpacity>
                 </Row>

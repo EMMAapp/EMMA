@@ -23,7 +23,7 @@ const PLanBox = ({isSelected, text}) =>
 
 const Plan = ({plan, selectedPlan, setSelectedPlan, margin, text, subText}) =>
     <View style={[hwStyle(subText ? 40 : 20, 50), marginStyle(margin)]}>
-        <TouchableOpacity disabled={plan === selectedPlan} onPress={() => setSelectedPlan(plan)} style={{alignItems: 'center'}}>
+        <TouchableOpacity activeOpacity={1} disabled={plan === selectedPlan} onPress={() => setSelectedPlan(plan)} style={{alignItems: 'center'}}>
             <PLanBox isSelected={plan === selectedPlan} text={text}/>
         </TouchableOpacity>
         {

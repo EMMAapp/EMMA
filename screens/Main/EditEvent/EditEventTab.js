@@ -278,6 +278,7 @@ export default function EditEventTab({navigation, screenProps}) {
             <Row center>
                 <ButtonPrimary
                     style={marginStyle(5, 'top')}
+                    width={125}
                     disabled={!canSave}
                     onPress={async () => await submit(true)}>
                     {localization('imDone')}
@@ -287,6 +288,7 @@ export default function EditEventTab({navigation, screenProps}) {
                 <ButtonPrimary
                     style={marginStyle(3, 'top')}
                     width={125}
+                    inverted
                     disabled={!canSave}
                     onPress={async () => await submit(false)}>
                     {localization(isMedicationEvent ? 'addAnotherMedication' : 'addAnotherCheckup')}
@@ -295,6 +297,7 @@ export default function EditEventTab({navigation, screenProps}) {
             <Row center style={marginStyle(40, 'bottom')}>
                 <Button
                     style={marginStyle(3, 'top')}
+                    width={125}
                     onPress={() => {
                         if (isNewEvent) {
                             close();

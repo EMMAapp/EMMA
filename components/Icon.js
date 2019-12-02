@@ -10,6 +10,7 @@ import Down from "../assets/icons/down.svg"
 import Add from "../assets/icons/add.svg"
 import Profile from "../assets/icons/profile.svg"
 import Right from "../assets/icons/right.svg"
+import Drop from "../assets/icons/drop.svg"
 
 const getIconByName = (name, style) => {
     switch (name) {
@@ -31,15 +32,17 @@ const getIconByName = (name, style) => {
             return <Add style={style}/>;
         case "profile":
             return <Profile style={style}/>;
+        case "drop":
+            return <Drop style={style}/>;
         default:
             return null;
     }
 };
 
-export default ({name, color, scale, style}) => getIconByName(name, {
+export default ({name, color, scale, style, height, width}) => getIconByName(name, {
     fill: color || Colors.grayDark,
-    height: 32,
-    width: 32,
+    height: height || 32,
+    width: width || 32,
     scale: scale || 1,
     ...style
 })

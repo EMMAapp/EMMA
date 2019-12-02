@@ -20,11 +20,12 @@ import Text from "../../../components/Text";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import Button from "../../../components/Button";
 import Colors from "../../../constants/Colors";
-import {eventColor, marginStyle, borderRadiusStyle} from "../../../constants/Styles";
+import {eventColor, marginStyle, borderRadiusStyle, paddingStyle} from "../../../constants/Styles";
 import Divider from "../../../components/Divider";
 import Row from "../../../components/Row";
 import Container from "../../../components/Container";
 import TextInput from "../../../components/TextInput";
+import Icon from "../../../components/Icon";
 
 const initialState = {
     id: null,
@@ -223,7 +224,12 @@ export default function EditEventTab({navigation, screenProps}) {
                         </View>
                     </Row> : null
             }
-            <Text style={marginStyle(10, 'top')}>{localization(isMedicationEvent ? 'ovulationCalendar' : 'calendar')}</Text>
+            <Row>
+                <Text style={marginStyle(10, 'top')}>{localization(isMedicationEvent ? 'ovulationCalendar' : 'calendar')}</Text>
+                {
+                    isMedicationEvent ? <View><Icon name='drop' style={{position: 'absolute', top: 3, left: 6}}/></View> : null
+                }
+            </Row>
             <Text style={marginStyle(5, 'top')} color={eventColor(isMedicationEvent)}>{localization(isMedicationEvent ? 'selectDaysOfMedicine' : 'selectDaysOfCheckup')}</Text>
             {
                 isMedicationEvent ?

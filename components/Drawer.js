@@ -24,7 +24,7 @@ export default function Drawer({isExpanded, setIsExpanded, renderCollapsed, rend
                     }
                 }}
             >
-                <TouchableOpacity onPress={() => setIsExpanded(!isExpanded)} style={{width: '100%', alignItems: 'center'}}>
+                <TouchableOpacity  activeOpacity={1} onPress={() => setIsExpanded(!isExpanded)} style={{width: '100%', alignItems: 'center'}}>
                     <Icon name={isExpanded ? 'down' : 'up'}/>
                 </TouchableOpacity>
             </GestureRecognizer>

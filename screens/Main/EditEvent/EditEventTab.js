@@ -122,6 +122,7 @@ export default function EditEventTab({navigation, screenProps}) {
         const contextColor = eventColor(targetEventType === EVENT_TYPE_MEDICATION);
         return (
             <TouchableOpacity
+                activeOpacity={1}
                 style={{width: '50%'}}
                 disabled={eventType === targetEventType}
                 onPress={() => {

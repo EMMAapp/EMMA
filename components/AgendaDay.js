@@ -1,7 +1,7 @@
-import {FlatList, View} from "react-native";
+import {FlatList, View, TouchableOpacity} from "react-native";
 import {dayTimeToDisplayString, isAfterOrEquals, momentToDisplayString, wixDateToMoment} from "../utils/dayTime";
 import _ from "lodash";
-import React from "react";
+import React, {useState, useRef} from "react";
 import shortid from "shortid";
 import Text from "./Text";
 import Colors from "../constants/Colors";
@@ -22,9 +22,22 @@ const NoItems = () =>
         <Icon name='down' color={Colors.pink} scale={1.5}/>
     </View>;
 
-const AgendaItem = ({dayTime, details, onEventPressed, noDivider}) => (
-    <View>
-        <Swipeable renderRightActions={() =>
+const AgendaItem = ({dayTime, details, onEventPressed, noDivider}) => {
+    const [isSwiped, setSwiped] = useState(false);
+    const swipeableRef = useRef(null);
+    return <TouchableOpacity activeOpacity={1} onPress={() => {
+        if (isSwiped) {
+            swipeableRef.current.close();
+        }
+        else {
+            swipeableRef.current.openRight();
+        }
+    }}>
+        <Swipeable
+            ref={swipeableRef}
+            onSwipeableRightOpen={() => setSwiped(true)}
+            onSwipeableClose={() => setSwiped(false)}
+            renderRightActions={() =>
             <IconButton name='edit' backgroundColor={Colors.purple} iconColor='white' onPress={() => onEventPressed(details)}/>
         }>
             <Row style={{minHeight: 37}}>
@@ -60,8 +73,8 @@ const AgendaItem = ({dayTime, details, onEventPressed, noDivider}) => (
         {
             noDivider ? null : <Divider/>
         }
-    </View>
-);
+    </TouchableOpacity>
+}
 
 export function AgendaDay({momentDate, events, onEventPressed}) {
     return <View>

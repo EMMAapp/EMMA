@@ -4,13 +4,25 @@ import store from "../../../store";
 import {addDays, daysBetween, isAfterOrEquals, momentsEquals, wixDateToMoment} from "../../../utils/dayTime";
 import _ from 'lodash'
 import CalendarTab from "./CalendarTab";
-import MultiDot from "react-native-calendars/src/calendar/day/multi-dot";
+import BasicDay from "react-native-calendars/src/calendar/day/basic";
 import localization from "../../../utils/localization";
 import {View} from "react-native";
 import {pushByKey} from '../../../utils/utils'
 import Text from "../../../components/Text";
 import Colors from "../../../constants/Colors";
 import shortid from 'shortid'
+import Row from "../../../components/Row";
+import styled from 'styled-components';
+
+const Dot = styled(View)`
+background-color: ${props => props.color};
+width: 4px;
+height: 4px;
+margin-top: 4px;
+margin-left: 1px;
+margin-right: 1px;
+border-radius: 2px;
+`;
 
 const medicationDot = {key: shortid.generate(), color: Colors.fuchsia};
 const checkupDot = {key: shortid.generate(), color: Colors.turquoise};
@@ -82,11 +94,21 @@ export default function CalendarTabWrapper({navigation, screenProps}) {
         if (!_.has(titlesCache, dateString)) {
             titlesCache[dateString] = getDayTitle(dateString);
         }
+        const {dots} = props.marking;
         const title = titlesCache[dateString];
         return <View>
-            <MultiDot {...props}/>
+            <BasicDay {...props}/>
             {
                 _.isEmpty(title) ? null : <Text alignCenter color={Colors.pink} size={7}>{title}</Text>
+            }
+            {
+                _.isArray(dots) ?
+                    <Row center>
+                        {
+                            dots.map((dot, index) => <Dot key={index} color={dot.color}/>)
+                        }
+                    </Row>
+                    : null
             }
         </View>
     };

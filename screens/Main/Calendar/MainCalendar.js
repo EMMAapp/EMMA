@@ -5,7 +5,7 @@ import {pushByMapKey} from "../../../utils/utils";
 import {calendarTheme} from "../../../constants/Styles";
 import {marginStyle} from "../../../constants/Styles";
 
-const selectedDayColoring = {selected: true, marked: true, selectedColor: Colors.gray};
+const selectedDayColoring = {selected: true, marked: true, selectedColor: Colors.purple};
 
 export default function CalendarTab({
     selectedDay,
@@ -23,11 +23,17 @@ export default function CalendarTab({
             current={selectedDay}
             onDayPress={(day) => setSelectedDay(day.dateString)}
             markedDates={currentMarkedDates}
-            markingType={'multi-dot'}
             monthFormat={'yyyy MM'}
             firstDay={0} // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
             dayComponent={dayRender}
-            theme={calendarTheme}
+            theme={{
+                ...calendarTheme,
+                'stylesheet.day.basic': {
+                    visibleDot: {
+                        opacity: 0
+                    }
+                }
+            }}
         />
     );
 }

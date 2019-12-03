@@ -108,6 +108,6 @@ export function Agenda({selectedDay, eventedDateMoments, agendaDayRender}) {
                 keyExtractor={item => item.toString()}
                 ItemSeparatorComponent={() => <Divider/>}
             />
-            <Image name='motorcycle' height={80} width={200} style={marginStyle(10, 'top')}/>
+            <Image name='motorcycle' height={80} width={230} style={marginStyle(10, 'top')}/>
         </View>
 }

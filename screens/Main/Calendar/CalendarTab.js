@@ -16,6 +16,7 @@ import Row from "../../../components/Row";
 import IconAndText from "../../../components/IconAndText";
 import Drawer from "../../../components/Drawer";
 import {Agenda, AgendaDay} from "../../../components/AgendaDay";
+import {marginStyle, paddingStyle} from "../../../constants/Styles";
 
 function collectEventsForDate(eventsByDay, selectedDay) {
     const eventsForDay = eventsByDay[selectedDay];
@@ -78,31 +79,33 @@ export default function CalendarTab({
 
     return (
         <Container style={{backgroundColor: Colors.grayLight}}>
-            <Row>
-                <Text size={11}>{localization('treatmentPlan')}</Text>
-                <View style={{flex: 1}}/>
-                <TouchableOpacity onPress={() => setEditingPeriod(true)}>
-                    <IconAndText name='edit' color={Colors.purple} paddingBetween={1}>
-                        {localization('editPeriod')}
-                    </IconAndText>
-                </TouchableOpacity>
-            </Row>
+            <View style={[paddingStyle(10, 'left'), paddingStyle(10, 'right')]}>
+                <Row>
+                    <Text size={11}>{localization('treatmentPlan')}</Text>
+                    <View style={{flex: 1}}/>
+                    <TouchableOpacity onPress={() => setEditingPeriod(true)}>
+                        <IconAndText name='edit' color={Colors.purple} paddingBetween={1}>
+                            {localization('editPeriod')}
+                        </IconAndText>
+                    </TouchableOpacity>
+                </Row>
 
-            <SetAndSyncPeriodModal
-                isVisible={isEditingPeriod}
-                dismiss={() => setEditingPeriod(false)}
-                setMainCalendarRefresh={setMainCalendarRefresh}
-            />
+                <SetAndSyncPeriodModal
+                    isVisible={isEditingPeriod}
+                    dismiss={() => setEditingPeriod(false)}
+                    setMainCalendarRefresh={setMainCalendarRefresh}
+                />
 
-            {
-                isAgendaExpanded ? null :
-                    <MainCalendar
-                        selectedDay={selectedDay}
-                        setSelectedDay={setSelectedDay}
-                        markedDates={markedDates}
-                        dayRender={dayRender}
-                    />
-            }
+                {
+                    isAgendaExpanded ? null :
+                        <MainCalendar
+                            selectedDay={selectedDay}
+                            setSelectedDay={setSelectedDay}
+                            markedDates={markedDates}
+                            dayRender={dayRender}
+                        />
+                }
+            </View>
             <Drawer
                 isExpanded={isAgendaExpanded}
                 setIsExpanded={setAgendaExpanded}

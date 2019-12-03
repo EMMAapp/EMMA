@@ -50,7 +50,7 @@ export default function LoginScreen({navigation, screenProps}) {
     const canSubmit = selectedPlan && age && lastPeriodDate && agreeTerms;
 
     return (
-        <Container>
+        <Container widthPercentage={90}>
             <Text bold color={Colors.purple} size={13}>{localization('onboardingTitle')}</Text>
             <Text size={9} style={paddingStyle(5, 'top')}>{localization('onboardingSubTitle')}</Text>
 

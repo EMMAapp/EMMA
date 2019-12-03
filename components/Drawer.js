@@ -8,7 +8,7 @@ export default function Drawer({isExpanded, setIsExpanded, renderCollapsed, rend
     return (
         <View style={[
             {backgroundColor: 'white', height: '1000%', shadowOpacity: 0.2, shadowRadius: 8, shadowColor: 'black'},
-            marginStyle(6),
+            marginStyle(7, 'top'),
             paddingStyle(15),
             paddingStyle(2, 'top'),
             borderRadiusStyle(15, 'TopLeft'),

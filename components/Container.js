@@ -8,15 +8,14 @@ flex: 1;
 align-items: flex-start;
 `;
 
-export default ({children, style}) =>
+export default ({children, style, widthPercentage}) =>
     <StyledView style={[{flex: 1, alignItems: 'center'}, style]}>
         <ScrollView
             keyboardShouldPersistTaps="handled"
             style={[
                 marginStyle(Platform.OS === 'ios' ? 10 : 25, 'top'),
-                {width: '90%'},
+                {width: `${widthPercentage || 100}%`},
             ]}
-            contentContainerStyle={{flexGrow: 1}}
             bounces={false}
         >
             {children}

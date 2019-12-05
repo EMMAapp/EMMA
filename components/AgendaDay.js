@@ -64,7 +64,7 @@ const AgendaItem = ({dayTime, details, onEventPressed, noDivider}) => {
                             : null
                     }
                 </View>
-                <View style={[absoluteStyle(175, 0), {opacity: 0.5}]}>
+                <View style={[absoluteStyle(205, 0), {opacity: 0.5}]}>
                     <Icon name='right' color={Colors.gray}/>
                 </View>
             </Row>

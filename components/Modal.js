@@ -4,6 +4,7 @@ import {View} from "react-native";
 import styled from "styled-components"
 import Colors from "../constants/Colors";
 import {marginStyle, borderRadiusStyle, paddingStyle} from "../constants/Styles";
+import Container from "./Container";
 
 const StyledView = styled(View)`
 background-color: white;
@@ -25,8 +26,12 @@ export default ({isVisible, children, onBackdropPress}) => {
         isVisible={isVisible}
         onBackdropPress={onBackdropPress}
     >
+        <Container>
+
         <StyledView style={[borderRadiusStyle(6), paddingStyle(10), marginStyle(2)]}>
-            {children}
+                {children}
         </StyledView>
+        </Container>
+
     </Modal>
 }

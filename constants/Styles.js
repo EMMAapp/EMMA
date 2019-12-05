@@ -14,6 +14,7 @@ export const calendarTheme = {
         base: {
             overflow: 'hidden',
             alignItems: 'center',
+            textAlignVertical: 'center',
             width: 30,
             height: 30
         }

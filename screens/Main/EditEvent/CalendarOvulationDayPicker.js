@@ -39,13 +39,6 @@ export default ({onDayPress, coloredDays}) => {
                     height: 0,
                     opacity: 0
                 }
-            },
-            "stylesheet.day.period": {
-                base: {
-                    width: 38,
-                    height: 24,
-                    alignItems: 'center'
-                },
             }
         }}
     />

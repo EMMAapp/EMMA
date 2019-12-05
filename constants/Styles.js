@@ -13,9 +13,9 @@ export const calendarTheme = {
     'stylesheet.day.period': {
         base: {
             overflow: 'hidden',
-            height: 34,
             alignItems: 'center',
-            width: 38,
+            width: 30,
+            height: 30
         }
     }
 };

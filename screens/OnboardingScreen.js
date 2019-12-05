@@ -1,11 +1,11 @@
 import React, {useState} from 'react'
 import {TouchableOpacity} from 'react-native'
-import {syncPatientData, store} from '../store';
+import {store, syncPatientData} from '../store';
 import RouteGuard from "../navigation/RouteGuard";
 import localization from "../utils/localization";
 import NumericInput from "../components/NumericInput";
 import CalendarModalPicker from "../components/CalendarModalPicker";
-import {wixDateToMoment, momentToDisplayString} from "../utils/dayTime";
+import {momentToDisplayString, wixDateToMoment} from "../utils/dayTime";
 import PlanPicker from "../components/PlanPicker";
 import TermsModal from "../components/TermsModal";
 import Text from "../components/Text";
@@ -16,7 +16,7 @@ import Row from "../components/Row";
 import YesNoBoxes from "../components/YesNoBoxes";
 import ButtonPrimary from "../components/ButtonPrimary";
 import Checkbox from "../components/Checkbox";
-import {paddingStyle, marginStyle} from "../constants/Styles"
+import {marginStyle, paddingStyle} from "../constants/Styles"
 import IconAndText from "../components/IconAndText";
 
 const QuestionText = (props) =>
@@ -97,7 +97,7 @@ export default function LoginScreen({navigation, screenProps}) {
                 />
                 <Row style={[paddingStyle(10, 'bottom'), {width: '100%'}]}>
                     <QuestionText>{localization('acceptTermsPrefix')}</QuestionText>
-                    <TouchableOpacity  activeOpacity={1} onPress={() => setTermsIsVisible(true)} style={paddingStyle(2, 'left')}>
+                    <TouchableOpacity activeOpacity={1} onPress={() => setTermsIsVisible(true)} style={paddingStyle(2, 'left')}>
                         <QuestionText color={Colors.purple} underline>{localization('acceptTermsLink')}</QuestionText>
                     </TouchableOpacity>
                 </Row>

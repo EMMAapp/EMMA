@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {StyleSheet, Text, TextInput, View, Button} from 'react-native'
+import {Button, StyleSheet, Text, TextInput, View} from 'react-native'
 import {REGISTER} from "../../navigation/Routes";
 import {loginPatient} from '../../store';
 import RouteGuard from "../../navigation/RouteGuard";

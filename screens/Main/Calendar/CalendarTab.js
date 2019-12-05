@@ -1,14 +1,13 @@
 import React, {useState} from 'react';
 import moment from "moment";
-import {View, TouchableOpacity} from "react-native";
-import {wixDateToMoment, momentToWixDate, isAfterOrEquals} from "../../../utils/dayTime";
+import {TouchableOpacity, View} from "react-native";
+import {isAfterOrEquals, momentToWixDate, wixDateToMoment} from "../../../utils/dayTime";
 import {EDIT_EVENT} from "../../../navigation/Routes";
 import _ from 'lodash'
 import localization from "../../../utils/localization";
 import SetAndSyncPeriodModal from "./SetAndSyncPeriodModal";
 import {store} from "../../../store";
 import Colors from "../../../constants/Colors";
-import {pushByMapKey} from "../../../utils/utils";
 import MainCalendar from "./MainCalendar";
 import Text from '../../../components/Text'
 import Container from "../../../components/Container";
@@ -16,7 +15,7 @@ import Row from "../../../components/Row";
 import IconAndText from "../../../components/IconAndText";
 import Drawer from "../../../components/Drawer";
 import {Agenda, AgendaDay} from "../../../components/AgendaDay";
-import {marginStyle, paddingStyle} from "../../../constants/Styles";
+import {paddingStyle} from "../../../constants/Styles";
 
 function collectEventsForDate(eventsByDay, selectedDay) {
     const eventsForDay = eventsByDay[selectedDay];

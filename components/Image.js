@@ -1,6 +1,6 @@
 import React from "react";
 import {Image} from "react-native";
-import {hwStyle, borderRadiusStyle} from "../constants/Styles";
+import {borderRadiusStyle, hwStyle} from "../constants/Styles";
 
 import Beach from "../assets/images/beach.png"
 import BeachAnimation from "../assets/images/beach.gif"

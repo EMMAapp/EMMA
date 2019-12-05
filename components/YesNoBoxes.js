@@ -17,9 +17,9 @@ const YesNoBox = ({isSelected, textKey}) =>
 export default ({selected, setSelected}) =>
     <Row>
         <TouchableOpacity activeOpacity={1} onPress={() => setSelected(true)}>
-            <YesNoBox isSelected={selected} textKey='yes' />
+            <YesNoBox isSelected={selected} textKey='yes'/>
         </TouchableOpacity>
         <TouchableOpacity activeOpacity={1} onPress={() => setSelected(false)}>
-            <YesNoBox isSelected={!selected} textKey='no' />
+            <YesNoBox isSelected={!selected} textKey='no'/>
         </TouchableOpacity>
     </Row>

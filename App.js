@@ -37,7 +37,8 @@ export default function App(props) {
                 onFinish={() => handleFinishLoading(setStartupLoadingComplete)}
             />
         );
-    } else {
+    }
+    else {
         return (
             <View style={styles.container}>
                 {Platform.OS === 'ios' && <StatusBar barStyle="default"/>}

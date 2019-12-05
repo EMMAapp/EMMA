@@ -5,7 +5,7 @@ import {addDays, momentToWixDate, wixDateToMoment} from "../../../utils/dayTime"
 import moment from "moment";
 import PlanPicker from "../../../components/PlanPicker";
 import localization from "../../../utils/localization";
-import {marginStyle, paddingStyle, calendarTheme} from "../../../constants/Styles";
+import {calendarTheme, marginStyle, paddingStyle} from "../../../constants/Styles";
 import Text from "../../../components/Text";
 import Colors from "../../../constants/Colors";
 import ButtonPrimary from "../../../components/ButtonPrimary";

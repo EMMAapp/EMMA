@@ -79,7 +79,8 @@ export default function SetAndSyncPeriodModal({isVisible, dismiss, setMainCalend
             event.selectedDates = event.selectedDates.map(date => {
                 if (!isAfterOrEquals(wixDateToMoment(date), prevPeriodEndMoment)) {
                     return date;
-                } else {
+                }
+                else {
                     logInfo(`Moving ${date} of event ${eventId} ${daysDiff} days`);
                     return momentToWixDate(addDays(wixDateToMoment(date), daysDiff));
                 }

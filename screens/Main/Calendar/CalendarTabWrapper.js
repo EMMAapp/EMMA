@@ -72,7 +72,8 @@ export default function CalendarTabWrapper({navigation, screenProps}) {
         let title = "";
         if (momentsEquals(currentDayMoment, periodsMoments[containingPeriodIndex])) { // day 1 of period
             title = localization('calendarTitles.period');
-        } else {
+        }
+        else {
             const nextPeriodMoment = containingPeriodIndex === periodsMoments.length - 1 ?
                 addDays(lastPeriodEndEstimation, 1) :
                 periodsMoments[containingPeriodIndex + 1];

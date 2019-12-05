@@ -76,7 +76,8 @@ export async function registerPatient(email, password) {
         store.patientId = userCredential.user.uid;
         await syncPatientData({...initialPatientData});
         return {success: true, error: null};
-    } catch (e) {
+    }
+    catch (e) {
         let errorMessage = localization('error.generic');
         // https://firebase.google.com/docs/reference/js/firebase.auth.Auth.html#createuserwithemailandpassword
         switch (e.code) {
@@ -103,7 +104,8 @@ export async function loginPatient(email, password) {
         store.patientId = userCredential.user.uid;
         await retrievePatientData();
         return {success: true, errorMessage: null};
-    } catch (e) {
+    }
+    catch (e) {
         let errorMessage = localization('error.generic');
         // https://firebase.google.com/docs/reference/js/firebase.auth.Auth.html#sign-inwith-email-and-password
         switch (e.code) {

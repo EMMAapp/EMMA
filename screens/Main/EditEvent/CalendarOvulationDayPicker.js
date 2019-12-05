@@ -3,7 +3,6 @@ import React from "react";
 import {addDays, momentToWixDate, wixDateToMoment} from "../../../utils/dayTime";
 import Colors from "../../../constants/Colors";
 import {borderRadiusStyle, calendarTheme, marginStyle} from "../../../constants/Styles";
-import Text from "react-native-web/dist/exports/Text";
 
 export default ({onDayPress, coloredDays}) => {
 

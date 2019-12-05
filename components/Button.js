@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components"
 import Colors from "../constants/Colors";
 import Text from "./Text";
-import {hwStyle, borderRadiusStyle, paddingStyle} from "../constants/Styles";
+import {borderRadiusStyle, hwStyle, paddingStyle} from "../constants/Styles";
 
 const StyledTouchable = styled(TouchableOpacity)`
 justify-content: center;

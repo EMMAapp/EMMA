@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 23.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 32 32" style="enable-background:new 0 0 32 32;" xml:space="preserve">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+     viewBox="0 0 32 32" style="enable-background:new 0 0 32 32;" xml:space="preserve">
 <style type="text/css">
 	.st0{fill:none;}
 	.st1{fill-rule:evenodd;clip-rule:evenodd;}
 </style>
-<g>
+    <g>
 	<g id="Group">
 		<g>
 			<path class="st0" d="M14.0435,20.762l-3.4208-3.9339l0.7546-0.6561l2.6661,3.0661l6.5792-7.5661l0.7546,0.6561L14.0435,20.762z"
-				/>
-			<polygon class="st0" points="14.0435,19.238 11.3773,16.1719 10.6227,16.8281 14.0435,20.762 21.3773,12.3281 20.6227,11.6719 
+            />
+            <polygon class="st0" points="14.0435,19.238 11.3773,16.1719 10.6227,16.8281 14.0435,20.762 21.3773,12.3281 20.6227,11.6719
 							"/>
 		</g>
-		<g transform="translate(6.000000, 6.000000)">
+        <g transform="translate(6.000000, 6.000000)">
 			<path class="st1" d="M10,0C4.4772,0,0,4.4772,0,10s4.4772,10,10,10s10-4.4772,10-10S15.5228,0,10,0z M8.0435,14.762
 				l-3.4208-3.9339l0.7546-0.6561l2.6661,3.0661l6.5792-7.5661l0.7546,0.6561L8.0435,14.762z"/>
 		</g>

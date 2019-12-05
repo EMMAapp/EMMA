@@ -1,4 +1,4 @@
-import {Platform, InteractionManager} from 'react-native';
+import {InteractionManager, Platform} from 'react-native';
 
 export default () => {
     const _setTimeout = global.setTimeout;

@@ -1,4 +1,3 @@
-
 export const MAIN = 'main';
 export const CALENDAR = 'calendar';
 export const EDIT_EVENT = 'edit';

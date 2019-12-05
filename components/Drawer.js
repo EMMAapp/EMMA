@@ -1,7 +1,7 @@
 import React from 'react';
 import {TouchableOpacity, View} from "react-native";
 import Icon from "./Icon";
-import {paddingStyle, borderRadiusStyle, marginStyle} from "../constants/Styles";
+import {borderRadiusStyle, marginStyle, paddingStyle} from "../constants/Styles";
 import GestureRecognizer from 'react-native-swipe-gestures';
 
 export default function Drawer({isExpanded, setIsExpanded, renderCollapsed, renderExpanded}) {
@@ -19,12 +19,13 @@ export default function Drawer({isExpanded, setIsExpanded, renderCollapsed, rend
                     const {dy} = gestureState;
                     if (dy > 20 && isExpanded) {
                         setIsExpanded(false);
-                    } else if (dy < -20 && !isExpanded) {
+                    }
+                    else if (dy < -20 && !isExpanded) {
                         setIsExpanded(true);
                     }
                 }}
             >
-                <TouchableOpacity  activeOpacity={1} onPress={() => setIsExpanded(!isExpanded)} style={{width: '100%', alignItems: 'center'}}>
+                <TouchableOpacity activeOpacity={1} onPress={() => setIsExpanded(!isExpanded)} style={{width: '100%', alignItems: 'center'}}>
                     <Icon name={isExpanded ? 'down' : 'up'}/>
                 </TouchableOpacity>
             </GestureRecognizer>

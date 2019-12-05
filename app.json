@@ -45,6 +45,7 @@
     "android": {
       "package": "com.emma.app",
       "googleServicesFile": "./google-services.json"
-    }
+    },
+    "description": ""
   }
 }

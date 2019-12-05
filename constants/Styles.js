@@ -10,6 +10,14 @@ export const calendarTheme = {
     todayTextColor: Colors.purple,
     arrowColor: Colors.purple,
     calendarBackground: 'transparent',
+    'stylesheet.day.period': {
+        base: {
+            overflow: 'hidden',
+            height: 34,
+            alignItems: 'center',
+            width: 38,
+        }
+    }
 };
 
 export const eventColor = (isMedication) => isMedication ? Colors.fuchsia : Colors.turquoise;

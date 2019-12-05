@@ -23,7 +23,7 @@ export const calendarTheme = {
 
 export const eventColor = (isMedication) => isMedication ? Colors.fuchsia : Colors.turquoise;
 
-const toRem = (number) => `${number/10}rem`;
+const toRem = (number) => `${number / 10}rem`;
 
 export const hwStyle = (height, width) =>
     EStyleSheet.create({

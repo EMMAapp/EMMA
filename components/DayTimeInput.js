@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import styled from 'styled-components'
-import {View, TouchableOpacity} from "react-native";
+import {TouchableOpacity, View} from "react-native";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import localization from "../utils/localization";
 import {dateToDayTime, dayTimeToDate, dayTimeToDisplayString} from "../utils/dayTime";

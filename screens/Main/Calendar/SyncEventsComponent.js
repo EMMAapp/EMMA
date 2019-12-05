@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {View, TouchableOpacity} from "react-native";
+import {TouchableOpacity, View} from "react-native";
 import localization from "../../../utils/localization";
 import _ from 'lodash'
 import {addOrRemove} from "../../../utils/utils";
@@ -38,7 +38,8 @@ export default ({dismiss, potentialSyncEvents, syncEventsWithNewPeriod}) => {
     const toggleAll = (enabled) => {
         if (enabled) {
             setEventIdsToSync(potentialSyncEvents.map(potential => potential.event.id));
-        } else {
+        }
+        else {
             setEventIdsToSync([]);
         }
     };

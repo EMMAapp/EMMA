@@ -1,7 +1,7 @@
 import Icon from "./Icon";
-import {View, TouchableOpacity} from "react-native";
+import {TouchableOpacity, View} from "react-native";
 import React from "react";
-import {marginStyle, paddingStyle, borderRadiusStyle} from "../constants/Styles";
+import {borderRadiusStyle, marginStyle, paddingStyle} from "../constants/Styles";
 
 export default ({name, backgroundColor, iconColor, onPress}) =>
     <TouchableOpacity onPress={onPress}>

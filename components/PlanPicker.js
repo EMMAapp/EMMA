@@ -6,7 +6,7 @@ import Text from "./Text";
 import Row from "./Row";
 import Box from "./Box";
 import Colors from "../constants/Colors";
-import {hwStyle, borderRadiusStyle, paddingStyle, marginStyle} from "../constants/Styles";
+import {borderRadiusStyle, hwStyle, marginStyle, paddingStyle} from "../constants/Styles";
 import _ from 'lodash'
 import shortid from 'shortid'
 
@@ -45,13 +45,13 @@ export default ({selectedPlan, setSelectedPlan}) => (
                 <Row key={shortid.generate()}>
                     {
                         plansChunk.map(plan => <Plan
-                            key={plan}
-                            plan={plan}
-                            selectedPlan={selectedPlan}
-                            setSelectedPlan={setSelectedPlan}
-                            margin={plansChunk.length === 3 ? 8 : 22}
-                            text={localization(`plan.${plan}_title`)}
-                            subText={localization(`plan.${plan}`)}
+                                key={plan}
+                                plan={plan}
+                                selectedPlan={selectedPlan}
+                                setSelectedPlan={setSelectedPlan}
+                                margin={plansChunk.length === 3 ? 8 : 22}
+                                text={localization(`plan.${plan}_title`)}
+                                subText={localization(`plan.${plan}`)}
                             />
                         )
                     }

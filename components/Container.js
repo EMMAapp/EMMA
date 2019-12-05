@@ -1,8 +1,8 @@
 import React from 'react'
-import {SafeAreaView, ScrollView, KeyboardAvoidingView, Platform} from 'react-native'
+import {Platform, SafeAreaView} from 'react-native'
 import styled from "styled-components"
 import {marginStyle} from "../constants/Styles";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 
 const StyledView = styled(SafeAreaView)`
 flex: 1;

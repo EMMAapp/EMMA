@@ -2,7 +2,7 @@ import {View} from "react-native";
 import React from "react";
 import styled from "styled-components"
 import Colors from "../constants/Colors";
-import {hwStyle, fontSizeStyle} from "../constants/Styles";
+import {fontSizeStyle, hwStyle} from "../constants/Styles";
 
 const StyledView = styled(View)`
 font-family: 'sf-pro-bold';

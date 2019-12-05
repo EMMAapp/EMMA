@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {View, TouchableOpacity} from 'react-native'
+import {TouchableOpacity, View} from 'react-native'
 import localization from "../../../utils/localization";
 import Autocomplete from "../../../components/Autocomplete";
 import Medications from '../../../constants/Medications';
@@ -14,13 +14,13 @@ import shortid from 'shortid';
 import ValidationModal from "../../../components/ValidationModal";
 import _ from "lodash";
 import {addOrRemove} from "../../../utils/utils";
-import {wixDateToMoment, momentToWixDate, daysBetween, addDays, isInFuture} from "../../../utils/dayTime";
+import {addDays, daysBetween, isInFuture, momentToWixDate, wixDateToMoment} from "../../../utils/dayTime";
 import {syncEvents, unsetAllNotifications} from "../../../utils/eventsSync";
 import Text from "../../../components/Text";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import Button from "../../../components/Button";
 import Colors from "../../../constants/Colors";
-import {eventColor, marginStyle, borderRadiusStyle, paddingStyle} from "../../../constants/Styles";
+import {borderRadiusStyle, eventColor, marginStyle, paddingStyle} from "../../../constants/Styles";
 import Divider from "../../../components/Divider";
 import Row from "../../../components/Row";
 import Container from "../../../components/Container";
@@ -63,7 +63,8 @@ export default function EditEventTab({navigation, screenProps}) {
         let storedState = store.patientData.events[currentEditedEventId];
         if (!storedState) {
             setState({...initialState, id: currentEditedEventId});
-        } else {
+        }
+        else {
             setIsNewEvent(false);
             setState({...storedState});
             setEventType(storedState.medication ? EVENT_TYPE_MEDICATION : EVENT_TYPE_CHECKUP);
@@ -146,11 +147,13 @@ export default function EditEventTab({navigation, screenProps}) {
         if (state.selectedDates.some(date => !isInFuture(wixDateToMoment(date)))) {
             setShowPastValidationModal(true);
             setCloseAfterPastValidation(shouldClose);
-        } else {
+        }
+        else {
             await syncEvents(setIsLoading, flush, [state]);
             if (shouldClose) {
                 close();
-            } else {
+            }
+            else {
                 reset();
             }
         }
@@ -167,7 +170,8 @@ export default function EditEventTab({navigation, screenProps}) {
                 setResult={async (shouldDelete) => {
                     if (!shouldDelete) {
                         setShowDeleteValidationModal(false);
-                    } else {
+                    }
+                    else {
                         await deleteEvent();
                         close();
                     }
@@ -183,7 +187,8 @@ export default function EditEventTab({navigation, screenProps}) {
                         await syncEvents(setIsLoading, flush, [state]);
                         if (closeAfterPastValidation) {
                             close();
-                        } else {
+                        }
+                        else {
                             reset();
                         }
                     }
@@ -304,7 +309,8 @@ export default function EditEventTab({navigation, screenProps}) {
                         onPress={() => {
                             if (isNewEvent) {
                                 close();
-                            } else {
+                            }
+                            else {
                                 setShowDeleteValidationModal(true);
                             }
                         }}

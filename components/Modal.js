@@ -3,7 +3,7 @@ import Modal from "react-native-modal";
 import {View} from "react-native";
 import styled from "styled-components"
 import Colors from "../constants/Colors";
-import {marginStyle, borderRadiusStyle, paddingStyle} from "../constants/Styles";
+import {borderRadiusStyle, marginStyle, paddingStyle} from "../constants/Styles";
 import Container from "./Container";
 
 const StyledView = styled(View)`
@@ -28,9 +28,9 @@ export default ({isVisible, children, onBackdropPress}) => {
     >
         <Container>
 
-        <StyledView style={[borderRadiusStyle(6), paddingStyle(10), marginStyle(2)]}>
+            <StyledView style={[borderRadiusStyle(6), paddingStyle(10), marginStyle(2)]}>
                 {children}
-        </StyledView>
+            </StyledView>
         </Container>
 
     </Modal>

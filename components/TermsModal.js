@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, ScrollView} from "react-native";
+import {ScrollView, Text} from "react-native";
 import localization from "../utils/localization";
 import terms from '../assets/terms'
 import Modal from "./Modal";

@@ -1,11 +1,11 @@
-import {FlatList, View, TouchableOpacity} from "react-native";
+import {FlatList, TouchableOpacity, View} from "react-native";
 import {dayTimeToDisplayString, isAfterOrEquals, momentToDisplayString, wixDateToMoment} from "../utils/dayTime";
 import _ from "lodash";
-import React, {useState, useRef} from "react";
+import React, {useRef, useState} from "react";
 import shortid from "shortid";
 import Text from "./Text";
 import Colors from "../constants/Colors";
-import {marginStyle, absoluteStyle, eventColor} from "../constants/Styles";
+import {absoluteStyle, eventColor, marginStyle} from "../constants/Styles";
 import Image from "./Image";
 import localization from "../utils/localization";
 import Icon from "./Icon";
@@ -38,8 +38,8 @@ const AgendaItem = ({dayTime, details, onEventPressed, noDivider}) => {
             onSwipeableRightOpen={() => setSwiped(true)}
             onSwipeableClose={() => setSwiped(false)}
             renderRightActions={() =>
-            <IconButton name='edit' backgroundColor={Colors.purple} iconColor='white' onPress={() => onEventPressed(details)}/>
-        }>
+                <IconButton name='edit' backgroundColor={Colors.purple} iconColor='white' onPress={() => onEventPressed(details)}/>
+            }>
             <Row style={{minHeight: 37}}>
                 <View>
                     <Row>

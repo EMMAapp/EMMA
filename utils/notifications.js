@@ -1,4 +1,4 @@
-import { Notifications } from 'expo';
+import {Notifications} from 'expo';
 import * as Permissions from 'expo-permissions';
 import {logInfo} from "./log";
 

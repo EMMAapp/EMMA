@@ -260,6 +260,7 @@ export default function EditEventTab({navigation, screenProps}) {
                                     eventAndReminder={state.eventsAndReminders[i]}
                                     setEventAndReminder={(eventAndReminder) => setEventsAndReminder(eventAndReminder, i)}
                                     defaultRemindMinutes={isMedicationEvent ? 0 : 60}
+                                    color={eventColor(isMedicationEvent)}
                                 />
                             )
                         })

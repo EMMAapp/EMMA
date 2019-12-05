@@ -19,7 +19,7 @@ align-items: center;
 text-align: center;
 `;
 
-export default ({eventAndReminder, setEventAndReminder, defaultRemindMinutes}) => {
+export default ({eventAndReminder, setEventAndReminder, defaultRemindMinutes, color}) => {
 
     const {event, reminder, reminderDisabled} = eventAndReminder;
 
@@ -51,6 +51,7 @@ export default ({eventAndReminder, setEventAndReminder, defaultRemindMinutes}) =
                             disabled={reminderDisabled}
                         />
                         <Checkbox
+                            color={color}
                             value={!reminderDisabled}
                             setValue={(enabled) => toggleReminder(enabled)}
                         />

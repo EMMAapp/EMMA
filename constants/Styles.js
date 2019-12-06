@@ -1,3 +1,4 @@
+import {Platform} from "react-native";
 import EStyleSheet from 'react-native-extended-stylesheet';
 import _ from "lodash"
 import Colors from "./Colors";
@@ -14,10 +15,15 @@ export const calendarTheme = {
         base: {
             overflow: 'hidden',
             alignItems: 'center',
-            textAlignVertical: 'center',
             width: 30,
             height: 30
-        }
+        },
+        text: {
+            marginTop: Platform.OS === 'ios' ? 7 : 5,
+            fontSize: 14,
+            fontFamily: 'sf-pro-regular',
+            color: Colors.grayDark
+        },
     }
 };
 

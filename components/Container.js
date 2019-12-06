@@ -1,5 +1,5 @@
 import React from 'react'
-import {Platform, SafeAreaView} from 'react-native'
+import {Platform, SafeAreaView, View} from 'react-native'
 import styled from "styled-components"
 import {marginStyle} from "../constants/Styles";
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
@@ -18,7 +18,10 @@ export default ({children, style, widthPercentage}) =>
                 {width: `${widthPercentage || 100}%`},
             ]}
             bounces={false}
+            enableOnAndroid={true}
         >
+            <View style={{ height: 2000 }}>
             {children}
+            </View>
         </KeyboardAwareScrollView>
     </StyledView>

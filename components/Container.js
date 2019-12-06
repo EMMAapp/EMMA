@@ -20,7 +20,7 @@ export default ({children, style, widthPercentage}) =>
             bounces={false}
             enableOnAndroid={true}
         >
-            <View style={{ height: 2000 }}>
+            <View style={Platform.OS === 'ios' ? {} : { height: 1100 }}>
             {children}
             </View>
         </KeyboardAwareScrollView>

@@ -77,7 +77,12 @@ export default function EditEventTab({navigation, screenProps}) {
         let eventsAndReminders = [];
         for (let i = 0; i < timesPerDayNormalized; i++) {
             const hour = (DEFAULT_MIN_HOUR + i) % 24;
-            eventsAndReminders.push({event: {hour: hour, minute: 0}, reminder: null, reminderDisabled: true});
+            const reminderHour = isMedicationEvent ? hour : (hour - 1) % 24;
+            eventsAndReminders.push({
+                event: {hour: hour, minute: 0},
+                reminder: {hour: reminderHour, minute: 0},
+                reminderDisabled: true
+            });
         }
         setState({...state, eventsAndReminders: eventsAndReminders});
         return <View/>;
@@ -264,7 +269,6 @@ export default function EditEventTab({navigation, screenProps}) {
                                     key={i}
                                     eventAndReminder={state.eventsAndReminders[i]}
                                     setEventAndReminder={(eventAndReminder) => setEventsAndReminder(eventAndReminder, i)}
-                                    defaultRemindMinutes={isMedicationEvent ? 0 : 60}
                                     color={eventColor(isMedicationEvent)}
                                 />
                             )

@@ -26,7 +26,7 @@ export default ({dayTime, setDayTime, disabled}) => {
                 setIsVisible(true);
             }}
         >
-            <Text bold>{disabled ? '-' : dayTimeToDisplayString(dayTime)}</Text>
+            <Text bold color={disabled ? Colors.grayMedium : Colors.grayDark}>{dayTimeToDisplayString(dayTime)}</Text>
         </TouchableOpacity>
         <DateTimePicker
             mode='time'

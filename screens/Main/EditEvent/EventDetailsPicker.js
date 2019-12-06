@@ -19,14 +19,9 @@ align-items: center;
 text-align: center;
 `;
 
-export default ({eventAndReminder, setEventAndReminder, defaultRemindMinutes, color}) => {
+export default ({eventAndReminder, setEventAndReminder, color}) => {
 
     const {event, reminder, reminderDisabled} = eventAndReminder;
-
-    const toggleReminder = (enabled) => {
-        let reminder = enabled ? dayTimeSubtract(event, defaultRemindMinutes) : null;
-        setEventAndReminder({...eventAndReminder, reminderDisabled: !enabled, reminder})
-    };
 
     return (
         <Row>
@@ -53,7 +48,7 @@ export default ({eventAndReminder, setEventAndReminder, defaultRemindMinutes, co
                         <Checkbox
                             color={color}
                             value={!reminderDisabled}
-                            setValue={(enabled) => toggleReminder(enabled)}
+                            setValue={(enabled) => setEventAndReminder({...eventAndReminder, reminderDisabled: !enabled})}
                         />
                     </Row>
                 </StyledView>

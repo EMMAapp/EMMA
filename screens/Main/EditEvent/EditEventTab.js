@@ -280,10 +280,10 @@ export default function EditEventTab({navigation, screenProps}) {
                     style={[
                         marginStyle(5, 'top'),
                         borderRadiusStyle(5),
-                        {backgroundColor: Colors.grayLight, borderColor: Colors.grayMedium, borderWidth: 1, width: '100%', minHeight: 85}
+                        {backgroundColor: Colors.grayLight, borderColor: Colors.grayMedium, borderWidth: 1, width: '100%'}
                     ]}
+                    height={85}
                     alignLeft
-                    multiline
                     value={state.note}
                     setValue={note => setState({...state, note: note})}
                 />

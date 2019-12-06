@@ -10,19 +10,22 @@ font-family: 'sf-pro-bold';
 text-align: ${props => props.alignLeft ? 'left' : 'center'};
 justify-content: ${props => props.alignLeft ? 'flex-start' : 'center'};
 color: ${props => props.color || Colors.grayDark};
+height: 100%;
+width: 100%;
 `;
 
-export default ({value, setValue, style, height, width, textColor, keyboardType, alignLeft, multiline}) => {
+export default ({value, setValue, style, height, width, textColor, keyboardType, alignLeft}) => {
     return (
-        <Box style={[fontSizeStyle(8), style]} height={height || 25} width={width || 25} textAlignVertical={multiline ? 'top' : 'center'}>
+        <Box style={[fontSizeStyle(8), style]} height={height || 25} width={width || 25} textAlignVertical='center'>
             <StyledTextInput
                 alignLeft={alignLeft}
                 color={textColor}
                 autoCapitalize="none"
-                multiline={multiline}
+                multiline
                 onChangeText={setValue}
                 value={value}
                 keyboardType={keyboardType || 'default'}
+                selectTextOnFocus={true}
             />
         </Box>
     )

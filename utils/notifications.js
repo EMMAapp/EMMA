@@ -1,6 +1,6 @@
 import {Notifications} from 'expo';
 import * as Permissions from 'expo-permissions';
-import {logInfo} from "./log";
+import {logError, logInfo} from "./log";
 
 const createNotification = (title, body) => {
     return {
@@ -16,12 +16,25 @@ const createNotification = (title, body) => {
 };
 
 export const setNotification = async (title, body, dateMoment) => {
-    await Permissions.askAsync(Permissions.NOTIFICATIONS);
-    const id = await Notifications.scheduleLocalNotificationAsync(createNotification(title, body), {time: dateMoment.toDate()});
-    logInfo(`Registered notification ${id} at ${dateMoment}`);
-    return id;
+    try {
+        await Permissions.askAsync(Permissions.NOTIFICATIONS);
+        const id = await Notifications.scheduleLocalNotificationAsync(createNotification(title, body), {time: dateMoment.toDate()});
+        logInfo(`Registered notification ${id} at ${dateMoment}`);
+        return id;
+    }
+    catch (e) {
+        logError(`Failed to set notification: ${e}`);
+        return "";
+    }
 };
 
 export const unsetNotification = async (id) => {
-    await Notifications.cancelScheduledNotificationAsync(id);
+    try {
+        if (id) {
+            await Notifications.cancelScheduledNotificationAsync(id);
+        }
+    }
+    catch (e) {
+        logError(`Failed to unset notification ${id}: ${e}`);
+    }
 };

@@ -149,7 +149,7 @@ export default function EditEventTab({navigation, screenProps}) {
     const dateToOvulationDay = (date) => daysBetween(lastPeriodMoment, wixDateToMoment(date)) + 1;
 
     const submit = async (shouldClose) => {
-        if (state.selectedDates.some(date => !isInFuture(wixDateToMoment(date)))) {
+        if (state.selectedDates.some(date => !isInFuture(addDays(wixDateToMoment(date), 1)))) {
             setShowPastValidationModal(true);
             setCloseAfterPastValidation(shouldClose);
         }

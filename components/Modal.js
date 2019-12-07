@@ -13,7 +13,11 @@ align-items: center;
 border-color: ${Colors.grayDark};
 `;
 
-export default ({isVisible, children, onBackdropPress}) => {
+export default ({isVisible, children, onBackdropPress, noContainer}) => {
+    const content =
+        <StyledView style={[borderRadiusStyle(6), paddingStyle(10), marginStyle(2)]}>
+            {children}
+        </StyledView>;
     return <Modal
         style={[
             marginStyle(20, 'left'),
@@ -26,12 +30,10 @@ export default ({isVisible, children, onBackdropPress}) => {
         isVisible={isVisible}
         onBackdropPress={onBackdropPress}
     >
-        <Container>
-
-            <StyledView style={[borderRadiusStyle(6), paddingStyle(10), marginStyle(2)]}>
-                {children}
-            </StyledView>
-        </Container>
-
+        {
+            noContainer ? content : <Container>
+                {content}
+            </Container>
+        }
     </Modal>
 }

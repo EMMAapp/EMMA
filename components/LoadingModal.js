@@ -3,7 +3,7 @@ import Loading from "./Loading";
 import Modal from "./Modal";
 
 export default ({isVisible}) => {
-    return <Modal isVisible={isVisible}>
+    return <Modal isVisible={isVisible} noContainer>
         <Loading/>
     </Modal>
 }

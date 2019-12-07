@@ -24,6 +24,13 @@ export const calendarTheme = {
             fontFamily: 'sf-pro-regular',
             color: Colors.grayDark
         },
+    },
+    'stylesheet.calendar.main': {
+        week: {
+            marginTop: Platform.OS === 'ios' ? 14 : 7,
+            flexDirection: 'row',
+            justifyContent: 'space-around'
+        },
     }
 };
 
@@ -75,3 +82,13 @@ export const absoluteStyle = (left, right) =>
             right: toRem(right)
         }
     }).absoluteStyle;
+
+export const shadowStyle = (androidWeight) =>
+    EStyleSheet.create({
+        shadowStyle: {
+            backgroundColor: 'white',
+            shadowOpacity: 0.2,
+            shadowColor: 'black',
+            elevation: androidWeight
+        }
+    }).shadowStyle;

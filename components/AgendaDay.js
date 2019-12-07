@@ -1,4 +1,4 @@
-import {FlatList, TouchableOpacity, View} from "react-native";
+import {FlatList, TouchableOpacity, View, Platform} from "react-native";
 import {dayTimeToDisplayString, isAfterOrEquals, momentToDisplayString, wixDateToMoment} from "../utils/dayTime";
 import _ from "lodash";
 import React, {useRef, useState} from "react";
@@ -17,9 +17,9 @@ import IconButton from "./IconButton";
 
 const NoItems = () =>
     <View style={{flex: 1, alignItems: 'center'}}>
-        <Image name='beachAnimation' height={80} width={200}/>
+        <Image name='beachAnimation' height={Platform.OS === 'ios' ? 80 : 65} width={200}/>
         <Text bold size={12} color={Colors.pink}>{localization('addTreatmentPlan')}</Text>
-        <Icon name='down' color={Colors.pink} scale={1.5}/>
+        <Icon name='down' color={Colors.pink} scale={1.5} style={marginStyle(7, 'right')}/>
     </View>;
 
 const AgendaItem = ({dayTime, details, onEventPressed, noDivider}) => {

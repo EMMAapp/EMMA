@@ -18,7 +18,7 @@ export default function CalendarTab({
 
     return (
         <Calendar
-            style={[marginStyle(10, 'top'), marginStyle(10, 'bottom')]}
+            style={marginStyle(5, 'bottom')}
             current={selectedDay}
             onDayPress={(day) => setSelectedDay(day.dateString)}
             markedDates={currentMarkedDates}
@@ -30,8 +30,10 @@ export default function CalendarTab({
                 'stylesheet.day.basic': {
                     visibleDot: {
                         opacity: 0
-                    }
-                }
+                    },
+                },
+                textMonthFontSize: 12,
+                textDayHeaderFontSize: 12,
             }}
         />
     );

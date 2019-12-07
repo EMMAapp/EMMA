@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {TouchableOpacity, View} from 'react-native'
+import {Platform, TouchableOpacity, View} from 'react-native'
 import localization from "../../../utils/localization";
 import Autocomplete from "../../../components/Autocomplete";
 import Medications from '../../../constants/Medications';
@@ -20,7 +20,7 @@ import Text from "../../../components/Text";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import Button from "../../../components/Button";
 import Colors from "../../../constants/Colors";
-import {borderRadiusStyle, eventColor, marginStyle, paddingStyle} from "../../../constants/Styles";
+import {borderRadiusStyle, eventColor, marginStyle, paddingStyle, shadowStyle} from "../../../constants/Styles";
 import Divider from "../../../components/Divider";
 import Row from "../../../components/Row";
 import Container from "../../../components/Container";
@@ -201,13 +201,17 @@ export default function EditEventTab({navigation, screenProps}) {
             />
             {
                 isNewEvent ?
-                    <Row style={[{shadowOpacity: 0.2, shadowOffset: {height: 2}, shadowTopRadius: 10, shadowColor: 'black', backgroundColor: 'white'}, marginStyle(15, 'bottom')]}>
+                    <Row style={[
+                        {shadowOffset: {height: 2}, shadowTopRadius: 10},
+                        shadowStyle(10),
+                        marginStyle(15, 'bottom')
+                    ]}>
                         <EventTypeButton targetEventType={EVENT_TYPE_MEDICATION} titleKey='medicationTitle'/>
                         <EventTypeButton targetEventType={EVENT_TYPE_CHECKUP} titleKey='checkupTitle'/>
                     </Row>
                     : null
             }
-            <View style={[paddingStyle(10, 'left'), paddingStyle(10, 'right')]}>
+            <View style={[paddingStyle(10, 'left'), paddingStyle(10, 'right'), Platform.OS === 'ios' ? {} : { height: 1100 }]}>
                 <Text>{localization(isMedicationEvent ? 'medicationSubTitle' : 'checkupSubTitle')}</Text>
                 <Autocomplete
                     items={isMedicationEvent ? Medications : Checkups}

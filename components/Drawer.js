@@ -1,13 +1,14 @@
 import React from 'react';
 import {TouchableOpacity, View} from "react-native";
 import Icon from "./Icon";
-import {borderRadiusStyle, marginStyle, paddingStyle} from "../constants/Styles";
+import {borderRadiusStyle, marginStyle, paddingStyle, shadowStyle} from "../constants/Styles";
 import GestureRecognizer from 'react-native-swipe-gestures';
 
 export default function Drawer({isExpanded, setIsExpanded, renderCollapsed, renderExpanded}) {
     return (
         <View style={[
-            {backgroundColor: 'white', height: '1000%', shadowOpacity: 0.2, shadowRadius: 8, shadowColor: 'black'},
+            {height: '1000%', shadowRadius: 8},
+            shadowStyle(20),
             marginStyle(7, 'top'),
             paddingStyle(15),
             paddingStyle(2, 'top'),

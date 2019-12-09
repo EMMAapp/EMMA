@@ -5,6 +5,7 @@ import {Text} from "react-native";
 import localization from "../../utils/localization";
 import {ONBOARDING} from "../../navigation/Routes";
 import Container from "../../components/Container";
+import {testNotification} from "../../utils/notifications";
 
 export default function ProfileTab({navigation}) {
 
@@ -16,5 +17,6 @@ export default function ProfileTab({navigation}) {
     return <Container>
         <Text onPress={logout}>{localization('auth.signout')}</Text>
         <Text onPress={() => navigation.navigate(ONBOARDING)}>onboarding</Text>
+        <Text onPress={() => testNotification()}>notification</Text>
     </Container>;
 }

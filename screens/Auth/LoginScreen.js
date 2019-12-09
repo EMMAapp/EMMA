@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {Button, StyleSheet, Text, TextInput, View} from 'react-native'
 import {REGISTER} from "../../navigation/Routes";
-import {loginPatient} from '../../store';
+import {logInWithFacebook} from '../../store';
 import RouteGuard from "../../navigation/RouteGuard";
 import localization from "../../utils/localization";
 
@@ -12,14 +12,9 @@ export default function LoginScreen({navigation, screenProps}) {
     const {setIsLoading} = screenProps;
 
     const handleLogin = async () => {
-        setIsLoading(true);
-        const {success, errorMessage} = await loginPatient(email, password);
-        setIsLoading(false);
+        const success = await logInWithFacebook();
         if (success) {
             RouteGuard(navigation);
-        }
-        else {
-            setErrorMessage(errorMessage);
         }
     };
 

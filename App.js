@@ -70,8 +70,9 @@ async function loadResourcesAsync() {
             'sf-pro-regular': require('./assets/fonts/SF-Pro-Text-Regular.ttf'),
             'sf-pro-bold': require('./assets/fonts/SF-Pro-Text-Bold.ttf'),
         }),
-        retrievePatient()
-    ]);
+        retrievePatient(),
+        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+]);
 }
 
 function handleLoadingError(error) {

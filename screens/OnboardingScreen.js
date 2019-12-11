@@ -7,7 +7,6 @@ import NumericInput from "../components/NumericInput";
 import CalendarModalPicker from "../components/CalendarModalPicker";
 import {momentToDisplayString, wixDateToMoment} from "../utils/dayTime";
 import PlanPicker from "../components/PlanPicker";
-import TermsModal from "../components/TermsModal";
 import Text from "../components/Text";
 import Container from "../components/Container";
 import Colors from "../constants/Colors";
@@ -15,7 +14,6 @@ import Box from "../components/Box";
 import Row from "../components/Row";
 import YesNoBoxes from "../components/YesNoBoxes";
 import ButtonPrimary from "../components/ButtonPrimary";
-import Checkbox from "../components/Checkbox";
 import {marginStyle, paddingStyle} from "../constants/Styles"
 import IconAndText from "../components/IconAndText";
 
@@ -34,8 +32,6 @@ export default function LoginScreen({navigation, screenProps}) {
     const [isPeriodRegular, setIsPeriodRegular] = useState(false);
     const [averagePeriodCycleDays, setAveragePeriodCycleDays] = useState(28);
     const [isCalendarPickerVisible, setCalendarPickerVisible] = useState(false);
-    const [agreeTerms, setAgreeTerms] = useState(false);
-    const [termsIsVisible, setTermsIsVisible] = useState(false);
     const {setIsLoading} = screenProps;
 
     const submit = async () => {
@@ -47,7 +43,7 @@ export default function LoginScreen({navigation, screenProps}) {
         RouteGuard(navigation);
     };
 
-    const canSubmit = selectedPlan && age && lastPeriodDate && agreeTerms;
+    const canSubmit = selectedPlan && age && lastPeriodDate;
 
     return (
         <Container widthPercentage={90}>
@@ -88,20 +84,6 @@ export default function LoginScreen({navigation, screenProps}) {
             }
 
             <PlanPicker selectedPlan={selectedPlan} setSelectedPlan={setSelectedPlan}/>
-
-            <TermsModal isVisible={termsIsVisible} dismiss={() => setTermsIsVisible(false)}/>
-            <Row>
-                <Checkbox
-                    value={agreeTerms}
-                    setValue={(enabled) => setAgreeTerms(enabled)}
-                />
-                <Row style={[paddingStyle(10, 'bottom'), {width: '100%'}]}>
-                    <QuestionText>{localization('acceptTermsPrefix')}</QuestionText>
-                    <TouchableOpacity activeOpacity={1} onPress={() => setTermsIsVisible(true)} style={paddingStyle(2, 'left')}>
-                        <QuestionText color={Colors.purple} underline>{localization('acceptTermsLink')}</QuestionText>
-                    </TouchableOpacity>
-                </Row>
-            </Row>
 
             <ButtonPrimary onPress={submit} disabled={!canSubmit} style={[marginStyle(15, 'top'), marginStyle(15, 'bottom')]}>
                 {localization('onboardingSubmit')}

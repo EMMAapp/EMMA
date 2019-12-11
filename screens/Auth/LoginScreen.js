@@ -58,7 +58,7 @@ export default function LoginScreen({navigation, screenProps}) {
             <Image name='welcomeAnimation' height='250%' width='100%' style={marginStyle(15, 'top')}/>
 
             <TermsModal isVisible={termsIsVisible} dismiss={() => setTermsIsVisible(false)}/>
-            <Row>
+            <Row style={marginStyle(15, 'left')}>
                 <Checkbox
                     value={agreeTerms}
                     setValue={(enabled) => setAgreeTerms(enabled)}
@@ -74,13 +74,13 @@ export default function LoginScreen({navigation, screenProps}) {
             </Row>
 
             <Row center style={marginStyle(10, 'bottom')}>
-                <ButtonPrimary onPress={facebookLogin} disabled={!canSubmit}>
-                    facebook
+                <ButtonPrimary onPress={facebookLogin} disabled={!canSubmit} width='75%'>
+                    {localization('connectFacebook')}
                 </ButtonPrimary>
             </Row>
             <Row center style={marginStyle(10, 'bottom')}>
-                <ButtonPrimary onPress={googleLogin} inverted disabled={!canSubmit}>
-                    google
+                <ButtonPrimary onPress={googleLogin} inverted disabled={!canSubmit} width='75%'>
+                    {localization('connectGoogle')}
                 </ButtonPrimary>
             </Row>
             {

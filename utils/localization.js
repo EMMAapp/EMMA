@@ -15,6 +15,8 @@ const en = {
         'adding': 'Add',
     },
 
+    'connectFacebook': 'Connect with Facebook',
+    'connectGoogle': 'Connect with Google',
     'treatmentPlan': 'Treatment Plan',
     'addTreatmentPlan': 'Add Your Treatment Plan',
     'editPeriod': 'Period/Plan',

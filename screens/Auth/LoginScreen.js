@@ -1,69 +1,91 @@
 import React, {useState} from 'react'
-import {Button, StyleSheet, Text, TextInput, View} from 'react-native'
-import {REGISTER} from "../../navigation/Routes";
-import {logInWithFacebook} from '../../store';
+import {TouchableOpacity} from 'react-native'
+import {logInWithFacebook, logInWithGoogle} from '../../store';
 import RouteGuard from "../../navigation/RouteGuard";
 import localization from "../../utils/localization";
+import Image from "../../components/Image";
+import Container from "../../components/Container";
+import ButtonPrimary from "../../components/ButtonPrimary";
+import {marginStyle, paddingStyle} from "../../constants/Styles";
+import TermsModal from "../../components/TermsModal";
+import Row from "../../components/Row";
+import Checkbox from "../../components/Checkbox";
+import Colors from "../../constants/Colors";
+import Text from "../../components/Text";
+
+const QuestionText = (props) =>
+    <Text
+        style={[paddingStyle(15, 'top'), paddingStyle(5, 'bottom')]}
+        {...props}>
+        {props.children}
+    </Text>;
+
 
 export default function LoginScreen({navigation, screenProps}) {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [errorMessage, setErrorMessage] = useState(null);
+    const [agreeTerms, setAgreeTerms] = useState(false);
+    const [termsIsVisible, setTermsIsVisible] = useState(false);
+    const [hasError, setHasError] = useState(false);
     const {setIsLoading} = screenProps;
 
-    const handleLogin = async () => {
+    const facebookLogin = async () => {
+        setIsLoading(true);
         const success = await logInWithFacebook();
+        setIsLoading(false);
         if (success) {
             RouteGuard(navigation);
         }
+        else {
+            setHasError(true);
+        }
     };
 
+    const googleLogin = async () => {
+        setIsLoading(true);
+        const success = await logInWithGoogle();
+        setIsLoading(false);
+        if (success) {
+            RouteGuard(navigation);
+        }
+        else {
+            setHasError(true);
+        }
+    };
+
+    const canSubmit = agreeTerms;
+
     return (
-        <View style={styles.container}>
-            <Text style={{color: '#e93766', fontSize: 40}}>{localization('auth.signin')}</Text>
-            {errorMessage &&
-            <Text style={{color: 'red'}}>
-                {errorMessage}
-            </Text>}
-            <TextInput
-                style={styles.textInput}
-                autoCapitalize="none"
-                placeholder={localization('auth.email-placeholder')}
-                onChangeText={newEmail => setEmail(newEmail)}
-                value={email}
-            />
-            <TextInput
-                secureTextEntry
-                style={styles.textInput}
-                autoCapitalize="none"
-                placeholder={localization('auth.password-placeholder')}
-                onChangeText={newPassword => setPassword(newPassword)}
-                value={password}
-            />
-            <Button title={localization('auth.signin')} color="#e93766" onPress={handleLogin}/>
-            <View>
-                <Text>
-                    {localization('auth.dont-have-an-account')}
-                    <Text onPress={() => navigation.navigate(REGISTER)} style={{color: '#e93766', fontSize: 18}}> {localization('auth.signup')} </Text
-                    ></Text>
-            </View>
-        </View>
+        <Container widthPercentage={90}>
+            <Image name='welcomeAnimation' height='250%' width='100%' style={marginStyle(15, 'top')}/>
+
+            <TermsModal isVisible={termsIsVisible} dismiss={() => setTermsIsVisible(false)}/>
+            <Row>
+                <Checkbox
+                    value={agreeTerms}
+                    setValue={(enabled) => setAgreeTerms(enabled)}
+                />
+                <Row style={[paddingStyle(10, 'bottom'), {width: '100%'}]}>
+                    <TouchableOpacity activeOpacity={1} onPress={() => setAgreeTerms(!agreeTerms)}>
+                        <QuestionText>{localization('acceptTermsPrefix')}</QuestionText>
+                    </TouchableOpacity>
+                    <TouchableOpacity activeOpacity={1} onPress={() => setTermsIsVisible(true)} style={paddingStyle(2, 'left')}>
+                        <QuestionText color={Colors.purple} underline>{localization('acceptTermsLink')}</QuestionText>
+                    </TouchableOpacity>
+                </Row>
+            </Row>
+
+            <Row center style={marginStyle(10, 'bottom')}>
+                <ButtonPrimary onPress={facebookLogin} disabled={!canSubmit}>
+                    facebook
+                </ButtonPrimary>
+            </Row>
+            <Row center style={marginStyle(10, 'bottom')}>
+                <ButtonPrimary onPress={googleLogin} inverted disabled={!canSubmit}>
+                    google
+                </ButtonPrimary>
+            </Row>
+            {
+                hasError && <Text color='red' style={marginStyle(5)}>Something went wrong</Text>
+            }
+        </Container>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    textInput: {
-        height: 40,
-        fontSize: 20,
-        width: '90%',
-        borderColor: '#9b9b9b',
-        borderBottomWidth: 1,
-        marginTop: 8,
-        marginVertical: 15
-    }
-});

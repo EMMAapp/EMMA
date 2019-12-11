@@ -9,16 +9,6 @@ const en = {
         'login-generic': 'Email or password are incorrect',
     },
 
-    'auth': {
-        'email-placeholder': 'Email',
-        'password-placeholder': 'Password',
-        'dont-have-an-account': 'Don\'t have an account?',
-        'already-have-an-account': 'Already have an account?',
-        'signup': 'Sign Up',
-        'signin': 'Login',
-        'signout': 'Logout',
-    },
-
     'tabs': {
         'calendar': 'Calendar',
         'profile': 'Profile',
@@ -71,7 +61,7 @@ const en = {
     'medicationReminder': 'Medication reminder',
     'checkupReminder': 'Checkup reminder',
     'reminderAt': 'at',
-    'acceptTermsPrefix': 'I agree to the',
+    'acceptTermsPrefix': 'I\'ve read and accept the',
     'acceptTermsLink': 'Terms and Conditions',
     'syncEventsTitle': 'You\'ve Changed Your Period Date',
     'syncEventsSubTitle': 'Select the events you wish to sync with the new date*',

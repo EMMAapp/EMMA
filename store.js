@@ -1,8 +1,8 @@
 import * as firebase from "firebase";
 import '@firebase/firestore';
 import {logError, logInfo, logWarn} from "./utils/log";
-import localization from "./utils/localization";
 import * as Facebook from "expo-facebook";
+import * as GoogleSignIn from 'expo-google-sign-in';
 
 const initialPatientData = {
     age: null,
@@ -68,27 +68,49 @@ export async function syncPatientData(updatedPatientData) {
     }
 }
 
+async function logInWithCredential(credential) {
+    const userCredential = await firebase.auth().signInWithCredential(credential);
+    store.patientId = userCredential.user.uid;
+    await syncPatientData({...initialPatientData});
+}
+
 export async function logInWithFacebook() {
     try {
         const appId = '807419566367785';
         const permissions = ['public_profile', 'email'];
+        Facebook.initializeAsync(appId);
 
-        const {
-            type,
-            token,
-        } = await Facebook.logInWithReadPermissionsAsync(
-            appId,
-            {permissions}
-        );
+        const {type, token} = await Facebook.logInWithReadPermissionsAsync(appId, {permissions});
         if (type !== 'success') {
             return false;
         }
 
-        await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
         const credential = firebase.auth.FacebookAuthProvider.credential(token);
-        const userCredential = await firebase.auth().signInWithCredential(credential);
-        store.patientId = userCredential.user.uid;
-        await syncPatientData({...initialPatientData});
+        await logInWithCredential(credential);
+        return true;
+    }
+    catch (e) {
+        logError(e.message);
+        return false;
+    }
+}
+
+export async function logInWithGoogle() {
+    try {
+        await GoogleSignIn.initAsync({
+           clientId: '1091629470495-bojd6ud8nfu85ku7b0vkng1uam23isl1.apps.googleusercontent.com'
+        });
+        await GoogleSignIn.askForPlayServicesAsync();
+        const { type, user } = await GoogleSignIn.signInAsync();
+        console.log("!!!")
+        console.log(type)
+        console.log(user)
+        if (type !== 'success') {
+            return false;
+        }
+
+        const credential = firebase.auth.GoogleAuthProvider.credential(user.idToken, user.accessToken);
+        await logInWithCredential(credential);
         return true;
     }
     catch (e) {

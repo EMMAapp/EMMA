@@ -13,15 +13,17 @@ import firebaseConfig from "./firebaseConfig";
 import {logError} from "./utils/log";
 import LoadingModal from "./components/LoadingModal";
 import androidWarningFix from './utils/androidWarningFix';
-import Layout from "./constants/Layout";
 
 EStyleSheet.build({
-    $rem: Layout.width > 340 ? 16 : 14
+    $rem: Platform.OS === 'ios' ? 16 : 14
 });
 
 androidWarningFix();
 
-firebase.initializeApp(firebaseConfig);
+try {
+    firebase.initializeApp(firebaseConfig);
+}
+catch (e) {}
 
 export default function App(props) {
     const [isStartupLoadingComplete, setStartupLoadingComplete] = useState(false);

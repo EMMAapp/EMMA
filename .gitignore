@@ -9,6 +9,7 @@ npm-debug.*
 *.orig.*
 web-build/
 web-report/
+emma.app
 
 .idea/**/workspace.xml
 .idea/**/tasks.xml

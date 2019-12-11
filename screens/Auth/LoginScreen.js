@@ -12,6 +12,7 @@ import Row from "../../components/Row";
 import Checkbox from "../../components/Checkbox";
 import Colors from "../../constants/Colors";
 import Text from "../../components/Text";
+import {Platform} from "react-native-web";
 
 const QuestionText = (props) =>
     <Text
@@ -55,7 +56,7 @@ export default function LoginScreen({navigation, screenProps}) {
 
     return (
         <Container widthPercentage={90}>
-            <Image name='welcomeAnimation' height='250%' width='100%' style={marginStyle(15, 'top')}/>
+            <Image name='welcomeAnimation' height={Platform.OS === 'ios' ? 300 : 220} width='100%' style={marginStyle(15, 'top')}/>
 
             <TermsModal isVisible={termsIsVisible} dismiss={() => setTermsIsVisible(false)}/>
             <Row style={marginStyle(15, 'left')}>
@@ -84,7 +85,7 @@ export default function LoginScreen({navigation, screenProps}) {
                 </ButtonPrimary>
             </Row>
             {
-                hasError && <Text color='red' style={marginStyle(5)}>Something went wrong</Text>
+                hasError && <Text alignCenter color='red' style={marginStyle(5)}>Something went wrong</Text>
             }
         </Container>
     )

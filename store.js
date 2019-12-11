@@ -71,14 +71,15 @@ export async function syncPatientData(updatedPatientData) {
 async function logInWithCredential(credential) {
     const userCredential = await firebase.auth().signInWithCredential(credential);
     store.patientId = userCredential.user.uid;
-    await syncPatientData({...initialPatientData});
+    store.patientId = userCredential.user.uid;
+    await retrievePatientData();
 }
 
 export async function logInWithFacebook() {
     try {
         const appId = '807419566367785';
         const permissions = ['public_profile', 'email'];
-        Facebook.initializeAsync(appId);
+        await Facebook.initializeAsync(appId);
 
         const {type, token} = await Facebook.logInWithReadPermissionsAsync(appId, {permissions});
         if (type !== 'success') {
@@ -102,20 +103,18 @@ export async function logInWithGoogle() {
         });
         await GoogleSignIn.askForPlayServicesAsync();
         const { type, user } = await GoogleSignIn.signInAsync();
-        console.log("!!!")
-        console.log(type)
-        console.log(user)
         if (type !== 'success') {
             return false;
         }
 
-        const credential = firebase.auth.GoogleAuthProvider.credential(user.idToken, user.accessToken);
+        const credential = firebase.auth.GoogleAuthProvider.credential(user.auth.idToken, user.auth.accessToken);
         await logInWithCredential(credential);
         return true;
     }
     catch (e) {
+        alert(e.message);
         logError(e.message);
-        return false;
+        return e.message;
     }
 }
 

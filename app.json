@@ -47,7 +47,12 @@
     },
     "android": {
       "package": "com.emma.app",
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json",
+      "config": {
+        "googleSignIn": {
+          "certificateHash": "90B157F797F377138F6E9141E9BCED8E88935AAD"
+        }
+      }
     },
     "description": ""
   }

@@ -9,7 +9,7 @@ export const unsetAllNotifications = async (event) => {
     }
 };
 
-const setNewNotifications = async (event) => {
+export const setNewNotifications = async (event) => {
     const notificationIds = [];
     for (const date of event.selectedDates) {
         for (const eventAndReminder of event.eventsAndReminders) {

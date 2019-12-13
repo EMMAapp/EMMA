@@ -13,6 +13,7 @@ import Checkbox from "../../components/Checkbox";
 import Colors from "../../constants/Colors";
 import Text from "../../components/Text";
 import {Platform} from "react-native-web";
+import Icon from "../../components/Icon";
 
 const QuestionText = (props) =>
     <Text
@@ -75,12 +76,12 @@ export default function LoginScreen({navigation, screenProps}) {
             </Row>
 
             <Row center style={marginStyle(10, 'bottom')}>
-                <ButtonPrimary onPress={facebookLogin} disabled={!canSubmit} width='75%'>
+                <ButtonPrimary onPress={facebookLogin} disabled={!canSubmit} width='75%' icon='facebook'>
                     {localization('connectFacebook')}
                 </ButtonPrimary>
             </Row>
             <Row center style={marginStyle(10, 'bottom')}>
-                <ButtonPrimary onPress={googleLogin} inverted disabled={!canSubmit} width='75%'>
+                <ButtonPrimary onPress={googleLogin} inverted disabled={!canSubmit} width='75%' icon='google'>
                     {localization('connectGoogle')}
                 </ButtonPrimary>
             </Row>

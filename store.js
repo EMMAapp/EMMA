@@ -3,7 +3,7 @@ import '@firebase/firestore';
 import {logError, logInfo, logWarn} from "./utils/log";
 import * as Facebook from "expo-facebook";
 import * as GoogleSignIn from 'expo-google-sign-in';
-import {unsetAllNotifications, setNewNotifications} from "./utils/eventsSync";
+import {setNewNotifications, unsetAllNotifications} from "./utils/notificationsSync";
 
 const initialPatientData = {
     age: null,

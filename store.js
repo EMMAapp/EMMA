@@ -3,6 +3,7 @@ import '@firebase/firestore';
 import {logError, logInfo, logWarn} from "./utils/log";
 import * as Facebook from "expo-facebook";
 import * as GoogleSignIn from 'expo-google-sign-in';
+import {unsetAllNotifications, setNewNotifications} from "./utils/eventsSync";
 
 const initialPatientData = {
     age: null,
@@ -73,6 +74,9 @@ async function logInWithCredential(credential) {
     store.patientId = userCredential.user.uid;
     store.patientId = userCredential.user.uid;
     await retrievePatientData();
+    for (const event of store.patientData.events) {
+        await setNewNotifications(event);
+    }
 }
 
 export async function logInWithFacebook() {
@@ -119,6 +123,9 @@ export async function logInWithGoogle() {
 }
 
 export async function logoutPatient() {
+    for (const event of store.patientData.events) {
+        await unsetAllNotifications(event);
+    }
     await firebase.auth().signOut();
     store.patientId = null;
     store.patientData = null;

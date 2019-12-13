@@ -15,7 +15,7 @@ import ValidationModal from "../../../components/ValidationModal";
 import _ from "lodash";
 import {addOrRemove} from "../../../utils/utils";
 import {addDays, daysBetween, isInFuture, momentToWixDate, wixDateToMoment} from "../../../utils/dayTime";
-import {syncEvents, unsetAllNotifications} from "../../../utils/eventsSync";
+import {syncEvents} from "../../../utils/eventsSync";
 import Text from "../../../components/Text";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import Button from "../../../components/Button";
@@ -26,6 +26,7 @@ import Row from "../../../components/Row";
 import Container from "../../../components/Container";
 import TextInput from "../../../components/TextInput";
 import Icon from "../../../components/Icon";
+import {unsetAllNotifications} from "../../../utils/notificationsSync";
 
 const initialState = {
     id: null,

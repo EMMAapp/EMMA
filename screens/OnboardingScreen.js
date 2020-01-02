@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {TouchableOpacity} from 'react-native'
+import {TouchableOpacity, Picker} from 'react-native'
 import {store, syncPatientData} from '../store';
 import RouteGuard from "../navigation/RouteGuard";
 import localization from "../utils/localization";
@@ -16,6 +16,7 @@ import YesNoBoxes from "../components/YesNoBoxes";
 import ButtonPrimary from "../components/ButtonPrimary";
 import {marginStyle, paddingStyle} from "../constants/Styles"
 import IconAndText from "../components/IconAndText";
+import BirthPicker from "../components/BirthPicker";
 
 const QuestionText = (props) =>
     <Text
@@ -27,7 +28,8 @@ const QuestionText = (props) =>
 export default function LoginScreen({navigation, screenProps}) {
 
     const [selectedPlan, setSelectedPlan] = useState(null);
-    const [age, setAge] = useState(null);
+    const [month, setMonth] = useState(1);
+    const [year, setYear] = useState(1990);
     const [lastPeriodDate, setLastPeriodDate] = useState(null);
     const [isPeriodRegular, setIsPeriodRegular] = useState(false);
     const [averagePeriodCycleDays, setAveragePeriodCycleDays] = useState(28);
@@ -37,21 +39,21 @@ export default function LoginScreen({navigation, screenProps}) {
     const submit = async () => {
         setIsLoading(true);
         const periods = [{date: lastPeriodDate, plan: selectedPlan}];
-        const patientData = {...store.patientData, age, averagePeriodCycleDays, isPeriodRegular, periods};
+        const patientData = {...store.patientData, averagePeriodCycleDays, isPeriodRegular, periods};
         await syncPatientData(patientData);
         setIsLoading(false);
         RouteGuard(navigation);
     };
 
-    const canSubmit = selectedPlan && age && lastPeriodDate;
+    const canSubmit = selectedPlan && lastPeriodDate;
 
     return (
         <Container widthPercentage={90}>
             <Text bold color={Colors.purple} size={13}>{localization('onboardingTitle')}</Text>
             <Text size={9} style={paddingStyle(5, 'top')}>{localization('onboardingSubTitle')}</Text>
 
-            <QuestionText>{localization('howOldAreYou')}</QuestionText>
-            <NumericInput value={age} setValue={setAge}/>
+            <QuestionText>{localization('whenBorn')}</QuestionText>
+            <BirthPicker month={month} year={year} setMonth={setMonth} setYear={setYear}/>
 
             <QuestionText>{localization('lastPeriod')}</QuestionText>
             <Box height={25} width={'90%'}>

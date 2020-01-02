@@ -54,7 +54,7 @@ const en = {
     'onboardingSubTitle': 'Just a few short questions',
     'onboardingSubmit': 'OK, Done',
     'yourPlan': 'The current cycle plan:',
-    'howOldAreYou': 'How old are you?',
+    'whenBorn': 'When were you born?',
     'lastPeriod': 'Last period date:',
     'regularPeriod': 'Do you have a regular menstrual cycle?',
     'periodCyclePrefix': 'I usually get my period once in',

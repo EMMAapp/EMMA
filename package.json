@@ -13,14 +13,11 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "@expo/samples": "~3.0.3",
-    "@expo/vector-icons": "^10.0.0",
     "@firebase/firestore": "^1.6.4",
     "@react-navigation/web": "^1.0.0-alpha.9",
     "expo": "^36.0.0",
     "expo-app-auth": "~8.0.0",
     "expo-asset": "~8.0.0",
-    "expo-constants": "~8.0.0",
     "expo-facebook": "~8.0.0",
     "expo-font": "~8.0.0",
     "expo-google-app-auth": "^8.0.0",

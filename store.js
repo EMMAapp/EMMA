@@ -4,6 +4,7 @@ import {logError, logInfo, logWarn} from "./utils/log";
 import * as Facebook from "expo-facebook";
 import * as GoogleSignIn from 'expo-google-sign-in';
 import {setNewNotifications, unsetAllNotifications} from "./utils/notificationsSync";
+import _ from "lodash";
 
 const initialPatientData = {
     month: null,
@@ -12,7 +13,7 @@ const initialPatientData = {
     periods: [],
     averagePeriodCycleDays: 28,
     plan: null,
-    events: []
+    events: {}
 };
 
 export const store = {
@@ -75,9 +76,9 @@ async function logInWithCredential(credential) {
     store.patientId = userCredential.user.uid;
     store.patientId = userCredential.user.uid;
     await retrievePatientData();
-    for (const event of store.patientData.events) {
+    _.forOwn(store.patientData.events, async (event, eventId) => {
         await setNewNotifications(event);
-    }
+    });
 }
 
 export async function logInWithFacebook() {
@@ -124,9 +125,9 @@ export async function logInWithGoogle() {
 }
 
 export async function logoutPatient() {
-    for (const event of store.patientData.events) {
+    _.forOwn(store.patientData.events, async (event, eventId) => {
         await unsetAllNotifications(event);
-    }
+    });
     await firebase.auth().signOut();
     store.patientId = null;
     store.patientData = null;

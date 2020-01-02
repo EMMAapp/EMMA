@@ -2,7 +2,6 @@ import React from 'react'
 import {View} from 'react-native'
 import localization from "../../../utils/localization";
 import DayTimeInput from "../../../components/DayTimeInput";
-import {dayTimeSubtract} from "../../../utils/dayTime";
 import Text from "../../../components/Text";
 import Checkbox from "../../../components/Checkbox";
 import Row from "../../../components/Row";

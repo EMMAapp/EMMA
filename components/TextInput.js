@@ -14,7 +14,7 @@ height: 100%;
 width: 100%;
 `;
 
-export default ({value, setValue, style, height, width, textColor, keyboardType, alignLeft}) => {
+export default ({value, setValue, style, height, width, textColor, keyboardType, alignLeft, singleline}) => {
     return (
         <Box style={[fontSizeStyle(8), style]} height={height || 25} width={width || 25}>
             <StyledTextInput
@@ -22,7 +22,7 @@ export default ({value, setValue, style, height, width, textColor, keyboardType,
                 alignLeft={alignLeft}
                 color={textColor}
                 autoCapitalize="none"
-                multiline
+                multiline={!singleline}
                 onChangeText={setValue}
                 value={value}
                 keyboardType={keyboardType || 'default'}

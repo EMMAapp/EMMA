@@ -12,7 +12,7 @@ const initialPatientData = {
     periods: [],
     averagePeriodCycleDays: 28,
     plan: null,
-    events: {}
+    events: []
 };
 
 export const store = {

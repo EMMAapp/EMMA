@@ -100,6 +100,7 @@ export default function EditEventTab({navigation, screenProps}) {
         !_.isEmpty(state.selectedDates) && state.timesPerDay;
 
     const flush = async (patientData) => {
+        patientData.events[state.id] = state;
         setMainCalendarRefresh(shortid.generate()); // to refresh main calendar
         await syncPatientData(patientData);
     };
@@ -107,12 +108,14 @@ export default function EditEventTab({navigation, screenProps}) {
     const close = () => {
         setCurrentEditedEventId(null);
         setState({...state, id: null});
+        setIsNewEvent(true);
         navigation.navigate(CALENDAR);
     };
 
     const reset = () => {
         setCurrentEditedEventId(null);
-        setState({...state, id: null});
+        setState({...state, id: null, isNewEvent: true});
+        setIsNewEvent(true);
     };
 
     const deleteEvent = async () => {

@@ -4,7 +4,7 @@ import localization from "../utils/localization";
 import {borderRadiusStyle, marginStyle, paddingStyle} from "../constants/Styles";
 import Colors from "../constants/Colors";
 
-export default ({items, selectedItem, setSelectedItem}) => {
+export default ({items, selectedItem, setSelectedItem, itemWidth, textAlign, style, keyboardType}) => {
 
     const [query, setQuery] = useState('');
 
@@ -14,15 +14,18 @@ export default ({items, selectedItem, setSelectedItem}) => {
         backgroundColor: Colors.grayLight,
         borderColor: Colors.grayMedium,
         color: Colors.grayDark,
+        width: itemWidth,
+        textAlign: textAlign,
         ...paddingStyle(5)
     };
 
     return <SearchableDropdown
+        style={style}
         onItemSelect={(item) => {
             setSelectedItem(item.name);
             setQuery(item.name);
         }}
-        containerStyle={marginStyle(5, 'top')}
+        containerStyle={{...marginStyle(5, 'top'), ...style}}
         itemStyle={itemStyle}
         itemTextStyle={{color: Colors.grayDark}}
         itemsContainerStyle={{borderColor: Colors.grayMedium, borderWidth: 1, ...borderRadiusStyle(5), ...marginStyle(1, 'top')}}
@@ -32,6 +35,7 @@ export default ({items, selectedItem, setSelectedItem}) => {
                 placeholder: localization('autocompletePlaceholder'),
                 underlineColorAndroid: "transparent",
                 style: {...itemStyle, ...borderRadiusStyle(5), borderWidth: 1},
+                keyboardType: keyboardType,
                 value: query,
                 onChangeText: text => {
                     setQuery(text);
@@ -42,6 +46,7 @@ export default ({items, selectedItem, setSelectedItem}) => {
         listProps={
             {
                 nestedScrollEnabled: true,
+                maxHeight: 200
             }
         }
         setSort={(item, searchedText) =>

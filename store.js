@@ -6,7 +6,8 @@ import * as GoogleSignIn from 'expo-google-sign-in';
 import {setNewNotifications, unsetAllNotifications} from "./utils/notificationsSync";
 
 const initialPatientData = {
-    age: null,
+    month: null,
+    year: null,
     isPeriodRegular: false,
     periods: [],
     averagePeriodCycleDays: 28,

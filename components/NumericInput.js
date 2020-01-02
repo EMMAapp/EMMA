@@ -7,4 +7,5 @@ export default (props) =>
         keyboardType='numeric'
         onChangeText={val => val ? props.setValue(Number(val)) : props.setValue(null)}
         value={props.value ? props.value.toString() : ''}
+        singleline
     />

@@ -80,7 +80,11 @@ export default function LoginScreen({navigation, screenProps}) {
             {
                 isPeriodRegular ? <Row>
                     <QuestionText style={paddingStyle(2, 'bottom')}>{localization('periodCyclePrefix')}</QuestionText>
-                    <NumericInput value={averagePeriodCycleDays} setValue={setAveragePeriodCycleDays} style={marginStyle(5)}/>
+                    <NumericInput
+                        value={averagePeriodCycleDays}
+                        setValue={value => setAveragePeriodCycleDays(value > 45 ? 28 : value)}
+                        style={marginStyle(5)}
+                    />
                     <QuestionText style={paddingStyle(2, 'bottom')}>{localization('periodCycleSuffix')}</QuestionText>
                 </Row> : null
             }

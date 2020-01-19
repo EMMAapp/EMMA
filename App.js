@@ -23,7 +23,8 @@ androidWarningFix();
 try {
     firebase.initializeApp(firebaseConfig);
 }
-catch (e) {}
+catch (e) {
+}
 
 export default function App(props) {
     const [isStartupLoadingComplete, setStartupLoadingComplete] = useState(false);
@@ -74,7 +75,7 @@ async function loadResourcesAsync() {
         }),
         retrievePatient(),
         firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-]);
+    ]);
 }
 
 function handleLoadingError(error) {

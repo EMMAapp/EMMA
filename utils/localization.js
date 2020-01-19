@@ -71,6 +71,8 @@ const en = {
     'sync': 'Synchronize',
     'selectAllEvents': 'Select all events',
     'eventsCountSuffix': 'events',
+    'today': 'Today',
+    'cycleDay': 'Cycle day ',
 
     'calendarTitles': {
         'period': 'period',

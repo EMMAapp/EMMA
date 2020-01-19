@@ -13,6 +13,7 @@ import Colors from "../../../constants/Colors";
 import shortid from 'shortid'
 import Row from "../../../components/Row";
 import styled from 'styled-components';
+import {eventColor} from "../../../constants/Styles";
 
 const Dot = styled(View)`
 background-color: ${props => props.color};
@@ -24,8 +25,8 @@ margin-right: 1px;
 border-radius: 2px;
 `;
 
-const medicationDot = {key: shortid.generate(), color: Colors.fuchsia};
-const checkupDot = {key: shortid.generate(), color: Colors.turquoise};
+const medicationDot = {key: shortid.generate(), color: eventColor(true)};
+const checkupDot = {key: shortid.generate(), color: eventColor(false)};
 
 function collectByDay(events) {
     let eventsByDay = {};
@@ -49,7 +50,7 @@ export default function CalendarTabWrapper({navigation, screenProps}) {
     }
     const lastPeriodEndEstimation = addDays(_.last(periodsMoments), patientData.averagePeriodCycleDays);
 
-    let eventsByDay = collectByDay(patientData.events);
+    const eventsByDay = collectByDay(patientData.events);
 
     const markedDates = {};
     _.forOwn(eventsByDay, (events, day) => {

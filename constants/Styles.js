@@ -83,12 +83,16 @@ export const absoluteStyle = (left, right) =>
         }
     }).absoluteStyle;
 
-export const shadowStyle = (androidWeight) =>
+export const shadowStyle = (androidWeight, opacity) =>
     EStyleSheet.create({
         shadowStyle: {
             backgroundColor: 'white',
-            shadowOpacity: 0.2,
+            shadowOpacity: opacity || 0.2,
             shadowColor: 'black',
-            elevation: androidWeight
+            elevation: androidWeight,
+            shadowOffset: {
+                width: 0,
+                height: 0
+            },
         }
     }).shadowStyle;

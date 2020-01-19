@@ -13,6 +13,7 @@ import Right from "../assets/icons/right.svg"
 import Drop from "../assets/icons/drop.svg"
 import Facebook from "../assets/icons/facebook.svg"
 import Google from "../assets/icons/google.svg"
+import Today from "../assets/icons/today.svg"
 
 const getIconByName = (name, style) => {
     switch (name) {
@@ -40,6 +41,8 @@ const getIconByName = (name, style) => {
             return <Facebook style={style}/>;
         case "google":
             return <Google style={style}/>;
+        case "today":
+            return <Today style={style}/>;
         default:
             return null;
     }

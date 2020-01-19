@@ -17,7 +17,7 @@ import Drawer from "../../../components/Drawer";
 import {Agenda, AgendaDay} from "../../../components/AgendaDay";
 import {paddingStyle} from "../../../constants/Styles";
 
-function collectEventsForDate(eventsByDay, selectedDay) {
+export function collectEventsForDate(eventsByDay, selectedDay) {
     const eventsForDay = eventsByDay[selectedDay];
     if (!eventsForDay || !eventsForDay.length) {
         return [];

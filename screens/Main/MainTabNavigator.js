@@ -7,6 +7,7 @@ import ProfileTab from './ProfileTab';
 import Icon from "../../components/Icon";
 import Colors from "../../constants/Colors";
 import {paddingStyle} from "../../constants/Styles";
+import JourneyTab from "./JourneyTab";
 
 const config = Platform.select({
     web: {headerMode: 'screen'},
@@ -17,6 +18,24 @@ const config = Platform.select({
         }
     },
 });
+
+const JourneyStack = createStackNavigator(
+    {
+        journey: JourneyTab,
+    },
+    config
+);
+
+JourneyStack.navigationOptions = {
+    tabBarIcon: ({focused}) => (
+        <Icon
+            color={focused ? Colors.purple : Colors.grayDark}
+            name='today'
+        />
+    ),
+};
+
+JourneyStack.path = '';
 
 const CalendarStack = createStackNavigator(
     {
@@ -71,10 +90,30 @@ ProfileStack.navigationOptions = {
 
 ProfileStack.path = '';
 
+const PlaceholderStack = createStackNavigator(
+    {
+        profile: ProfileTab,
+    },
+    config
+);
+
+PlaceholderStack.navigationOptions = {
+    tabBarIcon: ({focused}) => (
+        <Icon
+            color={focused ? Colors.purple : Colors.grayDark}
+            name='profile'
+        />
+    ),
+};
+
+ProfileStack.path = '';
+
 const tabNavigator = createBottomTabNavigator({
+    JourneyStack,
     CalendarStack,
     EditEventStack,
     ProfileStack,
+    PlaceholderStack,
 }, {
     tabBarOptions: {
         style: paddingStyle(10, 'top'),

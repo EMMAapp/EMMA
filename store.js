@@ -51,8 +51,8 @@ export async function retrievePatientData() {
         else {
             store.patientData = {...initialPatientData};
         }
-        logInfo("Patient data:");
-        logInfo(store.patientData);
+        // logInfo("Patient data:");
+        // logInfo(store.patientData);
         return store.patientData;
     }
     catch (e) {

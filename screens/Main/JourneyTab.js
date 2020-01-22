@@ -6,7 +6,7 @@ import Container from "../../components/Container";
 import Colors from "../../constants/Colors";
 import _ from "lodash";
 import {pushByKey} from "../../utils/utils";
-import {daysBetween, dayTimeToDisplayString, isAfterOrEquals, momentsEquals, momentToDisplayString, wixDateToMoment} from "../../utils/dayTime";
+import {daysBetween, dayTimeToDisplayString, isAfterOrEquals, momentsEquals, momentToDisplayString, wixDateToMoment, momentToWixDate} from "../../utils/dayTime";
 import moment from "moment";
 import Row from "../../components/Row";
 import Text from "../../components/Text";
@@ -15,12 +15,13 @@ import {borderRadiusStyle, eventColor, marginStyle, paddingStyle, shadowStyle} f
 import Divider from "../../components/Divider";
 import {collectEventsForDate} from "./Calendar/CalendarTab";
 import Icon from "../../components/Icon";
+import {Dot} from "../../components/Dot";
 
 function collectByDay(events) {
     let eventsByDay = {};
     _.forOwn(events, (event, eventId) => {
         event.selectedDates.forEach(selectedDay => {
-            pushByKey(eventsByDay, wixDateToMoment(selectedDay), event);
+            pushByKey(eventsByDay, selectedDay, event);
         });
     });
     return eventsByDay;
@@ -46,7 +47,7 @@ const Event = ({dayTime, details}) => (
 );
 
 const Card = ({children}) =>
-    <Card style={[
+    <View style={[
         {backgroundColor: 'white'},
         borderRadiusStyle(5),
         marginStyle(15),
@@ -54,7 +55,24 @@ const Card = ({children}) =>
         shadowStyle(10, 0.1)
     ]}>
         {children}
-    </Card>;
+    </View>;
+
+const DayReference = ({wixDate, setSelectedDay, eventsForDay}) =>
+{
+    const momentDate = wixDateToMoment(wixDate);
+    return <Card>
+        <Row>
+            {
+                eventsForDay.some(event => event.medication) && <Dot color={eventColor(true)}/>
+            }
+            {
+                eventsForDay.some(event => event.checkup) && <Dot color={eventColor(false)}/>
+            }
+        </Row>
+        <Text size={12}>{momentDate.format("ddd")}</Text>
+        <Text>{momentDate.format("MM D")}</Text>
+    </Card>
+};
 
 export default function JourneyTab({navigation, screenProps}) {
     RouteGuard(navigation);
@@ -65,7 +83,7 @@ export default function JourneyTab({navigation, screenProps}) {
     const periodsMoments = patientData.periods.map(period => wixDateToMoment(period.date));
     const eventsByDay = collectByDay(patientData.events);
 
-    const eventsForToday = collectEventsForDate(eventsByDay, selectedDay);
+    const eventsForToday = collectEventsForDate(eventsByDay, momentToWixDate(selectedDay));
     let containingPeriodIndex = _.findLastIndex(periodsMoments, periodMoment => isAfterOrEquals(selectedDay, periodMoment));
     const daysFromStart = daysBetween(periodsMoments[containingPeriodIndex], selectedDay) + 1;
 
@@ -89,11 +107,12 @@ export default function JourneyTab({navigation, screenProps}) {
                 ItemSeparatorComponent={() => <Divider/>}
             />
         </Card>
-        <FlatList
-            data={_.keys(eventsByDay)}
-            renderItem={item => <Card>{item}</Card>}
-            keyExtractor={item => item}
-            horizontal
-        />
+            <FlatList
+                data={_.keys(eventsByDay)}
+                renderItem={({item}) => <DayReference wixDate={item} setSelectedDay={setSelectedDay} eventsForDay={eventsByDay[item]} />}
+                keyExtractor={item => item}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+            />
     </Container>;
 }

@@ -12,18 +12,8 @@ import Text from "../../../components/Text";
 import Colors from "../../../constants/Colors";
 import shortid from 'shortid'
 import Row from "../../../components/Row";
-import styled from 'styled-components';
 import {eventColor} from "../../../constants/Styles";
-
-const Dot = styled(View)`
-background-color: ${props => props.color};
-width: 4px;
-height: 4px;
-margin-top: 4px;
-margin-left: 1px;
-margin-right: 1px;
-border-radius: 2px;
-`;
+import {Dot} from "../../../components/Dot";
 
 const medicationDot = {key: shortid.generate(), color: eventColor(true)};
 const checkupDot = {key: shortid.generate(), color: eventColor(false)};

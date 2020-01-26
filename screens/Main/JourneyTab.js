@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import store from "../../store";
 import RouteGuard from "../../navigation/RouteGuard";
 import localization from "../../utils/localization";
@@ -19,12 +19,8 @@ import {Dot} from "../../components/Dot";
 
 function collectByDay(events) {
     let eventsByDay = {};
-    const today = moment();
     _.forOwn(events, (event, eventId) => {
         event.selectedDates.forEach(selectedDay => {
-            if (!isAfterOrEquals(wixDateToMoment(selectedDay), today)) {
-                return;
-            }
             pushByKey(eventsByDay, selectedDay, event);
         });
     });
@@ -50,9 +46,9 @@ const Event = ({dayTime, details}) => (
     </Row>
 );
 
-const Card = ({children, margin, padding, style}) =>
+const Card = ({children, margin, padding, style, color}) =>
     <View style={[
-        {backgroundColor: 'white'},
+        {backgroundColor: color || 'white'},
         borderRadiusStyle(5),
         marginStyle(margin),
         paddingStyle(padding),
@@ -65,8 +61,9 @@ const Card = ({children, margin, padding, style}) =>
 const DayReference = ({wixDate, setSelectedDay, eventsForDay}) =>
 {
     const momentDate = wixDateToMoment(wixDate);
+    const isPast = !isAfterOrEquals(momentDate, moment());
     return <TouchableOpacity onPress={() => setSelectedDay(momentDate)}>
-        <Card margin={5} padding={7} style={hwStyle(53, 53)}>
+        <Card margin={5} padding={7} style={hwStyle(53, 53)} color={isPast ? Colors.gray : 'white'}>
             <Row>
                 {
                     eventsForDay.some(event => event.medication) && <Dot color={eventColor(true)}/>
@@ -87,6 +84,7 @@ const DayReference = ({wixDate, setSelectedDay, eventsForDay}) =>
 export default function JourneyTab({navigation, screenProps}) {
     RouteGuard(navigation);
 
+    const daysListRef = useRef(null);
     const [selectedDay, setSelectedDay] = useState(moment().startOf('day'));
     const {mainCalendarRefresh} = screenProps;
     const {patientData} = store;
@@ -100,6 +98,9 @@ export default function JourneyTab({navigation, screenProps}) {
     const eventsForToday = collectEventsForDate(eventsByDay, momentToWixDate(selectedDay));
     let containingPeriodIndex = _.findLastIndex(periodsMoments, periodMoment => isAfterOrEquals(selectedDay, periodMoment));
     const daysFromStart = daysBetween(periodsMoments[containingPeriodIndex], selectedDay) + 1;
+    const daysKeys = _.sortBy(_.keys(eventsByDay), wixDate => wixDateToMoment(wixDate));
+
+    setTimeout(() => daysListRef.current.scrollToIndex({animated: true, index: daysKeys.indexOf(today)}), 500);
 
     return <Container key={mainCalendarRefresh} style={{backgroundColor: Colors.grayLight}}>
         <Card margin={10} padding={15}>
@@ -122,8 +123,9 @@ export default function JourneyTab({navigation, screenProps}) {
             />
         </Card>
             <FlatList
+                ref={daysListRef}
                 style={[marginStyle(5, 'left'), marginStyle(5, 'right')]}
-                data={_.sortBy(_.keys(eventsByDay), wixDate => wixDateToMoment(wixDate))}
+                data={daysKeys}
                 renderItem={({item}) => <DayReference wixDate={item} setSelectedDay={setSelectedDay} eventsForDay={eventsByDay[item]} />}
                 keyExtractor={item => item}
                 horizontal

@@ -73,6 +73,9 @@ const en = {
     'eventsCountSuffix': 'events',
     'today': 'Today',
     'cycleDay': 'Cycle day ',
+    'insertBloodTest': 'Please insert blood test variables',
+    'chooseTestUnits': 'Choose test units',
+    'testUnits': 'Test units',
 
     'calendarTitles': {
         'period': 'period',

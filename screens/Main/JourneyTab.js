@@ -10,8 +10,8 @@ import {daysBetween, dayTimeToDisplayString, isAfterOrEquals, momentsEquals, mom
 import moment from "moment";
 import Row from "../../components/Row";
 import Text from "../../components/Text";
-import {FlatList, View} from "react-native";
-import {borderRadiusStyle, eventColor, marginStyle, paddingStyle, shadowStyle} from "../../constants/Styles";
+import {FlatList, View, TouchableOpacity} from "react-native";
+import {borderRadiusStyle, eventColor, hwStyle, marginStyle, paddingStyle, shadowStyle} from "../../constants/Styles";
 import Divider from "../../components/Divider";
 import {collectEventsForDate} from "./Calendar/CalendarTab";
 import Icon from "../../components/Icon";
@@ -19,8 +19,12 @@ import {Dot} from "../../components/Dot";
 
 function collectByDay(events) {
     let eventsByDay = {};
+    const today = moment();
     _.forOwn(events, (event, eventId) => {
         event.selectedDates.forEach(selectedDay => {
+            if (!isAfterOrEquals(wixDateToMoment(selectedDay), today)) {
+                return;
+            }
             pushByKey(eventsByDay, selectedDay, event);
         });
     });
@@ -46,13 +50,14 @@ const Event = ({dayTime, details}) => (
     </Row>
 );
 
-const Card = ({children}) =>
+const Card = ({children, margin, padding, style}) =>
     <View style={[
         {backgroundColor: 'white'},
         borderRadiusStyle(5),
-        marginStyle(15),
-        paddingStyle(10),
-        shadowStyle(10, 0.1)
+        marginStyle(margin),
+        paddingStyle(padding),
+        shadowStyle(10, 0.1),
+        {...style}
     ]}>
         {children}
     </View>;
@@ -60,18 +65,23 @@ const Card = ({children}) =>
 const DayReference = ({wixDate, setSelectedDay, eventsForDay}) =>
 {
     const momentDate = wixDateToMoment(wixDate);
-    return <Card>
-        <Row>
-            {
-                eventsForDay.some(event => event.medication) && <Dot color={eventColor(true)}/>
-            }
-            {
-                eventsForDay.some(event => event.checkup) && <Dot color={eventColor(false)}/>
-            }
-        </Row>
-        <Text size={12}>{momentDate.format("ddd")}</Text>
-        <Text>{momentDate.format("MM D")}</Text>
-    </Card>
+    return <TouchableOpacity onPress={() => setSelectedDay(momentDate)}>
+        <Card margin={5} padding={7} style={hwStyle(53, 53)}>
+            <Row>
+                {
+                    eventsForDay.some(event => event.medication) && <Dot color={eventColor(true)}/>
+                }
+                {
+                    eventsForDay.some(event => event.checkup) && <Dot color={eventColor(false)}/>
+                }
+                {
+                    <Dot color={"transparent"}/>
+                }
+            </Row>
+            <Text size={14} style={[paddingStyle(3, 'top'), paddingStyle(3, 'bottom')]}>{momentDate.format("ddd")}</Text>
+            <Text color={Colors.gray}>{momentDate.format("MMM D")}</Text>
+        </Card>
+    </TouchableOpacity>
 };
 
 export default function JourneyTab({navigation, screenProps}) {
@@ -82,13 +92,17 @@ export default function JourneyTab({navigation, screenProps}) {
     const {patientData} = store;
     const periodsMoments = patientData.periods.map(period => wixDateToMoment(period.date));
     const eventsByDay = collectByDay(patientData.events);
+    const today = momentToWixDate(moment());
+    if (!eventsByDay[today]) {
+        eventsByDay[today] = []
+    }
 
     const eventsForToday = collectEventsForDate(eventsByDay, momentToWixDate(selectedDay));
     let containingPeriodIndex = _.findLastIndex(periodsMoments, periodMoment => isAfterOrEquals(selectedDay, periodMoment));
     const daysFromStart = daysBetween(periodsMoments[containingPeriodIndex], selectedDay) + 1;
 
     return <Container key={mainCalendarRefresh} style={{backgroundColor: Colors.grayLight}}>
-        <Card>
+        <Card margin={10} padding={15}>
             {
                 momentsEquals(selectedDay, moment()) &&
                 <Text size={16} style={marginStyle(7, 'bottom')}>{localization('today')}</Text>
@@ -108,7 +122,8 @@ export default function JourneyTab({navigation, screenProps}) {
             />
         </Card>
             <FlatList
-                data={_.keys(eventsByDay)}
+                style={[marginStyle(5, 'left'), marginStyle(5, 'right')]}
+                data={_.sortBy(_.keys(eventsByDay), wixDate => wixDateToMoment(wixDate))}
                 renderItem={({item}) => <DayReference wixDate={item} setSelectedDay={setSelectedDay} eventsForDay={eventsByDay[item]} />}
                 keyExtractor={item => item}
                 horizontal

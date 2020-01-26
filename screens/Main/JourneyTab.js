@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import store from "../../store";
 import RouteGuard from "../../navigation/RouteGuard";
 import localization from "../../utils/localization";
@@ -6,16 +6,17 @@ import Container from "../../components/Container";
 import Colors from "../../constants/Colors";
 import _ from "lodash";
 import {pushByKey} from "../../utils/utils";
-import {daysBetween, dayTimeToDisplayString, isAfterOrEquals, momentsEquals, momentToDisplayString, wixDateToMoment, momentToWixDate} from "../../utils/dayTime";
+import {daysBetween, dayTimeToDisplayString, isAfterOrEquals, momentsEquals, momentToDisplayString, momentToWixDate, wixDateToMoment} from "../../utils/dayTime";
 import moment from "moment";
 import Row from "../../components/Row";
 import Text from "../../components/Text";
-import {FlatList, View, TouchableOpacity} from "react-native";
+import {FlatList, TouchableOpacity, View} from "react-native";
 import {borderRadiusStyle, eventColor, hwStyle, marginStyle, paddingStyle, shadowStyle} from "../../constants/Styles";
 import Divider from "../../components/Divider";
 import {collectEventsForDate} from "./Calendar/CalendarTab";
 import Icon from "../../components/Icon";
 import {Dot} from "../../components/Dot";
+import BloodTestResults from "../../components/BloodTestResults";
 
 function collectByDay(events) {
     let eventsByDay = {};
@@ -27,24 +28,32 @@ function collectByDay(events) {
     return eventsByDay;
 }
 
-const Event = ({dayTime, details}) => (
-    <Row>
-        <Text color={eventColor(!!details.medication)}>
-            {dayTimeToDisplayString(dayTime)}
-        </Text>
-        <Text
-            color={eventColor(!!details.medication)}
-            size={9}
-            style={[marginStyle(5, 'right'), marginStyle(5, 'left')]}>
-            •
-        </Text>
-        <Text bold>
-            {details.medication ? details.medication : details.checkup}
-        </Text>
-        <View style={{flex: 2}}/>
-        <Icon name="down" color={Colors.purple}/>
-    </Row>
-);
+const Event = ({dayTime, details}) => {
+    const [isExpanded, setExpanded] = useState(false);
+    return <View>
+        <Row>
+            <Text color={eventColor(!!details.medication)}>
+                {dayTimeToDisplayString(dayTime)}
+            </Text>
+            <Text
+                color={eventColor(!!details.medication)}
+                size={9}
+                style={[marginStyle(5, 'right'), marginStyle(5, 'left')]}>
+                •
+            </Text>
+            <Text bold>
+                {details.medication ? details.medication : details.checkup}
+            </Text>
+            <View style={{flex: 2}}/>
+            <TouchableOpacity onPress={() => setExpanded(!isExpanded)}>
+                <Icon name={isExpanded ? "up" : "down"} color={Colors.purple}/>
+            </TouchableOpacity>
+        </Row>
+        {
+            isExpanded && <View><BloodTestResults results={{lh: '1'}} setResults={() => {}}/></View>
+        }
+    </View>
+};
 
 const Card = ({children, margin, padding, style, color}) =>
     <View style={[
@@ -58,8 +67,7 @@ const Card = ({children, margin, padding, style, color}) =>
         {children}
     </View>;
 
-const DayReference = ({wixDate, setSelectedDay, eventsForDay}) =>
-{
+const DayReference = ({wixDate, setSelectedDay, eventsForDay}) => {
     const momentDate = wixDateToMoment(wixDate);
     const isPast = !isAfterOrEquals(momentDate, moment());
     return <TouchableOpacity onPress={() => setSelectedDay(momentDate)}>
@@ -100,7 +108,7 @@ export default function JourneyTab({navigation, screenProps}) {
     const daysFromStart = daysBetween(periodsMoments[containingPeriodIndex], selectedDay) + 1;
     const daysKeys = _.sortBy(_.keys(eventsByDay), wixDate => wixDateToMoment(wixDate));
 
-    setTimeout(() => daysListRef.current.scrollToIndex({animated: true, index: daysKeys.indexOf(today)}), 500);
+    setTimeout(() => daysListRef.current.scrollToIndex({animated: true, index: daysKeys.indexOf(momentToWixDate(selectedDay))}), 500);
 
     return <Container key={mainCalendarRefresh} style={{backgroundColor: Colors.grayLight}}>
         <Card margin={10} padding={15}>
@@ -122,14 +130,14 @@ export default function JourneyTab({navigation, screenProps}) {
                 ItemSeparatorComponent={() => <Divider/>}
             />
         </Card>
-            <FlatList
-                ref={daysListRef}
-                style={[marginStyle(5, 'left'), marginStyle(5, 'right')]}
-                data={daysKeys}
-                renderItem={({item}) => <DayReference wixDate={item} setSelectedDay={setSelectedDay} eventsForDay={eventsByDay[item]} />}
-                keyExtractor={item => item}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-            />
+        <FlatList
+            ref={daysListRef}
+            style={[marginStyle(5, 'left'), marginStyle(5, 'right')]}
+            data={daysKeys}
+            renderItem={({item}) => <DayReference wixDate={item} setSelectedDay={setSelectedDay} eventsForDay={eventsByDay[item]}/>}
+            keyExtractor={item => item}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+        />
     </Container>;
 }

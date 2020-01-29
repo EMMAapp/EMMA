@@ -37,7 +37,8 @@ const initialState = {
     selectedDates: [],
     eventsAndReminders: [],
     notificationIds: [],
-    note: ''
+    note: '',
+    results: {}
 };
 
 const DEFAULT_MIN_HOUR = 8;

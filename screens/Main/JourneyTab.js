@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import store from "../../store";
+import store, {syncPatientData} from "../../store";
 import RouteGuard from "../../navigation/RouteGuard";
 import localization from "../../utils/localization";
 import Container from "../../components/Container";
@@ -28,8 +28,16 @@ function collectByDay(events) {
     return eventsByDay;
 }
 
-const Event = ({dayTime, details}) => {
+const Event = ({dayTime, details, setIsLoading}) => {
     const [isExpanded, setExpanded] = useState(false);
+    const updateResults = async (results) => {
+        details.results = results;
+        setIsLoading(true);
+        store.patientData.events[details.id].results = results;
+        await syncPatientData(store.patientData);
+        setIsLoading(false);
+        setExpanded(false);
+    };
     return <View>
         <Row>
             <Text color={eventColor(!!details.medication)}>
@@ -50,7 +58,7 @@ const Event = ({dayTime, details}) => {
             </TouchableOpacity>
         </Row>
         {
-            isExpanded && <View><BloodTestResults results={{lh: '1'}} setResults={() => {}}/></View>
+            isExpanded && <View><BloodTestResults results={details.results || {}} setResults={updateResults}/></View>
         }
     </View>
 };
@@ -94,7 +102,7 @@ export default function JourneyTab({navigation, screenProps}) {
 
     const daysListRef = useRef(null);
     const [selectedDay, setSelectedDay] = useState(moment().startOf('day'));
-    const {mainCalendarRefresh} = screenProps;
+    const {mainCalendarRefresh, setIsLoading} = screenProps;
     const {patientData} = store;
     const periodsMoments = patientData.periods.map(period => wixDateToMoment(period.date));
     const eventsByDay = collectByDay(patientData.events);
@@ -125,7 +133,7 @@ export default function JourneyTab({navigation, screenProps}) {
             <Divider/>
             <FlatList
                 data={eventsForToday}
-                renderItem={({item}) => <Event {...item}/>}
+                renderItem={({item}) => <Event setIsLoading={setIsLoading} {...item}/>}
                 keyExtractor={item => item.details.id}
                 ItemSeparatorComponent={() => <Divider/>}
             />

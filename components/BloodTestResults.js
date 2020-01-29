@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import {View} from "react-native";
 import Text from "./Text";
-import Colors from "../constants/Colors";
 import localization from "../utils/localization";
 import NumericInput from "./NumericInput";
 import Row from "./Row";

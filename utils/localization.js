@@ -74,8 +74,14 @@ const en = {
     'today': 'Today',
     'cycleDay': 'Cycle day ',
     'insertBloodTest': 'Please insert blood test variables',
+    'insertUltrasound': 'Please insert the number of follicels for each size',
     'chooseTestUnits': 'Choose test units',
     'testUnits': 'Test units',
+    'rightOvary': 'Right Ovary',
+    'leftOvary': 'Left Ovary',
+    'follicelsSize': 'Follicels size',
+    'follicelsNumber': 'Number of follicels',
+    'endoThickness': 'Endometrium Thickness (mm)',
 
     'calendarTitles': {
         'period': 'period',

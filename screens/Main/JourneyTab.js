@@ -17,6 +17,7 @@ import {collectEventsForDate} from "./Calendar/CalendarTab";
 import Icon from "../../components/Icon";
 import {Dot} from "../../components/Dot";
 import BloodTestResults from "../../components/BloodTestResults";
+import UltrasoundResults from "../../components/UltrasoundResults";
 
 function collectByDay(events) {
     let eventsByDay = {};
@@ -58,7 +59,10 @@ const Event = ({dayTime, details, setIsLoading}) => {
             </TouchableOpacity>
         </Row>
         {
-            isExpanded && <View><BloodTestResults results={details.results || {}} setResults={updateResults}/></View>
+            isExpanded && details.checkup === "Blood Test" && <View><BloodTestResults results={details.results || {}} setResults={updateResults}/></View>
+        }
+        {
+            isExpanded && details.checkup === "Ultrasound" && <View><UltrasoundResults results={details.results || {}} setResults={updateResults}/></View>
         }
     </View>
 };

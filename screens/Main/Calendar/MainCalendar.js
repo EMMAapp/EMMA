@@ -18,7 +18,7 @@ export default function CalendarTab({
 
     return (
         <Calendar
-            style={marginStyle(5, 'bottom')}
+            style={[marginStyle(5, 'bottom')]}
             current={selectedDay}
             onDayPress={(day) => setSelectedDay(day.dateString)}
             markedDates={currentMarkedDates}

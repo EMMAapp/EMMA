@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import moment from "moment";
 import {TouchableOpacity, View} from "react-native";
-import {isAfterOrEquals, momentToWixDate, wixDateToMoment} from "../../../utils/dayTime";
+import {daysBetween, isAfterOrEquals, momentToWixDate, wixDateToMoment} from "../../../utils/dayTime";
 import {EDIT_EVENT} from "../../../navigation/Routes";
 import _ from 'lodash'
 import localization from "../../../utils/localization";
@@ -15,7 +15,8 @@ import Row from "../../../components/Row";
 import IconAndText from "../../../components/IconAndText";
 import Drawer from "../../../components/Drawer";
 import {Agenda, AgendaDay} from "../../../components/AgendaDay";
-import {paddingStyle} from "../../../constants/Styles";
+import {absoluteStyleVertical, paddingStyle} from "../../../constants/Styles";
+import Balloon from "../../../components/Balloon";
 
 export function collectEventsForDate(eventsByDay, selectedDay) {
     const eventsForDay = eventsByDay[selectedDay];
@@ -51,6 +52,7 @@ export default function CalendarTab({
     const [selectedDay, setSelectedDay] = useState(momentToWixDate(moment()));
     const [isAgendaExpanded, setAgendaExpanded] = useState(false);
     const [isEditingPeriod, setEditingPeriod] = useState(false);
+    const [balloonDismissed, setBalloonDismissed] = useState(false);
     const lastPeriodMoment = wixDateToMoment(_.last(store.patientData.periods).date);
 
     const eventsForDate = {};
@@ -68,6 +70,9 @@ export default function CalendarTab({
         setCurrentEditedEventId(event.id);
         navigation.navigate(EDIT_EVENT);
     };
+
+    const daysSinceLastPeriod = daysBetween(lastPeriodMoment, moment().startOf('day'));
+    const showUpdatePeriodBalloon = daysSinceLastPeriod > store.patientData.averagePeriodCycleDays;
 
     const agendaDayRender = (momentDate) =>
         <AgendaDay
@@ -103,6 +108,18 @@ export default function CalendarTab({
                             markedDates={markedDates}
                             dayRender={dayRender}
                         />
+                }
+
+                {
+                    (showUpdatePeriodBalloon && !balloonDismissed) &&
+                    <Row style={{justifyContent: 'flex-end'}}>
+                        <Balloon
+                            width={115}
+                            text={localization('pleaseUpdatePeriod')}
+                            onPress={() => setBalloonDismissed(true)}
+                            style={absoluteStyleVertical(195, 'bottom')}
+                        />
+                    </Row>
                 }
             </View>
             <Drawer

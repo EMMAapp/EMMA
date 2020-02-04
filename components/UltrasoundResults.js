@@ -10,7 +10,7 @@ import {marginStyle, paddingStyle} from "../constants/Styles";
 import Box from "./Box";
 import _ from 'lodash'
 
-const range = _.range(9, 30);
+const range = _.range(9, 31);
 
 const HighlightedTitle = ({titleKey}) =>
     <Row center style={[{backgroundColor: Colors.purpleLight}, paddingStyle(5, 'top'), paddingStyle(5, 'bottom')]}>

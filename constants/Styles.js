@@ -83,6 +83,14 @@ export const absoluteStyle = (left, right) =>
         }
     }).absoluteStyle;
 
+export const absoluteStyleVertical = (value, location) =>
+    EStyleSheet.create({
+        absoluteStyleVertical: {
+            position: 'absolute',
+            [location]: toRem(value)
+        }
+    }).absoluteStyleVertical;
+
 export const shadowStyle = (androidWeight, opacity) =>
     EStyleSheet.create({
         shadowStyle: {

@@ -82,6 +82,7 @@ const en = {
     'follicelsSize': 'Follicels size',
     'follicelsNumber': 'Number of follicels',
     'endoThickness': 'Endometrium Thickness (mm)',
+    'pleaseUpdatePeriod': 'Please update period!',
 
     'calendarTitles': {
         'period': 'period',

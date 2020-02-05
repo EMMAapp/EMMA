@@ -94,6 +94,18 @@ export default function CalendarTab({
                     </TouchableOpacity>
                 </Row>
 
+                {
+                    (showUpdatePeriodBalloon && !balloonDismissed) &&
+                    <Row style={{justifyContent: 'flex-end', zIndex: 100}}>
+                        <Balloon
+                            width={115}
+                            text={localization('pleaseUpdatePeriod')}
+                            onPress={() => setBalloonDismissed(true)}
+                            style={absoluteStyleVertical(1, 'top')}
+                        />
+                    </Row>
+                }
+
                 <SetAndSyncPeriodModal
                     isVisible={isEditingPeriod}
                     dismiss={() => setEditingPeriod(false)}
@@ -110,17 +122,7 @@ export default function CalendarTab({
                         />
                 }
 
-                {
-                    (showUpdatePeriodBalloon && !balloonDismissed) &&
-                    <Row style={{justifyContent: 'flex-end'}}>
-                        <Balloon
-                            width={115}
-                            text={localization('pleaseUpdatePeriod')}
-                            onPress={() => setBalloonDismissed(true)}
-                            style={absoluteStyleVertical(195, 'bottom')}
-                        />
-                    </Row>
-                }
+
             </View>
             <Drawer
                 isExpanded={isAgendaExpanded}

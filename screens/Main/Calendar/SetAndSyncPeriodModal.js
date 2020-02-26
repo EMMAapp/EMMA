@@ -90,11 +90,11 @@ export default function SetAndSyncPeriodModal({isVisible, dismiss, setMainCalend
         await syncEvents(setIsLoading, async (patientData) => await syncPatientData(patientData), eventsToSync);
 
         setIsLoading(false);
-        setMainCalendarRefresh(shortid.generate());
         finish();
     };
 
     const finish = () => {
+        setMainCalendarRefresh(shortid.generate());
         dismiss();
     };
 

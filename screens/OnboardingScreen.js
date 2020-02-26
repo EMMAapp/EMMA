@@ -1,12 +1,11 @@
 import React, {useState} from 'react'
-import {TouchableOpacity, Picker} from 'react-native'
+import {TouchableOpacity} from 'react-native'
 import {store, syncPatientData} from '../store';
 import RouteGuard from "../navigation/RouteGuard";
 import localization from "../utils/localization";
 import NumericInput from "../components/NumericInput";
 import CalendarModalPicker from "../components/CalendarModalPicker";
 import {momentToDisplayString, wixDateToMoment} from "../utils/dayTime";
-import PlanPicker from "../components/PlanPicker";
 import Text from "../components/Text";
 import Container from "../components/Container";
 import Colors from "../constants/Colors";
@@ -27,7 +26,6 @@ const QuestionText = (props) =>
 
 export default function LoginScreen({navigation, screenProps}) {
 
-    const [selectedPlan, setSelectedPlan] = useState(null);
     const [month, setMonth] = useState(1);
     const [year, setYear] = useState(1990);
     const [lastPeriodDate, setLastPeriodDate] = useState(null);
@@ -38,14 +36,14 @@ export default function LoginScreen({navigation, screenProps}) {
 
     const submit = async () => {
         setIsLoading(true);
-        const periods = [{date: lastPeriodDate, plan: selectedPlan}];
+        const periods = [{date: lastPeriodDate}];
         const patientData = {...store.patientData, averagePeriodCycleDays, isPeriodRegular, periods};
         await syncPatientData(patientData);
         setIsLoading(false);
         RouteGuard(navigation);
     };
 
-    const canSubmit = selectedPlan && lastPeriodDate;
+    const canSubmit = !!lastPeriodDate;
 
     return (
         <Container widthPercentage={90}>
@@ -88,8 +86,6 @@ export default function LoginScreen({navigation, screenProps}) {
                     <QuestionText style={paddingStyle(2, 'bottom')}>{localization('periodCycleSuffix')}</QuestionText>
                 </Row> : null
             }
-
-            <PlanPicker selectedPlan={selectedPlan} setSelectedPlan={setSelectedPlan}/>
 
             <ButtonPrimary onPress={submit} disabled={!canSubmit} style={[marginStyle(15, 'top'), marginStyle(15, 'bottom')]}>
                 {localization('onboardingSubmit')}

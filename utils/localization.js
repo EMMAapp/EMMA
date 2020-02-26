@@ -2,24 +2,12 @@ import * as Localization from 'expo-localization';
 import i18n from 'i18n-js';
 
 const en = {
-    'error': {
-        'generic': 'Something went wrong',
-        'mail-in-use': 'Email is invalid or already in use',
-        'weak-password': 'Password is too weak',
-        'login-generic': 'Email or password are incorrect',
-    },
-
-    'tabs': {
-        'calendar': 'Calendar',
-        'profile': 'Profile',
-        'adding': 'Add',
-    },
 
     'connectFacebook': 'Connect with Facebook',
     'connectGoogle': 'Connect with Google',
     'treatmentPlan': 'Treatment Plan',
     'addTreatmentPlan': 'Add Your Treatment Plan',
-    'editPeriod': 'Period/Plan',
+    'editPeriod': 'Period',
     'editPeriodMessage': 'Please Update Period!',
     'yes': 'Yes',
     'no': 'No',
@@ -53,7 +41,6 @@ const en = {
     'onboardingTitle': 'Let\'s Begin Our Journey!',
     'onboardingSubTitle': 'Just a few short questions',
     'onboardingSubmit': 'OK, Done',
-    'yourPlan': 'The current cycle plan:',
     'whenBorn': 'When were you born?',
     'lastPeriod': 'Last period date:',
     'regularPeriod': 'Do you have a regular menstrual cycle?',
@@ -83,40 +70,8 @@ const en = {
     'follicelsNumber': 'Number of follicels',
     'endoThickness': 'Endometrium Thickness (mm)',
     'pleaseUpdatePeriod': 'Please update period!',
-
-    'calendarTitles': {
-        'period': 'period',
-        'ovulationEst': 'est ovu'
-    },
-
-    'plan': {
-        'ICI_title': 'ICI',
-        'IUI_title': 'IUI',
-        'IVF_title': 'IVF',
-        'Intercourse_title': 'Intercourse',
-        'MedicalExploration_title': 'Medical Exploration',
-        'ICI': 'Intra Cervical Insemination',
-        'IUI': 'Intra Uterine Insemination',
-        'IVF': 'In Vitro Fertilization',
-        'Intercourse': '',
-        'MedicalExploration': ''
-    },
-
-    'diagnosis': {
-        'cos': "COS (Anovulatory)",
-        'diminished-reserve': "Diminished reserve",
-        'unexplained': "Unexplained",
-        'endometriosis': "Endometriosis",
-        'tubal-factor': "Tubal factor",
-        'male-low-count': "Male - low count",
-        'male-low-motility': "Male - low motility",
-        'male-morphology': "Male - morphology",
-        'uterine': "Uterine",
-        'pgd': "PGD",
-        'rec-pregnancy-loss': "Recurrent pregnancy loss",
-        'fertility-preservation': "Fertility preservation",
-        'other': "Other"
-    }
+    'calendarTitlesPeriod': 'period',
+    'calendarTitlesOvulationEst': 'est ovu'
 };
 
 i18n.fallbacks = true;

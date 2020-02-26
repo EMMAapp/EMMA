@@ -1,6 +1,6 @@
 import * as firebase from "firebase";
 import '@firebase/firestore';
-import {logError, logInfo, logWarn} from "./utils/log";
+import {logError, logWarn} from "./utils/log";
 import * as Facebook from "expo-facebook";
 import * as GoogleSignIn from 'expo-google-sign-in';
 import {setNewNotifications, unsetAllNotifications} from "./utils/notificationsSync";
@@ -12,7 +12,6 @@ const initialPatientData = {
     isPeriodRegular: false,
     periods: [],
     averagePeriodCycleDays: 28,
-    plan: null,
     events: {}
 };
 

@@ -62,7 +62,7 @@ export default function CalendarTabWrapper({navigation, screenProps}) {
         let containingPeriodIndex = _.findLastIndex(periodsMoments, periodMoment => isAfterOrEquals(currentDayMoment, periodMoment));
         let title = "";
         if (momentsEquals(currentDayMoment, periodsMoments[containingPeriodIndex])) { // day 1 of period
-            title = localization('calendarTitles.period');
+            title = localization('calendarTitlesPeriod');
         }
         else {
             const nextPeriodMoment = containingPeriodIndex === periodsMoments.length - 1 ?
@@ -70,7 +70,7 @@ export default function CalendarTabWrapper({navigation, screenProps}) {
                 periodsMoments[containingPeriodIndex + 1];
             const daysFromEnd = daysBetween(currentDayMoment, nextPeriodMoment) - 1;
             if (daysFromEnd === 14) {
-                title = localization('calendarTitles.ovulationEst');
+                title = localization('calendarTitlesOvulationEst');
             }
         }
         if (!title) {

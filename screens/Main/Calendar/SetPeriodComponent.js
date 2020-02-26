@@ -3,7 +3,6 @@ import React, {useState} from "react";
 import {View} from "react-native";
 import {addDays, momentToWixDate, wixDateToMoment} from "../../../utils/dayTime";
 import moment from "moment";
-import PlanPicker from "../../../components/PlanPicker";
 import localization from "../../../utils/localization";
 import {calendarTheme, marginStyle, paddingStyle} from "../../../constants/Styles";
 import Text from "../../../components/Text";
@@ -20,7 +19,6 @@ const QuestionText = (props) =>
     </Text>;
 
 export default ({lastPeriod, setPeriod}) => {
-    const [selectedPlan, setSelectedPlan] = useState(lastPeriod.plan);
     const [selectedDate, setSelectedDate] = useState(momentToWixDate(moment()));
     const markedDates = {[selectedDate]: {startingDay: true, endingDay: true, color: Colors.purple, textColor: 'white'}};
 
@@ -36,11 +34,10 @@ export default ({lastPeriod, setPeriod}) => {
             firstDay={0} // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
             theme={calendarTheme}
         />
-        <PlanPicker selectedPlan={selectedPlan} setSelectedPlan={setSelectedPlan}/>
         <Row center>
             <ButtonPrimary
                 style={[marginStyle(5, 'top')]}
-                onPress={() => setPeriod({date: selectedDate, plan: selectedPlan})}>
+                onPress={() => setPeriod({date: selectedDate})}>
                 {localization('save')}
             </ButtonPrimary>
         </Row>

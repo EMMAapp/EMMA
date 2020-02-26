@@ -14,6 +14,7 @@ import shortid from 'shortid'
 import Row from "../../../components/Row";
 import {eventColor} from "../../../constants/Styles";
 import {Dot} from "../../../components/Dot";
+import moment from "moment";
 
 const medicationDot = {key: shortid.generate(), color: eventColor(true)};
 const checkupDot = {key: shortid.generate(), color: eventColor(false)};
@@ -56,7 +57,7 @@ export default function CalendarTabWrapper({navigation, screenProps}) {
 
     const getDayTitle = (dateString) => {
         const currentDayMoment = wixDateToMoment(dateString);
-        if (currentDayMoment.isBefore(_.first(periodsMoments)) || currentDayMoment.isAfter(lastPeriodEndEstimation)) {
+        if (currentDayMoment.isBefore(_.first(periodsMoments)) || currentDayMoment.isAfter(moment())) {
             return null;
         }
         let containingPeriodIndex = _.findLastIndex(periodsMoments, periodMoment => isAfterOrEquals(currentDayMoment, periodMoment));

@@ -28,7 +28,7 @@ export default ({onDayPress, coloredDays}) => {
             arrowColor: Colors.turquoise,
             textDayFontSize: 14,
             textMonthFontSize: 12,
-            textDayHeaderFontSize: 12,
+            textDayHeaderFontSize: 12
         }}
     />
 }

@@ -61,11 +61,11 @@ export default ({results, setResults}) =>
             <View style={[marginStyle(20, 'right')]} >
                 <Text style={marginStyle(5, 'bottom')}>{localization('chooseTestUnits')}</Text>
                 <BinaryBoxes
-                    option1="pmol/mL"
-                    option2="pg/mL"
+                    option1="ng/mL"
+                    option2="nmol/mL"
                     width={50}
                     selected={progesteroneUnit === 'ng' ? 1 : 2}
-                    setSelected={index => setProgesteroneUnit(index === 1 ? 'ng' : 'mol')}
+                    setSelected={index => setProgesteroneUnit(index === 1 ? 'ng' : 'nmol')}
                 />
             </View>
         </Row>

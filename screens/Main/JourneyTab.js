@@ -11,13 +11,14 @@ import moment from "moment";
 import Row from "../../components/Row";
 import Text from "../../components/Text";
 import {FlatList, TouchableOpacity, View} from "react-native";
-import {borderRadiusStyle, eventColor, hwStyle, marginStyle, paddingStyle, shadowStyle} from "../../constants/Styles";
+import {eventColor, hwStyle, marginStyle, paddingStyle} from "../../constants/Styles";
 import Divider from "../../components/Divider";
 import {collectEventsForDate} from "./Calendar/CalendarTab";
 import Icon from "../../components/Icon";
 import {Dot} from "../../components/Dot";
 import BloodTestResults from "../../components/BloodTestResults";
 import UltrasoundResults from "../../components/UltrasoundResults";
+import Card from "../../components/Card"
 
 function collectByDay(events) {
     let eventsByDay = {};
@@ -66,18 +67,6 @@ const Event = ({dayTime, details, setIsLoading}) => {
         }
     </View>
 };
-
-const Card = ({children, margin, padding, style, color}) =>
-    <View style={[
-        {backgroundColor: color || 'white'},
-        borderRadiusStyle(5),
-        marginStyle(margin),
-        paddingStyle(padding),
-        shadowStyle(10, 0.1),
-        {...style}
-    ]}>
-        {children}
-    </View>;
 
 const DayReference = ({wixDate, setSelectedDay, eventsForDay}) => {
     const momentDate = wixDateToMoment(wixDate);

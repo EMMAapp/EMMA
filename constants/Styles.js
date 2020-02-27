@@ -12,6 +12,12 @@ export const calendarTheme = {
     arrowColor: Colors.purple,
     calendarBackground: 'transparent',
     'stylesheet.day.period': {
+        wrapper: {
+            overflow: 'hidden',
+            alignItems: 'center',
+            alignSelf: 'stretch',
+            marginLeft: -1
+        },
         base: {
             overflow: 'hidden',
             alignItems: 'center',

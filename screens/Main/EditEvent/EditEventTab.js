@@ -264,7 +264,7 @@ export default function EditEventTab({navigation, screenProps}) {
                         :
                         <CalendarDayPicker
                             onDayPress={(day) => {
-                                const selectedDates = addOrRemove(state.selectedDates, day.dateString);
+                                const selectedDates = [day.dateString];
                                 setState({...state, selectedDates});
                             }}
                             coloredDays={state.selectedDates}

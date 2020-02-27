@@ -23,7 +23,7 @@ const en = {
     'dailyDose': 'Daily dose (iu/pills)',
     'timesPerDay': 'Times a day',
     'selectDaysOfMedicine': 'Select the days of medicine administration',
-    'selectDaysOfCheckup': 'Select the days of scheduled process',
+    'selectDaysOfCheckup': 'Select the day of the scheduled process',
     'note': 'Note',
     'imDone': 'I\'m Done',
     'addAnotherMedication': 'Add Another Medication',
@@ -71,7 +71,11 @@ const en = {
     'endoThickness': 'Endometrium Thickness (mm)',
     'pleaseUpdatePeriod': 'Please update period!',
     'calendarTitlesPeriod': 'period',
-    'calendarTitlesOvulationEst': 'est ovu'
+    'calendarTitlesOvulationEst': 'est ovu',
+    'prevPeriod': 'Previous period',
+    'nextPeriod': 'Next period',
+    'noResults': 'Currently no results to display.',
+    'followUpTitle': 'Period follow up'
 };
 
 i18n.fallbacks = true;

@@ -10,10 +10,12 @@ import Down from "../assets/icons/down.svg"
 import Add from "../assets/icons/add.svg"
 import Profile from "../assets/icons/profile.svg"
 import Right from "../assets/icons/right.svg"
+import Left from "../assets/icons/left.svg"
 import Drop from "../assets/icons/drop.svg"
 import Facebook from "../assets/icons/facebook.svg"
 import Google from "../assets/icons/google.svg"
 import Today from "../assets/icons/today.svg"
+import Folder from "../assets/icons/folder.svg"
 
 const getIconByName = (name, style) => {
     switch (name) {
@@ -31,6 +33,8 @@ const getIconByName = (name, style) => {
             return <Down style={style}/>;
         case "right":
             return <Right style={style}/>;
+        case "left":
+            return <Left style={style}/>;
         case "add":
             return <Add style={style}/>;
         case "profile":
@@ -43,6 +47,8 @@ const getIconByName = (name, style) => {
             return <Google style={style}/>;
         case "today":
             return <Today style={style}/>;
+        case "folder":
+            return <Folder style={style}/>;
         default:
             return null;
     }

@@ -3,6 +3,7 @@ import {Dimensions} from "react-native";
 import {LineChart} from "react-native-chart-kit";
 import {View} from "react-native";
 import Text from "./Text";
+import Card from "./Card";
 
 const linedata = {
     labels: ['January', 'February', 'March', 'April', 'May', 'June'],
@@ -23,29 +24,28 @@ export default ({values, unit}) => {
         }
     ];
     return (
-        <View>
+        <Card margin={2} padding={2}>
             <Text>wat</Text>
             <LineChart
                 data={{labels, datasets}}
-                width={Dimensions.get('window').width} // from react-native
+                width={Dimensions.get('window').width * 0.8}
                 height={220}
                 yAxisLabel={'$'}
                 chartConfig={{
-                    backgroundColor: '#e26a00',
-                    backgroundGradientFrom: '#fb8c00',
-                    backgroundGradientTo: '#ffa726',
-                    decimalPlaces: 2, // optional, defaults to 2dp
-                    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                    decimalPlaces: 2,
+                    backgroundColor: '#ffffff',
+                    backgroundGradientFrom: '#ffffff',
+                    backgroundGradientTo: '#ffffff',
+                    color: (opacity = 1) => `rgba(151, 84, 203, ${opacity})`,
                     style: {
                         borderRadius: 16
                     }
                 }}
                 bezier
                 style={{
-                    marginVertical: 8,
-                    borderRadius: 16
+                    padding: 10
                 }}
             />
-        </View>
+        </Card>
     );
 }

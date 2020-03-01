@@ -75,7 +75,8 @@ const en = {
     'prevPeriod': 'Previous period',
     'nextPeriod': 'Next period',
     'noResults': 'Currently no results to display.',
-    'followUpTitle': 'Period follow up'
+    'followUpTitle': 'Period follow up',
+    'cycleDays': 'Cycle days'
 };
 
 i18n.fallbacks = true;

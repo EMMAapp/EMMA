@@ -33,6 +33,7 @@ function collectByDay(events) {
 const Event = ({dayTime, details, setIsLoading}) => {
     const [isExpanded, setExpanded] = useState(false);
     const updateResults = async (results) => {
+        console.info(results)
         details.results = results;
         setIsLoading(true);
         store.patientData.events[details.id].results = results;

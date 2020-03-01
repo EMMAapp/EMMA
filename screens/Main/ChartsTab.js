@@ -51,8 +51,8 @@ const getResultValue = (result, resultName) => {
     }
 };
 
-const BloodChart = ({bloodResults, resultName, unit}) => (
-    <LineChart unit={unit} values={_.sortBy(_.keys(bloodResults)).map(periodDay => {
+const BloodChart = ({title, bloodResults, resultName}) => (
+    <LineChart title={title} values={_.sortBy(_.keys(bloodResults)).map(periodDay => {
         return {periodDay, value: getResultValue(bloodResults[periodDay], resultName)}
     })}/>
 );
@@ -103,13 +103,13 @@ export default function ChartsTab({navigation, screenProps}) {
                 <Row center style={marginStyle(30, 'top')}>
                     <Text>{localization("noResults")}</Text>
                 </Row> :
-                <View>
+                <View style={marginStyle(10, 'top')}>
                     {
                         !_.isEmpty(_.keys(bloodResults)) &&
                         <View>
-                            <BloodChart bloodResults={bloodResults} resultName="estrogen" unit="pmol/mL"/>
-                            <BloodChart bloodResults={bloodResults} resultName="lh" unit="mlU/mL"/>
-                            <BloodChart bloodResults={bloodResults} resultName="progesterone" unit="ng/mL"/>
+                            <BloodChart title="Estrogen E2 (pmol/mL)" bloodResults={bloodResults} resultName="estrogen"/>
+                            <BloodChart title="LH (mlU/mL)" bloodResults={bloodResults} resultName="lh"/>
+                            <BloodChart title="Progesterone (ng/mL)" bloodResults={bloodResults} resultName="progesterone"/>
                         </View>
                     }
                 </View>

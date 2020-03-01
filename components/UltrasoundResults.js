@@ -67,7 +67,7 @@ export default ({results, setResults}) => {
             <NumericInput width={35} value={endoThickness} setValue={setEndoThickness} textColor={Colors.purple} style={{backgroundColor: Colors.purpleLight, borderColor: Colors.purple}}/>
         </Row>
         <Row center style={marginStyle(10, 'top')}>
-            <ButtonPrimary onPress={() => setResults({left, right})}>
+            <ButtonPrimary onPress={() => setResults({left, right, endoThickness})}>
                 {localization('imDone')}
             </ButtonPrimary>
         </Row>

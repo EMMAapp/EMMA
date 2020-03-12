@@ -33,21 +33,49 @@ const VerticalLine = styled(View)`
   position: absolute;
 `;
 
+const DotSizeTable = (value) => {
+    switch (parseInt(value)) {
+        case 1:
+        case 2:
+            return 6;
+        case 3:
+        case 4:
+            return 10;
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+            return 12;
+        case 9:
+        case 10:
+        case 11:
+        case 12:
+            return 14;
+        case 13:
+        case 14:
+        case 15:
+        case 16:
+            return 16;
+        default:
+            return 20;
+    }
+}
+
 const Dot = styled(View)`
   opacity: 1;
-  width: 10px;
-  height: 10px;
+  width: ${props => `${props.size}px`};
+  height: ${props => `${props.size}px`};
   background-color: ${props => props.color};
-  bottom: ${props => props.bottom - 5};
-  left: ${props => props.left - 5};
+  bottom: ${props => props.bottom - props.size/2};
+  left: ${props => props.left - props.size/2};
   position: absolute;
-  border-radius: 10px;
+  border-radius: ${props => `${props.size}px`};
 `;
 
 const ScatterChart = ({data, chartWidth}) => {
 
-    const getMin = (data, pairIndex) => _.max([0, parseInt(_.min(data.map(plot => _.min(plot.values.map(pair => pair[pairIndex]))))) - 3]);
-    const getMax = (data, pairIndex) => parseInt(_.max(data.map(plot => _.max(plot.values.map(pair => pair[pairIndex]))))) + 3;
+    const getMin = (data, pairIndex) => _.max([0, parseInt(_.min(data.map(plot => _.min(plot.values.map(pair => parseInt(pair[pairIndex])))))) - 3]);
+    const getMax = (data, pairIndex) => parseInt(_.max(data.map(plot => _.max(plot.values.map(pair => parseInt(pair[pairIndex])))))) + 3;
 
     const minX = getMin(data, 0);
     const maxX = getMax(data, 0);
@@ -84,6 +112,7 @@ const ScatterChart = ({data, chartWidth}) => {
                 points.push(
                     <Dot
                         key={`${i}_${j}`}
+                        size={DotSizeTable(point[1])}
                         left={getX(point[0])}
                         bottom={getY(point[1])}
                         color={dataSeries.color}

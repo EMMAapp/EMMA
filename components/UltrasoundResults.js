@@ -39,7 +39,7 @@ const OvaryResults = ({titleKey, results, setResults}) => (
                             height={25}
                             width={25}
                             value={results[i]}
-                            setValue={value => setResults({...results, [i]: value})}
+                            setValue={value => _.isEmpty(value) ? setResults(_.omit(results, i)) : setResults({...results, [i]: value})}
                             textColor={results[i] ? Colors.purple : null}
                             style={{backgroundColor: results[i] ? Colors.purpleLight : 'white', borderColor: results[i] ? Colors.purple : Colors.grayMedium}}
                         />)
@@ -54,7 +54,7 @@ const OvaryResults = ({titleKey, results, setResults}) => (
 export default ({results, setResults}) => {
     const [left, setLeft] = useState(results.left || {});
     const [right, setRight] = useState(results.right || {});
-    const [endoThickness, setEndoThickness] = useState(results.endoThickness);
+    const [endoThickness, setEndoThickness] = useState(results.endoThickness || 0);
 
     return <View>
         <Text size={9} style={[marginStyle(5, 'top'), marginStyle(15, 'bottom')]}>

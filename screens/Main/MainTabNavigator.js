@@ -113,8 +113,8 @@ const tabNavigator = createBottomTabNavigator({
     JourneyStack,
     CalendarStack,
     EditEventStack,
-    ProfileStack,
     ChartsStack,
+    ProfileStack,
 }, {
     tabBarOptions: {
         style: paddingStyle(10, 'top'),

@@ -78,7 +78,8 @@ const en = {
     'followUpTitle': 'Period follow up',
     'cycleDays': 'Cycle days',
     'ultrasoundResults': 'Ultrasound Results',
-    'firstDayOfPeriod': 'First day of period'
+    'firstDayOfPeriod': 'First day of period',
+    'noTasks': 'No tasks scheduled for today'
 };
 
 i18n.fallbacks = true;

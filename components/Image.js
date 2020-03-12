@@ -8,6 +8,9 @@ import Motorcycle from "../assets/images/motorcycle.jpg"
 import Wonder from "../assets/images/wonder.png"
 import Confused from "../assets/images/confused.jpg"
 import WelcomeAnimation from "../assets/images/welcome.gif"
+import Followup from "../assets/images/followup.png"
+import Plan from "../assets/images/plan.png"
+import Yoga from "../assets/images/yoga.png"
 
 const getImageByName = (name) => {
     switch (name) {
@@ -23,6 +26,12 @@ const getImageByName = (name) => {
             return Confused;
         case "welcomeAnimation":
             return WelcomeAnimation;
+        case "followup":
+            return Followup;
+        case "plan":
+            return Plan;
+        case "yoga":
+            return Yoga;
         default:
             return null;
     }

@@ -98,6 +98,7 @@ export default function CalendarTab({
                     (showUpdatePeriodBalloon && !balloonDismissed) &&
                     <Row style={{justifyContent: 'flex-end', zIndex: 100}}>
                         <Balloon
+                            canDismiss
                             width={115}
                             text={localization('pleaseUpdatePeriod')}
                             onPress={() => setBalloonDismissed(true)}

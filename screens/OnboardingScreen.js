@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {TouchableOpacity} from 'react-native'
+import {TouchableOpacity, Dimensions} from 'react-native'
 import {store, syncPatientData} from '../store';
 import RouteGuard from "../navigation/RouteGuard";
 import localization from "../utils/localization";
@@ -16,6 +16,7 @@ import ButtonPrimary from "../components/ButtonPrimary";
 import {marginStyle, paddingStyle} from "../constants/Styles"
 import IconAndText from "../components/IconAndText";
 import BirthPicker from "../components/BirthPicker";
+import Image from "../components/Image";
 
 const QuestionText = (props) =>
     <Text
@@ -90,6 +91,10 @@ export default function LoginScreen({navigation, screenProps}) {
             <ButtonPrimary onPress={submit} disabled={!canSubmit} style={[marginStyle(15, 'top'), marginStyle(15, 'bottom')]}>
                 {localization('onboardingSubmit')}
             </ButtonPrimary>
+
+            <Row center style={paddingStyle(20, 'top')}>
+                <Image name={"confetti"} height={100} width={Dimensions.get("window").width * 0.9}/>
+            </Row>
         </Container>
     )
 }

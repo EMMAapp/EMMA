@@ -82,6 +82,7 @@ export default function ProfileTab({navigation, screenProps}) {
                 width={50}
                 selected={weekStartDay}
                 setSelected={index => setStoredData('weekStartDay', index)}
+                middleSpan={7}
             />
         </Row>
 

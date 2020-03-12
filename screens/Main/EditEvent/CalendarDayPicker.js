@@ -2,9 +2,11 @@ import {Calendar} from "react-native-calendars";
 import React, {useState} from "react";
 import {borderRadiusStyle, calendarTheme, marginStyle} from "../../../constants/Styles";
 import Colors from "../../../constants/Colors";
+import store from "../../../store";
 
 export default ({onDayPress, coloredDays}) => {
     const [current, setCurrent] = useState(Date());
+    const firstDay = store.patientData.weekStartDay - 1;
 
     let markedDates = {};
     coloredDays.forEach(day => {
@@ -17,7 +19,7 @@ export default ({onDayPress, coloredDays}) => {
             setCurrent(day.dateString);
             onDayPress(day);
         }}
-        firstDay={0} // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
+        firstDay={firstDay}
         markedDates={markedDates}
         markingType={'period'}
         style={[borderRadiusStyle(5), marginStyle(5, 'top'), {borderWidth: 1, borderColor: Colors.grayMedium}]}

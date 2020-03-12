@@ -10,6 +10,7 @@ import Colors from "../../../constants/Colors";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import Button from "../../../components/Button";
 import Row from "../../../components/Row";
+import store from "../../../store";
 
 const QuestionText = (props) =>
     <Text
@@ -21,6 +22,7 @@ const QuestionText = (props) =>
 export default ({lastPeriod, setPeriod}) => {
     const [selectedDate, setSelectedDate] = useState(momentToWixDate(moment()));
     const markedDates = {[selectedDate]: {startingDay: true, endingDay: true, color: Colors.purple, textColor: 'white'}};
+    const firstDay = store.patientData.weekStartDay - 1;
 
     return <View>
         <QuestionText>{localization('lastPeriod')}</QuestionText>
@@ -31,7 +33,7 @@ export default ({lastPeriod, setPeriod}) => {
             onDayPress={day => setSelectedDate(day.dateString)}
             markedDates={markedDates}
             markingType={'period'}
-            firstDay={0} // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
+            firstDay={firstDay}
             theme={calendarTheme}
         />
         <Row center>

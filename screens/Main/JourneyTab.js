@@ -10,8 +10,8 @@ import {daysBetween, dayTimeToDisplayString, isAfterOrEquals, momentsEquals, mom
 import moment from "moment";
 import Row from "../../components/Row";
 import Text from "../../components/Text";
-import {FlatList, TouchableOpacity, View} from "react-native";
-import {eventColor, hwStyle, marginStyle, paddingStyle} from "../../constants/Styles";
+import {FlatList, TouchableOpacity, View, Dimensions} from "react-native";
+import {borderRadiusStyle, eventColor, hwStyle, marginStyle, paddingStyle} from "../../constants/Styles";
 import Divider from "../../components/Divider";
 import {collectEventsForDate} from "./Calendar/CalendarTab";
 import Icon from "../../components/Icon";
@@ -19,6 +19,7 @@ import {Dot} from "../../components/Dot";
 import BloodTestResults from "../../components/BloodTestResults";
 import UltrasoundResults from "../../components/UltrasoundResults";
 import Card from "../../components/Card"
+import Image from "../../components/Image";
 
 function collectByDay(events) {
     let eventsByDay = {};
@@ -108,6 +109,7 @@ export default function JourneyTab({navigation, screenProps}) {
     let containingPeriodIndex = _.findLastIndex(periodsMoments, periodMoment => isAfterOrEquals(selectedDay, periodMoment));
     const daysFromStart = daysBetween(periodsMoments[containingPeriodIndex], selectedDay) + 1;
     const daysKeys = _.sortBy(_.keys(eventsByDay), wixDate => wixDateToMoment(wixDate));
+    const anyCheckup = eventsForToday.some(event => event.details.checkup);
 
     setTimeout(() => daysListRef.current.scrollToIndex({animated: true, index: daysKeys.indexOf(momentToWixDate(selectedDay))}), 500);
 
@@ -124,12 +126,28 @@ export default function JourneyTab({navigation, screenProps}) {
                 <Text color={Colors.purple} bold>{daysFromStart}</Text>
             </Row>
             <Divider/>
-            <FlatList
-                data={eventsForToday}
-                renderItem={({item}) => <Event setIsLoading={setIsLoading} {...item}/>}
-                keyExtractor={item => item.details.id}
-                ItemSeparatorComponent={() => <Divider/>}
-            />
+            {
+                _.isEmpty(eventsForToday) ?
+                    <View>
+                        <Text size={10} alignCenter style={marginStyle(10)}>{localization('noTasks')}</Text>
+                        <Row center>
+                            <Image name="yoga" width={100} height={100}/>
+                        </Row>
+                    </View>
+                    :
+                    <View>
+                        <FlatList
+                            data={eventsForToday}
+                            renderItem={({item}) => <Event setIsLoading={setIsLoading} {...item}/>}
+                            keyExtractor={item => item.details.id}
+                            ItemSeparatorComponent={() => <Divider/>}
+                        />
+                        <Divider/>
+                        <Row center>
+                            <Image name={anyCheckup ? 'plan' : 'followup'} width={Dimensions.get('window').width * 0.5} height={100}/>
+                        </Row>
+                    </View>
+            }
         </Card>
         <FlatList
             ref={daysListRef}

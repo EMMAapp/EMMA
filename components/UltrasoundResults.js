@@ -20,7 +20,7 @@ const HighlightedTitle = ({titleKey}) =>
 const OvaryResults = ({titleKey, results, setResults}) => (
     <View>
         <HighlightedTitle titleKey={titleKey}/>
-        <Text size={6} style={[marginStyle(5, 'top'), marginStyle(2, 'bottom')]}>{localization('follicelsSize')}</Text>
+        <Text size={6} style={[marginStyle(5, 'top'), marginStyle(2, 'bottom')]}>{localization('folliclesSize')}</Text>
         <ScrollView horizontal={true}>
             <View>
                 <Row>
@@ -47,7 +47,7 @@ const OvaryResults = ({titleKey, results, setResults}) => (
                 </Row>
             </View>
         </ScrollView>
-        <Text size={6} style={[marginStyle(5, 'bottom'), marginStyle(2, 'top')]}>{localization('follicelsNumber')}</Text>
+        <Text size={6} style={[marginStyle(5, 'bottom'), marginStyle(2, 'top')]}>{localization('folliclesNumber')}</Text>
     </View>
 );
 

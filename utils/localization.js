@@ -30,6 +30,7 @@ const en = {
     'addAnotherCheckup': 'Add Another Checkup',
     'clearEvent': 'Clear Event',
     'deleteEvent': 'Delete Event',
+    'delete': 'Delete',
     'autocompletePlaceholder': 'Start typing or choose from list',
     'pickTime': 'Pick time of day',
     'loading': 'Loading...',
@@ -39,6 +40,7 @@ const en = {
     'close': 'Close',
     'confirm': 'Confirm',
     'onboardingTitle': 'Let\'s Begin Our Journey!',
+    'profileTitle': 'Profile Settings',
     'onboardingSubTitle': 'Just a few short questions',
     'onboardingSubmit': 'OK, Done',
     'whenBorn': 'When were you born?',
@@ -80,6 +82,12 @@ const en = {
     'ultrasoundResults': 'Ultrasound Results',
     'firstDayOfPeriod': 'First day of period',
     'noTasks': 'No tasks scheduled for today',
+    'sunday': 'Sunday',
+    'monday': 'Monday',
+    'myWeekStartOn': 'My week starts on',
+    'logout': 'Logout',
+    'deleteAllData': 'Delete all stored data',
+    'areYouSureDeleteAllData': 'Are you sure you want to delete all stored data? It could not be recovered.',
 
     'months': {
         '1': 'January',

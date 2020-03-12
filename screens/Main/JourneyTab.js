@@ -10,8 +10,8 @@ import {daysBetween, dayTimeToDisplayString, isAfterOrEquals, momentsEquals, mom
 import moment from "moment";
 import Row from "../../components/Row";
 import Text from "../../components/Text";
-import {FlatList, TouchableOpacity, View, Dimensions} from "react-native";
-import {borderRadiusStyle, eventColor, hwStyle, marginStyle, paddingStyle} from "../../constants/Styles";
+import {Dimensions, FlatList, TouchableOpacity, View} from "react-native";
+import {eventColor, hwStyle, marginStyle, paddingStyle} from "../../constants/Styles";
 import Divider from "../../components/Divider";
 import {collectEventsForDate} from "./Calendar/CalendarTab";
 import Icon from "../../components/Icon";
@@ -111,7 +111,15 @@ export default function JourneyTab({navigation, screenProps}) {
     const daysKeys = _.sortBy(_.keys(eventsByDay), wixDate => wixDateToMoment(wixDate));
     const anyCheckup = eventsForToday.some(event => event.details.checkup);
 
-    setTimeout(() => daysListRef.current.scrollToIndex({animated: true, index: daysKeys.indexOf(momentToWixDate(selectedDay))}), 500);
+    const scroll = () => {
+        try {
+            daysListRef.current.scrollToIndex({animated: true, index: daysKeys.indexOf(momentToWixDate(selectedDay))})
+        }
+        catch {
+            setTimeout(scroll, 500)
+        }
+    };
+    setTimeout(scroll, 500);
 
     return <Container key={mainCalendarRefresh} style={{backgroundColor: Colors.grayLight}}>
         <Card margin={10} padding={15}>

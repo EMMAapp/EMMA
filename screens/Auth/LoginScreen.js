@@ -13,7 +13,6 @@ import Checkbox from "../../components/Checkbox";
 import Colors from "../../constants/Colors";
 import Text from "../../components/Text";
 import {Platform} from "react-native-web";
-import Icon from "../../components/Icon";
 
 const QuestionText = (props) =>
     <Text

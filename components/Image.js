@@ -13,6 +13,7 @@ import Plan from "../assets/images/plan.png"
 import Yoga from "../assets/images/yoga.png"
 import CatBook from "../assets/images/catbook.png"
 import Confetti from "../assets/images/confetti.png"
+import Writing from "../assets/images/writing.jpg"
 
 const getImageByName = (name) => {
     switch (name) {
@@ -38,6 +39,8 @@ const getImageByName = (name) => {
             return CatBook;
         case "confetti":
             return Confetti;
+        case "writing":
+            return Writing;
         default:
             return null;
     }

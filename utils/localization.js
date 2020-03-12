@@ -61,13 +61,13 @@ const en = {
     'today': 'Today',
     'cycleDay': 'Cycle day ',
     'insertBloodTest': 'Please insert blood test variables',
-    'insertUltrasound': 'Please insert the number of follicels for each size',
+    'insertUltrasound': 'Please insert the number of follicles for each size',
     'chooseTestUnits': 'Choose test units',
     'testUnits': 'Test units',
     'rightOvary': 'Right Ovary',
     'leftOvary': 'Left Ovary',
-    'follicelsSize': 'Follicels size',
-    'follicelsNumber': 'Number of follicels',
+    'folliclesSize': 'Follicles size',
+    'folliclesNumber': 'Number of follicles',
     'endoThickness': 'Endometrium Thickness (mm)',
     'pleaseUpdatePeriod': 'Please update period!',
     'calendarTitlesPeriod': 'period',
@@ -76,7 +76,8 @@ const en = {
     'nextPeriod': 'Next period',
     'noResults': 'Currently no results to display.',
     'followUpTitle': 'Period follow up',
-    'cycleDays': 'Cycle days'
+    'cycleDays': 'Cycle days',
+    'ultrasoundResults': 'Ultrasound Results'
 };
 
 i18n.fallbacks = true;

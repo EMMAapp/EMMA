@@ -13,6 +13,7 @@ import Row from "../../components/Row";
 import {TouchableOpacity, View} from "react-native";
 import Icon from "../../components/Icon";
 import LineChart from "../../components/LineChart";
+import ScatterPlot from "../../components/ScatterPlot";
 
 
 const extractResults = (events, periodStartMoment, nextPeriodStartMoment) => {
@@ -68,6 +69,8 @@ export default function ChartsTab({navigation, screenProps}) {
     const period = periodsMoments[periodIndex];
     const nextPeriod = periodIndex < periodsMoments.length - 1 ? periodsMoments[periodIndex + 1] : addDays(moment(), 1);
     const {bloodResults, ultrasoundResults} = extractResults(patientData.events, period, nextPeriod);
+    const ultrasoundResult = _.last(_.values(ultrasoundResults));
+    const ultrasoundAny = ultrasoundResult && ( !_.isEmpty(ultrasoundResult.left) || !_.isEmpty(ultrasoundResult.right) );
 
     return <Container key={mainCalendarRefresh} style={{backgroundColor: Colors.grayLight}} widthPercentage={90}>
         <Row>
@@ -99,7 +102,7 @@ export default function ChartsTab({navigation, screenProps}) {
             <Text color={Colors.purple} size={11}>{`${momentToDisplayString(period)} - ${momentToDisplayString(addDays(nextPeriod, -1))}`}</Text>
         </Row>
         {
-            _.isEmpty(_.keys(bloodResults)) ?
+            _.isEmpty(_.keys(bloodResults)) && !ultrasoundAny ?
                 <Row center style={marginStyle(30, 'top')}>
                     <Text>{localization("noResults")}</Text>
                 </Row> :
@@ -111,6 +114,14 @@ export default function ChartsTab({navigation, screenProps}) {
                             <BloodChart title="LH (mlU/mL)" bloodResults={bloodResults} resultName="lh"/>
                             <BloodChart title="Progesterone (ng/mL)" bloodResults={bloodResults} resultName="progesterone"/>
                         </View>
+                    }
+                    {
+                        ultrasoundAny && <ScatterPlot
+                            title={localization('ultrasoundResults')}
+                            dataSets={[ultrasoundResult.left, ultrasoundResult.right]}
+                            colors={[Colors.purple, Colors.pink]}
+                            setsTitles={[localization('leftOvary'), localization('rightOvary')]}
+                        />
                     }
                 </View>
         }

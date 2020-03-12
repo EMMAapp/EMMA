@@ -15,30 +15,30 @@ export default ({onDayPress, coloredDays}) => {
     });
 
     return <Calendar
-        current={momentToWixDate(hackyMoment)}
-        minDate={momentToWixDate(hackyMoment)}
-        maxDate={momentToWixDate(addDays(hackyMoment, 30))}
-        onDayPress={day => onDayPress(day.day)}
-        firstDay={0}
-        hideArrows={true}
-        hideExtraDays={true}
-        disableMonthChange={true}
-        hideDayNames={true}
-        markedDates={markedDates}
-        markingType={'period'}
-        monthFormat={''}
-        style={[borderRadiusStyle(5), marginStyle(5, 'top'), {borderWidth: 1, borderColor: Colors.grayMedium}]}
-        theme={{
-            ...calendarTheme,
-            textDayFontSize: 14,
-            calendarBackground: Colors.grayLight,
-            dayTextColor: Colors.pink,
-            "stylesheet.calendar.header": {
-                header: {
-                    height: 0,
-                    opacity: 0
+            current={momentToWixDate(hackyMoment)}
+            minDate={momentToWixDate(hackyMoment)}
+            maxDate={momentToWixDate(addDays(hackyMoment, 30))}
+            onDayPress={day => onDayPress(day.day)}
+            firstDay={0}
+            hideArrows={true}
+            hideExtraDays={true}
+            disableMonthChange={true}
+            hideDayNames={true}
+            markedDates={markedDates}
+            markingType={'period'}
+            monthFormat={''}
+            style={[borderRadiusStyle(5), marginStyle(5, 'top'), {borderWidth: 1, borderColor: Colors.grayMedium}]}
+            theme={{
+                ...calendarTheme,
+                textDayFontSize: 14,
+                calendarBackground: Colors.grayLight,
+                dayTextColor: Colors.pink,
+                "stylesheet.calendar.header": {
+                    header: {
+                        height: 0,
+                        opacity: 0
+                    }
                 }
-            }
-        }}
-    />
+            }}
+        />
 }

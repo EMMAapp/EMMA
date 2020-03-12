@@ -27,6 +27,7 @@ import Container from "../../../components/Container";
 import TextInput from "../../../components/TextInput";
 import Icon from "../../../components/Icon";
 import {unsetAllNotifications} from "../../../utils/notificationsSync";
+import Balloon from "../../../components/Balloon";
 
 const initialState = {
     id: null,
@@ -252,6 +253,12 @@ export default function EditEventTab({navigation, screenProps}) {
                     }
                 </Row>
                 <Text style={marginStyle(5, 'top')} color={eventColor(isMedicationEvent)}>{localization(isMedicationEvent ? 'selectDaysOfMedicine' : 'selectDaysOfCheckup')}</Text>
+                {
+                    isMedicationEvent &&
+                    <Row>
+                        <Balloon pointDown width={100} text={localization('firstDayOfPeriod')}/>
+                    </Row>
+                }
                 {
                     isMedicationEvent ?
                         <CalendarOvulationDayPicker

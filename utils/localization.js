@@ -77,7 +77,8 @@ const en = {
     'noResults': 'Currently no results to display.',
     'followUpTitle': 'Period follow up',
     'cycleDays': 'Cycle days',
-    'ultrasoundResults': 'Ultrasound Results'
+    'ultrasoundResults': 'Ultrasound Results',
+    'firstDayOfPeriod': 'First day of period'
 };
 
 i18n.fallbacks = true;

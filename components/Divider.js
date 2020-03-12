@@ -10,9 +10,9 @@ border-color: ${props => props.color || Colors.gray};
 opacity: ${props => props.bright ? 1 : 0.5};
 `;
 
-export default ({color, bright, bold, style}) =>
+export default ({color, bright, bold, style, margin}) =>
     <StyledView color={color} bright={bright} bold={bold} style={[
-        marginStyle(10, 'top'),
-        marginStyle(10, 'bottom'),
+        marginStyle(margin || 10, 'top'),
+        marginStyle(margin || 10, 'bottom'),
         style
     ]}/>;

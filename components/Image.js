@@ -11,6 +11,7 @@ import WelcomeAnimation from "../assets/images/welcome.gif"
 import Followup from "../assets/images/followup.png"
 import Plan from "../assets/images/plan.png"
 import Yoga from "../assets/images/yoga.png"
+import CatBook from "../assets/images/catbook.png"
 
 const getImageByName = (name) => {
     switch (name) {
@@ -32,6 +33,8 @@ const getImageByName = (name) => {
             return Plan;
         case "yoga":
             return Yoga;
+        case "catbook":
+            return CatBook;
         default:
             return null;
     }
@@ -40,5 +43,5 @@ const getImageByName = (name) => {
 export default ({name, style, width, height, circled}) =>
     <Image
         style={[{resizeMode: 'contain'}, hwStyle(height, width), circled ? borderRadiusStyle(height / 2) : null, style]}
-        source={getImageByName(name)}
+        source={getImageByName(name) || CatBook}
     />

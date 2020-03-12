@@ -5,6 +5,8 @@ import * as Facebook from "expo-facebook";
 import * as GoogleSignIn from 'expo-google-sign-in';
 import {setNewNotifications, unsetAllNotifications} from "./utils/notificationsSync";
 import _ from "lodash";
+import * as moment from "moment";
+import * as Localization from 'expo-localization';
 
 const initialPatientData = {
     month: null,
@@ -12,7 +14,8 @@ const initialPatientData = {
     isPeriodRegular: false,
     periods: [],
     averagePeriodCycleDays: 28,
-    events: {}
+    events: {},
+    weekStartDay: moment.localeData(Localization.locale).firstDayOfWeek()
 };
 
 export const store = {
@@ -130,4 +133,9 @@ export async function logoutPatient() {
     await firebase.auth().signOut();
     store.patientId = null;
     store.patientData = null;
+}
+
+export async function purgePatient() {
+    await firebase.firestore().collection('patients').doc(store.patientId).delete();
+    await logoutPatient();
 }

@@ -8,7 +8,7 @@ export default ({children, margin, padding, style, color, noShadow}) =>
         borderRadiusStyle(5),
         marginStyle(margin),
         paddingStyle(padding),
-        noShadow? {} : shadowStyle(10, 0.1),
+        noShadow? {} : shadowStyle(5, 0.1),
         {...style}
     ]}>
         {children}

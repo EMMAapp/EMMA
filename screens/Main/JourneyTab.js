@@ -56,9 +56,12 @@ const Event = ({dayTime, details, setIsLoading}) => {
                 {details.medication ? details.medication : details.checkup}
             </Text>
             <View style={{flex: 2}}/>
-            <TouchableOpacity onPress={() => setExpanded(!isExpanded)}>
-                <Icon name={isExpanded ? "up" : "down"} color={Colors.purple}/>
-            </TouchableOpacity>
+            {
+                hasResultsDropdown(details) &&
+                <TouchableOpacity onPress={() => setExpanded(!isExpanded)}>
+                    <Icon name={isExpanded ? "up" : "down"} color={Colors.purple}/>
+                </TouchableOpacity>
+            }
         </Row>
         {
             isExpanded && details.checkup === "Blood Test" && <View><BloodTestResults results={details.results || {}} setResults={updateResults}/></View>
@@ -90,6 +93,8 @@ const DayReference = ({wixDate, setSelectedDay, eventsForDay}) => {
         </Card>
     </TouchableOpacity>
 };
+
+const hasResultsDropdown = (details) => details.checkup && (details.checkup === "Blood Test" || details.checkup === "Ultrasound");
 
 export default function JourneyTab({navigation, screenProps}) {
     RouteGuard(navigation);

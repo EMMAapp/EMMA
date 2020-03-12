@@ -108,5 +108,6 @@ export const shadowStyle = (androidWeight, opacity) =>
                 width: 0,
                 height: 0
             },
+            position:'relative',
         }
     }).shadowStyle;

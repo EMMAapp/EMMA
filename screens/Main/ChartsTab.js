@@ -7,13 +7,14 @@ import _ from "lodash";
 import Container from "../../components/Container";
 import Colors from "../../constants/Colors";
 import Text from "../../components/Text";
-import {marginStyle} from "../../constants/Styles";
+import {borderRadiusStyle, marginStyle} from "../../constants/Styles";
 import localization from "../../utils/localization";
 import Row from "../../components/Row";
-import {TouchableOpacity, View} from "react-native";
+import {TouchableOpacity, View, Dimensions} from "react-native";
 import Icon from "../../components/Icon";
 import LineChart from "../../components/LineChart";
 import ScatterPlot from "../../components/ScatterPlot";
+import Image from "../../components/Image";
 
 
 const extractResults = (events, periodStartMoment, nextPeriodStartMoment) => {
@@ -103,9 +104,15 @@ export default function ChartsTab({navigation, screenProps}) {
         </Row>
         {
             _.isEmpty(_.keys(bloodResults)) && !ultrasoundAny ?
+                <View>
                 <Row center style={marginStyle(30, 'top')}>
                     <Text>{localization("noResults")}</Text>
-                </Row> :
+                </Row>
+                    <Row center style={marginStyle(30, 'top')}>
+                        <Image name={"writing"} height={150} width={Dimensions.get('window').width * 0.9}/>
+                    </Row>
+                </View>
+                    :
                 <View style={marginStyle(10, 'top')}>
                     {
                         !_.isEmpty(_.keys(bloodResults)) &&

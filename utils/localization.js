@@ -89,6 +89,7 @@ const en = {
     'deleteAllData': 'Delete all stored data',
     'areYouSureDeleteAllData': 'Are you sure you want to delete all stored data? It could not be recovered.',
     'openSourceRef': 'Open source licenses used by Emma',
+    'openSourceTitle': 'Below is a list of open source licenses by package, used by Emma.',
 
     'months': {
         '1': 'January',

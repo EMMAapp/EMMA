@@ -17,6 +17,7 @@ import TermsModal from "../../components/TermsModal";
 import {TouchableOpacity} from "react-native";
 import Image from "../../components/Image";
 import ValidationModal from "../../components/ValidationModal";
+import LicensesModal from "../../components/LicensesModal";
 
 const QuestionText = (props) =>
     <Text
@@ -29,6 +30,7 @@ const QuestionText = (props) =>
 export default function ProfileTab({navigation, screenProps}) {
     const [updateToken, setUpdateToken] = useState(null);
     const [termsIsVisible, setTermsIsVisible] = useState(false);
+    const [licensesIsVisible, setLicensesIsVisible] = useState(false);
     const [showDeleteValidationModal, setShowDeleteValidationModal] = useState(false);
 
     const patientData = store.patientData;
@@ -84,6 +86,15 @@ export default function ProfileTab({navigation, screenProps}) {
                 setSelected={index => setStoredData('weekStartDay', index)}
                 middleSpan={7}
             />
+        </Row>
+
+        <Divider margin={5}/>
+
+        <LicensesModal isVisible={licensesIsVisible} dismiss={() => setLicensesIsVisible(false)}/>
+        <Row>
+            <TouchableOpacity activeOpacity={1} onPress={() => setLicensesIsVisible(true)} style={paddingStyle(5, 'bottom')}>
+                <QuestionText color={Colors.purple}>{localization('openSourceRef')}</QuestionText>
+            </TouchableOpacity>
         </Row>
 
         <Divider margin={5}/>

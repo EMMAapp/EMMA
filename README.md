@@ -14,3 +14,7 @@ tar -xzf ~/Downloads/emma-XXX.tar.gz -C .
 xcrun simctl install booted emma.app
 xcrun simctl launch booted com.emma.app
 ```
+
+## Licenses
+
+To generate license file: `npm-license-crawler --production --onlyDirectDependencies -json assets/licenses.json`

@@ -86,6 +86,7 @@ const Licenses = ({}) => (
 
 export default ({isVisible, dismiss}) => {
     return <Modal isVisible={isVisible} onBackdropPress={dismiss}>
+        <Text size={7} style={marginStyle(5, 'bottom')}>{localization('openSourceTitle')}</Text>
         <Licenses/>
         <Button onPress={dismiss} style={marginStyle(-15, 'top')}>
             {localization('close')}

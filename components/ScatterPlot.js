@@ -7,6 +7,7 @@ import {marginStyle, paddingStyle} from "../constants/Styles";
 import Colors from "../constants/Colors";
 import localization from "../utils/localization";
 import _ from "lodash";
+import Row from "./Row";
 
 const HorizontalLine = styled(View)`
   opacity: .5;
@@ -143,16 +144,22 @@ export default ({title, dataSets, colors, setsTitles}) => {
             }
         }
     );
-    const maxSetTitleLength = parseInt(_.max(setsTitles.map(setTitle => setTitle.length)));
-    const fillerSpaces = (setTitle) => _.repeat(' ', (maxSetTitleLength - setTitle.length) * 2 + 2);
     return (
         <Card margin={2} padding={2} style={[marginStyle(7, 'bottom')]}>
             <Text size={9} color={Colors.pink} style={[marginStyle(5)]}>{title}</Text>
             {
                 setsTitles.map((setTitle, index) =>
-                    <Text size={6} key={index} alignRight color={colors[index]} style={[paddingStyle(15, 'right'), paddingStyle(3, 'top')]}>
-                        {`•${fillerSpaces(setTitle)}${setTitle}`}
-                    </Text>
+                    <Row>
+                        <View style={{flex: 10}}/>
+                        <Text size={6} key={index}  color={colors[index]} style={[paddingStyle(3, 'top'), marginStyle(5, 'right')]}>
+                            •
+                        </Text>
+                        <View style={{minWidth: 50, flex: 1}}>
+                            <Text size={6} key={index}  color={colors[index]} style={[paddingStyle(15, 'right'), paddingStyle(3, 'top')]}>
+                                {setTitle}
+                            </Text>
+                        </View>
+                    </Row>
                 )
             }
             <Text size={7} color={Colors.gray} style={paddingStyle(5, 'left')}>

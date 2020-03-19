@@ -96,12 +96,11 @@ const DayReference = ({wixDate, setSelectedDay, eventsForDay}) => {
 
 const hasResultsDropdown = (details) => details.checkup && (details.checkup === "Blood Test" || details.checkup === "Ultrasound");
 
-export default function JourneyTab({navigation, screenProps}) {
+export default function JourneyTab({navigation, mainCalendarRefresh, setIsLoading}) {
     RouteGuard(navigation);
 
     const daysListRef = useRef(null);
     const [selectedDay, setSelectedDay] = useState(moment().startOf('day'));
-    const {mainCalendarRefresh, setIsLoading} = screenProps;
     const {patientData} = store;
     const periodsMoments = patientData.periods.map(period => wixDateToMoment(period.date));
     const eventsByDay = collectByDay(patientData.events);

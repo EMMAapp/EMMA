@@ -1,6 +1,6 @@
 import React from 'react';
 import {Platform} from 'react-native';
-import {createBottomTabNavigator, createStackNavigator} from 'react-navigation';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import CalendarTabWrapper from './Calendar/CalendarTabWrapper';
 import EditEventTab from './EditEvent/EditEventTab';
 import ProfileTab from './ProfileTab';
@@ -20,108 +20,49 @@ const config = Platform.select({
     },
 });
 
-const JourneyStack = createStackNavigator(
-    {
-        journey: JourneyTab,
-    },
-    config
-);
-
-JourneyStack.navigationOptions = {
-    tabBarIcon: ({focused}) => (
-        <Icon
-            color={focused ? Colors.purple : Colors.grayDark}
-            name='today'
-        />
-    ),
-};
-
-JourneyStack.path = '';
-
-const CalendarStack = createStackNavigator(
-    {
-        calendar: CalendarTabWrapper,
-    },
-    config
-);
-
-CalendarStack.navigationOptions = {
-    tabBarIcon: ({focused}) => (
-        <Icon
-            color={focused ? Colors.purple : Colors.grayDark}
-            name='calendar'
-        />
-    ),
-};
-
-CalendarStack.path = '';
-
-const EditEventStack = createStackNavigator(
-    {
-        edit: EditEventTab,
-    },
-    config
-);
-EditEventStack.navigationOptions = {
-    tabBarIcon: ({focused}) => (
-        <Icon
-            color={focused ? Colors.purple : Colors.grayDark}
-            name='add'
-        />
-    ),
-};
-
-EditEventStack.path = '';
-
-const ProfileStack = createStackNavigator(
-    {
-        profile: ProfileTab,
-    },
-    config
-);
-
-ProfileStack.navigationOptions = {
-    tabBarIcon: ({focused}) => (
-        <Icon
-            color={focused ? Colors.purple : Colors.grayDark}
-            name='profile'
-        />
-    ),
-};
-
-ProfileStack.path = '';
-
-const ChartsStack = createStackNavigator(
-    {
-        profile: ChartsTab,
-    },
-    config
-);
-
-ChartsStack.navigationOptions = {
-    tabBarIcon: ({focused}) => (
-        <Icon
-            color={focused ? Colors.purple : Colors.grayDark}
-            name='folder'
-        />
-    ),
-};
-
-ChartsStack.path = '';
-
-const tabNavigator = createBottomTabNavigator({
-    JourneyStack,
-    CalendarStack,
-    EditEventStack,
-    ChartsStack,
-    ProfileStack,
-}, {
-    tabBarOptions: {
-        style: paddingStyle(10, 'top'),
-        showLabel: false
-    }
-});
-
-tabNavigator.path = '';
-
-export default tabNavigator;
+const Tab = createBottomTabNavigator();
+export default ({}) => (
+        <Tab.Navigator
+            screenOptions={({route}) => ({
+                tabBarIcon: ({focused, color, size}) => {
+                    let iconName;
+                    switch (route) {
+                        case "Journey":
+                            iconName = 'today';
+                            break;
+                        case "Calendar":
+                            iconName = 'calendar';
+                            break;
+                        case "EditEvent":
+                            iconName = 'add';
+                            break;
+                        case "Charts":
+                            iconName = 'folder';
+                            break;
+                        case "Profile":
+                            iconName = 'profile';
+                            break;
+                    }
+                    return <Icon
+                        color={focused ? Colors.purple : Colors.grayDark}
+                        name='folder'
+                    />;
+                },
+            })}
+            options={{
+                headerMode: 'none',
+                navigationOptions: {
+                    headerVisible: false,
+                }
+            }}
+            tabBarOptions={{
+                style: paddingStyle(10, 'top'),
+                showLabel: false
+            }}>
+            <Tab.Screen name="Journey" component={JourneyTab}/>
+            <Tab.Screen name="Calendar" component={CalendarTabWrapper}/>
+            <Tab.Screen name="EditEvent" component={EditEventTab}/>
+            <Tab.Screen name="Charts" component={ChartsTab}/>
+            <Tab.Screen name="Profile" component={ProfileTab}/>
+        </Tab.Navigator>
+)

@@ -7,12 +7,13 @@ import {Ionicons} from '@expo/vector-icons';
 import * as firebase from 'firebase';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
-import {AppNavigator} from './navigation/AppNavigator';
+import AppNavigator from './navigation/AppNavigator';
 import {retrievePatient} from './store';
 import firebaseConfig from "./firebaseConfig";
 import {logError} from "./utils/log";
 import LoadingModal from "./components/LoadingModal";
 import androidWarningFix from './utils/androidWarningFix';
+import appContext from "./utils/context";
 
 EStyleSheet.build({
     $rem: Platform.OS === 'ios' ? 16 : 14
@@ -32,6 +33,8 @@ export default function App(props) {
     const [currentEditedEventId, setCurrentEditedEventId] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
+    const {Provider} = appContext;
+
     if (!isStartupLoadingComplete && !props.skipLoadingScreen) {
         return (
             <AppLoading
@@ -45,16 +48,18 @@ export default function App(props) {
         return (
             <View style={styles.container}>
                 {Platform.OS === 'ios' && <StatusBar barStyle="default"/>}
-                <AppNavigator
-                    screenProps={{
+                <Provider
+                    value={{
                         mainCalendarRefresh,
                         setMainCalendarRefresh,
                         currentEditedEventId,
                         setCurrentEditedEventId,
                         setIsLoading
                     }}
-                />
-                <LoadingModal isVisible={isLoading}/>
+                >
+                    <AppNavigator/>
+                    <LoadingModal isVisible={isLoading}/>
+                </Provider>
             </View>
         );
     }

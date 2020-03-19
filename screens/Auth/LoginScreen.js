@@ -22,11 +22,10 @@ const QuestionText = (props) =>
     </Text>;
 
 
-export default function LoginScreen({navigation, screenProps}) {
+export default function LoginScreen({navigation, setIsLoading}) {
     const [agreeTerms, setAgreeTerms] = useState(false);
     const [termsIsVisible, setTermsIsVisible] = useState(false);
     const [hasError, setHasError] = useState(false);
-    const {setIsLoading} = screenProps;
 
     const facebookLogin = async () => {
         setIsLoading(true);

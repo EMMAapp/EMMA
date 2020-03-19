@@ -18,6 +18,7 @@ import {TouchableOpacity} from "react-native";
 import Image from "../../components/Image";
 import ValidationModal from "../../components/ValidationModal";
 import LicensesModal from "../../components/LicensesModal";
+import appContext from "../../utils/context";
 
 const QuestionText = (props) =>
     <Text
@@ -27,7 +28,7 @@ const QuestionText = (props) =>
     </Text>;
 
 
-export default function ProfileTab({navigation, screenProps}) {
+const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
     const [updateToken, setUpdateToken] = useState(null);
     const [termsIsVisible, setTermsIsVisible] = useState(false);
     const [licensesIsVisible, setLicensesIsVisible] = useState(false);
@@ -35,7 +36,6 @@ export default function ProfileTab({navigation, screenProps}) {
 
     const patientData = store.patientData;
     const {averagePeriodCycleDays, weekStartDay} = patientData;
-    const {setMainCalendarRefresh, setIsLoading} = screenProps;
 
     const logout = async () => {
         await logoutPatient();
@@ -146,4 +146,14 @@ export default function ProfileTab({navigation, screenProps}) {
         }
 
     </Container>;
-}
+};
+
+
+
+const {Consumer} = appContext;
+
+export default (props) => <Consumer>
+    {
+        context => <ProfileTab {...props} {...context}/>
+    }
+</Consumer>

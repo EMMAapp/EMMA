@@ -13,6 +13,7 @@ import Checkbox from "../../components/Checkbox";
 import Colors from "../../constants/Colors";
 import Text from "../../components/Text";
 import {Platform} from "react-native-web";
+import appContext from "../../utils/context";
 
 const QuestionText = (props) =>
     <Text
@@ -22,7 +23,7 @@ const QuestionText = (props) =>
     </Text>;
 
 
-export default function LoginScreen({navigation, setIsLoading}) {
+const LoginScreen = ({navigation, setIsLoading}) => {
     const [agreeTerms, setAgreeTerms] = useState(false);
     const [termsIsVisible, setTermsIsVisible] = useState(false);
     const [hasError, setHasError] = useState(false);
@@ -88,4 +89,12 @@ export default function LoginScreen({navigation, setIsLoading}) {
             }
         </Container>
     )
-}
+};
+
+const {Consumer} = appContext;
+
+export default (props) => <Consumer>
+    {
+        context => <LoginScreen {...props} {...context}/>
+    }
+</Consumer>

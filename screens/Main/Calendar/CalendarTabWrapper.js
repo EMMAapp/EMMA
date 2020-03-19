@@ -15,6 +15,7 @@ import Row from "../../../components/Row";
 import {eventColor} from "../../../constants/Styles";
 import {Dot} from "../../../components/Dot";
 import moment from "moment";
+import appContext from "../../../utils/context";
 
 const medicationDot = {key: shortid.generate(), color: eventColor(true)};
 const checkupDot = {key: shortid.generate(), color: eventColor(false)};
@@ -29,11 +30,10 @@ function collectByDay(events) {
     return eventsByDay;
 }
 
-export default function CalendarTabWrapper({navigation, screenProps}) {
+const CalendarTabWrapper = ({navigation, mainCalendarRefresh, setCurrentEditedEventId, setMainCalendarRefresh}) => {
     RouteGuard(navigation);
 
     const {patientData} = store;
-    const {mainCalendarRefresh, setCurrentEditedEventId, setMainCalendarRefresh} = screenProps;
 
     const periodsMoments = patientData.periods.map(period => wixDateToMoment(period.date));
     if (_.isEmpty(periodsMoments)) {
@@ -116,4 +116,12 @@ export default function CalendarTabWrapper({navigation, screenProps}) {
         eventedDateMoments={_.sortBy(_.keys(eventsByDay).map(date => wixDateToMoment(date)), _ => _)}
         setMainCalendarRefresh={setMainCalendarRefresh}
     />
-}
+};
+
+const {Consumer} = appContext;
+
+export default (props) => <Consumer>
+    {
+        context => <CalendarTabWrapper {...props} {...context}/>
+    }
+</Consumer>

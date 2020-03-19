@@ -20,6 +20,7 @@ import BloodTestResults from "../../components/BloodTestResults";
 import UltrasoundResults from "../../components/UltrasoundResults";
 import Card from "../../components/Card"
 import Image from "../../components/Image";
+import appContext from "../../utils/context";
 
 function collectByDay(events) {
     let eventsByDay = {};
@@ -96,7 +97,7 @@ const DayReference = ({wixDate, setSelectedDay, eventsForDay}) => {
 
 const hasResultsDropdown = (details) => details.checkup && (details.checkup === "Blood Test" || details.checkup === "Ultrasound");
 
-export default function JourneyTab({navigation, mainCalendarRefresh, setIsLoading}) {
+const JourneyTab = ({navigation, mainCalendarRefresh, setIsLoading}) => {
     RouteGuard(navigation);
 
     const daysListRef = useRef(null);
@@ -171,4 +172,12 @@ export default function JourneyTab({navigation, mainCalendarRefresh, setIsLoadin
             showsHorizontalScrollIndicator={false}
         />
     </Container>;
-}
+};
+
+const {Consumer} = appContext;
+
+export default (props) => <Consumer>
+    {
+        context => <JourneyTab {...props} {...context}/>
+    }
+</Consumer>

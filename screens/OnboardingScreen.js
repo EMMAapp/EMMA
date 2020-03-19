@@ -17,6 +17,7 @@ import {marginStyle, paddingStyle} from "../constants/Styles"
 import IconAndText from "../components/IconAndText";
 import BirthPicker from "../components/BirthPicker";
 import Image from "../components/Image";
+import appContext from "../utils/context";
 
 const QuestionText = (props) =>
     <Text
@@ -25,7 +26,7 @@ const QuestionText = (props) =>
         {props.children}
     </Text>;
 
-export default function LoginScreen({navigation, screenProps}) {
+const OnboardingScreen = ({navigation, setIsLoading}) => {
 
     const [month, setMonth] = useState(1);
     const [year, setYear] = useState(1990);
@@ -33,7 +34,6 @@ export default function LoginScreen({navigation, screenProps}) {
     const [isPeriodRegular, setIsPeriodRegular] = useState(false);
     const [averagePeriodCycleDays, setAveragePeriodCycleDays] = useState(28);
     const [isCalendarPickerVisible, setCalendarPickerVisible] = useState(false);
-    const {setIsLoading} = screenProps;
 
     const submit = async () => {
         setIsLoading(true);
@@ -97,4 +97,13 @@ export default function LoginScreen({navigation, screenProps}) {
             </Row>
         </Container>
     )
-}
+};
+
+const {Consumer} = appContext;
+
+export default (props) => <Consumer>
+    {
+        context => <OnboardingScreen {...props} {...context}/>
+    }
+</Consumer>
+

@@ -28,6 +28,7 @@ import TextInput from "../../../components/TextInput";
 import Icon from "../../../components/Icon";
 import {unsetAllNotifications} from "../../../utils/notificationsSync";
 import Balloon from "../../../components/Balloon";
+import appContext from "../../../utils/context";
 
 const initialState = {
     id: null,
@@ -46,12 +47,11 @@ const DEFAULT_MIN_HOUR = 8;
 const EVENT_TYPE_MEDICATION = 'MEDICATION';
 const EVENT_TYPE_CHECKUP = 'CHECKUP';
 
-export default function EditEventTab({navigation, screenProps}) {
+const EditEventTab = ({navigation, setMainCalendarRefresh, currentEditedEventId, setCurrentEditedEventId, setIsLoading}) => {
 
     const [eventType, setEventType] = useState(EVENT_TYPE_MEDICATION);
     const [state, setState] = useState({...initialState});
     const [isNewEvent, setIsNewEvent] = useState(true);
-    const {setMainCalendarRefresh, currentEditedEventId, setCurrentEditedEventId, setIsLoading} = screenProps;
     const [showDeleteValidationModal, setShowDeleteValidationModal] = useState(false);
     const [showPastValidationModal, setShowPastValidationModal] = useState(false);
     const [closeAfterPastValidation, setCloseAfterPastValidation] = useState(false);
@@ -341,4 +341,13 @@ export default function EditEventTab({navigation, screenProps}) {
             </View>
         </Container>
     )
-}
+};
+
+const {Consumer} = appContext;
+
+export default (props) => <Consumer>
+    {
+        context => <EditEventTab {...props} {...context}/>
+    }
+</Consumer>
+

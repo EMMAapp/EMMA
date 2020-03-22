@@ -33,7 +33,6 @@ export const store = {
 export default store;
 
 export async function retrievePatient() {
-    console.info("retrievePatient")
     try {
         await new Promise((resolve => {
             try {

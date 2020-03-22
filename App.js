@@ -1,8 +1,9 @@
 import {AppLoading} from 'expo';
+import styled from 'styled-components';
 import {Asset} from 'expo-asset';
 import * as Font from 'expo-font';
 import React, {useState} from 'react';
-import {Platform, StatusBar, StyleSheet, View} from 'react-native';
+import {Platform, StatusBar, View} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import * as firebase from 'firebase';
 import EStyleSheet from 'react-native-extended-stylesheet';
@@ -27,6 +28,11 @@ try {
 catch (e) {
 }
 
+const Container = styled(View)`
+  flex: 1;
+  background-color: #fff;
+`;
+
 export default function App(props) {
     const [isStartupLoadingComplete, setStartupLoadingComplete] = useState(false);
     const [mainCalendarRefresh, setMainCalendarRefresh] = useState(null);
@@ -36,19 +42,17 @@ export default function App(props) {
     const {Provider} = appContext;
 
     if (!isStartupLoadingComplete && !props.skipLoadingScreen) {
-        console.info("loading!")
         return (
             <AppLoading
                 startAsync={async () => loadResourcesAsync()}
                 onError={handleLoadingError}
-                onFinish={() => handleFinishLoading(setStartupLoadingComplete)}
+                onFinish={() => setStartupLoadingComplete(true)}
             />
         );
     }
     else {
-        console.error("start!")
         return (
-            <View style={styles.container}>
+            <Container>
                 {Platform.OS === 'ios' && <StatusBar barStyle="default"/>}
                 <Provider
                     value={{
@@ -62,7 +66,7 @@ export default function App(props) {
                     <AppNavigator/>
                     <LoadingModal isVisible={isLoading}/>
                 </Provider>
-            </View>
+            </Container>
         );
     }
 }
@@ -86,15 +90,3 @@ async function loadResourcesAsync() {
 }
 
 const handleLoadingError = (error) => logError(error);
-
-function handleFinishLoading(setLoadingComplete) {
-    console.error("complete!")
-    setLoadingComplete(true);
-}
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-    },
-});

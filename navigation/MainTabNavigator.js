@@ -1,14 +1,14 @@
 import React from 'react';
 import {Platform} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import CalendarTabWrapper from './Calendar/CalendarTabWrapper';
-import EditEventTab from './EditEvent/EditEventTab';
-import ProfileTab from './ProfileTab';
-import Icon from "../../components/Icon";
-import Colors from "../../constants/Colors";
-import {paddingStyle} from "../../constants/Styles";
-import JourneyTab from "./JourneyTab";
-import ChartsTab from "./ChartsTab";
+import CalendarTabWrapper from '../screens/Main/Calendar/CalendarTabWrapper';
+import EditEventTab from '../screens/Main/EditEvent/EditEventTab';
+import ProfileTab from '../screens/Main/ProfileTab';
+import Icon from "../components/Icon";
+import Colors from "../constants/Colors";
+import {paddingStyle} from "../constants/Styles";
+import JourneyTab from "../screens/Main/JourneyTab";
+import ChartsTab from "../screens/Main/ChartsTab";
 
 const config = Platform.select({
     web: {headerMode: 'screen'},
@@ -26,7 +26,7 @@ export default ({}) => (
             screenOptions={({route}) => ({
                 tabBarIcon: ({focused, color, size}) => {
                     let iconName;
-                    switch (route) {
+                    switch (route.name) {
                         case "Journey":
                             iconName = 'today';
                             break;
@@ -45,7 +45,7 @@ export default ({}) => (
                     }
                     return <Icon
                         color={focused ? Colors.purple : Colors.grayDark}
-                        name='folder'
+                        name={iconName}
                     />;
                 },
             })}

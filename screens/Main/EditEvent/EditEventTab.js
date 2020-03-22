@@ -14,7 +14,7 @@ import shortid from 'shortid';
 import ValidationModal from "../../../components/ValidationModal";
 import _ from "lodash";
 import {addOrRemove} from "../../../utils/utils";
-import {addDays, daysBetween, isInFuture, momentToWixDate, wixDateToMoment} from "../../../utils/dayTime";
+import {addDays, daysBetween, isAfterOrEquals, isInFuture, momentToWixDate, wixDateToMoment} from "../../../utils/dayTime";
 import {syncEvents} from "../../../utils/eventsSync";
 import Text from "../../../components/Text";
 import ButtonPrimary from "../../../components/ButtonPrimary";
@@ -28,6 +28,7 @@ import TextInput from "../../../components/TextInput";
 import Icon from "../../../components/Icon";
 import {unsetAllNotifications} from "../../../utils/notificationsSync";
 import Balloon from "../../../components/Balloon";
+import BinaryBoxes from "../../../components/BinaryBoxes";
 
 const initialState = {
     id: null,
@@ -55,8 +56,10 @@ export default function EditEventTab({navigation, screenProps}) {
     const [showDeleteValidationModal, setShowDeleteValidationModal] = useState(false);
     const [showPastValidationModal, setShowPastValidationModal] = useState(false);
     const [closeAfterPastValidation, setCloseAfterPastValidation] = useState(false);
+    const [isCurrentPeriod, setIsCurrentPeriod] = useState(true);
     const isMedicationEvent = eventType === EVENT_TYPE_MEDICATION;
     const lastPeriodMoment = wixDateToMoment(_.last(store.patientData.periods).date);
+    const nextPeriodMoment = addDays(lastPeriodMoment, store.patientData.averagePeriodCycleDays);
 
     if (!currentEditedEventId) {
         setCurrentEditedEventId(shortid.generate());
@@ -70,6 +73,8 @@ export default function EditEventTab({navigation, screenProps}) {
         else {
             setIsNewEvent(false);
             setState({...storedState});
+            const sampleMoment = wixDateToMoment(state.selectedDates[0]);
+            setIsCurrentPeriod(isAfterOrEquals(sampleMoment, lastPeriodMoment) && !isAfterOrEquals(sampleMoment, nextPeriodMoment));
             setEventType(storedState.medication ? EVENT_TYPE_MEDICATION : EVENT_TYPE_CHECKUP);
         }
         return <View/>;
@@ -150,9 +155,9 @@ export default function EditEventTab({navigation, screenProps}) {
         );
     };
 
-    const ovulationDayToDate = (day) => momentToWixDate(addDays(lastPeriodMoment, day - 1));
+    const ovulationDayToDate = (day) => momentToWixDate(addDays(isCurrentPeriod ? lastPeriodMoment : nextPeriodMoment, day - 1));
 
-    const dateToOvulationDay = (date) => daysBetween(lastPeriodMoment, wixDateToMoment(date)) + 1;
+    const dateToOvulationDay = (date) => daysBetween(isCurrentPeriod ? lastPeriodMoment : nextPeriodMoment, wixDateToMoment(date)) + 1;
 
     const submit = async (shouldClose) => {
         if (state.selectedDates.some(date => !isInFuture(addDays(wixDateToMoment(date), 1)))) {
@@ -217,7 +222,7 @@ export default function EditEventTab({navigation, screenProps}) {
                     </Row>
                     : null
             }
-            <View style={[paddingStyle(10, 'left'), paddingStyle(10, 'right'), Platform.OS === 'ios' ? {} : { height: 1100 }]}>
+            <View style={[paddingStyle(10, 'left'), paddingStyle(10, 'right'), Platform.OS === 'ios' ? {} : {height: 1100}]}>
                 <Text>{localization(isMedicationEvent ? 'medicationSubTitle' : 'checkupSubTitle')}</Text>
                 <Autocomplete
                     items={isMedicationEvent ? Medications : Checkups}
@@ -246,6 +251,21 @@ export default function EditEventTab({navigation, screenProps}) {
                             </View>
                         </Row> : null
                 }
+                {
+                    isNewEvent && isMedicationEvent &&
+                    <Row style={marginStyle(10, 'top')}>
+                        <Text style={marginStyle(5, 'right')}>{localization('setFor')}</Text>
+                        <BinaryBoxes
+                            option1={localization('currentPeriod')}
+                            option2={localization('nextPeriod')}
+                            selected={isCurrentPeriod ? 1 : 2}
+                            setSelected={option => {
+                                setIsCurrentPeriod(option === 1)
+                            }}
+                            width={70} height={25} middleSpan={5}
+                        />
+                    </Row>
+                }
                 <Row>
                     <Text style={marginStyle(10, 'top')}>{localization(isMedicationEvent ? 'ovulationCalendar' : 'calendar')}</Text>
                     {
@@ -266,7 +286,7 @@ export default function EditEventTab({navigation, screenProps}) {
                                 const selectedDates = addOrRemove(state.selectedDates, ovulationDayToDate(day));
                                 setState({...state, selectedDates});
                             }}
-                            coloredDays={state.selectedDates.map(date => dateToOvulationDay(date))}
+                            coloredDays={state.selectedDates.map(date => dateToOvulationDay(date, isCurrentPeriod))}
                         />
                         :
                         <CalendarDayPicker

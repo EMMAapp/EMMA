@@ -74,6 +74,7 @@ const en = {
     'pleaseUpdatePeriod': 'Please update period!',
     'calendarTitlesPeriod': 'period',
     'calendarTitlesOvulationEst': 'est ovu',
+    'currentPeriod': 'Current period',
     'prevPeriod': 'Previous period',
     'nextPeriod': 'Next period',
     'noResults': 'Currently no results to display.',
@@ -90,6 +91,7 @@ const en = {
     'areYouSureDeleteAllData': 'Are you sure you want to delete all stored data? It could not be recovered.',
     'openSourceRef': 'Open source licenses used by Emma',
     'openSourceTitle': 'Below is a list of open source licenses by package, used by Emma.',
+    'setFor': 'Set for',
 
     'months': {
         '1': 'January',

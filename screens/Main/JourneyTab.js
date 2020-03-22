@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useContext} from 'react';
 import store, {syncPatientData} from "../../store";
 import RouteGuard from "../../navigation/RouteGuard";
 import localization from "../../utils/localization";
@@ -20,6 +20,7 @@ import BloodTestResults from "../../components/BloodTestResults";
 import UltrasoundResults from "../../components/UltrasoundResults";
 import Card from "../../components/Card"
 import Image from "../../components/Image";
+import {appContext} from "../../utils/context";
 
 function collectByDay(events) {
     let eventsByDay = {};
@@ -96,12 +97,12 @@ const DayReference = ({wixDate, setSelectedDay, eventsForDay}) => {
 
 const hasResultsDropdown = (details) => details.checkup && (details.checkup === "Blood Test" || details.checkup === "Ultrasound");
 
-export default function JourneyTab({navigation, screenProps}) {
+export default function JourneyTab({navigation}) {
     RouteGuard(navigation);
 
     const daysListRef = useRef(null);
     const [selectedDay, setSelectedDay] = useState(moment.utc().startOf('day'));
-    const {mainCalendarRefresh, setIsLoading} = screenProps;
+    const {mainCalendarRefresh, setIsLoading} = useContext(appContext);
     const {patientData} = store;
     const periodsMoments = patientData.periods.map(period => wixDateToMoment(period.date));
     const eventsByDay = collectByDay(patientData.events);

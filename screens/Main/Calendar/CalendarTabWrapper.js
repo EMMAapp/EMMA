@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import RouteGuard from "../../../navigation/RouteGuard";
 import store from "../../../store";
 import {addDays, daysBetween, isAfterOrEquals, momentsEquals, wixDateToMoment} from "../../../utils/dayTime";
@@ -15,6 +15,7 @@ import Row from "../../../components/Row";
 import {eventColor} from "../../../constants/Styles";
 import {Dot} from "../../../components/Dot";
 import moment from "moment";
+import {appContext} from "../../../utils/context";
 
 const medicationDot = {key: shortid.generate(), color: eventColor(true)};
 const checkupDot = {key: shortid.generate(), color: eventColor(false)};
@@ -29,11 +30,11 @@ function collectByDay(events) {
     return eventsByDay;
 }
 
-export default function CalendarTabWrapper({navigation, screenProps}) {
+export default function CalendarTabWrapper({navigation}) {
     RouteGuard(navigation);
 
     const {patientData} = store;
-    const {mainCalendarRefresh, setCurrentEditedEventId, setMainCalendarRefresh} = screenProps;
+    const {mainCalendarRefresh, setCurrentEditedEventId, setMainCalendarRefresh} = useContext(appContext);
 
     const periodsMoments = patientData.periods.map(period => wixDateToMoment(period.date));
     if (_.isEmpty(periodsMoments)) {

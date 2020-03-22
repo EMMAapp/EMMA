@@ -58,6 +58,7 @@ const en = {
     'syncEventsSubTitle': 'Select the events you wish to sync with the new date*',
     'syncEventsNote': '*Unselected events will remain at original date',
     'sync': 'Synchronize',
+    'dontSync': 'Do not synchronize',
     'selectAllEvents': 'Select all events',
     'eventsCountSuffix': 'events',
     'today': 'Today',

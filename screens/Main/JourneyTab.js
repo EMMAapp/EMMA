@@ -100,7 +100,7 @@ export default function JourneyTab({navigation, screenProps}) {
     RouteGuard(navigation);
 
     const daysListRef = useRef(null);
-    const [selectedDay, setSelectedDay] = useState(moment().startOf('day'));
+    const [selectedDay, setSelectedDay] = useState(moment.utc().startOf('day'));
     const {mainCalendarRefresh, setIsLoading} = screenProps;
     const {patientData} = store;
     const periodsMoments = patientData.periods.map(period => wixDateToMoment(period.date));
@@ -111,8 +111,8 @@ export default function JourneyTab({navigation, screenProps}) {
     }
 
     const eventsForToday = collectEventsForDate(eventsByDay, momentToWixDate(selectedDay));
-    let containingPeriodIndex = _.findLastIndex(periodsMoments, periodMoment => isAfterOrEquals(selectedDay, periodMoment));
-    const daysFromStart = daysBetween(periodsMoments[containingPeriodIndex], selectedDay) + 1;
+    let containingPeriodIndex = _.findLastIndex(periodsMoments, periodMoment => isAfterOrEquals(selectedDay, periodMoment)) || 0;
+    const daysFromStart = daysBetween(periodsMoments[containingPeriodIndex], selectedDay);
     const daysKeys = _.sortBy(_.keys(eventsByDay), wixDate => wixDateToMoment(wixDate));
     const anyCheckup = eventsForToday.some(event => event.details.checkup);
 

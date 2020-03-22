@@ -93,7 +93,7 @@ export function AgendaDay({momentDate, events, onEventPressed}) {
                         details={details}
                         onEventPressed={onEventPressed}
                         noDivider={i === events.length - 1}
-                        disabled={!isAfterOrEquals(momentDate, moment(new Date()))}
+                        disabled={!isAfterOrEquals(momentDate, moment.utc().startOf('day'))}
                     />)
                 : <NoItems/>
         }

@@ -1,19 +1,20 @@
 import {AppLoading} from 'expo';
+import styled from 'styled-components';
 import {Asset} from 'expo-asset';
 import * as Font from 'expo-font';
 import React, {useState} from 'react';
-import {Platform, StatusBar, StyleSheet, View} from 'react-native';
+import {Platform, StatusBar, View} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import * as firebase from 'firebase';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
-import {AppNavigator} from './navigation/AppNavigator';
+import AppNavigator from './navigation/AppNavigator';
 import {retrievePatient} from './store';
 import firebaseConfig from "./firebaseConfig";
 import {logError} from "./utils/log";
 import LoadingModal from "./components/LoadingModal";
 import androidWarningFix from './utils/androidWarningFix';
-import {appContext} from "./utils/context";
+import appContext from "./utils/context";
 
 EStyleSheet.build({
     $rem: Platform.OS === 'ios' ? 16 : 14
@@ -26,6 +27,11 @@ try {
 }
 catch (e) {
 }
+
+const Container = styled(View)`
+  flex: 1;
+  background-color: #fff;
+`;
 
 export default function App(props) {
     const [isStartupLoadingComplete, setStartupLoadingComplete] = useState(false);
@@ -40,25 +46,27 @@ export default function App(props) {
             <AppLoading
                 startAsync={async () => loadResourcesAsync()}
                 onError={handleLoadingError}
-                onFinish={() => handleFinishLoading(setStartupLoadingComplete)}
+                onFinish={() => setStartupLoadingComplete(true)}
             />
         );
     }
     else {
         return (
-            <View style={styles.container}>
+            <Container>
                 {Platform.OS === 'ios' && <StatusBar barStyle="default"/>}
-                <Provider value={{
-                    mainCalendarRefresh,
-                    setMainCalendarRefresh,
-                    currentEditedEventId,
-                    setCurrentEditedEventId,
-                    setIsLoading
-                }}>
+                <Provider
+                    value={{
+                        mainCalendarRefresh,
+                        setMainCalendarRefresh,
+                        currentEditedEventId,
+                        setCurrentEditedEventId,
+                        setIsLoading
+                    }}
+                >
                     <AppNavigator/>
+                    <LoadingModal isVisible={isLoading}/>
                 </Provider>
-                <LoadingModal isVisible={isLoading}/>
-            </View>
+            </Container>
         );
     }
 }
@@ -81,17 +89,4 @@ async function loadResourcesAsync() {
     ]);
 }
 
-function handleLoadingError(error) {
-    logError(error);
-}
-
-function handleFinishLoading(setLoadingComplete) {
-    setLoadingComplete(true);
-}
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-    },
-});
+const handleLoadingError = (error) => logError(error);

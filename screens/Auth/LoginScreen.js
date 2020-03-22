@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React, {useState} from 'react'
 import {TouchableOpacity} from 'react-native'
 import {logInWithFacebook, logInWithGoogle} from '../../store';
 import RouteGuard from "../../navigation/RouteGuard";
@@ -13,7 +13,7 @@ import Checkbox from "../../components/Checkbox";
 import Colors from "../../constants/Colors";
 import Text from "../../components/Text";
 import {Platform} from "react-native-web";
-import {appContext} from "../../utils/context";
+import appContext from "../../utils/context";
 
 const QuestionText = (props) =>
     <Text
@@ -23,11 +23,10 @@ const QuestionText = (props) =>
     </Text>;
 
 
-export default function LoginScreen({navigation}) {
+const LoginScreen = ({navigation, setIsLoading}) => {
     const [agreeTerms, setAgreeTerms] = useState(false);
     const [termsIsVisible, setTermsIsVisible] = useState(false);
     const [hasError, setHasError] = useState(false);
-    const {setIsLoading} = useContext(appContext);
 
     const facebookLogin = async () => {
         setIsLoading(true);
@@ -90,4 +89,12 @@ export default function LoginScreen({navigation}) {
             }
         </Container>
     )
-}
+};
+
+const {Consumer} = appContext;
+
+export default (props) => <Consumer>
+    {
+        context => <LoginScreen {...props} {...context}/>
+    }
+</Consumer>

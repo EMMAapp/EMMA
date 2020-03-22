@@ -1,4 +1,4 @@
-import React, {useRef, useState, useContext} from 'react';
+import React, {useRef, useState} from 'react';
 import store, {syncPatientData} from "../../store";
 import RouteGuard from "../../navigation/RouteGuard";
 import localization from "../../utils/localization";
@@ -20,7 +20,7 @@ import BloodTestResults from "../../components/BloodTestResults";
 import UltrasoundResults from "../../components/UltrasoundResults";
 import Card from "../../components/Card"
 import Image from "../../components/Image";
-import {appContext} from "../../utils/context";
+import appContext from "../../utils/context";
 
 function collectByDay(events) {
     let eventsByDay = {};
@@ -97,12 +97,11 @@ const DayReference = ({wixDate, setSelectedDay, eventsForDay}) => {
 
 const hasResultsDropdown = (details) => details.checkup && (details.checkup === "Blood Test" || details.checkup === "Ultrasound");
 
-export default function JourneyTab({navigation}) {
+const JourneyTab = ({navigation, mainCalendarRefresh, setIsLoading}) => {
     RouteGuard(navigation);
 
     const daysListRef = useRef(null);
-    const [selectedDay, setSelectedDay] = useState(moment.utc().startOf('day'));
-    const {mainCalendarRefresh, setIsLoading} = useContext(appContext);
+    const [selectedDay, setSelectedDay] = useState(moment().startOf('day'));
     const {patientData} = store;
     const periodsMoments = patientData.periods.map(period => wixDateToMoment(period.date));
     const eventsByDay = collectByDay(patientData.events);
@@ -112,8 +111,8 @@ export default function JourneyTab({navigation}) {
     }
 
     const eventsForToday = collectEventsForDate(eventsByDay, momentToWixDate(selectedDay));
-    let containingPeriodIndex = _.findLastIndex(periodsMoments, periodMoment => isAfterOrEquals(selectedDay, periodMoment)) || 0;
-    const daysFromStart = daysBetween(periodsMoments[containingPeriodIndex], selectedDay);
+    let containingPeriodIndex = _.findLastIndex(periodsMoments, periodMoment => isAfterOrEquals(selectedDay, periodMoment));
+    const daysFromStart = daysBetween(periodsMoments[containingPeriodIndex], selectedDay) + 1;
     const daysKeys = _.sortBy(_.keys(eventsByDay), wixDate => wixDateToMoment(wixDate));
     const anyCheckup = eventsForToday.some(event => event.details.checkup);
 
@@ -173,4 +172,12 @@ export default function JourneyTab({navigation}) {
             showsHorizontalScrollIndicator={false}
         />
     </Container>;
-}
+};
+
+const {Consumer} = appContext;
+
+export default (props) => <Consumer>
+    {
+        context => <JourneyTab {...props} {...context}/>
+    }
+</Consumer>

@@ -7,6 +7,14 @@ import {setNewNotifications, unsetAllNotifications} from "./utils/notificationsS
 import _ from "lodash";
 import * as moment from "moment";
 import * as Localization from 'expo-localization';
+import {decode, encode} from 'base-64'
+
+if (!global.btoa) {
+    global.btoa = encode
+}
+if (!global.atob) {
+    global.atob = decode
+}
 
 const initialPatientData = {
     month: null,
@@ -25,20 +33,31 @@ export const store = {
 export default store;
 
 export async function retrievePatient() {
-    await new Promise((resolve => {
-        firebase.auth().onAuthStateChanged(patient => {
-            store.patientId = patient?.uid;
-            resolve();
-        })
-    }));
-    const isAuthenticated = !!store.patientId;
-    if (isAuthenticated) {
-        await retrievePatientData();
+    console.info("retrievePatient")
+    try {
+        await new Promise((resolve => {
+            try {
+                firebase.auth().onAuthStateChanged(patient => {
+                    store.patientId = patient?.uid;
+                    resolve();
+                })
+            }
+            catch (e) {
+                logError(e)
+            }
+        }));
+        const isAuthenticated = !!store.patientId;
+        if (isAuthenticated) {
+            await retrievePatientData();
+        }
+        else {
+            store.patientData = {...initialPatientData};
+        }
+        return isAuthenticated;
     }
-    else {
-        store.patientData = {...initialPatientData};
+    catch (e) {
+        logError(e)
     }
-    return isAuthenticated;
 }
 
 export async function retrievePatientData() {
@@ -107,10 +126,10 @@ export async function logInWithFacebook() {
 export async function logInWithGoogle() {
     try {
         await GoogleSignIn.initAsync({
-           clientId: '1091629470495-bojd6ud8nfu85ku7b0vkng1uam23isl1.apps.googleusercontent.com'
+            clientId: '1091629470495-bojd6ud8nfu85ku7b0vkng1uam23isl1.apps.googleusercontent.com'
         });
         await GoogleSignIn.askForPlayServicesAsync();
-        const { type, user } = await GoogleSignIn.signInAsync();
+        const {type, user} = await GoogleSignIn.signInAsync();
         if (type !== 'success') {
             return false;
         }

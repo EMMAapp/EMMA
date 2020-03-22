@@ -64,9 +64,6 @@ export default function CalendarTab({
     };
 
     const onEventPressed = (event) => {
-        if (event.medication && !isAfterOrEquals(wixDateToMoment(event.selectedDates[0]), lastPeriodMoment)) {
-            return; // show message?
-        }
         setCurrentEditedEventId(event.id);
         navigation.navigate(EDIT_EVENT);
     };

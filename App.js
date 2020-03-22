@@ -36,6 +36,7 @@ export default function App(props) {
     const {Provider} = appContext;
 
     if (!isStartupLoadingComplete && !props.skipLoadingScreen) {
+        console.info("loading!")
         return (
             <AppLoading
                 startAsync={async () => loadResourcesAsync()}
@@ -45,6 +46,7 @@ export default function App(props) {
         );
     }
     else {
+        console.error("start!")
         return (
             <View style={styles.container}>
                 {Platform.OS === 'ios' && <StatusBar barStyle="default"/>}
@@ -83,11 +85,10 @@ async function loadResourcesAsync() {
     ]);
 }
 
-function handleLoadingError(error) {
-    logError(error);
-}
+const handleLoadingError = (error) => logError(error);
 
 function handleFinishLoading(setLoadingComplete) {
+    console.error("complete!")
     setLoadingComplete(true);
 }
 

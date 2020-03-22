@@ -97,7 +97,7 @@ export default ({dismiss, potentialSyncEvents, syncEventsWithNewPeriod}) => {
             <Button
                 style={[marginStyle(5, 'top')]}
                 onPress={() => dismiss()}>
-                {localization('cancel')}
+                {localization('dontSync')}
             </Button>
         </Row>
 

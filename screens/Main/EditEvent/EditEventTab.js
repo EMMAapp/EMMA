@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import {Platform, TouchableOpacity, View} from 'react-native'
 import localization from "../../../utils/localization";
 import Autocomplete from "../../../components/Autocomplete";
@@ -29,6 +29,7 @@ import Icon from "../../../components/Icon";
 import {unsetAllNotifications} from "../../../utils/notificationsSync";
 import Balloon from "../../../components/Balloon";
 import BinaryBoxes from "../../../components/BinaryBoxes";
+import {appContext} from "../../../utils/context";
 
 const initialState = {
     id: null,
@@ -47,12 +48,12 @@ const DEFAULT_MIN_HOUR = 8;
 const EVENT_TYPE_MEDICATION = 'MEDICATION';
 const EVENT_TYPE_CHECKUP = 'CHECKUP';
 
-export default function EditEventTab({navigation, screenProps}) {
+export default function EditEventTab({navigation}) {
 
     const [eventType, setEventType] = useState(EVENT_TYPE_MEDICATION);
     const [state, setState] = useState({...initialState});
     const [isNewEvent, setIsNewEvent] = useState(true);
-    const {setMainCalendarRefresh, currentEditedEventId, setCurrentEditedEventId, setIsLoading} = screenProps;
+    const {setMainCalendarRefresh, currentEditedEventId, setCurrentEditedEventId, setIsLoading} = useContext(appContext);
     const [showDeleteValidationModal, setShowDeleteValidationModal] = useState(false);
     const [showPastValidationModal, setShowPastValidationModal] = useState(false);
     const [closeAfterPastValidation, setCloseAfterPastValidation] = useState(false);
@@ -198,8 +199,10 @@ export default function EditEventTab({navigation, screenProps}) {
                 title={localization('areYouSurePast')}
                 positive={localization('yes')}
                 setResult={async (approve) => {
-                    setShowPastValidationModal(false);
-                    if (approve) {
+                    if (!approve) {
+                        setShowPastValidationModal(false);
+                    }
+                    else {
                         await syncEvents(setIsLoading, flush, [state]);
                         if (closeAfterPastValidation) {
                             close();

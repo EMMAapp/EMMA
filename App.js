@@ -13,6 +13,7 @@ import firebaseConfig from "./firebaseConfig";
 import {logError} from "./utils/log";
 import LoadingModal from "./components/LoadingModal";
 import androidWarningFix from './utils/androidWarningFix';
+import {appContext} from "./utils/context";
 
 EStyleSheet.build({
     $rem: Platform.OS === 'ios' ? 16 : 14
@@ -32,6 +33,8 @@ export default function App(props) {
     const [currentEditedEventId, setCurrentEditedEventId] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
+    const {Provider} = appContext;
+
     if (!isStartupLoadingComplete && !props.skipLoadingScreen) {
         return (
             <AppLoading
@@ -45,15 +48,15 @@ export default function App(props) {
         return (
             <View style={styles.container}>
                 {Platform.OS === 'ios' && <StatusBar barStyle="default"/>}
-                <AppNavigator
-                    screenProps={{
-                        mainCalendarRefresh,
-                        setMainCalendarRefresh,
-                        currentEditedEventId,
-                        setCurrentEditedEventId,
-                        setIsLoading
-                    }}
-                />
+                <Provider value={{
+                    mainCalendarRefresh,
+                    setMainCalendarRefresh,
+                    currentEditedEventId,
+                    setCurrentEditedEventId,
+                    setIsLoading
+                }}>
+                    <AppNavigator/>
+                </Provider>
                 <LoadingModal isVisible={isLoading}/>
             </View>
         );

@@ -1,5 +1,5 @@
 import RouteGuard from "../../navigation/RouteGuard";
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import moment from "moment";
 import store from "../../store";
 import {addDays, daysBetween, isAfterOrEquals, momentToDisplayString, wixDateToMoment} from "../../utils/dayTime";
@@ -15,6 +15,7 @@ import Icon from "../../components/Icon";
 import LineChart from "../../components/LineChart";
 import ScatterPlot from "../../components/ScatterPlot";
 import Image from "../../components/Image";
+import {appContext} from "../../utils/context";
 
 
 const extractResults = (events, periodStartMoment, nextPeriodStartMoment) => {
@@ -59,10 +60,10 @@ const BloodChart = ({title, bloodResults, resultName}) => (
     })}/>
 );
 
-export default function ChartsTab({navigation, screenProps}) {
+export default function ChartsTab({navigation}) {
     RouteGuard(navigation);
 
-    const {mainCalendarRefresh} = screenProps;
+    const {mainCalendarRefresh} = useContext(appContext);
     const {patientData} = store;
     const periodsMoments = patientData.periods.map(period => wixDateToMoment(period.date));
     const [periodIndex, setPeriodIndex] = useState(periodsMoments.length - 1);

@@ -24,12 +24,12 @@ const Triangle = styled(View)`
   left: ${props => props.pointDown ? '15%' : '70%'};
   ${props => props.pointDown ? {bottom: 0} : {}};
   border-left-color: transparent;
-  border-left-width: ${TRIANGLE_SIZE/2};
-  border-top-width: ${props => props.pointDown ? TRIANGLE_SIZE : 0};
-  border-bottom-width: ${props => props.pointDown ? 0 : TRIANGLE_SIZE};
+  border-left-width: ${`${TRIANGLE_SIZE/2}px`};
+  border-top-width: ${props => props.pointDown ? `${TRIANGLE_SIZE}px` : 0};
+  border-bottom-width: ${props => props.pointDown ? 0 : `${TRIANGLE_SIZE}px`};
   border-bottom-color: ${props => props.pointDown ? 'transparent' : Colors.pink};
   border-top-color: ${props => !props.pointDown ? 'transparent' : Colors.pink};
-  border-right-width: ${TRIANGLE_SIZE/2};
+  border-right-width: ${`${TRIANGLE_SIZE/2}px`};
   border-right-color: transparent;
 `;
 

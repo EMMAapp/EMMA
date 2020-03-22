@@ -30,6 +30,7 @@ export default ({dayTime, setDayTime, disabled}) => {
         </TouchableOpacity>
         <DateTimePicker
             mode='time'
+            display='spinner'
             is24Hour={false}
             isVisible={isVisible}
             date={dayTimeToDate(dayTime)}
@@ -38,13 +39,10 @@ export default ({dayTime, setDayTime, disabled}) => {
                 setDayTime(dateToDayTime(date));
             }}
             onCancel={() => setIsVisible(false)}
-            titleIOS={localization('pickTime')}
+            headerTextIOS={localization('pickTime')}
             cancelTextIOS={localization('cancel')}
-            cancelTextStyle={{fontSize: 16, color: Colors.grayDark, fontFamily: 'sf-pro-regular'}}
             confirmTextIOS={localization('confirm')}
-            confirmTextStyle={{fontSize: 16, color: Colors.purple, fontFamily: 'sf-pro-regular'}}
             titleStyle={{fontSize: 16, color: Colors.purple, fontFamily: 'sf-pro-regular'}}
-            datePickerModeAndroid='spinner'
         />
     </StyledView>;
 }

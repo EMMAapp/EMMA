@@ -56,7 +56,7 @@
     "expo-app-auth@8.0.0": {
         "licenses": "MIT",
         "repository": "https://github.com/expo/expo",
-        "licenseUrl": "https://github.com/expo/expo/raw/master/LICENSE-react-native-app-auth.md",
+        "licenseUrl": "https://github.com/expo/expo",
         "parents": "emma"
     },
     "expo-asset@8.0.0": {
@@ -86,7 +86,7 @@
     "expo-google-sign-in@8.0.0": {
         "licenses": "MIT",
         "repository": "https://github.com/expo/expo",
-        "licenseUrl": "https://github.com/expo/expo/raw/master/LICENSE-react-native-google-signin.md",
+        "licenseUrl": "https://github.com/expo/expo",
         "parents": "emma"
     },
     "expo-localization@8.0.0": {
@@ -150,7 +150,8 @@
         "parents": "emma"
     },
     "react-native-chart-kit@5.2.0": {
-        "licenses": "UNKNOWN",
+        "licenses": "MIT",
+        "licenseUrl": "https://github.com/indiespirit/react-native-chart-kit/raw/master/LICENSE",
         "parents": "emma"
     },
     "react-native-extended-stylesheet@0.12.0": {

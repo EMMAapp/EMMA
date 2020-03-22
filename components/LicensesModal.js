@@ -65,10 +65,13 @@ const LicenseListItem = ({image, licenseUrl, licenseText, version, username, nam
             : <View style={hwStyle(35, 35)}/>
         }
         <View style={paddingStyle(10, 'left')}>
-            <Text>{`${_.capitalize(name)}${username !== name ? ` by ${_.capitalize(username)}` : ''}`}</Text>
-            <TouchableOpacity onPress={() => licenseUrl && Linking.openURL(licenseUrl)}>
-                <ListedItemText color={Colors.purple} underline>{`License: ${licenseText}`}</ListedItemText>
-            </TouchableOpacity>
+            <Text>{`${name}${username !== name && username ? ` by ${_.capitalize(username)}` : ''}`}</Text>
+            {
+                licenseText !== 'UNKNOWN' &&
+                <TouchableOpacity onPress={() => licenseUrl && Linking.openURL(licenseUrl)}>
+                    <ListedItemText color={Colors.purple} underline>{`License: ${licenseText}`}</ListedItemText>
+                </TouchableOpacity>
+            }
             <ListedItemText>{`Version: ${version}`}</ListedItemText>
         </View>
     </Container>

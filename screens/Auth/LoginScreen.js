@@ -56,7 +56,10 @@ const LoginScreen = ({navigation, setIsLoading}) => {
 
     return (
         <Container widthPercentage={90}>
-            <Image name='welcomeAnimation' height={Platform.OS === 'ios' ? 300 : 220} width='100%' style={marginStyle(15, 'top')}/>
+            <Row center>
+                <Image name='logo' height={50} width='80%' style={marginStyle(15, 'top')}/>
+            </Row>
+            <Image name='welcomeAnimation' height={Platform.OS === 'ios' ? 300 : 220} width='100%'/>
 
             <TermsModal isVisible={termsIsVisible} dismiss={() => setTermsIsVisible(false)}/>
             <Row style={marginStyle(15, 'left')}>

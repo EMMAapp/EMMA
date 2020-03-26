@@ -14,6 +14,7 @@ import Yoga from "../assets/images/yoga.png"
 import CatBook from "../assets/images/catbook.png"
 import Confetti from "../assets/images/confetti.png"
 import Writing from "../assets/images/writing.jpg"
+import Logo from "../assets/images/logo.png"
 
 const getImageByName = (name) => {
     switch (name) {
@@ -41,6 +42,8 @@ const getImageByName = (name) => {
             return Confetti;
         case "writing":
             return Writing;
+        case "logo":
+            return Logo;
         default:
             return null;
     }

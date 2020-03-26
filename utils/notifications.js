@@ -15,7 +15,7 @@ const createNotification = (title, body) => {
         },
         android: {
             channelId: NOTIFICATIONS_CHANNEL,
-            icon: 'https://cdn3.iconfinder.com/data/icons/web-15/128/RSSvgLink-2-512.png' // TODO
+            icon: 'https://i.imgur.com/oBDkHRe.png'
         }
     }
 };

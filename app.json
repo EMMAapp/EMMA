@@ -2,6 +2,7 @@
   "expo": {
     "name": "EMMA",
     "slug": "emma",
+    "description": "EMMA App",
     "privacy": "public",
     "platforms": [
       "ios",
@@ -52,7 +53,6 @@
           "certificateHash": "90B157F797F377138F6E9141E9BCED8E88935AAD"
         }
       }
-    },
-    "description": ""
+    }
   }
 }

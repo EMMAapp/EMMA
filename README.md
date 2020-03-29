@@ -9,6 +9,8 @@ To install apk: `adb install emma-XXX.apk`
 ## Run build on iOS
 
 ```bash
+open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app
+
 rm -rf emma.app
 tar -xzf ~/Downloads/emma-XXX.tar.gz -C .
 xcrun simctl install booted emma.app

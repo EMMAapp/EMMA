@@ -36,9 +36,7 @@ const CalendarTabWrapper = ({navigation, mainCalendarRefresh, setCurrentEditedEv
     const {patientData} = store;
 
     const periodsMoments = patientData.periods.map(period => wixDateToMoment(period.date));
-    if (_.isEmpty(periodsMoments)) {
-        return <View/>
-    }
+
     const lastPeriodEndEstimation = addDays(_.last(periodsMoments), patientData.averagePeriodCycleDays);
 
     const eventsByDay = collectByDay(patientData.events);

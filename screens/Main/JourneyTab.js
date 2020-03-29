@@ -99,13 +99,15 @@ const hasResultsDropdown = (details) => details.checkup && (details.checkup === 
 
 const JourneyTab = ({navigation, mainCalendarRefresh, setIsLoading}) => {
     RouteGuard(navigation);
-    if (!store.patientId) {
+
+    const {patientData} = store;
+
+    if (!store.patientId || _.isEmpty(patientData.periods)) {
         return <View/>
     }
 
     const daysListRef = useRef(null);
     const [selectedDay, setSelectedDay] = useState(moment().startOf('day'));
-    const {patientData} = store;
     const periodsMoments = patientData.periods.map(period => wixDateToMoment(period.date));
     const eventsByDay = collectByDay(patientData.events);
     const today = momentToWixDate(moment());

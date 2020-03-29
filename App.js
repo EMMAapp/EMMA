@@ -16,6 +16,7 @@ import LoadingModal from "./components/LoadingModal";
 import androidWarningFix from './utils/androidWarningFix';
 import appContext from "./utils/context";
 import * as Sentry from 'sentry-expo';
+import {ErrorBoundary} from "./utils/ErrorBoundary";
 
 Sentry.init({
     dsn: 'https://86a7a4948882456d86293f5068bdc427@sentry.io/5179072',
@@ -59,21 +60,23 @@ export default function App(props) {
     }
     else {
         return (
-            <Container>
-                {Platform.OS === 'ios' && <StatusBar barStyle="default"/>}
-                <Provider
-                    value={{
-                        mainCalendarRefresh,
-                        setMainCalendarRefresh,
-                        currentEditedEventId,
-                        setCurrentEditedEventId,
-                        setIsLoading
-                    }}
-                >
-                    <AppNavigator/>
-                    <LoadingModal isVisible={isLoading}/>
-                </Provider>
-            </Container>
+            <ErrorBoundary>
+                <Container>
+                    {Platform.OS === 'ios' && <StatusBar barStyle="default"/>}
+                    <Provider
+                        value={{
+                            mainCalendarRefresh,
+                            setMainCalendarRefresh,
+                            currentEditedEventId,
+                            setCurrentEditedEventId,
+                            setIsLoading
+                        }}
+                    >
+                        <AppNavigator/>
+                        <LoadingModal isVisible={isLoading}/>
+                    </Provider>
+                </Container>
+            </ErrorBoundary>
         );
     }
 }

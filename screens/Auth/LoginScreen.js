@@ -53,7 +53,7 @@ const LoginScreen = ({navigation, setIsLoading}) => {
     };
 
     const canSubmit = agreeTerms;
-
+    
     return (
         <Container widthPercentage={90}>
             <Row center>

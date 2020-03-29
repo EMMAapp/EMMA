@@ -15,6 +15,13 @@ import {logError} from "./utils/log";
 import LoadingModal from "./components/LoadingModal";
 import androidWarningFix from './utils/androidWarningFix';
 import appContext from "./utils/context";
+import * as Sentry from 'sentry-expo';
+
+Sentry.init({
+    dsn: 'https://86a7a4948882456d86293f5068bdc427@sentry.io/5179072',
+    enableInExpoDevelopment: true,
+    debug: true
+});
 
 EStyleSheet.build({
     $rem: Platform.OS === 'ios' ? 16 : 14

@@ -59,6 +59,18 @@
           "certificateHash": "90B157F797F377138F6E9141E9BCED8E88935AAD"
         }
       }
+    },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "reallyliri",
+            "project": "emma",
+            "authToken": "b1d1c3271714498a99ca1fa05c88883866f9cd54afdf445fb713b7a823dc251d"
+          }
+        }
+      ]
     }
   }
 }

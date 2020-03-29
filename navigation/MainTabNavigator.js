@@ -35,7 +35,7 @@ export default ({}) => (
             }
         }}
         tabBarOptions={{
-            style: paddingStyle(10, 'top'),
+            style: {...paddingStyle(10, 'top'), ...paddingStyle(10, 'bottom')},
             showLabel: false
         }}>
         <Tab.Screen name={JOURNEY} component={JourneyTab}/>

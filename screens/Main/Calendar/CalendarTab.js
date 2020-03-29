@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import moment from "moment";
-import {TouchableOpacity, View} from "react-native";
-import {daysBetween, isAfterOrEquals, momentToWixDate, wixDateToMoment} from "../../../utils/dayTime";
+import {Platform, TouchableOpacity, View} from "react-native";
+import {daysBetween, momentToWixDate, wixDateToMoment} from "../../../utils/dayTime";
 import {EDIT_EVENT} from "../../../navigation/Routes";
 import _ from 'lodash'
 import localization from "../../../utils/localization";
@@ -128,6 +128,9 @@ export default function CalendarTab({
                 renderCollapsed={() => agendaDayRender(wixDateToMoment(selectedDay))}
                 renderExpanded={() => <Agenda selectedDay={selectedDay} eventedDateMoments={eventedDateMoments} agendaDayRender={agendaDayRender}/>}
             />
+            {
+                Platform.OS === 'android' && <View style={{height: 50, backgroundColor: 'white'}}/>
+            }
         </Container>
     );
 }

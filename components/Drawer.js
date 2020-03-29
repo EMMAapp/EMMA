@@ -7,7 +7,7 @@ import GestureRecognizer from 'react-native-swipe-gestures';
 export default function Drawer({isExpanded, setIsExpanded, renderCollapsed, renderExpanded}) {
     return (
         <View style={[
-            {height: '1000%', shadowRadius: 8},
+            {height: '100%', shadowRadius: 8},
             shadowStyle(20),
             marginStyle(7, 'top'),
             paddingStyle(15),

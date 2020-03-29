@@ -217,7 +217,7 @@ const EditEventTab = ({navigation, setMainCalendarRefresh, currentEditedEventId,
                     </Row>
                     : null
             }
-            <View style={[paddingStyle(10, 'left'), paddingStyle(10, 'right'), Platform.OS === 'ios' ? {} : { height: 1100 }]}>
+            <View style={[paddingStyle(10, 'left'), paddingStyle(10, 'right')]}>
                 <Text>{localization(isMedicationEvent ? 'medicationSubTitle' : 'checkupSubTitle')}</Text>
                 <Autocomplete
                     items={isMedicationEvent ? Medications : Checkups}

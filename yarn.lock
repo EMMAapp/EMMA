@@ -8117,10 +8117,10 @@ react-native-calendars@1.264.0:
     prop-types "^15.5.10"
     xdate "^0.8.0"
 
-react-native-chart-kit@5.2.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-chart-kit/-/react-native-chart-kit-5.2.0.tgz#90ed2c62bcf6cfd3a9e4f6c3b43ac7b100aec20c"
-  integrity sha512-G0qmIIimuJos/ABkm2WFYgTW2J0K0MvVdiC41JXpvMhgL7n7H/nAueQ0td+TnfeSUxJS60QuDeYu946gOdHhtw==
+react-native-chart-kit@5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-chart-kit/-/react-native-chart-kit-5.3.0.tgz#39c8ca9486ef9c2c5f7b72950ec814d9320abad0"
+  integrity sha512-iYXYbGXA/JTjSt2PmqwEr48bF0UI2pcE6zE8GP+rFzGuHyP3sMUEQRkMd/6HjakOL6F3FISzTy47g0xCLc68gw==
   dependencies:
     lodash "^4.17.13"
     paths-js "^0.4.10"

@@ -23,7 +23,7 @@ export default ({title, values}) => {
     const labels = values.map(pair => pair.periodDay);
     const datasets = [
         {
-            data: values.map(pair => parseFloat(pair.value)),
+            data: values.map(pair => parseFloat(pair.value)).map(value => isNaN(value) ? 0 : value),
             strokeWidth: 2
         }
     ];

@@ -13,7 +13,7 @@ import Plan from "../assets/images/plan.png"
 import Yoga from "../assets/images/yoga.png"
 import CatBook from "../assets/images/catbook.png"
 import Confetti from "../assets/images/confetti.png"
-import Writing from "../assets/images/writing.jpg"
+import Writing from "../assets/images/writing.png"
 import Logo from "../assets/images/logo.png"
 
 const getImageByName = (name) => {

@@ -3,6 +3,11 @@ import SearchableDropdown from 'react-native-searchable-dropdown';
 import localization from "../utils/localization";
 import {borderRadiusStyle, marginStyle, paddingStyle} from "../constants/Styles";
 import Colors from "../constants/Colors";
+import { YellowBox } from 'react-native'
+
+YellowBox.ignoreWarnings([
+    'VirtualizedLists should never be nested'
+]);
 
 export default ({items, selectedItem, setSelectedItem, itemWidth, textAlign, style, keyboardType}) => {
 

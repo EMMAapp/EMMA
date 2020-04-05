@@ -88,33 +88,27 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
             />
         </Row>
 
-        <Divider margin={5}/>
+        <Divider margin={10}/>
 
         <LicensesModal isVisible={licensesIsVisible} dismiss={() => setLicensesIsVisible(false)}/>
         <Row>
-            <TouchableOpacity activeOpacity={1} onPress={() => setLicensesIsVisible(true)} style={paddingStyle(5, 'bottom')}>
-                <QuestionText color={Colors.purple}>{localization('openSourceRef')}</QuestionText>
+            <TouchableOpacity activeOpacity={1} onPress={() => setLicensesIsVisible(true)} style={paddingStyle(3, 'bottom')}>
+                <QuestionText underline color={Colors.purple}>{localization('openSourceRef')}</QuestionText>
             </TouchableOpacity>
         </Row>
-
-        <Divider margin={5}/>
 
         <TermsModal isVisible={termsIsVisible} dismiss={() => setTermsIsVisible(false)}/>
         <Row>
-            <TouchableOpacity activeOpacity={1} onPress={() => setTermsIsVisible(true)} style={paddingStyle(5, 'bottom')}>
-                <QuestionText color={Colors.purple}>{localization('acceptTermsLink')}</QuestionText>
+            <TouchableOpacity activeOpacity={1} onPress={() => setTermsIsVisible(true)} style={paddingStyle(3, 'bottom')}>
+                <QuestionText underline color={Colors.purple}>{localization('acceptTermsLink')}</QuestionText>
             </TouchableOpacity>
         </Row>
-
-        <Divider margin={5}/>
 
         <Row>
-            <TouchableOpacity activeOpacity={1} onPress={() => logout()} style={paddingStyle(5, 'bottom')}>
-                <QuestionText color={Colors.purple}>{localization('logout')}</QuestionText>
+            <TouchableOpacity activeOpacity={1} onPress={() => logout()} style={paddingStyle(3, 'bottom')}>
+                <QuestionText underline color={Colors.purple}>{localization('logout')}</QuestionText>
             </TouchableOpacity>
         </Row>
-
-        <Divider margin={5}/>
 
         <ValidationModal
             isVisible={showDeleteValidationModal}
@@ -131,7 +125,7 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
         />
 
         <Row>
-            <TouchableOpacity activeOpacity={1} onPress={() => setShowDeleteValidationModal(true)} style={paddingStyle(5, 'bottom')}>
+            <TouchableOpacity activeOpacity={1} onPress={() => setShowDeleteValidationModal(true)} style={[paddingStyle(20, 'top')]}>
                 <QuestionText color={Colors.pink}>{localization('deleteAllData')}</QuestionText>
             </TouchableOpacity>
         </Row>
@@ -147,7 +141,6 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
 
     </Container>;
 };
-
 
 
 const {Consumer} = appContext;

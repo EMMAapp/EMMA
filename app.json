@@ -9,7 +9,7 @@
       "android",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "0.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "notification": {
@@ -43,8 +43,10 @@
       ]
     },
     "ios": {
-      "supportsTablet": true,
       "bundleIdentifier": "com.emma.app",
+      "buildNumber": "0.0.1",
+      "supportsTablet": true,
+      "requireFullScreen": false,
       "config": {
         "googleSignIn": {
           "reservedClientId": "com.googleusercontent.apps.1091629470495-bojd6ud8nfu85ku7b0vkng1uam23isl1"
@@ -53,12 +55,14 @@
     },
     "android": {
       "package": "com.emma.app",
+      "versionCode": 2,
       "googleServicesFile": "./google-services.json",
       "config": {
         "googleSignIn": {
           "certificateHash": "90B157F797F377138F6E9141E9BCED8E88935AAD"
         }
-      }
+      },
+      "permissions": []
     },
     "hooks": {
       "postPublish": [

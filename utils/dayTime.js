@@ -23,19 +23,11 @@ export const dayTimeToDisplayString = (dt) => {
     return `${hour <= 9 ? '0' + hour : hour}:${minute <= 9 ? '0' + minute : minute} ${suffix}`;
 };
 
-export const dayTimeSubtract = (dt, minutes) => {
-    if (minutes === 0) {
-        return {...dt};
-    }
-    const asMoment = moment(dayTimeToDate(dt)).subtract(minutes, "minutes");
-    return {hour: asMoment.hour(), minute: asMoment.minute()};
-};
-
 export const momentToDisplayString = (momentDate) => momentDate.format("dddd, MMM D");
 
 export const momentToWixDate = (momentDate) => momentDate.format("YYYY-MM-DD");
 
-export const wixDateToMoment = (wixDate) => moment(wixDate, 'YYYY-MM-DD');
+export const wixDateToMoment = (wixDate) => moment.utc(wixDate, 'YYYY-MM-DD');
 
 export const daysBetween = (earlier, later) => moment.duration(later.utc().startOf('day').diff(earlier.utc().startOf('day'))).asDays();
 

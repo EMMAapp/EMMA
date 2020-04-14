@@ -107,14 +107,14 @@ const JourneyTab = ({navigation, mainCalendarRefresh, setIsLoading}) => {
     }
 
     const daysListRef = useRef(null);
-    const [selectedDay, setSelectedDay] = useState(moment().startOf('day'));
+    const [selectedDay, setSelectedDay] = useState(moment().utc().startOf('day'));
     const periodsMoments = patientData.periods.map(period => wixDateToMoment(period.date));
     const eventsByDay = collectByDay(patientData.events);
     const today = momentToWixDate(moment());
     if (!eventsByDay[today]) {
         eventsByDay[today] = []
     }
-
+    
     const eventsForToday = collectEventsForDate(eventsByDay, momentToWixDate(selectedDay));
     let containingPeriodIndex = _.findLastIndex(periodsMoments, periodMoment => isAfterOrEquals(selectedDay, periodMoment));
     const daysFromStart = daysBetween(periodsMoments[containingPeriodIndex], selectedDay) + 1;

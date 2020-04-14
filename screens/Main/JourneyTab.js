@@ -114,7 +114,7 @@ const JourneyTab = ({navigation, mainCalendarRefresh, setIsLoading}) => {
     if (!eventsByDay[today]) {
         eventsByDay[today] = []
     }
-    
+
     const eventsForToday = collectEventsForDate(eventsByDay, momentToWixDate(selectedDay));
     let containingPeriodIndex = _.findLastIndex(periodsMoments, periodMoment => isAfterOrEquals(selectedDay, periodMoment));
     const daysFromStart = daysBetween(periodsMoments[containingPeriodIndex], selectedDay) + 1;

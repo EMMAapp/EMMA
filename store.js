@@ -28,7 +28,8 @@ const initialPatientData = {
 
 export const store = {
     patientId: null,
-    patientData: null
+    patientData: null,
+    noData: () => !store.patientId || !store.patientData || _.isEmpty(store.patientData.periods)
 };
 export default store;
 

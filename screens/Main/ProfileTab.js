@@ -14,7 +14,7 @@ import Text from "../../components/Text";
 import Divider from "../../components/Divider";
 import BinaryBoxes from "../../components/BinaryBoxes";
 import TermsModal from "../../components/TermsModal";
-import {TouchableOpacity} from "react-native";
+import {TouchableOpacity, View} from "react-native";
 import Image from "../../components/Image";
 import ValidationModal from "../../components/ValidationModal";
 import LicensesModal from "../../components/LicensesModal";
@@ -29,12 +29,19 @@ const QuestionText = (props) =>
 
 
 const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
+    RouteGuard(navigation);
+
     const [updateToken, setUpdateToken] = useState(null);
     const [termsIsVisible, setTermsIsVisible] = useState(false);
     const [licensesIsVisible, setLicensesIsVisible] = useState(false);
     const [showDeleteValidationModal, setShowDeleteValidationModal] = useState(false);
 
-    const patientData = store.patientData;
+    const {patientData} = store;
+
+    if (store.noData()) {
+        return <View/>
+    }
+
     const {averagePeriodCycleDays, weekStartDay} = patientData;
 
     const logout = async () => {

@@ -102,7 +102,7 @@ const JourneyTab = ({navigation, mainCalendarRefresh, setIsLoading}) => {
 
     const {patientData} = store;
 
-    if (!store.patientId || _.isEmpty(patientData.periods)) {
+    if (store.noData()) {
         return <View/>
     }
 

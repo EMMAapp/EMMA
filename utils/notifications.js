@@ -58,6 +58,6 @@ export const unsetNotification = async (id) => {
         }
     }
     catch (e) {
-        logError(`Failed to unset notification ${id}: ${e}`);
+        logInfo(`Failed to unset notification ${id}: ${e}`);
     }
 };

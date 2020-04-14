@@ -20,9 +20,3 @@ xcrun simctl launch booted com.emma.app
 ## Licenses
 
 To generate license file: `npm-license-crawler --production --onlyDirectDependencies -json assets/licenses.json`
-
-## Publish
-
-```bash
-expo upload:android --key service-account.json --track alpha
-```

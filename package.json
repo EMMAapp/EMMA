@@ -1,16 +1,16 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "name": "emma",
+  "private": true,
   "scripts": {
     "android": "expo start --android",
     "ios": "expo start --ios",
     "build-ios": "expo build:ios -t simulator",
     "build-ios-prod": "expo build:ios",
     "build-android": "expo build:android -t app-bundle",
-    "publish": "expo publish"
-  },
-  "jest": {
-    "preset": "jest-expo"
+    "upload-android": "expo upload:android --key service-account.json --track alpha",
+    "bump": "python bump_version.py",
+    "pub": "expo publish"
   },
   "dependencies": {
     "@expo/vector-icons": "10.0.0",
@@ -62,6 +62,5 @@
   "devDependencies": {
     "babel-preset-expo": "8.1.0",
     "jest-expo": "37.0.0"
-  },
-  "private": true
+  }
 }

@@ -55,7 +55,7 @@ const CalendarTabWrapper = ({navigation, mainCalendarRefresh, setCurrentEditedEv
 
     const getDayTitle = (dateString) => {
         const currentDayMoment = wixDateToMoment(dateString);
-        if (currentDayMoment.isBefore(_.first(periodsMoments)) || currentDayMoment.isAfter(moment())) {
+        if (currentDayMoment.isBefore(_.first(periodsMoments)) || isAfterOrEquals(currentDayMoment, lastPeriodEndEstimation)) {
             return null;
         }
         let containingPeriodIndex = _.findLastIndex(periodsMoments, periodMoment => isAfterOrEquals(currentDayMoment, periodMoment));

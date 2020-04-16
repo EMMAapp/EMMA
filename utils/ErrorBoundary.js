@@ -5,6 +5,7 @@ import {marginStyle} from "../constants/Styles";
 import Row from "../components/Row";
 import Colors from "../constants/Colors";
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
+import * as Sentry from 'sentry-expo';
 
 const Container = styled(KeyboardAwareScrollView)`
   flex: 1;
@@ -18,7 +19,8 @@ export class ErrorBoundary extends Component {
 
     componentDidCatch(error, info) {
         this.setState({hasError: true, error});
-        console.error(error, info)
+        console.error(error, info);
+        Sentry.captureException(error, {extra: info});
     }
 
     render() {

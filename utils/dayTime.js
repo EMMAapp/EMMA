@@ -29,7 +29,7 @@ export const momentToWixDate = (momentDate) => momentDate.format("YYYY-MM-DD");
 
 export const wixDateToMoment = (wixDate) => moment.utc(wixDate, 'YYYY-MM-DD');
 
-export const daysBetween = (earlier, later) => moment.duration(later.utc().startOf('day').diff(earlier.utc().startOf('day'))).asDays();
+export const daysBetween = (earlier, later) => !earlier ? 0 : moment.duration(later.utc().startOf('day').diff(earlier.utc().startOf('day'))).asDays();
 
 export const momentsEquals = (moment1, moment2) =>
     moment1.year() === moment2.year() &&

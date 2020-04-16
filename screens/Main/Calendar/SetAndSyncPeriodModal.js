@@ -99,7 +99,7 @@ export default function SetAndSyncPeriodModal({isVisible, dismiss, setMainCalend
     };
 
     return (
-        <Modal isVisible={isVisible}>
+        <Modal isVisible={isVisible} noContainer onBackdropPress={dismiss}>
             {
                 isLoading ? <Loading/> :
                     isSyncing ?

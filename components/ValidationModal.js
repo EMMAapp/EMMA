@@ -8,7 +8,7 @@ import Image from './Image';
 import {marginStyle} from "../constants/Styles";
 
 export default ({title, positive, isVisible, setResult}) => {
-    return <Modal isVisible={isVisible} onBackdropPress={() => setResult(false)}>
+    return <Modal isVisible={isVisible} onBackdropPress={() => setResult(false)} noContainer>
         <Image name='confused' height={100} width={100}/>
         <Text size={12} style={marginStyle(10, 'top')}>{title}</Text>
         <ButtonPrimary

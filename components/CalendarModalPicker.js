@@ -9,7 +9,7 @@ import moment from "moment";
 export default ({isVisible, onDayPress}) => {
     const firstDay = store.patientData.weekStartDay - 1;
     const today = moment().startOf('day');
-    return <Modal isVisible={isVisible} onBackdropPress={() => onDayPress(null)}>
+    return <Modal isVisible={isVisible} onBackdropPress={() => onDayPress(null)} noContainer>
         <Calendar
             current={today.toDate()}
             maxDate={today.toDate()}

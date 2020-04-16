@@ -54,7 +54,7 @@ export default ({results, setResults}) =>
         </Row>
         <Row style={marginStyle(10, 'top')}>
             <View>
-                <Text style={marginStyle(5, 'bottom')}>Estrogen E2</Text>
+                <Text style={marginStyle(5, 'bottom')}>Progesterone</Text>
                 <NumericInput value={progesterone} setValue={setProgesterone} style={marginStyle(5, 'bottom')} width={40} />
             </View>
             <View style={{flex: 1}}/>

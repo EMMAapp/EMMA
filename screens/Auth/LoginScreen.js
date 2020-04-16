@@ -28,6 +28,8 @@ const LoginScreen = ({navigation, setIsLoading}) => {
     const [termsIsVisible, setTermsIsVisible] = useState(false);
     const [hasError, setHasError] = useState(false);
 
+    RouteGuard(navigation);
+
     const facebookLogin = async () => {
         setIsLoading(true);
         const success = await logInWithFacebook();

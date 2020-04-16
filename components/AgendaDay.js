@@ -1,18 +1,17 @@
-import {FlatList, Platform, TouchableOpacity, View} from "react-native";
+import {FlatList, Platform, View} from "react-native";
 import {dayTimeToDisplayString, isAfterOrEquals, momentToDisplayString, wixDateToMoment} from "../utils/dayTime";
 import _ from "lodash";
-import React, {useRef, useState} from "react";
+import React from "react";
 import shortid from "shortid";
 import Text from "./Text";
 import Colors from "../constants/Colors";
-import {absoluteStyle, eventColor, marginStyle} from "../constants/Styles";
+import {eventColor, marginStyle} from "../constants/Styles";
 import Image from "./Image";
 import localization from "../utils/localization";
 import Icon from "./Icon";
 import moment from "moment";
 import Row from "./Row";
 import Divider from "./Divider";
-import Swipeable from 'react-native-gesture-handler/Swipeable';
 import IconButton from "./IconButton";
 
 const NoItems = () =>
@@ -23,8 +22,6 @@ const NoItems = () =>
     </View>;
 
 const AgendaItem = ({dayTime, details, onEventPressed, noDivider, disabled}) => {
-    const [isSwiped, setSwiped] = useState(false);
-    const swipeableRef = useRef(null);
     const AgendaItemBody = () => (
         <View>
             <Row>
@@ -51,32 +48,16 @@ const AgendaItem = ({dayTime, details, onEventPressed, noDivider, disabled}) => 
         </View>
     );
     return disabled ? <AgendaItemBody/> :
-        <TouchableOpacity activeOpacity={1} onPress={() => {
-            if (isSwiped) {
-                swipeableRef.current.close();
-            }
-            else {
-                swipeableRef.current.openRight();
-            }
-        }}>
-            <Swipeable
-                ref={swipeableRef}
-                onSwipeableRightOpen={() => setSwiped(true)}
-                onSwipeableClose={() => setSwiped(false)}
-                renderRightActions={() =>
-                    <IconButton name='edit' backgroundColor={Colors.purple} iconColor='white' onPress={() => onEventPressed(details)}/>
-                }>
-                <Row style={{minHeight: 37}}>
-                    <AgendaItemBody/>
-                    <View style={[absoluteStyle(205, 0), {opacity: 0.5}]}>
-                        <Icon name='right' color={Colors.gray}/>
-                    </View>
-                </Row>
-            </Swipeable>
+        <View>
+            <Row style={{minHeight: 37}}>
+                <AgendaItemBody/>
+                <View style={{flex: 1}}/>
+                <IconButton name='edit' backgroundColor={Colors.purple} iconColor='white' onPress={() => onEventPressed(details)}/>
+            </Row>
             {
                 noDivider ? null : <Divider/>
             }
-        </TouchableOpacity>
+        </View>
 };
 
 export function AgendaDay({momentDate, events, onEventPressed}) {

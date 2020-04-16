@@ -121,12 +121,16 @@ const EditEventTab = ({navigation, setMainCalendarRefresh, currentEditedEventId,
     };
 
     const deleteEvent = async () => {
-        const {patientData} = store;
-        setIsLoading(true);
-        delete patientData.events[state.id];
-        await unsetAllNotifications(state);
-        await flush(patientData);
-        setIsLoading(false);
+        try {
+            const {patientData} = store;
+            setIsLoading(true);
+            delete patientData.events[state.id];
+            await unsetAllNotifications(state);
+            await flush(patientData);
+        }
+        finally {
+            setIsLoading(false);
+        }
     };
 
     const EventTypeButton = ({targetEventType, titleKey}) => {

@@ -19,6 +19,8 @@ import Image from "../../components/Image";
 import ValidationModal from "../../components/ValidationModal";
 import LicensesModal from "../../components/LicensesModal";
 import appContext from "../../utils/context";
+import ButtonPrimary from "../../components/ButtonPrimary";
+import _ from "lodash";
 
 const QuestionText = (props) =>
     <Text
@@ -35,6 +37,8 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
     const [termsIsVisible, setTermsIsVisible] = useState(false);
     const [licensesIsVisible, setLicensesIsVisible] = useState(false);
     const [showDeleteValidationModal, setShowDeleteValidationModal] = useState(false);
+    const [newAveragePeriodCycleDays, setAveragePeriodCycleDays] = useState(null);
+    const [newWeekStartDay, setWeekStartDay] = useState(null);
 
     const {patientData} = store;
 
@@ -54,13 +58,19 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
         RouteGuard(navigation);
     };
 
-    const setStoredData = async (key, value) => {
-        setIsLoading(true);
-        patientData[key] = value;
-        await syncPatientData(patientData);
-        setUpdateToken(shortid.generate());
-        setMainCalendarRefresh(shortid.generate());
-        setIsLoading(false);
+    const setStoredData = async (keyValues) => {
+        try {
+            setIsLoading(true);
+            _.forEach(keyValues, ({key, value}) => patientData[key] = value);
+            await syncPatientData(patientData);
+            setUpdateToken(shortid.generate());
+            setMainCalendarRefresh(shortid.generate());
+        }
+        finally {
+            setIsLoading(false);
+            setAveragePeriodCycleDays(null);
+            setWeekStartDay(null);
+        }
     };
 
     return <Container widthPercentage={90} key={updateToken}>
@@ -73,14 +83,12 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
         <Row>
             <QuestionText style={paddingStyle(2, 'bottom')}>{localization('periodCyclePrefix')}</QuestionText>
             <NumericInput
-                value={averagePeriodCycleDays}
-                setValue={value => setStoredData('averagePeriodCycleDays', value > 45 ? 28 : value)}
+                value={newAveragePeriodCycleDays || averagePeriodCycleDays}
+                setValue={value => setAveragePeriodCycleDays(value)}
                 style={marginStyle(5)}
             />
             <QuestionText style={paddingStyle(2, 'bottom')}>{localization('periodCycleSuffix')}</QuestionText>
         </Row>
-
-        <Divider margin={5}/>
 
         <Row>
             <QuestionText style={paddingStyle(2, 'bottom')}>{localization('myWeekStartOn')}</QuestionText>
@@ -89,11 +97,35 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
                 option1={localization('sunday')}
                 option2={localization('monday')}
                 width={50}
-                selected={weekStartDay}
-                setSelected={index => setStoredData('weekStartDay', index)}
+                selected={newWeekStartDay || weekStartDay}
+                setSelected={index => setWeekStartDay(index)}
                 middleSpan={7}
             />
         </Row>
+
+        <ButtonPrimary
+            style={marginStyle(5, 'top')}
+            disabled={!newAveragePeriodCycleDays && !newWeekStartDay}
+            width={50}
+            onPress={async () => {
+                let keyValues = [];
+                if (newAveragePeriodCycleDays) {
+                    if (newAveragePeriodCycleDays < 20 || newAveragePeriodCycleDays > 45) {
+                        setAveragePeriodCycleDays(28);
+                        keyValues.push({key: 'averagePeriodCycleDays', value: 28})
+                    }
+                    else {
+                        keyValues.push({key: 'averagePeriodCycleDays', value: newAveragePeriodCycleDays})
+                    }
+                }
+                if (newWeekStartDay) {
+                    keyValues.push({key: 'weekStartDay', value: newWeekStartDay})
+                }
+                await setStoredData(keyValues)
+            }}
+        >
+            {localization('save')}
+        </ButtonPrimary>
 
         <Divider margin={10}/>
 

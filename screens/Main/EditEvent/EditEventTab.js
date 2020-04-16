@@ -29,6 +29,7 @@ import Icon from "../../../components/Icon";
 import {unsetAllNotifications} from "../../../utils/notificationsSync";
 import Balloon from "../../../components/Balloon";
 import appContext from "../../../utils/context";
+import {logInfo} from "../../../utils/log";
 
 const initialState = {
     id: null,
@@ -126,10 +127,12 @@ const EditEventTab = ({navigation, setMainCalendarRefresh, currentEditedEventId,
             setIsLoading(true);
             delete patientData.events[state.id];
             await unsetAllNotifications(state);
-            await flush(patientData);
+            setMainCalendarRefresh(shortid.generate()); // to refresh main calendar
+            await syncPatientData(patientData);
         }
         finally {
             setIsLoading(false);
+            close();
         }
     };
 
@@ -183,12 +186,9 @@ const EditEventTab = ({navigation, setMainCalendarRefresh, currentEditedEventId,
                 title={localization('areYouSureDelete')}
                 positive={localization('deleteEvent')}
                 setResult={async (shouldDelete) => {
-                    if (!shouldDelete) {
-                        setShowDeleteValidationModal(false);
-                    }
-                    else {
+                    setShowDeleteValidationModal(false);
+                    if (shouldDelete) {
                         await deleteEvent();
-                        close();
                     }
                 }}
             />

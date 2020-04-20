@@ -19,7 +19,7 @@ const en = {
     'calendar': 'Calender',
     'ovulationCalendar': 'Ovulation Calender',
     'timeOfEvent': 'Time of event',
-    'reminder': 'Reminder',
+    'reminder': 'Reminder Notification',
     'dailyDose': 'Daily dose (iu/pills)',
     'timesPerDay': 'Times a day',
     'selectDaysOfMedicine': 'Select the days of medicine administration',

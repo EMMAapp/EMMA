@@ -20,6 +20,7 @@ import UltrasoundResults from "../../components/UltrasoundResults";
 import Card from "../../components/Card"
 import Image from "../../components/Image";
 import appContext from "../../utils/context";
+import RouteGuard from "../../navigation/RouteGuard";
 
 function collectByDay(events) {
     let eventsByDay = {};
@@ -99,7 +100,12 @@ const DayReference = ({wixDate, setSelectedDay, eventsForDay}) => {
 
 const hasResultsDropdown = (details) => details.checkup && (details.checkup === "Blood Test" || details.checkup === "Ultrasound");
 
-const JourneyTab = ({mainCalendarRefresh, setIsLoading}) => {
+const JourneyTab = ({navigation, mainCalendarRefresh, setIsLoading}) => {
+    RouteGuard(navigation);
+    if (store.noData()) {
+        return <View/>
+    }
+
     const {patientData} = store;
 
     const daysListRef = useRef(null);

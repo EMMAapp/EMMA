@@ -14,6 +14,7 @@ import Row from "../../../components/Row";
 import {eventColor} from "../../../constants/Styles";
 import {Dot} from "../../../components/Dot";
 import appContext from "../../../utils/context";
+import RouteGuard from "../../../navigation/RouteGuard";
 
 const medicationDot = {key: shortid.generate(), color: eventColor(true)};
 const checkupDot = {key: shortid.generate(), color: eventColor(false)};
@@ -29,6 +30,11 @@ function collectByDay(events) {
 }
 
 const CalendarTabWrapper = ({navigation, mainCalendarRefresh, setCurrentEditedEventId, setMainCalendarRefresh}) => {
+    RouteGuard(navigation);
+    if (store.noData()) {
+        return <View/>
+    }
+
     const {patientData} = store;
 
     const periodsMoments = patientData.periods.map(period => wixDateToMoment(period.date));

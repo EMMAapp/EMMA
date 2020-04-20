@@ -31,6 +31,10 @@ const QuestionText = (props) =>
 
 
 const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
+    RouteGuard(navigation);
+    if (store.noData()) {
+        return <View/>
+    }
 
     const [updateToken, setUpdateToken] = useState(null);
     const [termsIsVisible, setTermsIsVisible] = useState(false);

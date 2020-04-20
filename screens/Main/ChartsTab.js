@@ -15,6 +15,7 @@ import LineChart from "../../components/LineChart";
 import ScatterPlot from "../../components/ScatterPlot";
 import Image from "../../components/Image";
 import appContext from "../../utils/context";
+import RouteGuard from "../../navigation/RouteGuard";
 
 
 const extractResults = (events, periodStartMoment, nextPeriodStartMoment) => {
@@ -59,7 +60,12 @@ const BloodChart = ({title, bloodResults, resultName}) => (
     })}/>
 );
 
-const ChartsTab = ({mainCalendarRefresh}) => {
+const ChartsTab = ({navigation, mainCalendarRefresh}) => {
+    RouteGuard(navigation);
+    if (store.noData()) {
+        return <View/>
+    }
+
     const {patientData} = store;
     const periodsMoments = patientData.periods.map(period => wixDateToMoment(period.date));
     const [periodIndex, setPeriodIndex] = useState(periodsMoments.length - 1);

@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {Keyboard, Platform, View} from 'react-native';
+import {Keyboard, Platform} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {useNavigation} from '@react-navigation/native';
 import CalendarTabWrapper from '../screens/Main/Calendar/CalendarTabWrapper';
 import EditEventTab from '../screens/Main/EditEvent/EditEventTab';
 import ProfileTab from '../screens/Main/ProfileTab';
@@ -11,8 +10,6 @@ import {paddingStyle} from "../constants/Styles";
 import JourneyTab from "../screens/Main/JourneyTab";
 import ChartsTab from "../screens/Main/ChartsTab";
 import {CALENDAR, CHARTS, EDIT_EVENT, JOURNEY, PROFILE} from "./Routes";
-import RouteGuard from "./RouteGuard";
-import store from "../store";
 
 const icons = {
     [JOURNEY]: 'today',
@@ -24,7 +21,6 @@ const icons = {
 
 const Tab = createBottomTabNavigator();
 export default ({}) => {
-    const navigation = useNavigation();
     const [keyboardVisible, setKeyboardVisible] = useState(false);
 
     useEffect(() => {
@@ -38,11 +34,6 @@ export default ({}) => {
             keyboardDidHideListener.remove();
         }
     }, []);
-
-    RouteGuard(navigation);
-    if (store.noData()) {
-        return <View/>
-    }
 
     return (
         <Tab.Navigator

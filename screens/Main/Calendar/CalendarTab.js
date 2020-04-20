@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import moment from "moment";
-import {Platform, TouchableOpacity, View} from "react-native";
+import {Platform, SafeAreaView, TouchableOpacity, View} from "react-native";
 import {daysBetween, momentToWixDate, wixDateToMoment} from "../../../utils/dayTime";
 import {EDIT_EVENT} from "../../../navigation/Routes";
 import _ from 'lodash'
@@ -10,13 +10,19 @@ import {store} from "../../../store";
 import Colors from "../../../constants/Colors";
 import MainCalendar from "./MainCalendar";
 import Text from '../../../components/Text'
-import Container from "../../../components/Container";
 import Row from "../../../components/Row";
 import IconAndText from "../../../components/IconAndText";
 import Drawer from "../../../components/Drawer";
 import {Agenda, AgendaDay} from "../../../components/AgendaDay";
-import {absoluteStyleVertical, paddingStyle} from "../../../constants/Styles";
+import {absoluteStyleVertical, marginStyle, paddingStyle} from "../../../constants/Styles";
 import Balloon from "../../../components/Balloon";
+import styled from "styled-components";
+
+const StyledView = styled(SafeAreaView)`
+  flex: 1;
+  align-items: flex-start;
+  background-color: ${Colors.grayLight};
+`;
 
 export function collectEventsForDate(eventsByDay, selectedDay) {
     const eventsForDay = eventsByDay[selectedDay];
@@ -79,8 +85,13 @@ export default function CalendarTab({
         />;
 
     return (
-        <Container style={{backgroundColor: Colors.grayLight}}>
-            <View style={[paddingStyle(10, 'left'), paddingStyle(10, 'right')]}>
+        <StyledView>
+            <View style={[
+                paddingStyle(10, 'left'),
+                paddingStyle(10, 'right'),
+                marginStyle(Platform.OS === 'ios' ? 10 : 25, 'top'),
+                {width: '100%'}
+            ]}>
                 <Row>
                     <Text size={11}>{localization('treatmentPlan')}</Text>
                     <View style={{flex: 1}}/>
@@ -128,9 +139,6 @@ export default function CalendarTab({
                 renderCollapsed={() => agendaDayRender(wixDateToMoment(selectedDay))}
                 renderExpanded={() => <Agenda selectedDay={selectedDay} eventedDateMoments={eventedDateMoments} agendaDayRender={agendaDayRender}/>}
             />
-            {
-                Platform.OS === 'android' && <View style={{height: 50, backgroundColor: 'white'}}/>
-            }
-        </Container>
+        </StyledView>
     );
 }

@@ -5,12 +5,12 @@ import {marginStyle} from "../constants/Styles";
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 
 const StyledView = styled(SafeAreaView)`
-flex: 1;
-align-items: flex-start;
+  flex: 1;
+  align-items: flex-start;
 `;
 
 export default ({children, style, widthPercentage}) =>
-    <StyledView style={[{flex: 1, alignItems: 'center'}, style]}>
+    <StyledView style={style}>
         <KeyboardAwareScrollView
             keyboardShouldPersistTaps="handled"
             style={[

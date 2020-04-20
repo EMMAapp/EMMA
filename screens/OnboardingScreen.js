@@ -34,7 +34,6 @@ const OnboardingScreen = ({navigation, setIsLoading}) => {
     const [isPeriodRegular, setIsPeriodRegular] = useState(false);
     const [averagePeriodCycleDays, setAveragePeriodCycleDays] = useState(28);
     const [isCalendarPickerVisible, setCalendarPickerVisible] = useState(false);
-    console.info(birth)
 
     const submit = async () => {
         setIsLoading(true);

@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Platform, TouchableOpacity, View} from 'react-native'
+import {TouchableOpacity, View} from 'react-native'
 import localization from "../../../utils/localization";
 import Autocomplete from "../../../components/Autocomplete";
 import Medications from '../../../constants/Medications';
@@ -29,7 +29,6 @@ import Icon from "../../../components/Icon";
 import {unsetAllNotifications} from "../../../utils/notificationsSync";
 import Balloon from "../../../components/Balloon";
 import appContext from "../../../utils/context";
-import {logInfo} from "../../../utils/log";
 
 const initialState = {
     id: null,
@@ -129,8 +128,7 @@ const EditEventTab = ({navigation, setMainCalendarRefresh, currentEditedEventId,
             await unsetAllNotifications(state);
             setMainCalendarRefresh(shortid.generate()); // to refresh main calendar
             await syncPatientData(patientData);
-        }
-        finally {
+        } finally {
             setIsLoading(false);
             close();
         }
@@ -326,6 +324,18 @@ const EditEventTab = ({navigation, setMainCalendarRefresh, currentEditedEventId,
                         {localization(isMedicationEvent ? 'addAnotherMedication' : 'addAnotherCheckup')}
                     </ButtonPrimary>
                 </Row>
+                {
+                    !isNewEvent &&
+                    <Row center>
+                        <Button
+                            style={marginStyle(3, 'top')}
+                            width={125}
+                            onPress={() => close()}
+                        >
+                            {localization('cancel')}
+                        </Button>
+                    </Row>
+                }
                 <Row center style={marginStyle(40, 'bottom')}>
                     <Button
                         style={marginStyle(3, 'top')}

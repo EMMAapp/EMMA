@@ -1,19 +1,15 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import localization from "../utils/localization";
 import {borderRadiusStyle, marginStyle, paddingStyle} from "../constants/Styles";
 import Colors from "../constants/Colors";
-import { YellowBox } from 'react-native'
+import {YellowBox} from 'react-native'
 
 YellowBox.ignoreWarnings([
     'VirtualizedLists should never be nested'
 ]);
 
 export default ({items, selectedItem, setSelectedItem, itemWidth, textAlign, style, keyboardType}) => {
-
-    const [query, setQuery] = useState('');
-
-    useEffect(() => setQuery(selectedItem ? selectedItem : ''), [selectedItem, setQuery]);
 
     const itemStyle = {
         backgroundColor: Colors.grayLight,
@@ -26,10 +22,7 @@ export default ({items, selectedItem, setSelectedItem, itemWidth, textAlign, sty
 
     return <SearchableDropdown
         style={style}
-        onItemSelect={(item) => {
-            setSelectedItem(item.name);
-            setQuery(item.name);
-        }}
+        onItemSelect={(item) => setSelectedItem(item.name)}
         containerStyle={{...marginStyle(5, 'top'), ...style}}
         itemStyle={itemStyle}
         itemTextStyle={{color: Colors.grayDark}}
@@ -39,13 +32,11 @@ export default ({items, selectedItem, setSelectedItem, itemWidth, textAlign, sty
             {
                 placeholder: localization('autocompletePlaceholder'),
                 underlineColorAndroid: "transparent",
+                autoCapitalize: "none",
                 style: {...itemStyle, ...borderRadiusStyle(5), borderWidth: 1},
                 keyboardType: keyboardType,
-                value: query,
-                onChangeText: text => {
-                    setQuery(text);
-                    setSelectedItem(null);
-                }
+                defaultValue: selectedItem || '',
+                onChangeText: text => setSelectedItem(text)
             }
         }
         listProps={

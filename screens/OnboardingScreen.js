@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {TouchableOpacity, Dimensions} from 'react-native'
+import {TouchableOpacity, Dimensions, View} from 'react-native'
 import {store, syncPatientData} from '../store';
 import RouteGuard from "../navigation/RouteGuard";
 import localization from "../utils/localization";
@@ -18,6 +18,7 @@ import IconAndText from "../components/IconAndText";
 import BirthPicker from "../components/BirthPicker";
 import Image from "../components/Image";
 import appContext from "../utils/context";
+import _ from "lodash";
 
 const QuestionText = (props) =>
     <Text
@@ -28,12 +29,12 @@ const QuestionText = (props) =>
 
 const OnboardingScreen = ({navigation, setIsLoading}) => {
 
-    const [month, setMonth] = useState(1);
-    const [year, setYear] = useState(1990);
+    const [birth, setBirth] = useState({month: 1, year: 1990});
     const [lastPeriodDate, setLastPeriodDate] = useState(null);
     const [isPeriodRegular, setIsPeriodRegular] = useState(false);
     const [averagePeriodCycleDays, setAveragePeriodCycleDays] = useState(28);
     const [isCalendarPickerVisible, setCalendarPickerVisible] = useState(false);
+    console.info(birth)
 
     const submit = async () => {
         setIsLoading(true);
@@ -52,7 +53,12 @@ const OnboardingScreen = ({navigation, setIsLoading}) => {
             <Text size={9} style={paddingStyle(5, 'top')}>{localization('onboardingSubTitle')}</Text>
 
             <QuestionText>{localization('whenBorn')}</QuestionText>
-            <BirthPicker month={month} year={year} setMonth={setMonth} setYear={setYear}/>
+            <BirthPicker
+                month={birth.month}
+                year={birth.year}
+                setMonth={month => setBirth({...birth, month: month || 1})}
+                setYear={year => setBirth({...birth, year: year || 1990})}
+            />
 
             <QuestionText>{localization('lastPeriod')}</QuestionText>
             <Box height={25} width={'90%'}>
@@ -106,4 +112,3 @@ export default (props) => <Consumer>
         context => <OnboardingScreen {...props} {...context}/>
     }
 </Consumer>
-

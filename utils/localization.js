@@ -93,6 +93,8 @@ const en = {
     'openSourceRef': 'Open source licenses used by Emma',
     'openSourceTitle': 'Below is a list of open source licenses by package, used by Emma.',
     'setFor': 'Set for',
+    'selectMonth': 'Select month',
+    'selectYear': 'Select year',
 
     'months': {
         '1': 'January',

@@ -3,11 +3,10 @@ import React from "react";
 import Modal from "./Modal";
 import {calendarTheme} from "../constants/Styles";
 import store from "../store";
-import {momentToWixDate} from "../utils/dayTime";
 import moment from "moment";
 
 export default ({isVisible, onDayPress}) => {
-    const firstDay = store.patientData.weekStartDay - 1;
+    const firstDay = store.patientData ? store.patientData.weekStartDay - 1 : 2;
     const today = moment().startOf('day');
     return <Modal isVisible={isVisible} onBackdropPress={() => onDayPress(null)} noContainer>
         <Calendar

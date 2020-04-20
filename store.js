@@ -91,7 +91,6 @@ export async function syncPatientData(updatedPatientData) {
 }
 
 async function logInWithCredential(credential) {
-    await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
     const userCredential = await firebase.auth().signInWithCredential(credential);
     store.patientId = userCredential.user.uid;
     store.patientId = userCredential.user.uid;

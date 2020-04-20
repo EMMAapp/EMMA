@@ -223,7 +223,7 @@ const EditEventTab = ({navigation, setMainCalendarRefresh, currentEditedEventId,
                 <Text>{localization(isMedicationEvent ? 'medicationSubTitle' : 'checkupSubTitle')}</Text>
                 <Autocomplete
                     items={isMedicationEvent ? Medications : Checkups}
-                    selectedItem={isMedicationEvent ? state.medication : state.checkup}
+                    selectedItem={{item: isMedicationEvent ? state.medication : state.checkup}}
                     setSelectedItem={item => setState(isMedicationEvent ? {...state, medication: item} : {...state, checkup: item})}
                 />
                 {

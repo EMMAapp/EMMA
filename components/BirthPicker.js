@@ -16,27 +16,47 @@ const thisYear = (new Date()).getFullYear();
 const makeMonths = (from, to) =>
     _.range(from, to + 1).map(i => {return {name: localization(`months.${i}`), aliases: [i.toString(), localization(`months.${i}`)]}});
 const makeYears = (from, to) =>
-    _.range(from, to + 1).map(i => {return {name: i, aliases: [i]}});
+    _.range(from, to + 1).map(i => {return {name: i.toString(), aliases: [i.toString()]}});
 
 const months = makeMonths(1, 12);
-const years = makeYears(thisYear - 80, thisYear - 18);
+const minYear = thisYear - 80;
+const maxYear = thisYear - 18;
+const years = makeYears(minYear, maxYear);
+
+const translateSubmittedMonth = (value) => {
+    const selectedMonth = months.filter(month => month.name === value);
+    if (_.isEmpty(selectedMonth)) {
+        return null;
+    }
+    return selectedMonth[0].aliases[0]
+};
+
+const translateSubmittedYear = (value) => {
+    const year = parseInt(value);
+    if (year < minYear || year > maxYear) {
+        return null;
+    }
+    return year;
+};
 
 export default ({month, setMonth, year, setYear}) =>
     <Row>
         <Autocomplete
             items={months}
-            selectedItem={months[month - 1].name}
-            setSelectedItem={value => value && setMonth(months.filter(month => month.name === value)[0].aliases[0])}
+            selectedItem={{item: months[month - 1].name}}
+            setSelectedItem={value => value && setMonth(translateSubmittedMonth(value))}
             itemWidth={150}
-            textAlign={'center'}
+            textAlign="center"
+            placeholderKey="selectMonth"
         />
         <Autocomplete
             style={marginStyle(10, 'left')}
             items={years}
-            selectedItem={year.toString()}
-            setSelectedItem={value => setYear(parseInt(value))}
+            selectedItem={{item: year.toString()}}
+            setSelectedItem={value => value && setYear(translateSubmittedYear(value))}
             itemWidth={150}
-            textAlign={'center'}
-            keyboardType={'numeric'}
+            textAlign="center"
+            placeholderKey="selectYear"
+            keyboardType="numeric"
         />
     </Row>

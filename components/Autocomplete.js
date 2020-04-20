@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useRef} from 'react'
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import localization from "../utils/localization";
 import {borderRadiusStyle, marginStyle, paddingStyle} from "../constants/Styles";
@@ -9,7 +9,22 @@ YellowBox.ignoreWarnings([
     'VirtualizedLists should never be nested'
 ]);
 
-export default ({items, selectedItem, setSelectedItem, itemWidth, textAlign, style, keyboardType}) => {
+export default ({items, selectedItem, setSelectedItem, itemWidth, textAlign, style, keyboardType, placeholderKey}) => {
+    const {item} = selectedItem;
+    const textInputRef = useRef(null);
+    useEffect(
+        () => {
+            if (item && textInputRef.current && item !== textInputRef.current.props.value) {
+                if (Platform.OS === 'ios') {
+                    setTimeout(() => {
+                        textInputRef.current.setNativeProps({ text: item });
+                    }, 500);
+                }
+                else {
+                    textInputRef.current.setNativeProps({ text: item });
+                }
+            }
+        }, [selectedItem, textInputRef]);
 
     const itemStyle = {
         backgroundColor: Colors.grayLight,
@@ -30,13 +45,14 @@ export default ({items, selectedItem, setSelectedItem, itemWidth, textAlign, sty
         items={items}
         textInputProps={
             {
-                placeholder: localization('autocompletePlaceholder'),
+                ref: textInputRef,
+                placeholder: localization(placeholderKey || 'autocompletePlaceholder'),
                 underlineColorAndroid: "transparent",
                 autoCapitalize: "none",
                 style: {...itemStyle, ...borderRadiusStyle(5), borderWidth: 1},
                 keyboardType: keyboardType,
-                defaultValue: selectedItem || '',
-                onChangeText: text => setSelectedItem(text)
+                defaultValue: item || '',
+                onEndEditing: (e) => setSelectedItem(e.nativeEvent.text || item)
             }
         }
         listProps={

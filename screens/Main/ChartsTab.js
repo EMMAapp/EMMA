@@ -1,4 +1,3 @@
-import RouteGuard from "../../navigation/RouteGuard";
 import React, {useState} from "react";
 import moment from "moment";
 import store from "../../store";
@@ -7,10 +6,10 @@ import _ from "lodash";
 import Container from "../../components/Container";
 import Colors from "../../constants/Colors";
 import Text from "../../components/Text";
-import {borderRadiusStyle, marginStyle} from "../../constants/Styles";
+import {marginStyle} from "../../constants/Styles";
 import localization from "../../utils/localization";
 import Row from "../../components/Row";
-import {TouchableOpacity, View, Dimensions} from "react-native";
+import {TouchableOpacity, View} from "react-native";
 import Icon from "../../components/Icon";
 import LineChart from "../../components/LineChart";
 import ScatterPlot from "../../components/ScatterPlot";
@@ -60,12 +59,7 @@ const BloodChart = ({title, bloodResults, resultName}) => (
     })}/>
 );
 
-const ChartsTab = ({navigation, mainCalendarRefresh}) => {
-    RouteGuard(navigation);
-    if (store.noData()) {
-        return <View/>
-    }
-
+const ChartsTab = ({mainCalendarRefresh}) => {
     const {patientData} = store;
     const periodsMoments = patientData.periods.map(period => wixDateToMoment(period.date));
     const [periodIndex, setPeriodIndex] = useState(periodsMoments.length - 1);
@@ -74,7 +68,7 @@ const ChartsTab = ({navigation, mainCalendarRefresh}) => {
     const nextPeriod = periodIndex < periodsMoments.length - 1 ? periodsMoments[periodIndex + 1] : addDays(moment(), 1);
     const {bloodResults, ultrasoundResults} = extractResults(patientData.events, period, nextPeriod);
     const ultrasoundResult = _.last(_.values(ultrasoundResults));
-    const ultrasoundAny = ultrasoundResult && ( !_.isEmpty(ultrasoundResult.left) || !_.isEmpty(ultrasoundResult.right) );
+    const ultrasoundAny = ultrasoundResult && (!_.isEmpty(ultrasoundResult.left) || !_.isEmpty(ultrasoundResult.right));
 
     return <Container key={mainCalendarRefresh} style={{backgroundColor: Colors.grayLight}} widthPercentage={90}>
         <Row>
@@ -108,14 +102,14 @@ const ChartsTab = ({navigation, mainCalendarRefresh}) => {
         {
             _.isEmpty(_.keys(bloodResults)) && !ultrasoundAny ?
                 <View>
-                <Row center style={marginStyle(30, 'top')}>
-                    <Text>{localization("noResults")}</Text>
-                </Row>
+                    <Row center style={marginStyle(30, 'top')}>
+                        <Text>{localization("noResults")}</Text>
+                    </Row>
                     <Row center style={marginStyle(30, 'top')}>
                         <Image name={"writing"} height={150} width={'90%'}/>
                     </Row>
                 </View>
-                    :
+                :
                 <View style={marginStyle(10, 'top')}>
                     {
                         !_.isEmpty(_.keys(bloodResults)) &&

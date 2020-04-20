@@ -1,6 +1,5 @@
 import React, {useRef, useState} from 'react';
 import store, {syncPatientData} from "../../store";
-import RouteGuard from "../../navigation/RouteGuard";
 import localization from "../../utils/localization";
 import Container from "../../components/Container";
 import Colors from "../../constants/Colors";
@@ -100,12 +99,7 @@ const DayReference = ({wixDate, setSelectedDay, eventsForDay}) => {
 
 const hasResultsDropdown = (details) => details.checkup && (details.checkup === "Blood Test" || details.checkup === "Ultrasound");
 
-const JourneyTab = ({navigation, mainCalendarRefresh, setIsLoading}) => {
-    RouteGuard(navigation);
-    if (store.noData()) {
-        return <View/>
-    }
-
+const JourneyTab = ({mainCalendarRefresh, setIsLoading}) => {
     const {patientData} = store;
 
     const daysListRef = useRef(null);

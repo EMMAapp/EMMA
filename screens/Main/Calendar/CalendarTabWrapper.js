@@ -1,5 +1,4 @@
 import React from 'react';
-import RouteGuard from "../../../navigation/RouteGuard";
 import store from "../../../store";
 import {addDays, daysBetween, isAfterOrEquals, momentsEquals, wixDateToMoment} from "../../../utils/dayTime";
 import _ from 'lodash'
@@ -30,11 +29,6 @@ function collectByDay(events) {
 }
 
 const CalendarTabWrapper = ({navigation, mainCalendarRefresh, setCurrentEditedEventId, setMainCalendarRefresh}) => {
-    RouteGuard(navigation);
-    if (store.noData()) {
-        return <View/>
-    }
-
     const {patientData} = store;
 
     const periodsMoments = patientData.periods.map(period => wixDateToMoment(period.date));

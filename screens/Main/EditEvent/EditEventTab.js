@@ -29,7 +29,6 @@ import Icon from "../../../components/Icon";
 import {unsetAllNotifications} from "../../../utils/notificationsSync";
 import Balloon from "../../../components/Balloon";
 import appContext from "../../../utils/context";
-import RouteGuard from "../../../navigation/RouteGuard";
 
 const initialState = {
     id: null,
@@ -49,11 +48,6 @@ const EVENT_TYPE_MEDICATION = 'MEDICATION';
 const EVENT_TYPE_CHECKUP = 'CHECKUP';
 
 const EditEventTab = ({navigation, setMainCalendarRefresh, currentEditedEventId, setCurrentEditedEventId, setIsLoading}) => {
-
-    RouteGuard(navigation);
-    if (store.noData()) {
-        return <View/>
-    }
 
     const [eventType, setEventType] = useState(EVENT_TYPE_MEDICATION);
     const [state, setState] = useState({...initialState});

@@ -109,7 +109,7 @@ const ChartsTab = ({navigation, mainCalendarRefresh}) => {
                     <Text>{localization("noResults")}</Text>
                 </Row>
                     <Row center style={marginStyle(30, 'top')}>
-                        <Image name={"writing"} height={150} width={Dimensions.get('window').width * 0.9}/>
+                        <Image name={"writing"} height={150} width={'90%'}/>
                     </Row>
                 </View>
                     :

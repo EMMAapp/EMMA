@@ -6,7 +6,7 @@ import EditEventTab from '../screens/Main/EditEvent/EditEventTab';
 import ProfileTab from '../screens/Main/ProfileTab';
 import Icon from "../components/Icon";
 import Colors from "../constants/Colors";
-import {marginStyle} from "../constants/Styles";
+import {marginStyle, paddingStyle} from "../constants/Styles";
 import JourneyTab from "../screens/Main/JourneyTab";
 import ChartsTab from "../screens/Main/ChartsTab";
 import {CALENDAR, CHARTS, EDIT_EVENT, JOURNEY, PROFILE} from "./Routes";
@@ -51,7 +51,7 @@ export default ({}) => {
                 }
             }}
             tabBarOptions={{
-                style: keyboardVisible ? {} : {...marginStyle(10, 'top')},
+                style: keyboardVisible ? {} : {...paddingStyle(10, 'top')},
                 showLabel: false,
                 keyboardHidesTabBar: true
             }}>

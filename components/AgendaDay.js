@@ -5,7 +5,7 @@ import React from "react";
 import shortid from "shortid";
 import Text from "./Text";
 import Colors from "../constants/Colors";
-import {eventColor, marginStyle} from "../constants/Styles";
+import {eventColor, marginStyle, paddingStyle} from "../constants/Styles";
 import Image from "./Image";
 import localization from "../utils/localization";
 import Icon from "./Icon";
@@ -13,6 +13,7 @@ import moment from "moment";
 import Row from "./Row";
 import Divider from "./Divider";
 import IconButton from "./IconButton";
+import Layout from "../constants/Layout";
 
 const NoItems = () =>
     <View style={{flex: 1, alignItems: 'center'}}>
@@ -60,8 +61,13 @@ const AgendaItem = ({dayTime, details, onEventPressed, noDivider, disabled}) => 
         </View>
 };
 
-export function AgendaDay({momentDate, events, onEventPressed}) {
-    return <View>
+export function AgendaDay({momentDate, events, onEventPressed, withPadding}) {
+    return <View style={
+        withPadding ? [
+            paddingStyle(15),
+            paddingStyle(2, 'top')
+        ] : []
+    }>
         <Text size={7} color={Colors.gray} style={marginStyle(8, 'bottom')}>
             {momentToDisplayString(momentDate)}
         </Text>
@@ -82,17 +88,23 @@ export function AgendaDay({momentDate, events, onEventPressed}) {
 }
 
 export function Agenda({selectedDay, eventedDateMoments, agendaDayRender}) {
-    return _.isEmpty(eventedDateMoments) ?
+    const filteredEvents = _.filter(eventedDateMoments, dateMoment =>
+        isAfterOrEquals(dateMoment, moment()) || isAfterOrEquals(dateMoment, wixDateToMoment(selectedDay))
+    )
+    return _.isEmpty(filteredEvents) ?
         <NoItems/> :
-        <View>
-            <FlatList
-                data={_.filter(eventedDateMoments, dateMoment =>
-                    isAfterOrEquals(dateMoment, moment()) || isAfterOrEquals(dateMoment, wixDateToMoment(selectedDay))
-                )}
-                renderItem={({item}) => agendaDayRender(item)}
-                keyExtractor={item => item.toString()}
-                ItemSeparatorComponent={() => <Divider/>}
-            />
-            <Image name='motorcycle' height={80} width={230} style={marginStyle(10, 'top')}/>
+        <View >
+            <View style={[
+                paddingStyle(15),
+                paddingStyle(2, 'top')
+            ]}>
+                <FlatList
+                    data={filteredEvents}
+                    renderItem={({item}) => agendaDayRender(item)}
+                    keyExtractor={item => item.toString()}
+                    ItemSeparatorComponent={() => <Divider/>}
+                />
+            </View>
+            <Image name='motorcycle' height={140} width={'100%'} style={marginStyle(-30, 'top')}/>
         </View>
 }

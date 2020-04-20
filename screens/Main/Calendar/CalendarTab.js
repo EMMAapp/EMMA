@@ -77,11 +77,12 @@ export default function CalendarTab({
     const daysSinceLastPeriod = daysBetween(lastPeriodMoment, moment().startOf('day'));
     const showUpdatePeriodBalloon = daysSinceLastPeriod > store.patientData.averagePeriodCycleDays;
 
-    const agendaDayRender = (momentDate) =>
+    const agendaDayRender = (momentDate, withPadding) =>
         <AgendaDay
             momentDate={momentDate}
             events={getEventsForDate(momentToWixDate(momentDate))}
             onEventPressed={onEventPressed}
+            withPadding={withPadding}
         />;
 
     return (
@@ -136,7 +137,7 @@ export default function CalendarTab({
             <Drawer
                 isExpanded={isAgendaExpanded}
                 setIsExpanded={setAgendaExpanded}
-                renderCollapsed={() => agendaDayRender(wixDateToMoment(selectedDay))}
+                renderCollapsed={() => agendaDayRender(wixDateToMoment(selectedDay), true)}
                 renderExpanded={() => <Agenda selectedDay={selectedDay} eventedDateMoments={eventedDateMoments} agendaDayRender={agendaDayRender}/>}
             />
         </StyledView>

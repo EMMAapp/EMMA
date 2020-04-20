@@ -40,8 +40,7 @@ const Event = ({dayTime, details, setIsLoading}) => {
             setIsLoading(true);
             store.patientData.events[details.id].results = results;
             await syncPatientData(store.patientData);
-        }
-        finally {
+        } finally {
             setIsLoading(false);
             setExpanded(false);
         }
@@ -103,12 +102,11 @@ const hasResultsDropdown = (details) => details.checkup && (details.checkup === 
 
 const JourneyTab = ({navigation, mainCalendarRefresh, setIsLoading}) => {
     RouteGuard(navigation);
-
-    const {patientData} = store;
-
     if (store.noData()) {
         return <View/>
     }
+
+    const {patientData} = store;
 
     const daysListRef = useRef(null);
     const [selectedDay, setSelectedDay] = useState(moment().utc().startOf('day'));

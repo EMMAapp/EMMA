@@ -62,6 +62,9 @@ const BloodChart = ({title, bloodResults, resultName}) => (
 
 const ChartsTab = ({navigation, mainCalendarRefresh}) => {
     RouteGuard(navigation);
+    if (store.noData()) {
+        return <View/>
+    }
 
     const {patientData} = store;
     const periodsMoments = patientData.periods.map(period => wixDateToMoment(period.date));

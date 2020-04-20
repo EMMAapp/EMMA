@@ -1,16 +1,10 @@
 import React from 'react'
 import {Platform, SafeAreaView} from 'react-native'
-import styled from "styled-components"
 import {marginStyle} from "../constants/Styles";
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 
-const StyledView = styled(SafeAreaView)`
-  flex: 1;
-  align-items: flex-start;
-`;
-
 export default ({children, style, widthPercentage}) =>
-    <StyledView style={style}>
+    <SafeAreaView style={[{flex: 1, alignItems: 'center'}, style]}>
         <KeyboardAwareScrollView
             keyboardShouldPersistTaps="handled"
             style={[
@@ -22,4 +16,4 @@ export default ({children, style, widthPercentage}) =>
         >
             {children}
         </KeyboardAwareScrollView>
-    </StyledView>
+    </SafeAreaView>

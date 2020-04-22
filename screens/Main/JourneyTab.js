@@ -68,10 +68,10 @@ const Event = ({dayTime, details, setIsLoading}) => {
             }
         </Row>
         {
-            isExpanded && details.checkup === "Blood Test" && <View><BloodTestResults results={details.results || {}} setResults={updateResults}/></View>
+            details.checkup === "Blood Test" && <View><BloodTestResults isExpanded={isExpanded} results={details.results || {}} setResults={updateResults}/></View>
         }
         {
-            isExpanded && details.checkup === "Ultrasound" && <View><UltrasoundResults results={details.results || {}} setResults={updateResults}/></View>
+            details.checkup === "Ultrasound" && <View><UltrasoundResults isExpanded={isExpanded} results={details.results || {}} setResults={updateResults}/></View>
         }
     </View>
 };

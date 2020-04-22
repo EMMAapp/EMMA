@@ -8,7 +8,7 @@ import BinaryBoxes, {OptionBox} from "./BinaryBoxes";
 import ButtonPrimary from "./ButtonPrimary";
 import {marginStyle} from "../constants/Styles";
 
-export default ({results, setResults}) =>
+export default ({results, setResults, isExpanded}) =>
 {
     const [estrogen, setEstrogen] = useState(results.estrogen || 0);
     const [estrogenUnit, setEstrogenUnit] = useState(results.estrogenUnit || 'pmol');
@@ -16,7 +16,7 @@ export default ({results, setResults}) =>
     const [progesterone, setProgesterone] = useState(results.progesterone || 0);
     const [progesteroneUnit, setProgesteroneUnit] = useState(results.progesteroneUnit || 'ng');
 
-    return <View>
+    return isExpanded && <View>
         <Text size={9} style={[marginStyle(5, 'top'), marginStyle(15, 'bottom')]}>
             {localization('insertBloodTest')}
         </Text>

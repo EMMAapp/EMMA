@@ -51,12 +51,12 @@ const OvaryResults = ({titleKey, results, setResults}) => (
     </View>
 );
 
-export default ({results, setResults}) => {
+export default ({results, setResults, isExpanded}) => {
     const [left, setLeft] = useState(results.left || {});
     const [right, setRight] = useState(results.right || {});
     const [endoThickness, setEndoThickness] = useState(results.endoThickness || 0);
 
-    return <View>
+    return isExpanded && <View>
         <Text size={9} style={[marginStyle(5, 'top'), marginStyle(15, 'bottom')]}>
             {localization('insertUltrasound')}
         </Text>

@@ -34,6 +34,8 @@ export const store = {
 export default store;
 
 export async function retrievePatient() {
+    await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+    //await firebase.firestore().disableNetwork();
     try {
         await new Promise((resolve => {
             try {
@@ -72,12 +74,13 @@ export async function retrievePatientData() {
         else {
             store.patientData = {...initialPatientData};
         }
-        return store.patientData;
     }
     catch (e) {
         logWarn(e.message);
-        return null;
+        store.patientData = {...initialPatientData};
     }
+
+    return store.patientData;
 }
 
 export async function syncPatientData(updatedPatientData) {

@@ -95,7 +95,6 @@ async function loadResourcesAsync() {
             'sf-pro-bold': require('./assets/fonts/SF-Pro-Text-Bold.ttf'),
         }),
         retrievePatient(),
-        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
     ]);
 }
 

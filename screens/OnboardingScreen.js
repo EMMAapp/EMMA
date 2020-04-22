@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {TouchableOpacity, Dimensions, View} from 'react-native'
+import {Dimensions, TouchableOpacity} from 'react-native'
 import {store, syncPatientData} from '../store';
 import RouteGuard from "../navigation/RouteGuard";
 import localization from "../utils/localization";
@@ -18,7 +18,6 @@ import IconAndText from "../components/IconAndText";
 import BirthPicker from "../components/BirthPicker";
 import Image from "../components/Image";
 import appContext from "../utils/context";
-import _ from "lodash";
 
 const QuestionText = (props) =>
     <Text
@@ -26,6 +25,13 @@ const QuestionText = (props) =>
         {...props}>
         {props.children}
     </Text>;
+
+export const fixPeriodCycleValue = (value) => {
+    if (value < 20 || value > 45) {
+        return 28;
+    }
+    return value;
+};
 
 const OnboardingScreen = ({navigation, setIsLoading}) => {
 
@@ -38,7 +44,7 @@ const OnboardingScreen = ({navigation, setIsLoading}) => {
     const submit = async () => {
         setIsLoading(true);
         const periods = [{date: lastPeriodDate}];
-        const patientData = {...store.patientData, averagePeriodCycleDays, isPeriodRegular, periods};
+        const patientData = {...store.patientData, averagePeriodCycleDays: fixPeriodCycleValue(averagePeriodCycleDays), isPeriodRegular, periods};
         await syncPatientData(patientData);
         setIsLoading(false);
         RouteGuard(navigation);
@@ -86,7 +92,10 @@ const OnboardingScreen = ({navigation, setIsLoading}) => {
                     <QuestionText style={paddingStyle(2, 'bottom')}>{localization('periodCyclePrefix')}</QuestionText>
                     <NumericInput
                         value={averagePeriodCycleDays}
-                        setValue={value => setAveragePeriodCycleDays(value > 45 ? 28 : value)}
+                        setValue={value => {
+                            setAveragePeriodCycleDays(value);
+                            setTimeout(() => setAveragePeriodCycleDays(value => fixPeriodCycleValue(value)), 2000)
+                        }}
                         style={marginStyle(5)}
                     />
                     <QuestionText style={paddingStyle(2, 'bottom')}>{localization('periodCycleSuffix')}</QuestionText>

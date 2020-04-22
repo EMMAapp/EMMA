@@ -21,6 +21,7 @@ import LicensesModal from "../../components/LicensesModal";
 import appContext from "../../utils/context";
 import ButtonPrimary from "../../components/ButtonPrimary";
 import _ from "lodash";
+import {fixPeriodCycleValue} from "../OnboardingScreen";
 
 const QuestionText = (props) =>
     <Text
@@ -28,7 +29,6 @@ const QuestionText = (props) =>
         {...props}>
         {props.children}
     </Text>;
-
 
 const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
     RouteGuard(navigation);
@@ -86,7 +86,10 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
             <QuestionText style={paddingStyle(2, 'bottom')}>{localization('periodCyclePrefix')}</QuestionText>
             <NumericInput
                 value={newAveragePeriodCycleDays || averagePeriodCycleDays}
-                setValue={value => setAveragePeriodCycleDays(value)}
+                setValue={value => {
+                    setAveragePeriodCycleDays(value);
+                    setTimeout(() => setAveragePeriodCycleDays(value => fixPeriodCycleValue(value)), 2000)
+                }}
                 style={marginStyle(5)}
             />
             <QuestionText style={paddingStyle(2, 'bottom')}>{localization('periodCycleSuffix')}</QuestionText>
@@ -112,13 +115,7 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
             onPress={async () => {
                 let keyValues = [];
                 if (newAveragePeriodCycleDays) {
-                    if (newAveragePeriodCycleDays < 20 || newAveragePeriodCycleDays > 45) {
-                        setAveragePeriodCycleDays(28);
-                        keyValues.push({key: 'averagePeriodCycleDays', value: 28})
-                    }
-                    else {
-                        keyValues.push({key: 'averagePeriodCycleDays', value: newAveragePeriodCycleDays})
-                    }
+                    keyValues.push({key: 'averagePeriodCycleDays', value: fixPeriodCycleValue(newAveragePeriodCycleDays)});
                 }
                 if (newWeekStartDay) {
                     keyValues.push({key: 'weekStartDay', value: newWeekStartDay})

@@ -95,6 +95,7 @@ const en = {
     'setFor': 'Set for',
     'selectMonth': 'Select month',
     'selectYear': 'Select year',
+    'appVersion': 'App Version',
 
     'months': {
         '1': 'January',

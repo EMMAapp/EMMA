@@ -22,6 +22,7 @@ import appContext from "../../utils/context";
 import ButtonPrimary from "../../components/ButtonPrimary";
 import _ from "lodash";
 import {fixPeriodCycleValue} from "../OnboardingScreen";
+const version = require("../../app").expo.version;
 
 const QuestionText = (props) =>
     <Text
@@ -162,18 +163,8 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
             </TouchableOpacity>
         </Row>
 
-        {
-            __DEV__ &&
-            <TouchableOpacity onPress={() => logout()}><QuestionText>logout</QuestionText></TouchableOpacity>
-        }
-        {
-            __DEV__ &&
-            <TouchableOpacity onPress={() => navigation.navigate(ONBOARDING)}><QuestionText>onboarding</QuestionText></TouchableOpacity>
-        }
-        {
-            __DEV__ &&
-            <TouchableOpacity onPress={() => testNotification()}><QuestionText>notification</QuestionText></TouchableOpacity>
-        }
+
+        <QuestionText size={5} style={paddingStyle(50, 'top')}>{`${localization('appVersion')} ${version}`}</QuestionText>
 
     </Container>;
 };

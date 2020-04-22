@@ -142,12 +142,6 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
             </TouchableOpacity>
         </Row>
 
-        <Row>
-            <TouchableOpacity activeOpacity={1} onPress={() => logout()} style={paddingStyle(3, 'bottom')}>
-                <QuestionText underline color={Colors.purple}>{localization('logout')}</QuestionText>
-            </TouchableOpacity>
-        </Row>
-
         <ValidationModal
             isVisible={showDeleteValidationModal}
             title={localization('areYouSureDeleteAllData')}
@@ -168,6 +162,10 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
             </TouchableOpacity>
         </Row>
 
+        {
+            __DEV__ &&
+            <TouchableOpacity onPress={() => logout()}><QuestionText>logout</QuestionText></TouchableOpacity>
+        }
         {
             __DEV__ &&
             <TouchableOpacity onPress={() => navigation.navigate(ONBOARDING)}><QuestionText>onboarding</QuestionText></TouchableOpacity>

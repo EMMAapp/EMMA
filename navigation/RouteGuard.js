@@ -1,5 +1,5 @@
 import store from "../store";
-import {MAIN, ONBOARDING, LOGIN} from "./Routes";
+import {JOURNEY, ONBOARDING, LOGIN, CALENDAR} from "./Routes";
 import _ from "lodash";
 
 export default function RouteGuard(navigation) {
@@ -7,9 +7,16 @@ export default function RouteGuard(navigation) {
         navigation.navigate(LOGIN);
         return;
     }
+
     if (_.isEmpty(store.patientData.periods)) {
         navigation.navigate(ONBOARDING);
         return;
     }
-    navigation.navigate(MAIN);
+
+    if (_.isEmpty(store.patientData.events)) {
+        navigation.navigate(CALENDAR);
+        return;
+    }
+
+    navigation.navigate(JOURNEY);
 }

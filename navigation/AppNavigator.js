@@ -2,7 +2,7 @@ import React from 'react';
 import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {LOGIN, MAIN, ONBOARDING} from "./Routes";
-import MainTabNavigator from "./MainTabNavigator";
+import MainTabNavigator from "./BottomTabNavigator";
 import LoginScreen from "../screens/Auth/LoginScreen";
 import OnboardingScreen from "../screens/OnboardingScreen";
 

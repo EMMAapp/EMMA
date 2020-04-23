@@ -56,9 +56,9 @@ export default ({}) => {
                 keyboardHidesTabBar: true
             }}>
             <Tab.Screen name={JOURNEY} component={JourneyTab}/>
-            <Tab.Screen name={CALENDAR} component={CalendarTabWrapper}/>
-            <Tab.Screen name={EDIT_EVENT} component={EditEventTab}/>
             <Tab.Screen name={CHARTS} component={ChartsTab}/>
+            <Tab.Screen name={EDIT_EVENT} component={EditEventTab}/>
+            <Tab.Screen name={CALENDAR} component={CalendarTabWrapper}/>
             <Tab.Screen name={PROFILE} component={ProfileTab}/>
         </Tab.Navigator>
     )

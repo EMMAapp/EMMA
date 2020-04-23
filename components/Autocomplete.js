@@ -17,7 +17,7 @@ export default ({items, selectedItem, setSelectedItem, itemWidth, textAlign, sty
             if (item && textInputRef.current && item !== textInputRef.current.props.value) {
                 if (Platform.OS === 'ios') {
                     setTimeout(() => {
-                        textInputRef.current.setNativeProps({ text: item });
+                        textInputRef.current?.setNativeProps({ text: item });
                     }, 500);
                 }
                 else {

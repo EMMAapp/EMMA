@@ -42,7 +42,7 @@ export const setNotification = async (title, body, dateMoment) => {
     try {
         await setup();
         const id = await Notifications.scheduleLocalNotificationAsync(createNotification(title, body), {time: dateMoment.toDate()});
-        logInfo(`Registered notification ${id} at ${dateMoment}`);
+        logInfo(`Registered notification ${id} at ${dateMoment.format("LLLL")}`);
         return id;
     }
     catch (e) {

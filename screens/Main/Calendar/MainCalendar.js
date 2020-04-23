@@ -3,7 +3,7 @@ import {Calendar} from "react-native-calendars";
 import Colors from "../../../constants/Colors";
 import {pushByMapKey} from "../../../utils/utils";
 import {calendarTheme, marginStyle} from "../../../constants/Styles";
-import store from "../../../store";
+import {calendarFirstDay} from "../../../store";
 
 const selectedDayColoring = {selected: true, marked: true, selectedColor: Colors.purple};
 
@@ -16,7 +16,6 @@ export default function CalendarTab({
 
     const currentMarkedDates = {...markedDates};
     pushByMapKey(currentMarkedDates, selectedDay, selectedDayColoring);
-    const firstDay = store.patientData.weekStartDay - 1;
 
     return (
         <Calendar
@@ -25,7 +24,7 @@ export default function CalendarTab({
             onDayPress={(day) => setSelectedDay(day.dateString)}
             markedDates={currentMarkedDates}
             monthFormat={'yyyy MM'}
-            firstDay={firstDay}
+            firstDay={calendarFirstDay()}
             dayComponent={dayRender}
             theme={{
                 ...calendarTheme,

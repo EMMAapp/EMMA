@@ -14,14 +14,14 @@ export const setNewNotifications = async (event) => {
         for (const eventAndReminder of event.eventsAndReminders) {
             if (!eventAndReminder.reminderDisabled) {
                 const {hour, minute} = eventAndReminder.reminder;
-                const reminderMoment = wixDateToMoment(date).add(hour, 'hours').add(minute, "minutes");
-                if (!isInFuture(reminderMoment)) {
+                const notificationMoment = wixDateToMoment(date).add(hour, 'hours').add(minute, "minutes");
+                if (!isInFuture(notificationMoment)) {
                     continue;
                 }
                 const id = await setNotification(
                     localization(event.medication ? 'medicationReminder' : 'checkupReminder'),
                     `${localization('reminderAt')} ${dayTimeToDisplayString(eventAndReminder.event)}. ${event.note}`,
-                    reminderMoment
+                    notificationMoment
                 );
                 notificationIds.push(id);
             }

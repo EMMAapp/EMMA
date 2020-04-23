@@ -159,3 +159,7 @@ export async function purgePatient() {
     await firebase.firestore().collection('patients').doc(store.patientId).delete();
     await logoutPatient();
 }
+
+export function calendarFirstDay() {
+    return store.patientData ? store.patientData.weekStartDay - 1 : 1;
+}

@@ -1,7 +1,7 @@
-import {FlatList, Platform, View} from "react-native";
+import React, {useEffect, useState} from "react";
+import {Animated, FlatList, Platform, View} from "react-native";
 import {dayTimeToDisplayString, isAfterOrEquals, momentToDisplayString, wixDateToMoment} from "../utils/dayTime";
 import _ from "lodash";
-import React from "react";
 import shortid from "shortid";
 import Text from "./Text";
 import Colors from "../constants/Colors";
@@ -13,14 +13,41 @@ import moment from "moment";
 import Row from "./Row";
 import Divider from "./Divider";
 import IconButton from "./IconButton";
-import Layout from "../constants/Layout";
 
-const NoItems = () =>
-    <View style={{flex: 1, alignItems: 'center'}}>
+const NoItems = () => {
+    const [marginTopAnimation] = useState(new Animated.Value(0));
+    useEffect(() => {
+        Animated.loop(
+            Animated.sequence([
+                Animated.timing(
+                    marginTopAnimation,
+                    {
+                        toValue: 10,
+                        duration: 800
+                    }
+                ),
+                Animated.timing(
+                    marginTopAnimation,
+                    {
+                        toValue: 0,
+                        duration: 800
+                    }
+                )
+            ])
+        ).start()
+    }, []);
+
+    return (<View style={{alignItems: 'center', height: '100%'}}>
         <Image name='beachAnimation' height={Platform.OS === 'ios' ? 80 : 65} width={200}/>
         <Text bold size={12} color={Colors.pink}>{localization('addTreatmentPlan')}</Text>
-        <Icon name='down' color={Colors.pink} scale={1.5} style={marginStyle(7, 'right')}/>
-    </View>;
+        {
+            Platform.OS === 'ios' && <View style={{height: '20%'}}/>
+        }
+        <Animated.View style={{marginTop: marginTopAnimation}}>
+            <Icon name='down' color={Colors.pink} scale={1.5} style={marginStyle(7, 'right')}/>
+        </Animated.View>
+    </View>)
+};
 
 const AgendaItem = ({dayTime, details, onEventPressed, noDivider, disabled}) => {
     const AgendaItemBody = () => (
@@ -90,10 +117,10 @@ export function AgendaDay({momentDate, events, onEventPressed, withPadding}) {
 export function Agenda({selectedDay, eventedDateMoments, agendaDayRender}) {
     const filteredEvents = _.filter(eventedDateMoments, dateMoment =>
         isAfterOrEquals(dateMoment, moment()) || isAfterOrEquals(dateMoment, wixDateToMoment(selectedDay))
-    )
+    );
     return _.isEmpty(filteredEvents) ?
         <NoItems/> :
-        <View >
+        <View>
             <View style={[
                 paddingStyle(15),
                 paddingStyle(2, 'top')

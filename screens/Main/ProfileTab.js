@@ -163,6 +163,18 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
             </TouchableOpacity>
         </Row>
 
+        {
+            __DEV__ &&
+            <TouchableOpacity onPress={() => logout()}><QuestionText>logout</QuestionText></TouchableOpacity>
+        }
+        {
+            __DEV__ &&
+            <TouchableOpacity onPress={() => navigation.navigate(ONBOARDING)}><QuestionText>onboarding</QuestionText></TouchableOpacity>
+        }
+        {
+            __DEV__ &&
+            <TouchableOpacity onPress={() => testNotification()}><QuestionText>notification</QuestionText></TouchableOpacity>
+        }
 
         <QuestionText size={5} style={paddingStyle(50, 'top')}>{`${localization('appVersion')} ${version}`}</QuestionText>
 

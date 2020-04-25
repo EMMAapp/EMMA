@@ -16,6 +16,9 @@ if (!global.atob) {
     global.atob = decode
 }
 
+const auth = firebase.auth();
+const firestore = firebase.firestore();
+
 const initialPatientData = {
     month: null,
     year: null,
@@ -34,12 +37,13 @@ export const store = {
 export default store;
 
 export async function retrievePatient() {
-    await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-    //await firebase.firestore().disableNetwork();
+    await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+    await firestore.enablePersistence();
+    //await firestore.disableNetwork();
     try {
         await new Promise((resolve => {
             try {
-                firebase.auth().onAuthStateChanged(patient => {
+                auth.onAuthStateChanged(patient => {
                     store.patientId = patient?.uid;
                     resolve();
                 })
@@ -62,12 +66,14 @@ export async function retrievePatient() {
     }
 }
 
+const patientDoc = () => firestore.collection('patients').doc(store.patientId);
+
 export async function retrievePatientData() {
     try {
         if (!store.patientId) {
             return;
         }
-        const doc = await firebase.firestore().collection('patients').doc(store.patientId).get();
+        const doc = await patientDoc().get();
         if (doc.exists) {
             store.patientData = doc.data();
         }
@@ -86,7 +92,7 @@ export async function retrievePatientData() {
 export async function syncPatientData(updatedPatientData) {
     try {
         store.patientData = updatedPatientData;
-        await firebase.firestore().collection('patients').doc(store.patientId).set(store.patientData);
+        await patientDoc().set(store.patientData);
     }
     catch (e) {
         logError(e.message);
@@ -94,7 +100,7 @@ export async function syncPatientData(updatedPatientData) {
 }
 
 async function logInWithCredential(credential) {
-    const userCredential = await firebase.auth().signInWithCredential(credential);
+    const userCredential = await auth.signInWithCredential(credential);
     store.patientId = userCredential.user.uid;
     store.patientId = userCredential.user.uid;
     await retrievePatientData();
@@ -150,13 +156,13 @@ export async function logoutPatient() {
     _.forOwn(store.patientData.events, async (event, eventId) => {
         await unsetAllNotifications(event);
     });
-    await firebase.auth().signOut();
+    await auth.signOut();
     store.patientId = null;
     store.patientData = null;
 }
 
 export async function purgePatient() {
-    await firebase.firestore().collection('patients').doc(store.patientId).delete();
+    await patientDoc().delete();
     await logoutPatient();
 }
 

@@ -1,6 +1,6 @@
 import * as firebase from "firebase";
 import '@firebase/firestore';
-import {logError, logWarn} from "./utils/log";
+import {logError, logInfo} from "./utils/log";
 import * as Facebook from "expo-facebook";
 import * as GoogleSignIn from 'expo-google-sign-in';
 import {setNewNotifications, unsetAllNotifications} from "./utils/notificationsSync";
@@ -9,6 +9,7 @@ import * as moment from "moment";
 import * as Localization from 'expo-localization';
 import {decode, encode} from 'base-64'
 import firebaseConfig from "./firebaseConfig";
+import {getItem, setItem} from './utils/storage';
 
 if (!global.btoa) {
     global.btoa = encode
@@ -21,7 +22,9 @@ try {
     firebase.initializeApp(firebaseConfig);
 }
 catch (e) {
-    console.error(e)
+    if (!_.includes(e.message, "already exists")) {
+        logError(e);
+    }
 }
 
 const auth = firebase.auth();
@@ -34,7 +37,8 @@ const initialPatientData = {
     periods: [],
     averagePeriodCycleDays: 28,
     events: {},
-    weekStartDay: moment.localeData(Localization.locale).firstDayOfWeek() || 2
+    weekStartDay: moment.localeData(Localization.locale).firstDayOfWeek() || 2,
+    revision: 0
 };
 
 export const store = {
@@ -46,8 +50,6 @@ export default store;
 
 export async function retrievePatient() {
     await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-    //await firestore.enablePersistence();
-    //await firestore.disableNetwork();
     try {
         await new Promise((resolve => {
             try {
@@ -77,33 +79,59 @@ export async function retrievePatient() {
 const patientDoc = () => firestore.collection('patients').doc(store.patientId);
 
 export async function retrievePatientData() {
+    let patientData = await getItem(store.patientId);
+    let remotePatientData = null;
     try {
         if (!store.patientId) {
             return;
         }
         const doc = await patientDoc().get();
-        if (doc.exists) {
-            store.patientData = doc.data();
-        }
-        else {
-            store.patientData = {...initialPatientData};
-        }
+        remotePatientData = doc.exists ? doc.data() : null;
     }
     catch (e) {
-        logWarn(e.message);
-        store.patientData = {...initialPatientData};
+        if (!_.includes(e.message, "the client is offline")) {
+            logError(e.message);
+        }
+        else {
+            logInfo(e.message)
+        }
     }
 
-    return store.patientData;
+    if (!patientData) {
+        patientData = remotePatientData;
+    }
+    else if (remotePatientData) {
+        const localRevision = patientData.revision || 0;
+        const remoteRevision = remotePatientData.revision || 0;
+        if (localRevision || remoteRevision) {
+            await patientDoc().set(patientData);
+        }
+        else if (localRevision < remoteRevision) {
+            patientData = remotePatientData;
+            await setItem(store.patientId, patientData);
+        }
+    }
+
+    if (!patientData) {
+        patientData = {...initialPatientData};
+    }
+    store.patientData = patientData;
+    return patientData;
 }
 
 export async function syncPatientData(updatedPatientData) {
     try {
-        store.patientData = updatedPatientData;
+        store.patientData = {...updatedPatientData, revision: store.patientData.revision + 1};
+        await setItem(store.patientId, store.patientData);
         await patientDoc().set(store.patientData);
     }
     catch (e) {
-        logError(e.message);
+        if (!_.includes(e.message, "the client is offline")) {
+            logError(e.message);
+        }
+        else {
+            logInfo(e.message)
+        }
     }
 }
 

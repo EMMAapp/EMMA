@@ -8,12 +8,20 @@ import _ from "lodash";
 import * as moment from "moment";
 import * as Localization from 'expo-localization';
 import {decode, encode} from 'base-64'
+import firebaseConfig from "./firebaseConfig";
 
 if (!global.btoa) {
     global.btoa = encode
 }
 if (!global.atob) {
     global.atob = decode
+}
+
+try {
+    firebase.initializeApp(firebaseConfig);
+}
+catch (e) {
+    console.error(e)
 }
 
 const auth = firebase.auth();
@@ -38,7 +46,7 @@ export default store;
 
 export async function retrievePatient() {
     await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-    await firestore.enablePersistence();
+    //await firestore.enablePersistence();
     //await firestore.disableNetwork();
     try {
         await new Promise((resolve => {

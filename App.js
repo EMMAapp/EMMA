@@ -5,12 +5,10 @@ import * as Font from 'expo-font';
 import React, {useState} from 'react';
 import {Platform, StatusBar, View} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
-import * as firebase from 'firebase';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 import AppNavigator from './navigation/AppNavigator';
 import {retrievePatient} from './store';
-import firebaseConfig from "./firebaseConfig";
 import {logError} from "./utils/log";
 import LoadingModal from "./components/LoadingModal";
 import androidWarningFix from './utils/androidWarningFix';
@@ -30,11 +28,6 @@ EStyleSheet.build({
 
 androidWarningFix();
 
-try {
-    firebase.initializeApp(firebaseConfig);
-}
-catch (e) {
-}
 
 const Container = styled(View)`
   flex: 1;

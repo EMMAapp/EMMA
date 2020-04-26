@@ -16,6 +16,7 @@ import Facebook from "../assets/icons/facebook.svg"
 import Google from "../assets/icons/google.svg"
 import Today from "../assets/icons/today.svg"
 import Folder from "../assets/icons/folder.svg"
+import DrawerHandle from "../assets/icons/drawer-handle.svg"
 
 const getIconByName = (name, style) => {
     switch (name) {
@@ -49,6 +50,8 @@ const getIconByName = (name, style) => {
             return <Today style={style}/>;
         case "folder":
             return <Folder style={style}/>;
+        case "drawer-handle":
+            return <DrawerHandle style={style}/>;
         default:
             return null;
     }

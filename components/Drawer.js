@@ -3,6 +3,7 @@ import {ScrollView, TouchableOpacity, View} from "react-native";
 import Icon from "./Icon";
 import {borderRadiusStyle, marginStyle, paddingStyle, shadowStyle} from "../constants/Styles";
 import GestureRecognizer from 'react-native-swipe-gestures';
+import Colors from "../constants/Colors";
 
 export default function Drawer({isExpanded, setIsExpanded, renderCollapsed, renderExpanded}) {
     return (
@@ -18,7 +19,7 @@ export default function Drawer({isExpanded, setIsExpanded, renderCollapsed, rend
                 bounces={false}
             >
                 <TouchableOpacity activeOpacity={1} onPress={() => setIsExpanded(!isExpanded)} style={{width: '100%', alignItems: 'center'}}>
-                    <Icon name={isExpanded ? 'down' : 'up'}/>
+                    <Icon name='drawer-handle' color={Colors.gray}/>
                 </TouchableOpacity>
                 {
                     isExpanded ? renderExpanded() :

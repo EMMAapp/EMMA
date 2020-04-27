@@ -16,6 +16,7 @@ import ScatterPlot from "../../components/ScatterPlot";
 import Image from "../../components/Image";
 import appContext from "../../utils/context";
 import RouteGuard from "../../navigation/RouteGuard";
+import Swipe from "../../components/Swipe";
 
 
 const extractResults = (events, periodStartMoment, nextPeriodStartMoment) => {
@@ -76,10 +77,17 @@ const ChartsTab = ({navigation, mainCalendarRefresh}) => {
     const ultrasoundResult = _.last(_.values(ultrasoundResults).filter(value => !_.isEmpty(value)));
     const ultrasoundAny = ultrasoundResult && !(_.isEmpty(ultrasoundResult.left) && _.isEmpty(ultrasoundResult.right));
 
+    const hasLeft = periodIndex > 0;
+    const hasRight = periodIndex < periodsMoments.length - 1;
+
     return <Container key={mainCalendarRefresh} style={{backgroundColor: Colors.grayLight}} widthPercentage={90}>
+        <Swipe
+        onRight={() => hasRight && setPeriodIndex(periodIndex + 1)}
+        onLeft={() => hasLeft && setPeriodIndex(periodIndex - 1)}
+        >
         <Row>
             {
-                periodIndex > 0 &&
+                hasLeft > 0 &&
                 <TouchableOpacity onPress={() => setPeriodIndex(periodIndex - 1)}>
                     <Row>
                         <Icon name="left"/>
@@ -89,7 +97,7 @@ const ChartsTab = ({navigation, mainCalendarRefresh}) => {
             }
             <View style={{flex: 1}}/>
             {
-                periodIndex < periodsMoments.length - 1 &&
+                hasRight &&
                 <TouchableOpacity onPress={() => setPeriodIndex(periodIndex + 1)}>
                     <Row>
                         <Text>{localization("nextPeriod")}</Text>
@@ -135,6 +143,7 @@ const ChartsTab = ({navigation, mainCalendarRefresh}) => {
                     }
                 </View>
         }
+        </Swipe>
     </Container>;
 };
 

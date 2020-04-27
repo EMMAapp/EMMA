@@ -1,8 +1,7 @@
-import {Calendar} from "react-native-calendars";
 import React, {useState} from "react";
 import {borderRadiusStyle, calendarTheme, marginStyle} from "../../../constants/Styles";
 import Colors from "../../../constants/Colors";
-import {calendarFirstDay} from "../../../store";
+import Calendar from "../../../components/Calendar";
 
 export default ({onDayPress, coloredDays}) => {
     const [current, setCurrent] = useState(Date());
@@ -18,7 +17,6 @@ export default ({onDayPress, coloredDays}) => {
             setCurrent(day.dateString);
             onDayPress(day);
         }}
-        firstDay={calendarFirstDay()}
         markedDates={markedDates}
         markingType={'period'}
         style={[borderRadiusStyle(5), marginStyle(5, 'top'), {borderWidth: 1, borderColor: Colors.grayMedium}]}

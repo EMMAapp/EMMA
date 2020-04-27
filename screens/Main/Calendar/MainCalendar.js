@@ -1,9 +1,8 @@
 import React from 'react';
-import {Calendar} from "react-native-calendars";
 import Colors from "../../../constants/Colors";
 import {pushByMapKey} from "../../../utils/utils";
 import {calendarTheme, marginStyle} from "../../../constants/Styles";
-import {calendarFirstDay} from "../../../store";
+import Calendar from "../../../components/Calendar";
 
 const selectedDayColoring = {selected: true, marked: true, selectedColor: Colors.purple};
 
@@ -23,9 +22,7 @@ export default function CalendarTab({
             current={selectedDay}
             onDayPress={(day) => setSelectedDay(day.dateString)}
             markedDates={currentMarkedDates}
-            monthFormat={'yyyy MM'}
-            firstDay={calendarFirstDay()}
-            dayComponent={dayRender}
+            dayRender={dayRender}
             theme={{
                 ...calendarTheme,
                 'stylesheet.day.basic': {

@@ -1,4 +1,3 @@
-import {Calendar} from "react-native-calendars";
 import React, {useState} from "react";
 import {View} from "react-native";
 import {addDays, momentToWixDate, wixDateToMoment} from "../../../utils/dayTime";
@@ -10,7 +9,7 @@ import Colors from "../../../constants/Colors";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import Button from "../../../components/Button";
 import Row from "../../../components/Row";
-import {calendarFirstDay} from "../../../store";
+import Calendar from "../../../components/Calendar";
 
 const QuestionText = (props) =>
     <Text
@@ -32,7 +31,6 @@ export default ({lastPeriod, setPeriod}) => {
             onDayPress={day => setSelectedDate(day.dateString)}
             markedDates={markedDates}
             markingType={'period'}
-            firstDay={calendarFirstDay()}
             theme={calendarTheme}
         />
         <Row center>

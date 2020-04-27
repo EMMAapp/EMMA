@@ -45,7 +45,7 @@ const Event = ({dayTime, details, setIsLoading}) => {
             setExpanded(false);
         }
     };
-    return <View>
+    const body = (
         <Row>
             <Text color={eventColor(!!details.medication)}>
                 {dayTimeToDisplayString(dayTime)}
@@ -62,11 +62,18 @@ const Event = ({dayTime, details, setIsLoading}) => {
             <View style={{flex: 2}}/>
             {
                 hasResultsDropdown(details) &&
-                <TouchableOpacity onPress={() => setExpanded(!isExpanded)}>
-                    <Icon name={isExpanded ? "up" : "down"} color={Colors.purple}/>
-                </TouchableOpacity>
+                <Icon name={isExpanded ? "up" : "down"} color={Colors.purple}/>
             }
         </Row>
+    );
+    return <View>
+        {
+            hasResultsDropdown(details)
+                ? <TouchableOpacity onPress={() => setExpanded(!isExpanded)} activeOpacity={1}>
+                    {body}
+                </TouchableOpacity>
+                : body
+        }
         {
             details.checkup === "Blood Test" && <View><BloodTestResults isExpanded={isExpanded} results={details.results || {}} setResults={updateResults}/></View>
         }

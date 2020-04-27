@@ -9,7 +9,7 @@
     "build-ios-prod": "expo build:ios",
     "build-android": "expo build:android -t app-bundle",
     "upload-android": "expo upload:android --key service-account.json --track alpha",
-    "bump": "python bump_version.py",
+    "bump": "python3 bump_version.py",
     "pub": "expo publish"
   },
   "dependencies": {

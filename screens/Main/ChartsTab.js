@@ -73,8 +73,8 @@ const ChartsTab = ({navigation, mainCalendarRefresh}) => {
     const period = periodsMoments[periodIndex];
     const nextPeriod = periodIndex < periodsMoments.length - 1 ? periodsMoments[periodIndex + 1] : addDays(moment(), 1);
     const {bloodResults, ultrasoundResults} = extractResults(patientData.events, period, nextPeriod);
-    const ultrasoundResult = _.last(_.values(ultrasoundResults));
-    const ultrasoundAny = ultrasoundResult && (!_.isEmpty(ultrasoundResult.left) || !_.isEmpty(ultrasoundResult.right));
+    const ultrasoundResult = _.last(_.values(ultrasoundResults).filter(value => !_.isEmpty(value)));
+    const ultrasoundAny = ultrasoundResult && !(_.isEmpty(ultrasoundResult.left) && _.isEmpty(ultrasoundResult.right));
 
     return <Container key={mainCalendarRefresh} style={{backgroundColor: Colors.grayLight}} widthPercentage={90}>
         <Row>

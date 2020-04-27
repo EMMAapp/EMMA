@@ -12,12 +12,12 @@ import Row from "./Row";
 const HorizontalLine = styled(View)`
   opacity: .5;
   background-color: transparent;
-  width: ${props => props.width};
+  width: ${props => props.width}px;
   height: 1px;
   border-style: dashed;
   border-color: darkgray;
   border-width: 0.5px;
-  bottom: ${props => props.bottom};
+  bottom: ${props => props.bottom}px;
   position: absolute;
 `;
 
@@ -25,12 +25,12 @@ const VerticalLine = styled(View)`
   opacity: .5;
   background-color: transparent;
   width: 1px;
-  height: ${props => props.height};
+  height: ${props => props.height}px;
   border-style: dashed;
   border-color: darkgray;
   border-width: 0.5px;
   bottom: 0;
-  left: ${props => props.left};
+  left: ${props => props.left}px;
   position: absolute;
 `;
 
@@ -64,13 +64,13 @@ const DotSizeTable = (value) => {
 
 const Dot = styled(View)`
   opacity: 1;
-  width: ${props => `${props.size}px`};
-  height: ${props => `${props.size}px`};
+  width: ${props => props.size}px;
+  height: ${props => props.size}px;
   background-color: ${props => props.color};
-  bottom: ${props => props.bottom - props.size/2};
-  left: ${props => props.left - props.size/2};
+  bottom: ${props => props.bottom - props.size/2}px;
+  left: ${props => props.left - props.size/2}px;
   position: absolute;
-  border-radius: ${props => `${props.size}px`};
+  border-radius: ${props => props.size}px;
 `;
 
 const ScatterChart = ({data, chartWidth}) => {
@@ -149,7 +149,7 @@ export default ({title, dataSets, colors, setsTitles}) => {
             <Text size={9} color={Colors.pink} style={[marginStyle(5)]}>{title}</Text>
             {
                 setsTitles.map((setTitle, index) =>
-                    <Row>
+                    <Row key={index}>
                         <View style={{flex: 10}}/>
                         <Text size={6} key={index}  color={colors[index]} style={[paddingStyle(3, 'top'), marginStyle(5, 'right')]}>
                             •

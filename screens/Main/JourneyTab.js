@@ -76,11 +76,17 @@ const Event = ({dayTime, details, setIsLoading}) => {
     </View>
 };
 
-const DayReference = ({wixDate, setSelectedDay, eventsForDay}) => {
+const DayReference = ({wixDate, isSelected, setSelectedDay, eventsForDay}) => {
     const momentDate = wixDateToMoment(wixDate);
     const isPast = !isAfterOrEquals(momentDate, moment());
     return <TouchableOpacity onPress={() => setSelectedDay(momentDate)}>
-        <Card margin={5} padding={7} style={hwStyle(53, 53)} color={isPast ? Colors.gray : 'white'}>
+        <Card
+            margin={5}
+            padding={7}
+            style={hwStyle(53, 53)}
+            color={isPast ? Colors.grayMedium : 'white'}
+            borderColor={isSelected ? Colors.purple : null}
+        >
             <Row>
                 {
                     eventsForDay.some(event => event.medication) && <Dot color={eventColor(true)}/>
@@ -173,7 +179,15 @@ const JourneyTab = ({navigation, mainCalendarRefresh, setIsLoading}) => {
             ref={daysListRef}
             style={[marginStyle(5, 'left'), marginStyle(5, 'right')]}
             data={daysKeys}
-            renderItem={({item}) => <DayReference wixDate={item} setSelectedDay={setSelectedDay} eventsForDay={eventsByDay[item]}/>}
+            renderItem={
+                ({item}) =>
+                    <DayReference
+                        wixDate={item}
+                        isSelected={momentToWixDate(selectedDay) === item}
+                        setSelectedDay={setSelectedDay}
+                        eventsForDay={eventsByDay[item]}
+                    />
+            }
             keyExtractor={item => item}
             horizontal
             showsHorizontalScrollIndicator={false}

@@ -2,8 +2,8 @@ import React from 'react';
 import {ScrollView, TouchableOpacity, View} from "react-native";
 import Icon from "./Icon";
 import {borderRadiusStyle, marginStyle, paddingStyle, shadowStyle} from "../constants/Styles";
-import GestureRecognizer from 'react-native-swipe-gestures';
 import Colors from "../constants/Colors";
+import Swipe from "./Swipe";
 
 export default function Drawer({isExpanded, setIsExpanded, renderCollapsed, renderExpanded}) {
     return (
@@ -23,20 +23,14 @@ export default function Drawer({isExpanded, setIsExpanded, renderCollapsed, rend
                 </TouchableOpacity>
                 {
                     isExpanded ? renderExpanded() :
-                        <GestureRecognizer
-                            onSwipe={(gestureName, gestureState) => {
-                                const {dy} = gestureState;
-                                if (dy > 20 && isExpanded) {
-                                    setIsExpanded(false);
-                                }
-                                else if (dy < -20 && !isExpanded) {
-                                    setIsExpanded(true);
-                                }
-                            }}>
+                        <Swipe
+                            onUp={() => setIsExpanded(true)}
+                            onDown={() => setIsExpanded(false)}
+                        >
                             {
                                 renderCollapsed()
                             }
-                        </GestureRecognizer>
+                        </Swipe>
                 }
             </ScrollView>
         </View>

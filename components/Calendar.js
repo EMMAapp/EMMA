@@ -2,7 +2,7 @@ import React, {useRef} from 'react';
 import {Calendar} from "react-native-calendars";
 import {calendarTheme} from "../constants/Styles";
 import {calendarFirstDay} from "../store";
-import GestureRecognizer from 'react-native-swipe-gestures';
+import Swipe from "./Swipe";
 
 export default ({
     current,
@@ -17,16 +17,9 @@ export default ({
 }) => {
     const calendarRef = useRef(null);
     return (
-        <GestureRecognizer
-        onSwipe={(gestureName, gestureState) => {
-            const {dx} = gestureState;
-            if (dx > 20) {
-                calendarRef.current.addMonth(-1);
-            }
-            else if (dx < 20) {
-                calendarRef.current.addMonth(1);
-            }
-        }}
+        <Swipe
+            onLeft={() => calendarRef.current.addMonth(-1)}
+            onRight={() => calendarRef.current.addMonth(1)}
         >
             <Calendar
                 ref={calendarRef}
@@ -44,6 +37,6 @@ export default ({
                     ...theme
                 }}
             />
-        </GestureRecognizer>
+        </Swipe>
     );
 }

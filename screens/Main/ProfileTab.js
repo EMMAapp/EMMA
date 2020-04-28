@@ -28,7 +28,6 @@ import locales, {localesForAutocomplete} from "../../utils/locales";
 
 const version = require("../../app").expo.version;
 
-console.info(localesForAutocomplete)
 const QuestionText = (props) =>
     <Text
         style={[paddingStyle(15, 'top'), paddingStyle(5, 'bottom')]}

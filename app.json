@@ -9,7 +9,7 @@
       "android",
       "web"
     ],
-    "version": "0.0.4",
+    "version": "0.0.5",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "notification": {
@@ -44,7 +44,7 @@
     },
     "ios": {
       "bundleIdentifier": "com.emma.app",
-      "buildNumber": "0.0.4",
+      "buildNumber": "0.0.5",
       "supportsTablet": true,
       "requireFullScreen": false,
       "config": {
@@ -55,7 +55,7 @@
     },
     "android": {
       "package": "com.emma.app",
-      "versionCode": 4,
+      "versionCode": 5,
       "googleServicesFile": "./google-services.json",
       "config": {
         "googleSignIn": {

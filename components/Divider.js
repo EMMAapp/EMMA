@@ -7,6 +7,7 @@ import {marginStyle} from "../constants/Styles";
 const StyledView = styled(View)`
 border-width: ${props => props.bold ? '1px' : '0.5px'};
 border-color: ${props => props.color || Colors.gray};
+background-color: ${props => props.color || Colors.gray};
 opacity: ${props => props.bright ? 1 : 0.5};
 `;
 

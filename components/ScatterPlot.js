@@ -145,7 +145,7 @@ export default ({title, dataSets, colors, setsTitles}) => {
         }
     );
     return (
-        <Card margin={2} padding={2} style={[marginStyle(7, 'bottom')]}>
+        <Card margin={2} padding={2} style={marginStyle(7, 'bottom')}>
             <Text size={9} color={Colors.pink} style={[marginStyle(5)]}>{title}</Text>
             {
                 setsTitles.map((setTitle, index) =>
@@ -154,7 +154,7 @@ export default ({title, dataSets, colors, setsTitles}) => {
                         <Text size={6} key={index}  color={colors[index]} style={[paddingStyle(3, 'top'), marginStyle(5, 'right')]}>
                             •
                         </Text>
-                        <View style={{minWidth: 50, flex: 1}}>
+                        <View style={{minWidth: 70, flex: 1}}>
                             <Text size={6} key={index}  color={colors[index]} style={[paddingStyle(15, 'right'), paddingStyle(3, 'top')]}>
                                 {setTitle}
                             </Text>

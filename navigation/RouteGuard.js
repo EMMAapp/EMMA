@@ -13,10 +13,5 @@ export default function RouteGuard(navigation) {
         return;
     }
 
-    if (_.isEmpty(store.patientData.events)) {
-        navigation.navigate(CALENDAR);
-        return;
-    }
-
     navigation.navigate(MAIN);
 }

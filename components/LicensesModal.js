@@ -57,12 +57,12 @@ const formattedLicenses = _.map(licensesRaw, (licenseRaw, key) => {
     };
 });
 
-const LicenseListItem = ({image, licenseUrl, licenseText, version, username, name}) =>  (
+const LicenseListItem = ({image, licenseUrl, licenseText, version, username, name}) => (
     <Container style={[paddingStyle(5), marginStyle(5, 'bottom')]}>
         {
             image ?
-            <Image source={{uri: image}} style={[hwStyle(35, 35), borderRadiusStyle(35)]}/>
-            : <View style={hwStyle(35, 35)}/>
+                <Image source={{uri: image}} style={[hwStyle(35, 35), borderRadiusStyle(35)]}/>
+                : <View style={hwStyle(35, 35)}/>
         }
         <View style={paddingStyle(10, 'left')}>
             <Text>{`${name}${username !== name && username ? ` by ${_.capitalize(username)}` : ''}`}</Text>
@@ -79,7 +79,7 @@ const LicenseListItem = ({image, licenseUrl, licenseText, version, username, nam
 
 const Licenses = ({}) => (
     <FlatList
-        style={{flex: 1}}
+        style={{flex: 1, direction: 'ltr'}}
         keyExtractor={({key}) => key}
         data={_.orderBy(formattedLicenses, item => item.key)}
         renderItem={({item}) => <LicenseListItem {...item}/>}

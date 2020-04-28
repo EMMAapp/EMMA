@@ -1,12 +1,16 @@
 import React from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
+import {isRTL} from "../utils/localization";
 
 const THRESHOLD = 20;
 
 export default ({children, onUp, onDown, onLeft, onRight}) =>
     <GestureRecognizer
         onSwipe={(gestureName, gestureState) => {
-            const {dx, dy} = gestureState;
+            let {dx, dy} = gestureState;
+            if (isRTL) {
+                dx = -1 * dx;
+            }
             if (dx > THRESHOLD && onLeft) {
                 onLeft();
             }

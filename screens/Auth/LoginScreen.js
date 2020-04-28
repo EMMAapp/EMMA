@@ -24,6 +24,8 @@ const QuestionText = (props) =>
 
 
 const LoginScreen = ({navigation, setIsLoading}) => {
+    RouteGuard(navigation);
+
     const [agreeTerms, setAgreeTerms] = useState(false);
     const [termsIsVisible, setTermsIsVisible] = useState(false);
     const [hasError, setHasError] = useState(false);
@@ -53,7 +55,7 @@ const LoginScreen = ({navigation, setIsLoading}) => {
     };
 
     const canSubmit = agreeTerms;
-    
+
     return (
         <Container widthPercentage={90}>
             <Row center>

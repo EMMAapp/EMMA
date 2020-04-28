@@ -4,10 +4,11 @@ import styled from "styled-components"
 import Box from "./Box";
 import {fontSizeStyle} from "../constants/Styles";
 import Colors from "../constants/Colors";
+import {isRTL} from "../utils/localization";
 
 const StyledTextInput = styled(TextInput)`
 font-family: 'sf-pro-bold';
-text-align: ${props => props.alignLeft ? 'left' : 'center'};
+text-align: ${props => props.alignLeft ? (isRTL ? 'right' : 'left') : 'center'};
 justify-content: ${props => props.alignLeft ? 'flex-start' : 'center'};
 color: ${props => props.color || Colors.grayDark};
 height: 100%;

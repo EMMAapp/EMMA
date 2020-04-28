@@ -9,7 +9,7 @@ export default ({children, style, widthPercentage}) =>
             keyboardShouldPersistTaps="handled"
             style={[
                 marginStyle(Platform.OS === 'ios' ? 10 : 25, 'top'),
-                {width: `${widthPercentage || 100}%`},
+                {width: `${widthPercentage || 100}%`}
             ]}
             bounces={false}
             enableOnAndroid={true}

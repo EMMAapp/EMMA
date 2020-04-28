@@ -1,4 +1,5 @@
 import moment from "moment";
+import localization, {isRTL} from "./localization";
 
 export const dayTimeToDate = (dt) => {
     if (!dt) {
@@ -18,12 +19,16 @@ export const dateToDayTime = (date) => {
 
 export const dayTimeToDisplayString = (dt) => {
     let {hour, minute} = dt;
-    const suffix = hour <= 11 ? 'AM' : 'PM';
-    hour = hour % 12;
-    return `${hour <= 9 ? '0' + hour : hour}:${minute <= 9 ? '0' + minute : minute} ${suffix}`;
+    let suffix = "";
+    if (!isRTL) {
+        suffix = ` ${hour <= 11 ? localization('am') : localization('pm')}`;
+        hour = hour % 12;
+    }
+
+    return `${hour <= 9 ? '0' + hour : hour}:${minute <= 9 ? '0' + minute : minute}${suffix}`;
 };
 
-export const momentToDisplayString = (momentDate) => momentDate.format("dddd, MMM D");
+export const momentToDisplayString = (momentDate) => momentDate.format("dddd, MMMM D");
 
 export const momentToWixDate = (momentDate) => momentDate.format("YYYY-MM-DD");
 

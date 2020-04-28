@@ -13,7 +13,7 @@ export default function Drawer({isExpanded, setIsExpanded, renderCollapsed, rend
             marginStyle(7, 'top'),
             paddingStyle(7, 'top'),
             borderRadiusStyle(15, 'TopLeft'),
-            borderRadiusStyle(10, 'TopRight')
+            borderRadiusStyle(15, 'TopRight')
         ]}>
             <ScrollView
                 bounces={false}

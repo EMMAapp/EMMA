@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import moment from "moment";
 import store from "../../store";
 import {addDays, daysBetween, isAfterOrEquals, momentToDisplayString, wixDateToMoment} from "../../utils/dayTime";
@@ -9,7 +9,7 @@ import Text from "../../components/Text";
 import {marginStyle} from "../../constants/Styles";
 import localization from "../../utils/localization";
 import Row from "../../components/Row";
-import {TouchableOpacity, View} from "react-native";
+import {I18nManager, TouchableOpacity, View} from "react-native";
 import Icon from "../../components/Icon";
 import LineChart from "../../components/LineChart";
 import ScatterPlot from "../../components/ScatterPlot";
@@ -17,7 +17,6 @@ import Image from "../../components/Image";
 import appContext from "../../utils/context";
 import RouteGuard from "../../navigation/RouteGuard";
 import Swipe from "../../components/Swipe";
-
 
 const extractResults = (events, periodStartMoment, nextPeriodStartMoment) => {
     const bloodResults = {};
@@ -80,7 +79,10 @@ const ChartsTab = ({navigation, mainCalendarRefresh}) => {
     const hasLeft = periodIndex > 0;
     const hasRight = periodIndex < periodsMoments.length - 1;
 
-    return <Container key={mainCalendarRefresh} style={{backgroundColor: Colors.grayLight}} widthPercentage={90}>
+    return <Container
+        key={mainCalendarRefresh}
+        style={{backgroundColor: Colors.grayLight, direction: 'ltr'}}
+        widthPercentage={90}>
         <Swipe
         onRight={() => hasRight && setPeriodIndex(periodIndex + 1)}
         onLeft={() => hasLeft && setPeriodIndex(periodIndex - 1)}

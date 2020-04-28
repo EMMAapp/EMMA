@@ -16,8 +16,6 @@ import appContext from "./utils/context";
 import * as Sentry from 'sentry-expo';
 import {ErrorBoundary} from "./utils/ErrorBoundary";
 
-I18nManager.forceRTL(false);
-
 Sentry.init({
     dsn: 'https://86a7a4948882456d86293f5068bdc427@sentry.io/5179072',
     enableInExpoDevelopment: true,

@@ -7,7 +7,7 @@ import Text from "./Text";
 import Colors from "../constants/Colors";
 import {eventColor, marginStyle, paddingStyle} from "../constants/Styles";
 import Image from "./Image";
-import localization from "../utils/localization";
+import localization, {isRTL} from "../utils/localization";
 import Icon from "./Icon";
 import moment from "moment";
 import Row from "./Row";
@@ -38,12 +38,12 @@ const NoItems = () => {
     }, []);
 
     return (<View style={{alignItems: 'center', height: '100%'}}>
-        <Image name='beachAnimation' height={Platform.OS === 'ios' ? 80 : 65} width={200}/>
+        <Image name='beachAnimation' height={Platform.OS === 'ios' ? 80 : 60} width={200}/>
         <Text bold size={12} color={Colors.pink}>{localization('addTreatmentPlan')}</Text>
         {
             Platform.OS === 'ios' && <View style={{height: '20%'}}/>
         }
-        <Animated.View style={{marginTop: marginTopAnimation}}>
+        <Animated.View style={[{marginTop: marginTopAnimation}, isRTL ? marginStyle(12, 'left') : {}]}>
             <Icon name='down' color={Colors.pink} scale={1.5} style={marginStyle(7, 'right')}/>
         </Animated.View>
     </View>)

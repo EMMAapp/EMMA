@@ -1,6 +1,6 @@
 import React, {useRef, useState} from 'react';
 import store, {syncPatientData} from "../../store";
-import localization from "../../utils/localization";
+import localization, {isRTL} from "../../utils/localization";
 import Container from "../../components/Container";
 import Colors from "../../constants/Colors";
 import _ from "lodash";
@@ -105,8 +105,8 @@ const DayReference = ({wixDate, isSelected, setSelectedDay, eventsForDay}) => {
                     <Dot color={"transparent"}/>
                 }
             </Row>
-            <Text size={14} style={[paddingStyle(3, 'top'), paddingStyle(3, 'bottom')]}>{momentDate.format("ddd")}</Text>
-            <Text color={Colors.gray}>{momentDate.format("MMM D")}</Text>
+            <Text size={14} style={[paddingStyle(3, 'top'), paddingStyle(3, 'bottom')]}>{momentDate.format(localization('journeyDayFormat'))}</Text>
+            <Text color={Colors.gray}>{momentDate.format(localization('journeyDateFormat'))}</Text>
         </Card>
     </TouchableOpacity>
 };
@@ -133,12 +133,16 @@ const JourneyTab = ({navigation, mainCalendarRefresh, setIsLoading}) => {
     const eventsForToday = collectEventsForDate(eventsByDay, momentToWixDate(selectedDay));
     let containingPeriodIndex = _.findLastIndex(periodsMoments, periodMoment => isAfterOrEquals(selectedDay, periodMoment));
     const daysFromStart = daysBetween(periodsMoments[containingPeriodIndex], selectedDay) + 1;
-    const daysKeys = _.sortBy(_.keys(eventsByDay), wixDate => wixDateToMoment(wixDate));
+    const daysKeys = _.orderBy(_.keys(eventsByDay), [wixDate => wixDateToMoment(wixDate)], [isRTL ? "desc" : "asc"]);
     const anyCheckup = eventsForToday.some(event => event.details.checkup);
 
     const scroll = () => {
         try {
-            daysListRef.current.scrollToIndex({animated: true, index: daysKeys.indexOf(momentToWixDate(selectedDay))})
+            let targetIndex = daysKeys.indexOf(momentToWixDate(selectedDay));
+            if (isRTL) {
+                targetIndex = daysKeys.length - targetIndex;
+            }
+            daysListRef.current.scrollToIndex({animated: true, index: targetIndex})
         }
         catch {
             setTimeout(scroll, 500)
@@ -156,7 +160,7 @@ const JourneyTab = ({navigation, mainCalendarRefresh, setIsLoading}) => {
                 <Text>{momentToDisplayString(selectedDay)}</Text>
                 <View style={{flex: 2}}/>
                 <Text color={Colors.purple}>{localization('cycleDay')}</Text>
-                <Text color={Colors.purple} bold>{daysFromStart}</Text>
+                <Text color={Colors.purple} bold style={marginStyle(3, 'left')}>{daysFromStart}</Text>
             </Row>
             <Divider/>
             {

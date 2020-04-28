@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {Asset} from 'expo-asset';
 import * as Font from 'expo-font';
 import React, {useState} from 'react';
-import {Platform, StatusBar, View, I18nManager} from 'react-native';
+import {Platform, StatusBar, View} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
@@ -15,6 +15,7 @@ import androidWarningFix from './utils/androidWarningFix';
 import appContext from "./utils/context";
 import * as Sentry from 'sentry-expo';
 import {ErrorBoundary} from "./utils/ErrorBoundary";
+import {initializeLocalization} from "./utils/localization";
 
 Sentry.init({
     dsn: 'https://86a7a4948882456d86293f5068bdc427@sentry.io/5179072',
@@ -80,6 +81,15 @@ async function loadResourcesAsync() {
             require('./assets/images/beach.png'),
             require('./assets/images/motorcycle.jpg'),
             require('./assets/images/wonder.png'),
+            require('./assets/images/confused.jpg'),
+            require('./assets/images/welcome.gif'),
+            require('./assets/images/followup.png'),
+            require('./assets/images/plan.png'),
+            require('./assets/images/yoga.png'),
+            require('./assets/images/catbook.png'),
+            require('./assets/images/confetti.png'),
+            require('./assets/images/writing.png'),
+            require('./assets/images/logo.png'),
         ]),
         Font.loadAsync({
             ...Ionicons.font,
@@ -87,6 +97,7 @@ async function loadResourcesAsync() {
             'sf-pro-bold': require('./assets/fonts/SF-Pro-Text-Bold.ttf'),
         }),
         retrievePatient(),
+        initializeLocalization()
     ]);
 }
 

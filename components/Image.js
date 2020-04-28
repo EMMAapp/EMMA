@@ -15,6 +15,7 @@ import CatBook from "../assets/images/catbook.png"
 import Confetti from "../assets/images/confetti.png"
 import Writing from "../assets/images/writing.png"
 import Logo from "../assets/images/logo.png"
+// Update in App.js load if you add an image ^
 
 const getImageByName = (name) => {
     switch (name) {

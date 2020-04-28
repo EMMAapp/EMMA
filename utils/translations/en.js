@@ -96,6 +96,8 @@ export default {
     'appVersion': 'App Version',
     'am': 'AM',
     'pm': 'PM',
+    'appLanguage': 'Application language:',
+    'language': 'Language',
 
     'months': {
         '1': 'January',

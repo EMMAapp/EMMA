@@ -94,6 +94,8 @@ export default {
     'selectMonth': 'בחרי חודש',
     'selectYear': 'בחרי שנה',
     'appVersion': 'גרסא',
+    'appLanguage': 'שפת הממשק:',
+    'language': 'שפה',
 
     'months': {
         '1': 'ינואר',

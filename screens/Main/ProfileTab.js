@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import store, {logoutPatient, purgePatient, syncPatientData} from "../../store";
 import RouteGuard from "../../navigation/RouteGuard";
-import localization from "../../utils/localization";
+import localization, {changeLanguage} from "../../utils/localization";
 import {ONBOARDING} from "../../navigation/Routes";
 import Container from "../../components/Container";
 import {testNotification} from "../../utils/notifications";
@@ -22,8 +22,13 @@ import appContext from "../../utils/context";
 import ButtonPrimary from "../../components/ButtonPrimary";
 import _ from "lodash";
 import {fixPeriodCycleValue} from "../OnboardingScreen";
+import Autocomplete from "../../components/Autocomplete";
+import i18n from 'i18n-js';
+import locales, {localesForAutocomplete} from "../../utils/locales";
+
 const version = require("../../app").expo.version;
 
+console.info(localesForAutocomplete)
 const QuestionText = (props) =>
     <Text
         style={[paddingStyle(15, 'top'), paddingStyle(5, 'bottom')]}
@@ -43,6 +48,7 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
     const [showDeleteValidationModal, setShowDeleteValidationModal] = useState(false);
     const [newAveragePeriodCycleDays, setAveragePeriodCycleDays] = useState(null);
     const [newWeekStartDay, setWeekStartDay] = useState(null);
+    const [locale, setLocale] = useState(i18n.locale);
 
     const {patientData} = store;
 
@@ -109,9 +115,23 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
             />
         </Row>
 
+        <Row style={{alignItems: 'stretch'}}>
+            <QuestionText style={marginStyle(10, 'top')}>{localization('appLanguage')}</QuestionText>
+            <View>
+                <Autocomplete
+                    style={marginStyle(3, 'left')}
+                    items={localesForAutocomplete}
+                    itemWidth={85}
+                    selectedItem={{item: locales[locale]}}
+                    setSelectedItem={value => setLocale(_.keys(locales).filter(locale => locales[locale] === value)[0])}
+                    placeholderKey={"language"}
+                />
+            </View>
+        </Row>
+
         <ButtonPrimary
             style={marginStyle(5, 'top')}
-            disabled={!newAveragePeriodCycleDays && !newWeekStartDay}
+            disabled={!newAveragePeriodCycleDays && !newWeekStartDay && locale === i18n.locale}
             width={50}
             onPress={async () => {
                 let keyValues = [];
@@ -121,7 +141,11 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
                 if (newWeekStartDay) {
                     keyValues.push({key: 'weekStartDay', value: newWeekStartDay})
                 }
-                await setStoredData(keyValues)
+                await setStoredData(keyValues);
+
+                if (locale !== i18n.locale) {
+                    await changeLanguage(locale);
+                }
             }}
         >
             {localization('save')}

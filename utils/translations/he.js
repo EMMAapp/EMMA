@@ -5,7 +5,7 @@ export default {
     'connectFacebook': 'התחברות באמצעות פייסבוק',
     'connectGoogle': 'התחברות באמצעות גוגל',
     'treatmentPlan': 'תוכנית הטיפול',
-    'addTreatmentPlan': 'הוספת תוכנית טיפול',
+    'addTreatmentPlan': 'הוסיפי משימות לתכנון הזמנים שלך',
     'editPeriod': 'מחזור',
     'editPeriodMessage': 'בבקשה עדכני את המחזור שלך!',
     'yes': 'כן',

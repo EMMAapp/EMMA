@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import moment from "moment";
 import store from "../../store";
 import {addDays, daysBetween, isAfterOrEquals, momentToDisplayString, wixDateToMoment} from "../../utils/dayTime";
@@ -9,7 +9,7 @@ import Text from "../../components/Text";
 import {marginStyle} from "../../constants/Styles";
 import localization from "../../utils/localization";
 import Row from "../../components/Row";
-import {I18nManager, TouchableOpacity, View} from "react-native";
+import {TouchableOpacity, View} from "react-native";
 import Icon from "../../components/Icon";
 import LineChart from "../../components/LineChart";
 import ScatterPlot from "../../components/ScatterPlot";
@@ -17,6 +17,7 @@ import Image from "../../components/Image";
 import appContext from "../../utils/context";
 import RouteGuard from "../../navigation/RouteGuard";
 import Swipe from "../../components/Swipe";
+import {flipDirectionIf} from "../../utils/utils";
 
 const extractResults = (events, periodStartMoment, nextPeriodStartMoment) => {
     const bloodResults = {};
@@ -81,70 +82,69 @@ const ChartsTab = ({navigation, mainCalendarRefresh}) => {
 
     return <Container
         key={mainCalendarRefresh}
-        style={{backgroundColor: Colors.grayLight, direction: 'ltr'}}
+        style={{backgroundColor: Colors.grayLight}}
         widthPercentage={90}>
         <Swipe
-        onRight={() => hasRight && setPeriodIndex(periodIndex + 1)}
-        onLeft={() => hasLeft && setPeriodIndex(periodIndex - 1)}
+            onRight={() => hasRight && setPeriodIndex(periodIndex + 1)}
+            onLeft={() => hasLeft && setPeriodIndex(periodIndex - 1)}
         >
-        <Row>
+            <Row>
+                {
+                    hasLeft > 0 &&
+                    <TouchableOpacity onPress={() => setPeriodIndex(periodIndex - 1)}>
+                        <Row>
+                            <Icon name={flipDirectionIf("left")}/>
+                            <Text>{localization("prevPeriod")}</Text>
+                        </Row>
+                    </TouchableOpacity>
+                }
+                <View style={{flex: 1}}/>
+                {
+                    hasRight &&
+                    <TouchableOpacity onPress={() => setPeriodIndex(periodIndex + 1)}>
+                        <Row>
+                            <Text>{localization("nextPeriod")}</Text>
+                            <Icon name={flipDirectionIf("right")}/>
+                        </Row>
+                    </TouchableOpacity>
+                }
+            </Row>
+            <Row center>
+                <Text color={Colors.purple} size={10} style={[marginStyle(10, 'top'), marginStyle(10, 'bottom')]}>{localization('followUpTitle')}</Text>
+            </Row>
+            <Row center>
+                <Text color={Colors.purple} size={11}>{`${momentToDisplayString(period)} - ${momentToDisplayString(addDays(nextPeriod, -1))}`}</Text>
+            </Row>
             {
-                hasLeft > 0 &&
-                <TouchableOpacity onPress={() => setPeriodIndex(periodIndex - 1)}>
-                    <Row>
-                        <Icon name="left"/>
-                        <Text>{localization("prevPeriod")}</Text>
-                    </Row>
-                </TouchableOpacity>
+                _.isEmpty(_.keys(bloodResults)) && !ultrasoundAny ?
+                    <View>
+                        <Row center style={marginStyle(30, 'top')}>
+                            <Text>{localization("noResults")}</Text>
+                        </Row>
+                        <Row center style={marginStyle(30, 'top')}>
+                            <Image name={"writing"} height={150} width={'90%'}/>
+                        </Row>
+                    </View>
+                    :
+                    <View style={marginStyle(10, 'top')}>
+                        {
+                            !_.isEmpty(_.keys(bloodResults)) &&
+                            <View>
+                                <BloodChart title="Estrogen E2 (pmol/mL)" bloodResults={bloodResults} resultName="estrogen"/>
+                                <BloodChart title="LH (mlU/mL)" bloodResults={bloodResults} resultName="lh"/>
+                                <BloodChart title="Progesterone (ng/mL)" bloodResults={bloodResults} resultName="progesterone"/>
+                            </View>
+                        }
+                        {
+                            ultrasoundAny && <ScatterPlot
+                                title={localization('ultrasoundResults')}
+                                dataSets={[ultrasoundResult.left, ultrasoundResult.right]}
+                                colors={[Colors.purple, Colors.pink]}
+                                setsTitles={[localization('leftOvary'), localization('rightOvary')]}
+                            />
+                        }
+                    </View>
             }
-            <View style={{flex: 1}}/>
-            {
-                hasRight &&
-                <TouchableOpacity onPress={() => setPeriodIndex(periodIndex + 1)}>
-                    <Row>
-                        <Text>{localization("nextPeriod")}</Text>
-                        <Icon name="right"/>
-
-                    </Row>
-                </TouchableOpacity>
-            }
-        </Row>
-        <Row center>
-            <Text color={Colors.purple} size={10} style={[marginStyle(10, 'top'), marginStyle(10, 'bottom')]}>{localization('followUpTitle')}</Text>
-        </Row>
-        <Row center>
-            <Text color={Colors.purple} size={11}>{`${momentToDisplayString(period)} - ${momentToDisplayString(addDays(nextPeriod, -1))}`}</Text>
-        </Row>
-        {
-            _.isEmpty(_.keys(bloodResults)) && !ultrasoundAny ?
-                <View>
-                    <Row center style={marginStyle(30, 'top')}>
-                        <Text>{localization("noResults")}</Text>
-                    </Row>
-                    <Row center style={marginStyle(30, 'top')}>
-                        <Image name={"writing"} height={150} width={'90%'}/>
-                    </Row>
-                </View>
-                :
-                <View style={marginStyle(10, 'top')}>
-                    {
-                        !_.isEmpty(_.keys(bloodResults)) &&
-                        <View>
-                            <BloodChart title="Estrogen E2 (pmol/mL)" bloodResults={bloodResults} resultName="estrogen"/>
-                            <BloodChart title="LH (mlU/mL)" bloodResults={bloodResults} resultName="lh"/>
-                            <BloodChart title="Progesterone (ng/mL)" bloodResults={bloodResults} resultName="progesterone"/>
-                        </View>
-                    }
-                    {
-                        ultrasoundAny && <ScatterPlot
-                            title={localization('ultrasoundResults')}
-                            dataSets={[ultrasoundResult.left, ultrasoundResult.right]}
-                            colors={[Colors.purple, Colors.pink]}
-                            setsTitles={[localization('leftOvary'), localization('rightOvary')]}
-                        />
-                    }
-                </View>
-        }
         </Swipe>
     </Container>;
 };

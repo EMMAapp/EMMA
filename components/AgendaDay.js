@@ -38,7 +38,7 @@ const NoItems = () => {
     }, []);
 
     return (<View style={{alignItems: 'center', height: '100%'}}>
-        <Image name='beachAnimation' height={Platform.OS === 'ios' ? 80 : 60} width={200}/>
+        <Image name='beachAnimation' height={Platform.OS === 'ios' ? 70 : 60} width={200}/>
         <Text bold size={12} color={Colors.pink}>{localization('addTreatmentPlan')}</Text>
         {
             Platform.OS === 'ios' && <View style={{height: '20%'}}/>

@@ -6,7 +6,7 @@ import Card from "./Card";
 import {absoluteStyle, absoluteStyleVertical, marginStyle, paddingStyle} from "../constants/Styles";
 import Colors from "../constants/Colors";
 import localization, {isRTL} from "../utils/localization";
-import {flipDirectionIf} from "../utils/utils";
+import {flipIfRtl} from "../utils/utils";
 
 
 const hexToRgb = (hex) => {
@@ -49,7 +49,7 @@ export default ({title, values}) => {
                 fromZero
                 style={{padding: 10}}
             />
-            <Text color={Colors.gray} style={[absoluteStyleVertical(5, 'bottom'), absoluteStyle(0, 0), paddingStyle(10, flipDirectionIf('right'))]} alignRight={!isRTL}>
+            <Text color={Colors.gray} style={[absoluteStyleVertical(5, 'bottom'), absoluteStyle(0, 0), paddingStyle(10, flipIfRtl('right'))]} alignRight={!isRTL}>
                 {localization('cycleDays')}
             </Text>
         </Card>

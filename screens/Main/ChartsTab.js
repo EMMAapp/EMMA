@@ -17,7 +17,7 @@ import Image from "../../components/Image";
 import appContext from "../../utils/context";
 import RouteGuard from "../../navigation/RouteGuard";
 import Swipe from "../../components/Swipe";
-import {flipDirectionIf} from "../../utils/utils";
+import {flipIfRtl} from "../../utils/utils";
 
 const extractResults = (events, periodStartMoment, nextPeriodStartMoment) => {
     const bloodResults = {};
@@ -93,7 +93,7 @@ const ChartsTab = ({navigation, mainCalendarRefresh}) => {
                     hasLeft > 0 &&
                     <TouchableOpacity onPress={() => setPeriodIndex(periodIndex - 1)}>
                         <Row>
-                            <Icon name={flipDirectionIf("left")}/>
+                            <Icon name={flipIfRtl("left")}/>
                             <Text>{localization("prevPeriod")}</Text>
                         </Row>
                     </TouchableOpacity>
@@ -104,7 +104,7 @@ const ChartsTab = ({navigation, mainCalendarRefresh}) => {
                     <TouchableOpacity onPress={() => setPeriodIndex(periodIndex + 1)}>
                         <Row>
                             <Text>{localization("nextPeriod")}</Text>
-                            <Icon name={flipDirectionIf("right")}/>
+                            <Icon name={flipIfRtl("right")}/>
                         </Row>
                     </TouchableOpacity>
                 }

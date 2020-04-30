@@ -8,7 +8,7 @@ import Colors from "../constants/Colors";
 import localization, {isRTL} from "../utils/localization";
 import _ from "lodash";
 import Row from "./Row";
-import {flipDirectionIf} from "../utils/utils";
+import {flipIfRtl} from "../utils/utils";
 
 const HorizontalLine = styled(View)`
   opacity: .5;
@@ -92,14 +92,14 @@ const ScatterChart = ({data, chartWidth}) => {
 
     const horizontalLines = _.range(minY, maxY + 1).map((line, idx) =>
         <HorizontalLine key={idx} bottom={getY(line)} width={chartWidth}>
-            <Text style={{position: 'absolute', bottom: 0, [flipDirectionIf("left")]: -15}} size={5}>
+            <Text style={{position: 'absolute', bottom: 0, [flipIfRtl("left")]: -15}} size={5}>
                 {line}
             </Text>
         </HorizontalLine>
     );
     const verticalLines = _.range(minX, maxX + 1).map((line, idx) =>
-        <VerticalLine key={idx} height={chartHeight} style={{[flipDirectionIf('left')]: getX(line)}}>
-            <Text style={{position: 'absolute', bottom: -15, [flipDirectionIf("left")]: 0}} size={5}>
+        <VerticalLine key={idx} height={chartHeight} style={{[flipIfRtl('left')]: getX(line)}}>
+            <Text style={{position: 'absolute', bottom: -15, [flipIfRtl("left")]: 0}} size={5}>
                 {line}
             </Text>
         </VerticalLine>
@@ -113,7 +113,7 @@ const ScatterChart = ({data, chartWidth}) => {
                 const point = dataSeries.values[j];
                 points.push(
                     <Dot
-                        style={{[flipDirectionIf('left')]: (getX(point[0]) - DotSizeTable(point[1])) / 2}}
+                        style={{[flipIfRtl('left')]: (getX(point[0]) - DotSizeTable(point[1])) / 2}}
                         key={`${i}_${j}`}
                         size={DotSizeTable(point[1])}
                         bottom={getY(point[1])}
@@ -152,18 +152,18 @@ export default ({title, dataSets, colors, setsTitles}) => {
                 setsTitles.map((setTitle, index) =>
                     <Row key={index} style={{flexDirection: isRTL ? 'row-reverse' : 'row'}}>
                         <View style={{flex: 10}}/>
-                        <Text size={6} key={index} color={colors[index]} style={[paddingStyle(3, 'top'), marginStyle(5, flipDirectionIf('right'))]}>
+                        <Text size={6} key={index} color={colors[index]} style={[paddingStyle(3, 'top'), marginStyle(5, flipIfRtl('right'))]}>
                             •
                         </Text>
                         <View style={{minWidth: 70, flex: 1}}>
-                            <Text size={6} key={index} color={colors[index]} style={[paddingStyle(15, flipDirectionIf('right')), paddingStyle(3, 'top')]}>
+                            <Text size={6} key={index} color={colors[index]} style={[paddingStyle(15, flipIfRtl('right')), paddingStyle(3, 'top')]}>
                                 {setTitle}
                             </Text>
                         </View>
                     </Row>
                 )
             }
-            <Text size={7} color={Colors.gray} style={paddingStyle(5, flipDirectionIf('left'))} alignRight={isRTL}>
+            <Text size={7} color={Colors.gray} style={paddingStyle(5, flipIfRtl('left'))} alignRight={isRTL}>
                 {localization('folliclesNumber')}
             </Text>
             <ScatterChart
@@ -171,7 +171,7 @@ export default ({title, dataSets, colors, setsTitles}) => {
                 chartWidth={Dimensions.get('window').width * 0.75}
             />
 
-            <Text size={7} color={Colors.gray} alignRight={!isRTL} style={[paddingStyle(5, flipDirectionIf('right')), paddingStyle(5, 'bottom')]}>
+            <Text size={7} color={Colors.gray} alignRight={!isRTL} style={[paddingStyle(5, flipIfRtl('right')), paddingStyle(5, 'bottom')]}>
                 {localization('folliclesSize')}
             </Text>
         </Card>

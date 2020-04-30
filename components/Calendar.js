@@ -6,7 +6,7 @@ import {calendarFirstDay} from "../store";
 import Swipe from "./Swipe";
 import {isRTL} from "../utils/localization";
 import Icon from "./Icon";
-import {flipDirectionIf} from "../utils/utils";
+import {flipIfRtl} from "../utils/utils";
 
 const rightImage =  require('react-native-calendars/src/calendar/img/next.png');
 const leftImage =  require('react-native-calendars/src/calendar/img/previous.png');
@@ -45,7 +45,7 @@ export default ({
                 }}
                 renderArrow={direction =>
                     <Icon
-                        name={flipDirectionIf(direction)}
+                        name={flipIfRtl(direction)}
                         color={calendarTheme['arrowColor']}
                     />
                 }

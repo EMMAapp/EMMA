@@ -3,6 +3,8 @@ import {Notifications} from 'expo';
 import * as Permissions from 'expo-permissions';
 import {logError, logInfo} from "./log";
 
+const localOffsetMilliSec = new Date().getTimezoneOffset() * 60 * 1000;
+
 const NOTIFICATIONS_CHANNEL = 'emma';
 
 const createNotification = (title, body) => {
@@ -41,8 +43,9 @@ export const testNotification = async () => {
 export const setNotification = async (title, body, dateMoment) => {
     try {
         await setup();
-        const id = await Notifications.scheduleLocalNotificationAsync(createNotification(title, body), {time: dateMoment.toDate()});
-        logInfo(`Registered notification ${id} at ${dateMoment.format("LLLL")}`);
+        const epochTimestamp = dateMoment.valueOf() + localOffsetMilliSec;
+        const id = await Notifications.scheduleLocalNotificationAsync(createNotification(title, body), {time: epochTimestamp});
+        logInfo(`Registered notification ${id} at ${epochTimestamp}`);
         return id;
     }
     catch (e) {

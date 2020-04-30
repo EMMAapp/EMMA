@@ -31,9 +31,9 @@ const VerticalLine = styled(View)`
   border-color: darkgray;
   border-width: 0.5px;
   bottom: 0;
-  ${() => flipDirectionIf('left')}: ${props => props.left}px;
   position: absolute;
 `;
+
 
 const DotSizeTable = (value) => {
     switch (parseInt(value)) {
@@ -69,7 +69,6 @@ const Dot = styled(View)`
   height: ${props => props.size}px;
   background-color: ${props => props.color};
   bottom: ${props => props.bottom - props.size / 2}px;
-  ${() => flipDirectionIf('left')}: ${props => props.left - props.size / 2}px;
   position: absolute;
   border-radius: ${props => props.size}px;
   z-index: 1;
@@ -99,7 +98,7 @@ const ScatterChart = ({data, chartWidth}) => {
         </HorizontalLine>
     );
     const verticalLines = _.range(minX, maxX + 1).map((line, idx) =>
-        <VerticalLine key={idx} left={getX(line)} height={chartHeight}>
+        <VerticalLine key={idx} height={chartHeight} style={{[flipDirectionIf('left')]: getX(line)}}>
             <Text style={{position: 'absolute', bottom: -15, [flipDirectionIf("left")]: 0}} size={5}>
                 {line}
             </Text>
@@ -114,9 +113,9 @@ const ScatterChart = ({data, chartWidth}) => {
                 const point = dataSeries.values[j];
                 points.push(
                     <Dot
+                        style={{[flipDirectionIf('left')]: (getX(point[0]) - DotSizeTable(point[1])) / 2}}
                         key={`${i}_${j}`}
                         size={DotSizeTable(point[1])}
-                        left={getX(point[0])}
                         bottom={getY(point[1])}
                         color={dataSeries.color}
                     />

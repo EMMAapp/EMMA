@@ -14,7 +14,7 @@ import Text from "../../components/Text";
 import Divider from "../../components/Divider";
 import BinaryBoxes from "../../components/BinaryBoxes";
 import TermsModal from "../../components/TermsModal";
-import {TouchableOpacity, View} from "react-native";
+import {Platform, TouchableOpacity, View} from "react-native";
 import Image from "../../components/Image";
 import ValidationModal from "../../components/ValidationModal";
 import LicensesModal from "../../components/LicensesModal";
@@ -115,7 +115,7 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
         </Row>
 
         <Row style={{alignItems: 'stretch'}}>
-            <QuestionText style={marginStyle(10, 'top')}>{localization('appLanguage')}</QuestionText>
+            <QuestionText style={marginStyle(Platform.OS === 'ios' ? 10 : 12, 'top')}>{localization('appLanguage')}</QuestionText>
             <View>
                 <Autocomplete
                     style={marginStyle(3, 'left')}

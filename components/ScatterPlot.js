@@ -72,6 +72,7 @@ const Dot = styled(View)`
   ${() => flipDirectionIf('left')}: ${props => props.left - props.size / 2}px;
   position: absolute;
   border-radius: ${props => props.size}px;
+  z-index: 1;
 `;
 
 const ScatterChart = ({data, chartWidth}) => {

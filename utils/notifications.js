@@ -15,7 +15,7 @@ const createNotification = (title, body) => {
         },
         android: {
             channelId: NOTIFICATIONS_CHANNEL,
-            icon: 'https://i.imgur.com/oBDkHRe.png'
+            icon: 'https://i.imgur.com/3sEaZRt.png'
         }
     }
 };

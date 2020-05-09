@@ -1,6 +1,7 @@
 import _ from "lodash";
 
 export const getLocaleOrDefault = (locale) => {
+    locale = locale.split('-')[0];
     if (locales[locale]) {
         return locale;
     }
@@ -10,7 +11,6 @@ export const getLocaleOrDefault = (locale) => {
 const locales = {
     'en': 'English',
     'he': 'עברית',
-
 };
 
 export const localesForAutocomplete = _.keys(locales).map(

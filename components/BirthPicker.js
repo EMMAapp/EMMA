@@ -40,13 +40,13 @@ const translateSubmittedYear = (value) => {
 };
 
 export default ({month, setMonth, year, setYear}) =>
-    <Row>
+    <Row style={{zIndex: 2}}>
         <Autocomplete
             items={months}
             selectedItem={{item: months[month - 1].name}}
             setSelectedItem={value => value && setMonth(translateSubmittedMonth(value))}
             itemWidth={150}
-            textAlign="center"
+            center
             placeholderKey="selectMonth"
         />
         <Autocomplete
@@ -55,7 +55,7 @@ export default ({month, setMonth, year, setYear}) =>
             selectedItem={{item: year.toString()}}
             setSelectedItem={value => value && setYear(translateSubmittedYear(value))}
             itemWidth={150}
-            textAlign="center"
+            center
             placeholderKey="selectYear"
             keyboardType="numeric"
         />

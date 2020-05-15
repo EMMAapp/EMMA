@@ -126,13 +126,14 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
             />
         </Row>
 
-        <Row style={{alignItems: 'stretch'}}>
-            <QuestionText style={marginStyle(Platform.OS === 'ios' ? 10 : 12, 'top')}>{localization('appLanguage')}</QuestionText>
+        <Row style={{zIndex: 2}}>
+            <Text >{localization('appLanguage')}</Text>
             <View>
                 <Autocomplete
-                    style={marginStyle(3, 'left')}
+                    style={marginStyle(5, 'left')}
                     items={localesForAutocomplete}
-                    itemWidth={85}
+                    itemWidth={150}
+                    center
                     selectedItem={{item: locales[locale]}}
                     setSelectedItem={value => setLocale(_.keys(locales).filter(locale => locales[locale] === value)[0])}
                     placeholderKey={"language"}

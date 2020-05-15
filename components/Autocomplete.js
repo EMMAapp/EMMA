@@ -4,25 +4,31 @@ import localization, {isRTL} from "../utils/localization";
 import {borderRadiusStyle, marginStyle, paddingStyle} from "../constants/Styles";
 import Colors from "../constants/Colors";
 import {YellowBox} from 'react-native'
+import {flipIfRtl} from "../utils/utils";
 
 YellowBox.ignoreWarnings([
     'VirtualizedLists should never be nested'
 ]);
 
-export default ({items, selectedItem, setSelectedItem, itemWidth, textAlign, style, keyboardType, placeholderKey}) => {
+export default ({items, selectedItem, setSelectedItem, itemWidth, center, style, keyboardType, placeholderKey}) => {
     const {item} = selectedItem;
     const textInputRef = useRef(null);
+
+    const setNativeText = (text) => {
+        if (Platform.OS === 'ios') {
+            setTimeout(() => {
+                textInputRef.current?.setNativeProps({text});
+            }, 500);
+        }
+        else {
+            textInputRef.current.setNativeProps({text});
+        }
+    };
+
     useEffect(
         () => {
             if (item && textInputRef.current && item !== textInputRef.current.props.value) {
-                if (Platform.OS === 'ios') {
-                    setTimeout(() => {
-                        textInputRef.current?.setNativeProps({text: item});
-                    }, 500);
-                }
-                else {
-                    textInputRef.current.setNativeProps({text: item});
-                }
+                setNativeText(item);
             }
         }, [selectedItem, textInputRef]);
 
@@ -31,7 +37,6 @@ export default ({items, selectedItem, setSelectedItem, itemWidth, textAlign, sty
         borderColor: Colors.grayMedium,
         color: Colors.grayDark,
         width: itemWidth,
-        textAlign: textAlign,
         ...paddingStyle(5)
     };
 
@@ -40,8 +45,16 @@ export default ({items, selectedItem, setSelectedItem, itemWidth, textAlign, sty
         onItemSelect={(item) => setSelectedItem(item.name)}
         containerStyle={{...marginStyle(5, 'top'), ...style}}
         itemStyle={itemStyle}
-        itemTextStyle={{color: Colors.grayDark, alignSelf: 'flex-start'}}
-        itemsContainerStyle={{borderColor: Colors.grayMedium, borderWidth: 1, ...borderRadiusStyle(5), ...marginStyle(1, 'top')}}
+        itemTextStyle={{color: Colors.grayDark, alignSelf: center ? 'center' : 'flex-start'}}
+        itemsContainerStyle={{
+            position: 'absolute',
+            top: 35,
+            width: '100%',
+            borderColor: Colors.grayMedium,
+            borderWidth: 1,
+            ...borderRadiusStyle(5),
+            ...marginStyle(1, 'top')
+        }}
         items={items}
         textInputProps={
             {
@@ -52,8 +65,16 @@ export default ({items, selectedItem, setSelectedItem, itemWidth, textAlign, sty
                 style: {...itemStyle, ...borderRadiusStyle(5), borderWidth: 1},
                 keyboardType: keyboardType,
                 defaultValue: item || '',
-                onEndEditing: (e) => setSelectedItem(e.nativeEvent.text || item),
-                textAlign: isRTL ? 'right' : 'left'
+                onEndEditing: (e) => {
+                    const {text} = e.nativeEvent;
+                    if (text) {
+                        setSelectedItem(text);
+                    }
+                    else {
+                        setNativeText(item);
+                    }
+                },
+                textAlign: center ? 'center' : flipIfRtl('left')
             }
         }
         listProps={

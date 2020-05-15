@@ -227,6 +227,7 @@ const EditEventTab = ({navigation, setMainCalendarRefresh, currentEditedEventId,
             <View style={[paddingStyle(10, 'left'), paddingStyle(10, 'right')]}>
                 <Text>{localization(isMedicationEvent ? 'medicationSubTitle' : 'checkupSubTitle')}</Text>
                 <Autocomplete
+                    style={{zIndex: 2}}
                     items={isMedicationEvent ? Medications : Checkups}
                     selectedItem={{item: isMedicationEvent ? state.medication : state.checkup}}
                     setSelectedItem={item => setState(isMedicationEvent ? {...state, medication: item} : {...state, checkup: item})}

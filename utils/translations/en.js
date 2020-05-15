@@ -89,8 +89,9 @@ export default {
     'logout': 'Logout',
     'deleteAllData': 'Delete all stored data',
     'areYouSureDeleteAllData': 'Are you sure you want to delete all stored data? It could not be recovered.',
-    'openSourceRef': 'Open source licenses used by Emma',
-    'openSourceTitle': 'Below is a list of open source licenses by package, used by Emma.',
+    'openAboutRef': 'About EMMA',
+    'openSourceRef': 'Open source licenses used by EMMA',
+    'openSourceTitle': 'Below is a list of open source licenses by package, used by EMMA.',
     'selectMonth': 'Select month',
     'selectYear': 'Select year',
     'appVersion': 'App Version',
@@ -100,6 +101,22 @@ export default {
     'language': 'Language',
     'errorTitle': "An error occurred ...",
     'errorBody': "We are doing our best to resolve the issue.",
+    'aboutText':
+        `Emma is a free app, specially designed to assist you with organizing your fertility checkup, follow up, saving medical records and giving relevant alarms. Protocols, injection times, lab results, follicles sizes, trigger shots – you’re not alone! Emma app is here to help you out and go through this journey together.
+
+Emma app was voluntarily founded in order to help women and families to go through fertility treatments without getting lost down the road, between all the paperwork and tests.  After finding out that most of the people track their treatment on paper, we believed it was time for a change.  
+To make this great cause take shape, four professional women have undertaken the challenge:
+
+Eynav Senio - UX/UI designer.
+Liri Sokol - End to end developer.
+Ortal Avraham - Illustrator and UX/UI designer.
+Jen Barak Levitt - Medical intern and founder.
+
+To the creation of the project contributed:
+Dr. Hershko-Klement Anat, head of IVF unit, Hadassah medical center.
+Michal Ben-Ami, legal advice.
+Odeilia Asher-Eisenkeit, lawyer. 
+    `,
 
     'months': {
         '1': 'January',

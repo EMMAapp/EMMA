@@ -25,6 +25,8 @@ import {fixPeriodCycleValue} from "../OnboardingScreen";
 import Autocomplete from "../../components/Autocomplete";
 import i18n from 'i18n-js';
 import locales, {localesForAutocomplete} from "../../utils/locales";
+import Modal from "../../components/Modal";
+import Button from "../../components/Button";
 
 const version = require("../../app").expo.version;
 
@@ -34,6 +36,15 @@ const QuestionText = (props) =>
         {...props}>
         {props.children}
     </Text>;
+
+const AboutModal = ({isVisible, dismiss}) =>
+    <Modal isVisible={isVisible} onBackdropPress={dismiss} noContainer>
+        <Text size={7} style={[marginStyle(5, 'top'), marginStyle(10, 'bottom')]}>{localization('aboutText')}</Text>
+        <Text size={6}>{localization('appVersion')} {version}</Text>
+        <Button onPress={dismiss} style={marginStyle(15, 'top')}>
+            {localization('close')}
+        </Button>
+    </Modal>;
 
 const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
     RouteGuard(navigation);
@@ -48,6 +59,7 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
     const [newAveragePeriodCycleDays, setAveragePeriodCycleDays] = useState(null);
     const [newWeekStartDay, setWeekStartDay] = useState(null);
     const [locale, setLocale] = useState(i18n.locale);
+    const [aboutModalVisible, setAboutModalVisible] = useState(false);
 
     const {patientData} = store;
 
@@ -152,6 +164,13 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
 
         <Divider margin={10}/>
 
+        <AboutModal isVisible={aboutModalVisible} dismiss={() => setAboutModalVisible(false)}/>
+        <Row>
+            <TouchableOpacity activeOpacity={1} onPress={() => setAboutModalVisible(true)} style={paddingStyle(3, 'bottom')}>
+                <QuestionText underline color={Colors.purple}>{localization('openAboutRef')}</QuestionText>
+            </TouchableOpacity>
+        </Row>
+
         <LicensesModal isVisible={licensesIsVisible} dismiss={() => setLicensesIsVisible(false)}/>
         <Row>
             <TouchableOpacity activeOpacity={1} onPress={() => setLicensesIsVisible(true)} style={paddingStyle(3, 'bottom')}>
@@ -198,9 +217,6 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
             __DEV__ &&
             <TouchableOpacity onPress={() => testNotification()}><QuestionText>notification</QuestionText></TouchableOpacity>
         }
-
-        <QuestionText size={5} style={paddingStyle(50, 'top')}>{`${localization('appVersion')} ${version}`}</QuestionText>
-
     </Container>;
 };
 

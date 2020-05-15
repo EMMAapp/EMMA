@@ -80,7 +80,8 @@ export default ({items, selectedItem, setSelectedItem, itemWidth, center, style,
         listProps={
             {
                 nestedScrollEnabled: true,
-                maxHeight: 200
+                maxHeight: 200,
+                backgroundColor: Colors.grayLight
             }
         }
         setSort={(item, searchedText) =>

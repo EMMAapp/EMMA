@@ -96,6 +96,8 @@ export default {
     'appVersion': 'גרסא',
     'appLanguage': 'שפת הממשק:',
     'language': 'שפה',
+    'errorTitle': "משהו השתבש...",
+    'errorBody': "אנחנו עובדות כמיטב יכולתנו לתקן את הבעיה.",
 
     'months': {
         '1': 'ינואר',

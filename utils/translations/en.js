@@ -98,6 +98,8 @@ export default {
     'pm': 'PM',
     'appLanguage': 'Application language:',
     'language': 'Language',
+    'errorTitle': "An error occurred ...",
+    'errorBody': "We are doing our best to resolve the issue.",
 
     'months': {
         '1': 'January',

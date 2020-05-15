@@ -6,6 +6,10 @@ import Row from "../components/Row";
 import Colors from "../constants/Colors";
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import * as Sentry from 'sentry-expo';
+import Modal from "../components/Modal";
+import {Updates} from "expo";
+import localization from "./localization";
+import Button from "../components/Button";
 
 const Container = styled(KeyboardAwareScrollView)`
   flex: 1;
@@ -25,15 +29,20 @@ export class ErrorBoundary extends Component {
         }
     }
 
+
     render() {
+
+        const closeModal = async () => await Updates.reload();
+
         return this.state.hasError
-            ? <Container bounces={false}>
-                <Row center>
-                    <Text color={Colors.pink} size={14} style={marginStyle(50, 'top')}>An error occurred :(</Text>
-                </Row>
-                <Text color={Colors.gray} size={10} style={[marginStyle(10, 'top'), marginStyle(10, 'left')]}>{this.state.error.message}</Text>
-                <Text color={Colors.gray} style={[marginStyle(2, 'top'), marginStyle(10, 'left')]}>{this.state.error.componentStack}</Text>
-            </Container>
+            ?
+            <Modal isVisible={true} onBackdropPress={closeModal} noContainer>
+                <Text alignCenter color={Colors.pink} size={12} style={marginStyle(10, 'top')}>{localization('errorTitle')}</Text>
+                <Text color={Colors.gray} size={6} style={[marginStyle(10, 'top'), marginStyle(10, 'left')]}>{localization('errorBody')}</Text>
+                <Button onPress={closeModal} style={marginStyle(15, 'top')}>
+                    {localization('close')}
+                </Button>
+            </Modal>
             : this.props.children
     }
 }

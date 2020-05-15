@@ -131,5 +131,31 @@ Odeilia Asher-Eisenkeit, lawyer.
         '10': 'October',
         '11': 'November',
         '12': 'December',
+    },
+
+    'checkups': {
+        'ultrasound': 'Ultrasound',
+        'bloodTest': 'Blood Test',
+        'zift': 'ZIFT',
+        'embryoTransfer': 'Embryo Transfer',
+        'oocytesRetrieval': 'Oocytes Retrieval',
+        'ici': 'ICI',
+        'iui': 'IUI',
+        'fertilityCheck': 'Fertility Check Up',
+        'geneticTest': 'Genetic Testing',
+        'pipelleTest': 'Pipelle Test',
+        'receptivaTest': 'Receptiva Test',
+        'surgicalHysteroscopy': 'Surgical Hysteroscopy',
+        'eraTest': 'ERA Test',
+        'aliceTest': 'ALICE Test',
+        'emmaTest': 'EMMA Test',
+        'hydrosonography': 'Hydrosonography',
+        'diagnosticHysteroscopy': 'Diagnostic Hysteroscopy',
+        'hsg': 'HSG',
+        'obgyn': 'OBGYN',
+        'reproductiveEndocrinologis': 'Reproductive Endocrinologis',
+        'cervicalMucus': 'Cervical Mucus',
+        'ovulationStick': 'Ovulation Stick',
+        'pregnancyCheck': 'Pregnancy Check'
     }
 }

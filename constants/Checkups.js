@@ -1,94 +1,174 @@
-export default [
+import localization from "../utils/localization";
+import _ from "lodash";
+
+const checkups = [
     {
-        name: 'Ultrasound',
-        aliases: ['ultrasound', 'follicles', '2d', '3d']
+        key: 'ultrasound',
+        aliases: [
+            'ultrasound', 'follicles', '2d', '3d',
+            'אולטראסאונד', 'זקיקים', 'דו מימד', 'תלת מימד'
+        ]
     },
     {
-        name: 'Blood Test',
-        aliases: ['blood test', 'lh', 'progesterone', 'estradiol']
+        key: 'bloodTest',
+        aliases: [
+            'blood test', 'lh', 'progesterone', 'estradiol',
+            'בדיקת דם', 'פרוגסטרון', 'אסטרדיול'
+        ]
     },
     {
-        name: 'ZIFT',
-        aliases: ['zift', 'zygote intrafallopian transfer']
+        key: 'zift',
+        aliases: [
+            'zift', 'zygote intrafallopian transfer',
+            'זיפט'
+        ]
     },
     {
-        name: 'Embryo Transfer',
-        aliases: ['embryo transfer', 'et']
+        key: 'embryoTransfer',
+        aliases: [
+            'embryo transfer', 'et',
+            'הפריה חוץ גופית', 'החזרת עוברים'
+        ]
     },
     {
-        name: 'ICI',
-        aliases: ['ici', 'intracervical insemination']
+        key: 'oocytesRetrieval',
+        aliases: [
+            'oocytes retrieval', 'ivf', 'in vitro fertilisation',
+            'הפריה חוץ גופית', 'שאיבת ביציות'
+        ]
     },
     {
-        name: 'IUI',
-        aliases: ['iui', 'intrauterine insemination']
+        key: 'ici',
+        aliases: [
+            'ici', 'intracervical insemination', 'artificial insemination',
+            'הפריה מלאכותית'
+        ]
     },
     {
-        name: 'IVF Oocytes Retreival',
-        aliases: ['ivf oocytes retreival', 'in vitro fertilisation']
+        key: 'iui',
+        aliases: [
+            'iui', 'intrauterine insemination',
+            'הזרעה תוך רחמית', 'הפריה תוך רחמית'
+        ]
     },
     {
-        name: 'IVF Embryo Transfer',
-        aliases: ['ivf embryo transfer', 'in vitro fertilisation']
+        key: 'fertilityCheck',
+        aliases: [
+            'fertility check up',
+            'בדיקת פוריות'
+        ]
     },
     {
-        name: 'Fertility Check Up',
-        aliases: ['fertility check up']
+        key: 'geneticTest',
+        aliases: [
+            'genetic testing', 'dna',
+            'בדיקה גנטית'
+        ]
     },
     {
-        name: 'Genetic Testing',
-        aliases: ['genetic testing', 'dna']
+        key: 'pipelleTest',
+        aliases: [
+            'pipelle test', 'endometrial biopsy',
+            'בדיקת פיפל'
+        ]
     },
     {
-        name: 'Pipelle Test',
-        aliases: ['pipelle test']
+        key: 'receptivaTest',
+        aliases: [
+            'receptiva test', 'dx'
+        ]
     },
     {
-        name: 'Receptiva Test',
-        aliases: ['receptiva test']
+        key: 'surgicalHysteroscopy',
+        aliases: [
+            'surgical hysteroscopy',
+            'היסטרוסקופיה ניתוחית', 'היסטרוסקופיה כירורגית'
+        ]
     },
     {
-        name: 'Surgical Hysteroscopy',
-        aliases: ['surgical hysteroscopy']
+        key: 'diagnosticHysteroscopy',
+        aliases: [
+            'diagnostic hysteroscopy',
+            'היסטרוסקופיה אבחנתית'
+        ]
     },
     {
-        name: 'ERA Test',
-        aliases: ['era test', 'endometrial receptivity test']
+        key: 'eraTest',
+        aliases: [
+            'era test', 'endometrial receptivity test',
+            'בדיקת חלון ההשתרשות'
+        ]
     },
     {
-        name: 'ALICE Test',
-        aliases: ['alice test', 'analysis of infectious chronic endometritis']
+        key: 'aliceTest',
+        aliases: [
+            'alice test', 'analysis of infectious chronic endometritis'
+        ]
     },
     {
-        name: 'EMMA Test',
-        aliases: ['emma test', 'environmental mold and mycotoxin assessment']
+        key: 'emmaTest',
+        aliases: [
+            'emma test', 'environmental mold and mycotoxin assessment'
+        ]
     },
     {
-        name: 'Hydrosonography',
-        aliases: ['hydrosonography', '3d sono hcg']
+        key: 'hydrosonography',
+        aliases: [
+            'hydrosonography', '3d sono hcg',
+            'הידרוסונוגרפיה', 'הדמיות'
+        ]
     },
     {
-        name: 'Diagnostic Hysteroscopy',
-        aliases: ['diagnostic hysteroscopy']
+        key: 'hsg',
+        aliases: [
+            'hsg', 'hysterosonography',
+            'צילום רחם'
+        ]
     },
     {
-        name: 'HSG',
-        aliases: ['hsg', 'hysterosonography']
+        key: 'obgyn',
+        aliases: [
+            'obgyn', 'appointment',
+            'גינקולוגית', 'גניקולוגית'
+        ]
     },
     {
-        name: 'OBGYN',
-        aliases: ['obgyn', 'appointment']
+        key: 'reproductiveEndocrinologis',
+        aliases: [
+            'reproductive endocrinologist', 'appointment',
+            'אנדוקרינולוגית'
+        ]
     },
     {
-        name: 'Reproductive Endocrinologist',
-        aliases: ['reproductive endocrinologist', 're', 'appointment']
+        key: 'cervicalMucus',
+        aliases: [
+            'cervical mucus',
+            'ריר צוואר הרחם'
+        ]
     },
     {
-        name: 'Cervical Mucus',
-        aliases: ['cervical mucus']
+        key: 'ovulationStick',
+        aliases: [
+            'ovulation stick',
+            'בדיקת ביוץ'
+        ]
     },
     {
-        name: 'Ovulation Stick',
-        aliases: ['ovulation stick']
+        key: 'pregnancyCheck',
+        aliases: [
+            'pregnancy stick', 'pregnancy check',
+            'בדיקת הריון'
+        ]
     },
-]
+];
+
+export default _.memoize(() => {
+    const nameToKey = _.keyBy(checkups.map(checkup => checkup.key), key => localization(`checkups.${key}`));
+    const keyToName = _.invert(nameToKey);
+    const items = checkups.map(checkup => ({name: keyToName[checkup.key], aliases: checkup.aliases}));
+    return {
+        keyToName,
+        nameToKey,
+        items: _.sortBy(items, item => item.name)
+    }
+});

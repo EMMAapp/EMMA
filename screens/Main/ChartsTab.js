@@ -32,7 +32,7 @@ const extractResults = (events, periodStartMoment, nextPeriodStartMoment) => {
             return;
         }
         const dayOfPeriod = daysBetween(periodStartMoment, eventMoment) + 1;
-        if (event.checkup === "Blood Test") {
+        if (event.checkup === "bloodTest") {
             bloodResults[dayOfPeriod] = event.results;
         }
         else {

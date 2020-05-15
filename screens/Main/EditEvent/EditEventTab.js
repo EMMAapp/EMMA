@@ -62,6 +62,7 @@ const EditEventTab = ({navigation, setMainCalendarRefresh, currentEditedEventId,
     const [closeAfterPastValidation, setCloseAfterPastValidation] = useState(false);
     const isMedicationEvent = eventType === EVENT_TYPE_MEDICATION;
     const lastPeriodMoment = wixDateToMoment(_.last(store.patientData.periods).date);
+    const {keyToName: checkupKeyToName, nameToKey: checkNameToKey, items: checkups} = Checkups();
 
     if (!currentEditedEventId) {
         setCurrentEditedEventId(shortid.generate());
@@ -228,9 +229,9 @@ const EditEventTab = ({navigation, setMainCalendarRefresh, currentEditedEventId,
                 <Text>{localization(isMedicationEvent ? 'medicationSubTitle' : 'checkupSubTitle')}</Text>
                 <Autocomplete
                     style={{zIndex: 2}}
-                    items={isMedicationEvent ? Medications : Checkups}
-                    selectedItem={{item: isMedicationEvent ? state.medication : state.checkup}}
-                    setSelectedItem={item => setState(isMedicationEvent ? {...state, medication: item} : {...state, checkup: item})}
+                    items={isMedicationEvent ? Medications : checkups}
+                    selectedItem={{item: isMedicationEvent ? state.medication : checkupKeyToName[state.checkup]}}
+                    setSelectedItem={item => setState(isMedicationEvent ? {...state, medication: item} : {...state, checkup: checkNameToKey[item]})}
                 />
                 {
                     isMedicationEvent ?

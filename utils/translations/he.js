@@ -122,5 +122,31 @@ export default {
         'חמישי',
         'שישי',
         'שבת'
-    ]
+    ],
+
+    'checkups': {
+        'ultrasound': 'אולטראסאונד',
+        'bloodTest': 'בדיקת דם',
+        'zift': 'ZIFT',
+        'embryoTransfer': 'החזרת עוברים',
+        'oocytesRetrieval': 'שאיבת ביציות',
+        'ici': 'ICI',
+        'iui': 'IUI',
+        'fertilityCheck': 'בדיקת פוריות',
+        'geneticTest': 'בדיקה גנטית',
+        'pipelleTest': 'בדיקת פיפל',
+        'receptivaTest': 'Receptiva Test',
+        'surgicalHysteroscopy': 'היסטרוסקופיה כירורגית',
+        'diagnosticHysteroscopy': 'היסטרוסקופיה אבחנתית',
+        'eraTest': 'ERA Test',
+        'aliceTest': 'ALICE Test',
+        'emmaTest': 'EMMA Test',
+        'hydrosonography': 'הידרוסונוגרפיה',
+        'hsg': 'צילום רחם',
+        'obgyn': 'גינקולוגית',
+        'reproductiveEndocrinologis': 'אנדוקרינולוגית',
+        'cervicalMucus': 'ריר צוואר הרחם',
+        'ovulationStick': 'בדיקת ביוץ',
+        'pregnancyCheck': 'בדיקת הריון'
+    }
 }

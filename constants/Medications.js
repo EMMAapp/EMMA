@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 const MEDICATIONS = [
     "Acupuncture",
     "Antagon",
@@ -74,4 +76,4 @@ const MEDICATIONS_WITH_ALIASES = MEDICATIONS.map(medication => {
     }
 });
 
-export default MEDICATIONS_WITH_ALIASES
+export default _.sortBy(MEDICATIONS_WITH_ALIASES, item => item.name)

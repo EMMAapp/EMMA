@@ -75,10 +75,10 @@ const Event = ({dayTime, details, setIsLoading}) => {
                 : body
         }
         {
-            details.checkup === "Blood Test" && <View><BloodTestResults isExpanded={isExpanded} results={details.results || {}} setResults={updateResults}/></View>
+            details.checkup === "bloodTest" && <View><BloodTestResults isExpanded={isExpanded} results={details.results || {}} setResults={updateResults}/></View>
         }
         {
-            details.checkup === "Ultrasound" && <View><UltrasoundResults isExpanded={isExpanded} results={details.results || {}} setResults={updateResults}/></View>
+            details.checkup === "ultrasound" && <View><UltrasoundResults isExpanded={isExpanded} results={details.results || {}} setResults={updateResults}/></View>
         }
     </View>
 };
@@ -111,7 +111,7 @@ const DayReference = ({wixDate, isSelected, setSelectedDay, eventsForDay}) => {
     </TouchableOpacity>
 };
 
-const hasResultsDropdown = (details) => details.checkup && (details.checkup === "Blood Test" || details.checkup === "Ultrasound");
+const hasResultsDropdown = (details) => details.checkup && (details.checkup === "bloodTest" || details.checkup === "ultrasound");
 
 const JourneyTab = ({navigation, mainCalendarRefresh, setIsLoading}) => {
     RouteGuard(navigation);

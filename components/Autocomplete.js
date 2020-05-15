@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from 'react'
 import SearchableDropdown from 'react-native-searchable-dropdown';
-import localization, {isRTL} from "../utils/localization";
+import localization from "../utils/localization";
 import {borderRadiusStyle, marginStyle, paddingStyle} from "../constants/Styles";
 import Colors from "../constants/Colors";
 import {YellowBox} from 'react-native'

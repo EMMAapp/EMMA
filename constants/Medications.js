@@ -76,4 +76,8 @@ const MEDICATIONS_WITH_ALIASES = MEDICATIONS.map(medication => {
     }
 });
 
-export default _.sortBy(MEDICATIONS_WITH_ALIASES, item => item.name)
+export const medicationsService = {
+    getKeyByName: _.identity,
+    getNameByKey: _.identity,
+    items: _.sortBy(MEDICATIONS_WITH_ALIASES, item => item.name)
+};

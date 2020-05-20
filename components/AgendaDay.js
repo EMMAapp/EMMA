@@ -13,6 +13,8 @@ import moment from "moment";
 import Row from "./Row";
 import Divider from "./Divider";
 import IconButton from "./IconButton";
+import {medicationsService} from "../constants/Medications";
+import {checkupsService} from "../constants/Checkups";
 
 const NoItems = () => {
     const [marginTopAnimation] = useState(new Animated.Value(0));
@@ -63,15 +65,18 @@ const AgendaItem = ({dayTime, details, onEventPressed, noDivider, disabled}) => 
                     •
                 </Text>
                 <Text bold>
-                    {details.medication ? details.medication : details.checkup}
+                    {
+                        details.medication
+                            ? medicationsService.getNameByKey(details.medication)
+                            : checkupsService.getNameByKey(details.checkup)
+                    }
                 </Text>
             </Row>
             {
                 details.note ?
                     <Text size={7} color={Colors.gray} style={marginStyle(2, 'top')}>
                         {details.note}
-                    </Text>
-                    : null
+                    </Text> : null
             }
         </View>
     );

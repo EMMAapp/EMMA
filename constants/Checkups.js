@@ -162,13 +162,11 @@ const checkups = [
     },
 ];
 
-export default _.memoize(() => {
-    const nameToKey = _.keyBy(checkups.map(checkup => checkup.key), key => localization(`checkups.${key}`));
-    const keyToName = _.invert(nameToKey);
-    const items = checkups.map(checkup => ({name: keyToName[checkup.key], aliases: checkup.aliases}));
-    return {
-        keyToName,
-        nameToKey,
-        items: _.sortBy(items, item => item.name)
-    }
-});
+const nameToKeyMap = _.memoize(() => _.keyBy(checkups.map(checkup => checkup.key), key => localization(`checkups.${key}`)));
+const keyToNameMap = _.memoize(() => _.invert(nameToKeyMap()));
+
+export const checkupsService = {
+    getKeyByName: (name) => _.get(nameToKeyMap(), name, name),
+    getNameByKey: (key) => _.get(keyToNameMap(), key, key),
+    items: _.sortBy(checkups.map(checkup => ({name: keyToNameMap()[checkup.key], aliases: checkup.aliases})), item => item.name)
+};

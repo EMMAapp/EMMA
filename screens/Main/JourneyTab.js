@@ -21,6 +21,8 @@ import Card from "../../components/Card"
 import Image from "../../components/Image";
 import appContext from "../../utils/context";
 import RouteGuard from "../../navigation/RouteGuard";
+import {medicationsService} from "../../constants/Medications";
+import {checkupsService} from "../../constants/Checkups";
 
 function collectByDay(events) {
     let eventsByDay = {};
@@ -57,7 +59,7 @@ const Event = ({dayTime, details, setIsLoading}) => {
                 •
             </Text>
             <Text bold>
-                {details.medication ? details.medication : details.checkup}
+                {details.medication ? medicationsService.getNameByKey(details.medication) : checkupsService.getNameByKey(details.checkup)}
             </Text>
             <View style={{flex: 2}}/>
             {

@@ -2,8 +2,8 @@ import React, {useState} from 'react'
 import {TouchableOpacity, View} from 'react-native'
 import localization from "../../../utils/localization";
 import Autocomplete from "../../../components/Autocomplete";
-import Medications from '../../../constants/Medications';
-import Checkups from '../../../constants/Checkups';
+import {medicationsService} from '../../../constants/Medications';
+import {checkupsService} from '../../../constants/Checkups';
 import NumericInput from "../../../components/NumericInput";
 import CalendarDayPicker from "./CalendarDayPicker";
 import CalendarOvulationDayPicker from "./CalendarOvulationDayPicker";
@@ -62,7 +62,6 @@ const EditEventTab = ({navigation, setMainCalendarRefresh, currentEditedEventId,
     const [closeAfterPastValidation, setCloseAfterPastValidation] = useState(false);
     const isMedicationEvent = eventType === EVENT_TYPE_MEDICATION;
     const lastPeriodMoment = wixDateToMoment(_.last(store.patientData.periods).date);
-    const {keyToName: checkupKeyToName, nameToKey: checkNameToKey, items: checkups} = Checkups();
 
     if (!currentEditedEventId) {
         setCurrentEditedEventId(shortid.generate());
@@ -229,9 +228,18 @@ const EditEventTab = ({navigation, setMainCalendarRefresh, currentEditedEventId,
                 <Text>{localization(isMedicationEvent ? 'medicationSubTitle' : 'checkupSubTitle')}</Text>
                 <Autocomplete
                     style={{zIndex: 2}}
-                    items={isMedicationEvent ? Medications : checkups}
-                    selectedItem={{item: isMedicationEvent ? state.medication : checkupKeyToName[state.checkup]}}
-                    setSelectedItem={item => setState(isMedicationEvent ? {...state, medication: item} : {...state, checkup: checkNameToKey[item]})}
+                    items={isMedicationEvent ? medicationsService.items : checkupsService.items}
+                    selectedItem={{
+                        item:
+                            isMedicationEvent ? medicationsService.getNameByKey(state.medication)
+                                : checkupsService.getNameByKey(state.checkup)
+                    }}
+                    setSelectedItem={item => setState(
+                        isMedicationEvent ? {...state, medication: medicationsService.getKeyByName(item)} : {
+                            ...state,
+                            checkup: checkupsService.getKeyByName(item)
+                        }
+                    )}
                 />
                 {
                     isMedicationEvent ?

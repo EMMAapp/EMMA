@@ -14,6 +14,8 @@ import Button from "../../../components/Button";
 import Row from "../../../components/Row";
 import Image from "../../../components/Image";
 import Divider from "../../../components/Divider";
+import {checkupsService} from "../../../constants/Checkups";
+import {medicationsService} from "../../../constants/Medications";
 
 const StyledImage = styled(Image)`
 border-color: #e07a83;
@@ -75,7 +77,7 @@ export default ({dismiss, potentialSyncEvents, syncEventsWithNewPeriod}) => {
             potentialSyncEvents.map(potential =>
                 <SyncRow
                     key={shortid.generate()}
-                    mainTitle={potential.event.checkup ? potential.event.checkup : potential.event.medication}
+                    mainTitle={potential.event.checkup ? checkupsService.getNameByKey(potential.event.checkup) : medicationsService.getNameByKey(potential.event.medication)}
                     subTitle={potential.count > 1 ? null : ` - ${potential.count} ${localization('eventsCountSuffix')}`}
                     enabled={_.includes(eventIdsToSync, potential.event.id)}
                     onToggle={() => toggleEvent(potential.event)}

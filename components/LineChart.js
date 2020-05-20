@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {Dimensions} from "react-native";
 import {LineChart} from "react-native-chart-kit";
 import Text from "./Text";
@@ -18,13 +18,22 @@ const hexToRgb = (hex) => {
     } : null;
 };
 
+const DotContent = ({x, y, value}) =>
+    <Text
+        color={Colors.gray}
+        style={{position: 'absolute', paddingTop: y - 20, paddingLeft: x + 5, opacity: 0.6}}>
+        {value}
+    </Text>;
+
 const themeColorRgb = hexToRgb(Colors.pink);
 
 export default ({title, values}) => {
+    const [selectedDotIndex, setSelectedDotIndex] = useState(null);
     const labels = values.map(pair => pair.periodDay);
+    const data = values.map(pair => parseFloat(pair.value)).map(value => isNaN(value) ? 0 : value);
     const datasets = [
         {
-            data: values.map(pair => parseFloat(pair.value)).map(value => isNaN(value) ? 0 : value),
+            data,
             strokeWidth: 2
         }
     ];
@@ -48,6 +57,8 @@ export default ({title, values}) => {
                 bezier
                 fromZero
                 style={{padding: 10}}
+                renderDotContent={({x, y, index}) => selectedDotIndex === index && <DotContent key={index} x={x} y={y} value={data[index]}/>}
+                onDataPointClick={({index}) => setSelectedDotIndex(index === selectedDotIndex ? null : index)}
             />
             <Text color={Colors.gray} style={[absoluteStyleVertical(5, 'bottom'), absoluteStyle(0, 0), paddingStyle(10, flipIfRtl('right'))]} alignRight={!isRTL}>
                 {localization('cycleDays')}

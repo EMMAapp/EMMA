@@ -19,14 +19,14 @@ const checkups = [
     {
         key: 'zift',
         aliases: [
-            'zift', 'zygote intrafallopian transfer',
-            'זיפט'
+            'zift', 'zygote intrafallopian transfer', 'embryo transfer',
+            'זיפט', 'החזרת עוברים'
         ]
     },
     {
         key: 'embryoTransfer',
         aliases: [
-            'embryo transfer', 'et',
+            'ivf', 'embryo transfer', 'et',
             'הפריה חוץ גופית', 'החזרת עוברים'
         ]
     },
@@ -41,7 +41,7 @@ const checkups = [
         key: 'ici',
         aliases: [
             'ici', 'intracervical insemination', 'artificial insemination',
-            'הפריה מלאכותית'
+            'הפריה מלאכותית', 'הפריה לצוואר הרחם'
         ]
     },
     {
@@ -75,7 +75,8 @@ const checkups = [
     {
         key: 'receptivaTest',
         aliases: [
-            'receptiva test', 'dx'
+            'receptiva test', 'dx',
+            'בדיקת דלקת הרחם'
         ]
     },
     {
@@ -96,19 +97,21 @@ const checkups = [
         key: 'eraTest',
         aliases: [
             'era test', 'endometrial receptivity test',
-            'בדיקת חלון ההשתרשות'
+            'בדיקת חלון השרשה', 'ההשתרשות'
         ]
     },
     {
         key: 'aliceTest',
         aliases: [
-            'alice test', 'analysis of infectious chronic endometritis'
+            'alice test', 'analysis of infectious chronic endometritis',
+            'בדיקת חיידקים פתוגניים', 'אליס'
         ]
     },
     {
         key: 'emmaTest',
         aliases: [
-            'emma test', 'environmental mold and mycotoxin assessment'
+            'emma test', 'environmental mold and mycotoxin assessment',
+            'בדיקת מיקרוביומה אנדומטריאלית'
         ]
     },
     {

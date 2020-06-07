@@ -64,19 +64,17 @@ const LoginScreen = ({navigation, setIsLoading}) => {
             <Image name='welcomeAnimation' height={Platform.OS === 'ios' ? 300 : 220} width='100%'/>
 
             <TermsModal isVisible={termsIsVisible} dismiss={() => setTermsIsVisible(false)}/>
-            <Row style={marginStyle(15, 'left')}>
+            <Row center>
                 <Checkbox
                     value={agreeTerms}
                     setValue={(enabled) => setAgreeTerms(enabled)}
                 />
-                <Row style={[paddingStyle(10, 'bottom'), {width: '100%'}]}>
-                    <TouchableOpacity activeOpacity={1} onPress={() => setAgreeTerms(!agreeTerms)}>
-                        <QuestionText>{localization('acceptTermsPrefix')}</QuestionText>
-                    </TouchableOpacity>
-                    <TouchableOpacity activeOpacity={1} onPress={() => setTermsIsVisible(true)} style={paddingStyle(2, 'left')}>
-                        <QuestionText color={Colors.purple} underline>{localization('acceptTermsLink')}</QuestionText>
-                    </TouchableOpacity>
-                </Row>
+                <TouchableOpacity activeOpacity={1} onPress={() => setAgreeTerms(!agreeTerms)} style={paddingStyle(10, 'bottom')}>
+                    <QuestionText>{localization('acceptTermsPrefix')}</QuestionText>
+                </TouchableOpacity>
+                <TouchableOpacity activeOpacity={1} onPress={() => setTermsIsVisible(true)} style={[paddingStyle(2, 'left'), paddingStyle(10, 'bottom')]}>
+                    <QuestionText color={Colors.purple} underline>{localization('acceptTermsLink')}</QuestionText>
+                </TouchableOpacity>
             </Row>
 
             <Row center style={marginStyle(10, 'bottom')}>

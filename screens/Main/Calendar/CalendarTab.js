@@ -111,7 +111,7 @@ export default function CalendarTab({
                             width={115}
                             text={localization('pleaseUpdatePeriod')}
                             onPress={() => setBalloonDismissed(true)}
-                            style={absoluteStyleVertical(1, 'top')}
+                            style={Platform.OS === "ios" ? absoluteStyleVertical(1, 'top') : {}}
                         />
                     </Row>
                 }

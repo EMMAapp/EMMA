@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {TouchableOpacity} from 'react-native'
+import {TouchableOpacity, Platform} from 'react-native'
 import {logInWithFacebook, logInWithGoogle} from '../../store';
 import RouteGuard from "../../navigation/RouteGuard";
 import localization from "../../utils/localization";
@@ -12,7 +12,6 @@ import Row from "../../components/Row";
 import Checkbox from "../../components/Checkbox";
 import Colors from "../../constants/Colors";
 import Text from "../../components/Text";
-import {Platform} from "react-native-web";
 import appContext from "../../utils/context";
 
 const QuestionText = (props) =>
@@ -61,7 +60,7 @@ const LoginScreen = ({navigation, setIsLoading}) => {
             <Row center>
                 <Image name='logo' height={50} width='80%' style={marginStyle(15, 'top')}/>
             </Row>
-            <Image name='welcomeAnimation' height={Platform.OS === 'ios' ? 300 : 220} width='100%'/>
+            <Image name='welcomeAnimation' height={Platform.OS === 'ios' ? 180 : 220} width='100%'/>
 
             <TermsModal isVisible={termsIsVisible} dismiss={() => setTermsIsVisible(false)}/>
             <Row center>

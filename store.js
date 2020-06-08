@@ -151,7 +151,7 @@ export async function logInWithFacebook() {
         const permissions = ['public_profile', 'email'];
         await Facebook.initializeAsync(appId);
 
-        const {type, token} = await Facebook.logInWithReadPermissionsAsync(appId, {permissions});
+        const {type, token} = await Facebook.logInWithReadPermissionsAsync({permissions});
         if (type !== 'success') {
             return false;
         }
@@ -178,6 +178,19 @@ export async function logInWithGoogle() {
         }
 
         const credential = firebase.auth.GoogleAuthProvider.credential(user.auth.idToken, user.auth.accessToken);
+        await logInWithCredential(credential);
+        return true;
+    }
+    catch (e) {
+        alert(e.message);
+        logError(e.message);
+        return e.message;
+    }
+}
+
+export async function loginWithEmail({email, password}) {
+    try {
+        const credential = firebase.auth.EmailAuthProvider.credential(email, password);
         await logInWithCredential(credential);
         return true;
     }

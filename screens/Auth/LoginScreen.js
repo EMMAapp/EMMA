@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {TouchableOpacity, Platform} from 'react-native'
-import {logInWithFacebook, logInWithGoogle} from '../../store';
+import {logInWithFacebook, logInWithGoogle, loginWithEmail} from '../../store';
 import RouteGuard from "../../navigation/RouteGuard";
 import localization from "../../utils/localization";
 import Image from "../../components/Image";
@@ -29,9 +29,9 @@ const LoginScreen = ({navigation, setIsLoading}) => {
     const [termsIsVisible, setTermsIsVisible] = useState(false);
     const [hasError, setHasError] = useState(false);
 
-    const facebookLogin = async () => {
+    const login = async (loginLogic) => {
         setIsLoading(true);
-        const success = await logInWithFacebook();
+        const success = await loginLogic();
         setIsLoading(false);
         if (success) {
             RouteGuard(navigation);
@@ -41,17 +41,11 @@ const LoginScreen = ({navigation, setIsLoading}) => {
         }
     };
 
-    const googleLogin = async () => {
-        setIsLoading(true);
-        const success = await logInWithGoogle();
-        setIsLoading(false);
-        if (success) {
-            RouteGuard(navigation);
-        }
-        else {
-            setHasError(true);
-        }
-    };
+    const facebookLogin = async () => await login(logInWithFacebook);
+
+    const googleLogin = async () => await login(logInWithGoogle);
+
+    const devLogin = async () => await login(() => loginWithEmail({email: "dev@dev.com", password: "p@ssw0rd"}));
 
     const canSubmit = agreeTerms;
 
@@ -76,6 +70,14 @@ const LoginScreen = ({navigation, setIsLoading}) => {
                 </TouchableOpacity>
             </Row>
 
+            {
+                __DEV__ &&
+                <Row center style={marginStyle(10, 'bottom')}>
+                    <ButtonPrimary onPress={devLogin} disabled={!canSubmit} width='75%' icon='today'>
+                        DEV LOGIN
+                    </ButtonPrimary>
+                </Row>
+            }
             <Row center style={marginStyle(10, 'bottom')}>
                 <ButtonPrimary onPress={facebookLogin} disabled={!canSubmit} width='75%' icon='facebook'>
                     {localization('connectFacebook')}

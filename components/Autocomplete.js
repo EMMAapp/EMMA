@@ -47,8 +47,6 @@ export default ({items, selectedItem, setSelectedItem, itemWidth, center, style,
         itemStyle={itemStyle}
         itemTextStyle={{color: Colors.grayDark, alignSelf: center ? 'center' : 'flex-start'}}
         itemsContainerStyle={{
-            position: 'absolute',
-            top: 35,
             width: '100%',
             borderColor: Colors.grayMedium,
             borderWidth: 1,

@@ -1,15 +1,10 @@
 import React, {useRef} from 'react';
-import {Image} from 'react-native';
 import {Calendar} from "react-native-calendars";
 import {calendarTheme} from "../constants/Styles";
 import {calendarFirstDay} from "../store";
 import Swipe from "./Swipe";
-import {isRTL} from "../utils/localization";
 import Icon from "./Icon";
 import {flipIfRtl} from "../utils/utils";
-
-const rightImage =  require('react-native-calendars/src/calendar/img/next.png');
-const leftImage =  require('react-native-calendars/src/calendar/img/previous.png');
 
 export default ({
     current,

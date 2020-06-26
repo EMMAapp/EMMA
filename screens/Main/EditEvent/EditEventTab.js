@@ -235,10 +235,13 @@ const EditEventTab = ({navigation, setMainCalendarRefresh, currentEditedEventId,
                                 : checkupsService.getNameByKey(state.checkup)
                     }}
                     setSelectedItem={item => setState(
-                        isMedicationEvent ? {...state, medication: medicationsService.getKeyByName(item)} : {
-                            ...state,
-                            checkup: checkupsService.getKeyByName(item)
-                        }
+                        isMedicationEvent
+                            ? {
+                                ...state, medication: medicationsService.getKeyByName(item)
+                            }
+                            : {
+                                ...state, checkup: checkupsService.getKeyByName(item)
+                            }
                     )}
                 />
                 {

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Keyboard, Platform} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {useNavigation} from '@react-navigation/core';
 import CalendarTabWrapper from '../screens/Main/Calendar/CalendarTabWrapper';
 import EditEventTab from '../screens/Main/EditEvent/EditEventTab';
 import ProfileTab from '../screens/Main/ProfileTab';
@@ -21,6 +22,7 @@ const icons = {
 
 const Tab = createBottomTabNavigator();
 export default ({}) => {
+    const navigation = useNavigation();
     const [keyboardVisible, setKeyboardVisible] = useState(false);
 
     useEffect(() => {
@@ -40,7 +42,7 @@ export default ({}) => {
             screenOptions={({route}) => ({
                 tabBarIcon: ({focused, color, size}) =>
                     <Icon
-                        color={focused ? Colors.purple : Colors.grayDark}
+                        color={route.name === JOURNEY ? Colors.grayMedium : focused ? Colors.purple : Colors.grayDark}
                         name={icons[route.name]}
                     />
             })}
@@ -50,15 +52,16 @@ export default ({}) => {
                     headerVisible: false
                 }
             }}
+
             tabBarOptions={{
                 style: keyboardVisible ? {} : {...paddingStyle(10, 'top')},
                 showLabel: false,
                 keyboardHidesTabBar: true
             }}>
-            <Tab.Screen name={JOURNEY} component={JourneyTab}/>
+            <Tab.Screen name={CALENDAR} component={CalendarTabWrapper}/>
             <Tab.Screen name={CHARTS} component={ChartsTab}/>
             <Tab.Screen name={EDIT_EVENT} component={EditEventTab}/>
-            <Tab.Screen name={CALENDAR} component={CalendarTabWrapper}/>
+            <Tab.Screen name={JOURNEY} component={JourneyTab}/>
             <Tab.Screen name={PROFILE} component={ProfileTab}/>
         </Tab.Navigator>
     )

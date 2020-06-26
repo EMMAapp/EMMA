@@ -65,10 +65,7 @@ export default ({items, selectedItem, setSelectedItem, itemWidth, center, style,
                 defaultValue: item || '',
                 onEndEditing: (e) => {
                     const {text} = e.nativeEvent;
-                    if (text) {
-                        setSelectedItem(text);
-                    }
-                    else {
+                    if (!text) {
                         setNativeText(item);
                     }
                 },

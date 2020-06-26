@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import moment from "moment";
-import {Platform, SafeAreaView, TouchableOpacity, View} from "react-native";
+import {Platform, SafeAreaView, ScrollView, TouchableOpacity, View} from "react-native";
 import {daysBetween, momentToWixDate, wixDateToMoment} from "../../../utils/dayTime";
 import {EDIT_EVENT} from "../../../navigation/Routes";
 import _ from 'lodash'
@@ -12,9 +12,8 @@ import MainCalendar from "./MainCalendar";
 import Text from '../../../components/Text'
 import Row from "../../../components/Row";
 import IconAndText from "../../../components/IconAndText";
-import Drawer from "../../../components/Drawer";
-import {Agenda, AgendaDay} from "../../../components/AgendaDay";
-import {absoluteStyleVertical, marginStyle, paddingStyle} from "../../../constants/Styles";
+import {AgendaDay} from "./AgendaDay";
+import {absoluteStyleVertical, borderRadiusStyle, marginStyle, paddingStyle, shadowStyle} from "../../../constants/Styles";
 import Balloon from "../../../components/Balloon";
 import styled from "styled-components";
 
@@ -51,12 +50,11 @@ export default function CalendarTab({
     markedDates,
     eventsByDay,
     dayRender,
-    eventedDateMoments,
-    setMainCalendarRefresh
+    setMainCalendarRefresh,
+    setIsLoading
 }) {
 
     const [selectedDay, setSelectedDay] = useState(momentToWixDate(moment()));
-    const [isAgendaExpanded, setAgendaExpanded] = useState(false);
     const [isEditingPeriod, setEditingPeriod] = useState(false);
     const [balloonDismissed, setBalloonDismissed] = useState(false);
     const lastPeriodMoment = wixDateToMoment(_.last(store.patientData.periods).date);
@@ -76,14 +74,6 @@ export default function CalendarTab({
 
     const daysSinceLastPeriod = daysBetween(lastPeriodMoment, moment().startOf('day'));
     const showUpdatePeriodBalloon = daysSinceLastPeriod > store.patientData.averagePeriodCycleDays;
-
-    const agendaDayRender = (momentDate, withPadding) =>
-        <AgendaDay
-            momentDate={momentDate}
-            events={getEventsForDate(momentToWixDate(momentDate))}
-            onEventPressed={onEventPressed}
-            withPadding={withPadding}
-        />;
 
     return (
         <StyledView>
@@ -122,24 +112,29 @@ export default function CalendarTab({
                     setMainCalendarRefresh={setMainCalendarRefresh}
                 />
 
-                {
-                    isAgendaExpanded ? null :
-                        <MainCalendar
-                            selectedDay={selectedDay}
-                            setSelectedDay={setSelectedDay}
-                            markedDates={markedDates}
-                            dayRender={dayRender}
-                        />
-                }
-
+                <MainCalendar
+                    selectedDay={selectedDay}
+                    setSelectedDay={setSelectedDay}
+                    markedDates={markedDates}
+                    dayRender={dayRender}
+                />
 
             </View>
-            <Drawer
-                isExpanded={isAgendaExpanded}
-                setIsExpanded={setAgendaExpanded}
-                renderCollapsed={() => agendaDayRender(wixDateToMoment(selectedDay), true)}
-                renderExpanded={() => <Agenda selectedDay={selectedDay} eventedDateMoments={eventedDateMoments} agendaDayRender={agendaDayRender}/>}
-            />
+            <ScrollView style={[
+                {height: '100%', width: '100%', shadowRadius: 8},
+                shadowStyle(20),
+                marginStyle(7, 'top'),
+                paddingStyle(7, 'top'),
+                borderRadiusStyle(15, 'TopLeft'),
+                borderRadiusStyle(15, 'TopRight')
+            ]}>
+                <AgendaDay
+                    momentDate={wixDateToMoment(selectedDay)}
+                    events={getEventsForDate(selectedDay)}
+                    onEventPressed={onEventPressed}
+                    setIsLoading={setIsLoading}
+                />
+            </ScrollView>
         </StyledView>
     );
 }

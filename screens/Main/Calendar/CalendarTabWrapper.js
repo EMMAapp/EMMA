@@ -29,7 +29,7 @@ function collectByDay(events) {
     return eventsByDay;
 }
 
-const CalendarTabWrapper = ({navigation, mainCalendarRefresh, setCurrentEditedEventId, setMainCalendarRefresh}) => {
+const CalendarTabWrapper = ({navigation, mainCalendarRefresh, setCurrentEditedEventId, setMainCalendarRefresh, setIsLoading}) => {
     RouteGuard(navigation);
     if (store.noData()) {
         return <View/>
@@ -113,8 +113,8 @@ const CalendarTabWrapper = ({navigation, mainCalendarRefresh, setCurrentEditedEv
         markedDates={markedDates}
         eventsByDay={eventsByDay}
         dayRender={dayRender}
-        eventedDateMoments={_.sortBy(_.keys(eventsByDay).map(date => wixDateToMoment(date)), _ => _)}
         setMainCalendarRefresh={setMainCalendarRefresh}
+        setIsLoading={setIsLoading}
     />
 };
 

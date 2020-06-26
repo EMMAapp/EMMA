@@ -14,7 +14,7 @@ import Text from "../../components/Text";
 import Divider from "../../components/Divider";
 import BinaryBoxes from "../../components/BinaryBoxes";
 import TermsModal from "../../components/TermsModal";
-import {Platform, TouchableOpacity, View} from "react-native";
+import {TouchableOpacity, View} from "react-native";
 import Image from "../../components/Image";
 import ValidationModal from "../../components/ValidationModal";
 import LicensesModal from "../../components/LicensesModal";

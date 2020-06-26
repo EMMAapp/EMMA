@@ -3,7 +3,6 @@ import {TouchableOpacity, View} from "react-native";
 import localization from "../../../utils/localization";
 import _ from 'lodash'
 import {addOrRemove} from "../../../utils/utils";
-import shortid from 'shortid';
 import Text from "../../../components/Text";
 import Checkbox from "../../../components/Checkbox";
 import Colors from "../../../constants/Colors";
@@ -74,9 +73,9 @@ export default ({dismiss, potentialSyncEvents, syncEventsWithNewPeriod}) => {
                 : null
         }
         {
-            potentialSyncEvents.map(potential =>
+            potentialSyncEvents.map((potential, index) =>
                 <SyncRow
-                    key={shortid.generate()}
+                    key={index}
                     mainTitle={potential.event.checkup ? checkupsService.getNameByKey(potential.event.checkup) : medicationsService.getNameByKey(potential.event.medication)}
                     subTitle={potential.count > 1 ? null : ` - ${potential.count} ${localization('eventsCountSuffix')}`}
                     enabled={_.includes(eventIdsToSync, potential.event.id)}

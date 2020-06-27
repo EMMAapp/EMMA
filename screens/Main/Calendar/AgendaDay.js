@@ -131,7 +131,7 @@ export function AgendaDay({momentDate, events, onEventPressed, setIsLoading}) {
         </Text>
         {
             !_.isEmpty(events) ?
-                events.map(({dayTime, details}) =>
+                events.map(({dayTime, details}, i) =>
                     <AgendaItem
                         key={shortid.generate()}
                         dayTime={dayTime}

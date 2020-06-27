@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Animated, Platform, View} from "react-native";
 import {addDays, dayTimeToDisplayString, isInFuture, momentToDisplayString} from "../../../utils/dayTime";
 import _ from "lodash";
+import shortid from "shortid";
 import Text from "../../../components/Text";
 import Colors from "../../../constants/Colors";
 import {eventColor, marginStyle, paddingStyle} from "../../../constants/Styles";
@@ -130,9 +131,9 @@ export function AgendaDay({momentDate, events, onEventPressed, setIsLoading}) {
         </Text>
         {
             !_.isEmpty(events) ?
-                events.map(({dayTime, details}, i) =>
+                events.map(({dayTime, details}) =>
                     <AgendaItem
-                        key={i}
+                        key={shortid.generate()}
                         dayTime={dayTime}
                         details={details}
                         onEventPressed={onEventPressed}

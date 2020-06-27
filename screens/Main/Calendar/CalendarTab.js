@@ -13,7 +13,7 @@ import Text from '../../../components/Text'
 import Row from "../../../components/Row";
 import IconAndText from "../../../components/IconAndText";
 import {AgendaDay} from "./AgendaDay";
-import {absoluteStyleVertical, borderRadiusStyle, marginStyle, paddingStyle, shadowStyle} from "../../../constants/Styles";
+import {absoluteStyleVertical, borderRadiusStyle, hwStyle, marginStyle, paddingStyle, shadowStyle} from "../../../constants/Styles";
 import Balloon from "../../../components/Balloon";
 import styled from "styled-components";
 
@@ -120,21 +120,23 @@ export default function CalendarTab({
                 />
 
             </View>
-            <ScrollView style={[
-                {height: '100%', width: '100%', shadowRadius: 8},
+            <SafeAreaView style={[
+                {height: '100%', width: '100%', shadowRadius: 8, flex: 1},
                 shadowStyle(20),
                 marginStyle(7, 'top'),
-                paddingStyle(7, 'top'),
                 borderRadiusStyle(15, 'TopLeft'),
                 borderRadiusStyle(15, 'TopRight')
             ]}>
-                <AgendaDay
-                    momentDate={wixDateToMoment(selectedDay)}
-                    events={getEventsForDate(selectedDay)}
-                    onEventPressed={onEventPressed}
-                    setIsLoading={setIsLoading}
-                />
-            </ScrollView>
+                <View style={hwStyle(7, '100%')}/>
+                <ScrollView>
+                    <AgendaDay
+                        momentDate={wixDateToMoment(selectedDay)}
+                        events={getEventsForDate(selectedDay)}
+                        onEventPressed={onEventPressed}
+                        setIsLoading={setIsLoading}
+                    />
+                </ScrollView>
+            </SafeAreaView>
         </StyledView>
     );
 }

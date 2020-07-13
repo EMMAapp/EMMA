@@ -13,7 +13,7 @@ import shortid from 'shortid';
 import Text from "../../components/Text";
 import Divider from "../../components/Divider";
 import BinaryBoxes from "../../components/BinaryBoxes";
-import TermsModal from "../../components/TermsModal";
+import TermsModal from "../../components/LongTextModal";
 import {TouchableOpacity, View} from "react-native";
 import Image from "../../components/Image";
 import ValidationModal from "../../components/ValidationModal";

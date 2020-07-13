@@ -37,6 +37,21 @@ export default ({}) => {
         }
     }, []);
 
+    const label = (name) => {
+        switch (name) {
+            case CALENDAR:
+                return "Journey";
+            case CHARTS:
+                return "Results";
+            case EDIT_EVENT:
+                return "Add Event";
+            case JOURNEY:
+                return "Tips";
+            case PROFILE:
+                return "Profile";
+        }
+    };
+
     return (
         <Tab.Navigator
             screenOptions={({route}) => ({
@@ -44,7 +59,8 @@ export default ({}) => {
                     <Icon
                         color={route.name === JOURNEY ? Colors.grayMedium : focused ? Colors.purple : Colors.grayDark}
                         name={icons[route.name]}
-                    />
+                    />,
+                tabBarLabel: label(route.name)
             })}
             options={{
                 headerMode: 'none',
@@ -55,8 +71,10 @@ export default ({}) => {
 
             tabBarOptions={{
                 style: keyboardVisible ? {} : {...paddingStyle(10, 'top')},
-                showLabel: false,
-                keyboardHidesTabBar: true
+                showLabel: true,
+                keyboardHidesTabBar: true,
+                activeTintColor: Colors.purple,
+                inactiveTintColor: Colors.grayDark
             }}>
             <Tab.Screen name={CALENDAR} component={CalendarTabWrapper}/>
             <Tab.Screen name={CHARTS} component={ChartsTab}/>

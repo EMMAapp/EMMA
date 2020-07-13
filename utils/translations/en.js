@@ -52,7 +52,7 @@ export default {
     'checkupReminder': 'Checkup reminder',
     'reminderAt': 'at',
     'acceptTermsPrefix': 'By signing in, you agree to our',
-    'terms': 'Terms',
+    'terms': 'Terms and Conditions',
     'acceptTermsMiddle': 'and that you have read our',
     'privacyPolicy': 'Privacy Policy',
     'syncEventsTitle': 'You\'ve Changed Your Period Date',

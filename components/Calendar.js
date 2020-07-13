@@ -22,6 +22,8 @@ export default ({
         <Swipe
             onLeft={() => calendarRef.current.addMonth(-1)}
             onRight={() => calendarRef.current.addMonth(1)}
+            onDown={() => calendarRef.current.addMonth(-1)}
+            onUp={() => calendarRef.current.addMonth(1)}
         >
             <Calendar
                 ref={calendarRef}

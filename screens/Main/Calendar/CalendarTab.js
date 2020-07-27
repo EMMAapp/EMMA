@@ -17,6 +17,9 @@ import {absoluteStyleVertical, marginStyle, paddingStyle} from "../../../constan
 import Balloon from "../../../components/Balloon";
 import styled from "styled-components";
 import Card from "../../../components/Card";
+import Image from "../../../components/Image";
+
+const topImages = ['followup', 'plan'];
 
 const StyledView = styled(SafeAreaView)`
   flex: 1;
@@ -78,12 +81,15 @@ export default function CalendarTab({
 
     return (
         <StyledView>
-            <ScrollView style={[
+            <ScrollView
+                style={[
                 paddingStyle(10, 'left'),
                 paddingStyle(10, 'right'),
                 marginStyle(Platform.OS === 'ios' ? 10 : 25, 'top'),
                 {width: '100%'}
             ]}>
+
+                <Image name={_.sample(topImages)} width="100%" height={85}/>
 
                 <Row>
                     <Text size={13} color={Colors.purple}>{localization('fertilityJourney')}</Text>

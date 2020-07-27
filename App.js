@@ -79,7 +79,7 @@ async function loadResourcesAsync() {
         Asset.loadAsync([
             require('./assets/images/beach.gif'),
             require('./assets/images/beach.png'),
-            require('./assets/images/motorcycle.jpg'),
+            require('./assets/images/motorcycle.png'),
             require('./assets/images/wonder.png'),
             require('./assets/images/confused.jpg'),
             require('./assets/images/welcome.gif'),

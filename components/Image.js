@@ -4,7 +4,7 @@ import {borderRadiusStyle, hwStyle} from "../constants/Styles";
 
 import Beach from "../assets/images/beach.png"
 import BeachAnimation from "../assets/images/beach.gif"
-import Motorcycle from "../assets/images/motorcycle.jpg"
+import Motorcycle from "../assets/images/motorcycle.png"
 import Wonder from "../assets/images/wonder.png"
 import Confused from "../assets/images/confused.jpg"
 import WelcomeAnimation from "../assets/images/welcome.gif"

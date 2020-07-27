@@ -109,12 +109,8 @@ const ChartsTab = ({navigation, mainCalendarRefresh}) => {
                     </TouchableOpacity>
                 }
             </Row>
-            <Row center>
-                <Text color={Colors.purple} size={10} style={[marginStyle(10, 'top'), marginStyle(10, 'bottom')]}>{localization('followUpTitle')}</Text>
-            </Row>
-            <Row center>
-                <Text color={Colors.purple} size={11}>{`${momentToDisplayString(period)} - ${momentToDisplayString(addDays(nextPeriod, -1))}`}</Text>
-            </Row>
+            <Text color={Colors.purple} size={13} style={[marginStyle(10, 'top'), marginStyle(10, 'bottom')]}>{localization('followUpTitle')}</Text>
+            <Text size={11}>{`${momentToDisplayString(period)} - ${momentToDisplayString(addDays(nextPeriod, -1))}`}</Text>
             {
                 _.isEmpty(_.keys(bloodResults)) && !ultrasoundAny ?
                     <View>

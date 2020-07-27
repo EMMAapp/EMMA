@@ -81,7 +81,7 @@ export default {
     'prevPeriod': 'Previous period',
     'nextPeriod': 'Next period',
     'noResults': 'Currently no results to display.',
-    'followUpTitle': 'Period follow up',
+    'followUpTitle': 'My Results Followups',
     'cycleDays': 'Cycle days',
     'ultrasoundResults': 'Ultrasound Results',
     'firstDayOfPeriod': 'First day of period',

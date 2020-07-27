@@ -91,6 +91,11 @@ async function loadResourcesAsync() {
             require('./assets/images/writing.png'),
             require('./assets/images/logo.png'),
             require('./assets/images/tips.png'),
+            require('./assets/images/procedure.png'),
+            require('./assets/images/weekswait.png'),
+            require('./assets/images/onboarding1.png'),
+            require('./assets/images/onboarding2.png'),
+            require('./assets/images/onboarding3.png'),
         ]),
         Font.loadAsync({
             ...Ionicons.font,

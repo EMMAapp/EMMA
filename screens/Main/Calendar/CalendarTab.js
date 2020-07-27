@@ -19,7 +19,7 @@ import styled from "styled-components";
 import Card from "../../../components/Card";
 import Image from "../../../components/Image";
 
-const topImages = ['followup', 'plan'];
+const topImages = ['followup', 'plan', 'procedure', 'weekswait'];
 
 const StyledView = styled(SafeAreaView)`
   flex: 1;

@@ -4,8 +4,9 @@ export default {
 
     'connectFacebook': 'התחברות באמצעות פייסבוק',
     'connectGoogle': 'התחברות באמצעות גוגל',
-    'treatmentPlan': 'תוכנית הטיפול',
-    'addTreatmentPlan': 'הוסיפי משימות לתכנון הזמנים שלך',
+    'fertilityJourney': 'המסע שלי',
+    'chooseDate': 'בחרי תאריך לצפייה במשימות הרלוונטיות',
+    'addTreatmentPlan': 'לחצי על כפור הוספה כדי לתכנן את משימותיך',
     'editPeriod': 'מחזור',
     'editPeriodMessage': 'בבקשה עדכני את המחזור שלך!',
     'yes': 'כן',
@@ -101,6 +102,14 @@ export default {
     'language': 'שפה',
     'errorTitle': "משהו השתבש...",
     'errorBody': "אנחנו עובדות כמיטב יכולתנו לתקן את הבעיה.",
+
+    'navbar': {
+        'journey': 'מסע',
+        'results': 'תוצאות',
+        'edit': 'הוספה',
+        'tips': 'טיפים',
+        'profile': 'פרופיל'
+    },
 
     'months': {
         '1': 'ינואר',

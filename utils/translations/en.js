@@ -4,8 +4,9 @@ export default {
 
     'connectFacebook': 'Connect with Facebook',
     'connectGoogle': 'Connect with Google',
-    'treatmentPlan': 'Treatment Plan',
-    'addTreatmentPlan': 'Add Your Treatment Plan',
+    'fertilityJourney': 'Fertility Journey',
+    'chooseDate': 'Choose a date to see relevant events',
+    'addTreatmentPlan': 'Click Add Event to plan your treatment',
     'editPeriod': 'Period',
     'editPeriodMessage': 'Please Update Period!',
     'yes': 'Yes',
@@ -119,6 +120,14 @@ Dr. Hershko-Klement Anat, head of IVF unit, Hadassah medical center.
 Michal Ben-Ami, legal advice.
 Odeilia Asher-Eisenkeit, lawyer. 
     `,
+
+    'navbar': {
+        'journey': 'Journey',
+        'results': 'Results',
+        'edit': 'Add Event',
+        'tips': 'Tips',
+        'profile': 'Profile'
+    },
 
     'months': {
         '1': 'January',

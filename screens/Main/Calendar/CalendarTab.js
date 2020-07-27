@@ -13,9 +13,10 @@ import Text from '../../../components/Text'
 import Row from "../../../components/Row";
 import IconAndText from "../../../components/IconAndText";
 import {AgendaDay} from "./AgendaDay";
-import {absoluteStyleVertical, borderRadiusStyle, hwStyle, marginStyle, paddingStyle, shadowStyle} from "../../../constants/Styles";
+import {absoluteStyleVertical, marginStyle, paddingStyle} from "../../../constants/Styles";
 import Balloon from "../../../components/Balloon";
 import styled from "styled-components";
+import Card from "../../../components/Card";
 
 const StyledView = styled(SafeAreaView)`
   flex: 1;
@@ -77,14 +78,15 @@ export default function CalendarTab({
 
     return (
         <StyledView>
-            <View style={[
+            <ScrollView style={[
                 paddingStyle(10, 'left'),
                 paddingStyle(10, 'right'),
                 marginStyle(Platform.OS === 'ios' ? 10 : 25, 'top'),
                 {width: '100%'}
             ]}>
+
                 <Row>
-                    <Text size={11}>{localization('treatmentPlan')}</Text>
+                    <Text size={13} color={Colors.purple}>{localization('fertilityJourney')}</Text>
                     <View style={{flex: 1}}/>
                     <TouchableOpacity onPress={() => setEditingPeriod(true)}>
                         <IconAndText name='edit' color={Colors.purple} paddingBetween={1}>
@@ -93,9 +95,11 @@ export default function CalendarTab({
                     </TouchableOpacity>
                 </Row>
 
-                {
-                    (showUpdatePeriodBalloon && !balloonDismissed) &&
-                    <Row style={{justifyContent: 'flex-end', zIndex: 100}}>
+                <Row style={{justifyContent: 'flex-end', zIndex: 100}}>
+                    <Text style={{flex: 1}}>{localization('chooseDate')}</Text>
+                    {
+                        (showUpdatePeriodBalloon && !balloonDismissed) &&
+
                         <Balloon
                             canDismiss
                             width={115}
@@ -103,8 +107,8 @@ export default function CalendarTab({
                             onPress={() => setBalloonDismissed(true)}
                             style={Platform.OS === "ios" ? absoluteStyleVertical(1, 'top') : {}}
                         />
-                    </Row>
-                }
+                    }
+                </Row>
 
                 <SetAndSyncPeriodModal
                     isVisible={isEditingPeriod}
@@ -112,31 +116,22 @@ export default function CalendarTab({
                     setMainCalendarRefresh={setMainCalendarRefresh}
                 />
 
-                <MainCalendar
-                    selectedDay={selectedDay}
-                    setSelectedDay={setSelectedDay}
-                    markedDates={markedDates}
-                    dayRender={dayRender}
-                />
-
-            </View>
-            <SafeAreaView style={[
-                {height: '100%', width: '100%', shadowRadius: 8, flex: 1},
-                shadowStyle(20),
-                marginStyle(7, 'top'),
-                borderRadiusStyle(15, 'TopLeft'),
-                borderRadiusStyle(15, 'TopRight')
-            ]}>
-                <View style={hwStyle(7, '100%')}/>
-                <ScrollView>
-                    <AgendaDay
-                        momentDate={wixDateToMoment(selectedDay)}
-                        events={getEventsForDate(selectedDay)}
-                        onEventPressed={onEventPressed}
-                        setIsLoading={setIsLoading}
+                <Card margin={4} padding={4} style={marginStyle(8, 'top')}>
+                    <MainCalendar
+                        selectedDay={selectedDay}
+                        setSelectedDay={setSelectedDay}
+                        markedDates={markedDates}
+                        dayRender={dayRender}
                     />
-                </ScrollView>
-            </SafeAreaView>
+                </Card>
+
+                <AgendaDay
+                    momentDate={wixDateToMoment(selectedDay)}
+                    events={getEventsForDate(selectedDay)}
+                    onEventPressed={onEventPressed}
+                    setIsLoading={setIsLoading}
+                />
+            </ScrollView>
         </StyledView>
     );
 }

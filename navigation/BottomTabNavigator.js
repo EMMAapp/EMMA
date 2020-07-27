@@ -10,10 +10,11 @@ import Colors from "../constants/Colors";
 import {paddingStyle} from "../constants/Styles";
 import JourneyTab from "../screens/Main/JourneyTab";
 import ChartsTab from "../screens/Main/ChartsTab";
-import {CALENDAR, CHARTS, EDIT_EVENT, JOURNEY, PROFILE} from "./Routes";
+import {CALENDAR, CHARTS, EDIT_EVENT, TIPS, PROFILE} from "./Routes";
+import localization from "../utils/localization";
 
 const icons = {
-    [JOURNEY]: 'today',
+    [TIPS]: 'today',
     [CALENDAR]: 'calendar',
     [EDIT_EVENT]: 'add',
     [CHARTS]: 'folder',
@@ -40,15 +41,15 @@ export default ({}) => {
     const label = (name) => {
         switch (name) {
             case CALENDAR:
-                return "Journey";
+                return localization('navbar.journey');
             case CHARTS:
-                return "Results";
+                return localization('navbar.results');
             case EDIT_EVENT:
-                return "Add Event";
-            case JOURNEY:
-                return "Tips";
+                return localization('navbar.edit');
+            case TIPS:
+                return localization('navbar.tips');
             case PROFILE:
-                return "Profile";
+                return localization('navbar.profile');
         }
     };
 
@@ -57,7 +58,7 @@ export default ({}) => {
             screenOptions={({route}) => ({
                 tabBarIcon: ({focused, color, size}) =>
                     <Icon
-                        color={route.name === JOURNEY ? Colors.grayMedium : focused ? Colors.purple : Colors.grayDark}
+                        color={focused ? Colors.purple : Colors.grayDark}
                         name={icons[route.name]}
                     />,
                 tabBarLabel: label(route.name)
@@ -79,7 +80,7 @@ export default ({}) => {
             <Tab.Screen name={CALENDAR} component={CalendarTabWrapper}/>
             <Tab.Screen name={CHARTS} component={ChartsTab}/>
             <Tab.Screen name={EDIT_EVENT} component={EditEventTab}/>
-            <Tab.Screen name={JOURNEY} component={JourneyTab}/>
+            <Tab.Screen name={TIPS} component={JourneyTab}/>
             <Tab.Screen name={PROFILE} component={ProfileTab}/>
         </Tab.Navigator>
     )

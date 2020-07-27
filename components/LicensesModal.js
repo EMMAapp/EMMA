@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList, Image, Linking, TouchableOpacity, View} from 'react-native';
+import {FlatList, Image, Linking, TouchableOpacity, View, ScrollView} from 'react-native';
 import styled from "styled-components";
 import localization from "../utils/localization";
 import licensesRaw from '../assets/licenses'
@@ -11,7 +11,6 @@ import _ from "lodash";
 import Colors from "../constants/Colors";
 
 const Container = styled(View)`
-  overflow: hidden;
   flex-direction: row;
   background-color: white;
   align-items: center;
@@ -90,7 +89,9 @@ const Licenses = ({}) => (
 export default ({isVisible, dismiss}) => {
     return <Modal isVisible={isVisible} onBackdropPress={dismiss}>
         <Text size={7} style={marginStyle(5, 'bottom')}>{localization('openSourceTitle')}</Text>
-        <Licenses/>
+       <ScrollView horizontal>
+           <Licenses/>
+       </ScrollView>
         <Button onPress={dismiss} style={marginStyle(-15, 'top')}>
             {localization('close')}
         </Button>

@@ -15,6 +15,7 @@ import CatBook from "../assets/images/catbook.png"
 import Confetti from "../assets/images/confetti.png"
 import Writing from "../assets/images/writing.png"
 import Logo from "../assets/images/logo.png"
+import Tips from "../assets/images/tips.png"
 // Update in App.js load if you add an image ^
 
 const getImageByName = (name) => {
@@ -45,6 +46,8 @@ const getImageByName = (name) => {
             return Writing;
         case "logo":
             return Logo;
+        case "tips":
+            return Tips;
         default:
             return null;
     }

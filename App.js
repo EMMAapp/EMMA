@@ -90,6 +90,7 @@ async function loadResourcesAsync() {
             require('./assets/images/confetti.png'),
             require('./assets/images/writing.png'),
             require('./assets/images/logo.png'),
+            require('./assets/images/tips.png'),
         ]),
         Font.loadAsync({
             ...Ionicons.font,

@@ -12,6 +12,8 @@ import localization from "../../utils/localization";
 import {marginStyle} from "../../constants/Styles";
 import YoutubePlayer from 'react-native-youtube-iframe';
 import Loading from "../../components/Loading";
+import Image from "../../components/Image";
+import Card from "../../components/Card";
 
 let Tips = TipsEn;
 if (i18n.locale === "he") {
@@ -56,17 +58,18 @@ const TipBody = ({type, url, text}) => {
 
 const Tip = ({tip}) => {
     const {type, title, url, text} = tip;
-    return <View style={marginStyle(10, 'top')}>
-        <Text bold>{title}</Text>
+    return <Card padding={10} margin={2} style={marginStyle(10, 'bottom')}>
+        <Text size={10} color={Colors.purple} bold style={marginStyle(5, 'bottom')}>{title}</Text>
         <TipBody type={type} url={url} text={text}/>
-    </View>
+    </Card>;
 };
 
 const TipsTab = ({navigation}) => {
     RouteGuard(navigation);
 
-    return <Container widthPercentage={90} style={marginStyle(10, 'bottom')}>
+    return <Container widthPercentage={90} style={{backgroundColor: Colors.grayLight}}>
         <Text color={Colors.purple} size={13}>{localization('tipsTitle')}</Text>
+        <Image name="tips" height={50} width="100%" style={marginStyle(10, 'bottom')}/>
         {
             Tips.map((tip, index) => <Tip key={index} tip={tip}/>)
         }

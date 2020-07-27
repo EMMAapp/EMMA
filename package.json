@@ -54,6 +54,8 @@
     "react-native-svg-transformer": "0.14.3",
     "react-native-swipe-gestures": "1.0.4",
     "react-native-web": "0.11.7",
+    "react-native-webview": "10.3.2",
+    "react-native-youtube-iframe": "1.2.4",
     "sentry-expo": "2.0.3",
     "shortid": "2.2.15",
     "styled-components": "5.0.1"

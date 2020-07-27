@@ -8,7 +8,7 @@ import ProfileTab from '../screens/Main/ProfileTab';
 import Icon from "../components/Icon";
 import Colors from "../constants/Colors";
 import {paddingStyle} from "../constants/Styles";
-import JourneyTab from "../screens/Main/JourneyTab";
+import JourneyTab from "../screens/Main/TipsTab";
 import ChartsTab from "../screens/Main/ChartsTab";
 import {CALENDAR, CHARTS, EDIT_EVENT, TIPS, PROFILE} from "./Routes";
 import localization from "../utils/localization";

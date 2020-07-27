@@ -97,7 +97,7 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
     };
 
     return <Container widthPercentage={90} key={updateToken}>
-        <Text bold color={Colors.purple} size={13}>{localization('profileTitle')}</Text>
+        <Text color={Colors.purple} size={13}>{localization('profileTitle')}</Text>
 
         <Row center>
             <Image name-={"catbook"} height={70} width={100}/>

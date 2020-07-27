@@ -104,6 +104,8 @@ export default {
     'language': 'Language',
     'errorTitle': "An error occurred ...",
     'errorBody': "We are doing our best to resolve the issue.",
+    'tipsTitle': 'Tips',
+    'link': 'Link',
     'aboutText':
         `Emma is a free app, specially designed to assist you with organizing your fertility checkup, follow up, saving medical records and giving relevant alarms. Protocols, injection times, lab results, follicles sizes, trigger shots – you’re not alone! Emma app is here to help you out and go through this journey together.
 

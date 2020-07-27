@@ -108,7 +108,7 @@ export default function CalendarTab({
 
                         <Balloon
                             canDismiss
-                            width={115}
+                            width={135}
                             text={localization('pleaseUpdatePeriod')}
                             onPress={() => setBalloonDismissed(true)}
                             style={Platform.OS === "ios" ? absoluteStyleVertical(1, 'top') : {}}

@@ -13,7 +13,7 @@ import shortid from 'shortid';
 import Text from "../../components/Text";
 import Divider from "../../components/Divider";
 import BinaryBoxes from "../../components/BinaryBoxes";
-import TermsModal from "../../components/LongTextModal";
+import LongTextModal from "../../components/LongTextModal";
 import {TouchableOpacity, View} from "react-native";
 import Image from "../../components/Image";
 import ValidationModal from "../../components/ValidationModal";
@@ -27,6 +27,8 @@ import i18n from 'i18n-js';
 import locales, {localesForAutocomplete} from "../../utils/locales";
 import Modal from "../../components/Modal";
 import Button from "../../components/Button";
+import terms from "../../assets/legal/terms";
+import privacy from "../../assets/legal/privacy";
 
 const version = require("../../app").expo.version;
 
@@ -54,6 +56,7 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
 
     const [updateToken, setUpdateToken] = useState(null);
     const [termsIsVisible, setTermsIsVisible] = useState(false);
+    const [privacyIsVisible, setPrivacyIsVisible] = useState(false);
     const [licensesIsVisible, setLicensesIsVisible] = useState(false);
     const [showDeleteValidationModal, setShowDeleteValidationModal] = useState(false);
     const [newAveragePeriodCycleDays, setAveragePeriodCycleDays] = useState(null);
@@ -127,7 +130,7 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
         </Row>
 
         <Row style={{zIndex: 2}}>
-            <Text >{localization('appLanguage')}</Text>
+            <Text>{localization('appLanguage')}</Text>
             <View>
                 <Autocomplete
                     style={marginStyle(5, 'left')}
@@ -179,12 +182,16 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
             </TouchableOpacity>
         </Row>
 
-        <TermsModal isVisible={termsIsVisible} dismiss={() => setTermsIsVisible(false)}/>
-        <Row>
-            <TouchableOpacity activeOpacity={1} onPress={() => setTermsIsVisible(true)} style={paddingStyle(3, 'bottom')}>
-                <QuestionText underline color={Colors.purple}>{localization('acceptTermsLink')}</QuestionText>
-            </TouchableOpacity>
-        </Row>
+        <LongTextModal text={terms} isVisible={termsIsVisible} dismiss={() => setTermsIsVisible(false)}/>
+        <LongTextModal text={privacy} isVisible={privacyIsVisible} dismiss={() => setPrivacyIsVisible(false)}/>
+
+        <TouchableOpacity activeOpacity={1} onPress={() => setTermsIsVisible(true)} style={paddingStyle(3, 'bottom')}>
+            <QuestionText underline color={Colors.purple}>{localization('terms')}</QuestionText>
+        </TouchableOpacity>
+
+        <TouchableOpacity activeOpacity={1} onPress={() => setPrivacyIsVisible(true)} style={paddingStyle(3, 'bottom')}>
+            <QuestionText underline color={Colors.purple}>{localization('privacyPolicy')}</QuestionText>
+        </TouchableOpacity>
 
         <ValidationModal
             isVisible={showDeleteValidationModal}

@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import {Dimensions, TouchableOpacity} from 'react-native'
 import {store, syncPatientData} from '../store';
-import RouteGuard from "../navigation/RouteGuard";
 import localization from "../utils/localization";
 import NumericInput from "../components/NumericInput";
 import CalendarModalPicker from "../components/CalendarModalPicker";
@@ -18,6 +17,7 @@ import IconAndText from "../components/IconAndText";
 import BirthPicker from "../components/BirthPicker";
 import Image from "../components/Image";
 import appContext from "../utils/context";
+import {TUTORIAL} from "../navigation/Routes";
 
 const QuestionText = (props) =>
     <Text
@@ -47,7 +47,7 @@ const OnboardingScreen = ({navigation, setIsLoading}) => {
         const patientData = {...store.patientData, averagePeriodCycleDays: fixPeriodCycleValue(averagePeriodCycleDays), isPeriodRegular, periods};
         await syncPatientData(patientData);
         setIsLoading(false);
-        RouteGuard(navigation);
+        navigation.navigate(TUTORIAL);
     };
 
     const canSubmit = !!lastPeriodDate;

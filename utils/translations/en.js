@@ -170,5 +170,20 @@ Odeilia Asher-Eisenkeit, lawyer.
         'cervicalMucus': 'Cervical Mucus',
         'ovulationStick': 'Ovulation Stick',
         'pregnancyCheck': 'Pregnancy Check'
+    },
+
+    'onboarding': {
+        '1': {
+            'title': 'Fertility Journey',
+            'text': 'Insert your treatment plan by selecting your medications and lab appointments'
+        },
+        '2': {
+            'title': 'Fertility Journey',
+            'text': 'Insert your'
+        },
+        '3': {
+            'title': 'Fertility Journey',
+            'text': 'Insert your'
+        }
     }
 }

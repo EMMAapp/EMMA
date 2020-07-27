@@ -4,8 +4,9 @@ import {isRTL} from "../utils/localization";
 
 const THRESHOLD = 20;
 
-export default ({children, onUp, onDown, onLeft, onRight}) =>
+export default ({children, onUp, onDown, onLeft, onRight, style}) =>
     <GestureRecognizer
+        style={style}
         onSwipe={(gestureName, gestureState) => {
             let {dx, dy} = gestureState;
             if (isRTL) {

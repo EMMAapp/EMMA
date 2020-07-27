@@ -1,5 +1,5 @@
 import store from "../store";
-import {MAIN, ONBOARDING, LOGIN, CALENDAR} from "./Routes";
+import {MAIN, ONBOARDING, LOGIN} from "./Routes";
 import _ from "lodash";
 
 export default function RouteGuard(navigation) {

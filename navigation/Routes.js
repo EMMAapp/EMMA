@@ -6,3 +6,4 @@ export const LOGIN = 'login';
 export const ONBOARDING = 'onboarding';
 export const TIPS = 'tips';
 export const CHARTS = 'charts';
+export const TUTORIAL = 'tutorial';

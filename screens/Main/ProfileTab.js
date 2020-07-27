@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import store, {logoutPatient, purgePatient, syncPatientData} from "../../store";
 import RouteGuard from "../../navigation/RouteGuard";
 import localization, {changeLanguage} from "../../utils/localization";
-import {ONBOARDING} from "../../navigation/Routes";
+import {ONBOARDING, TUTORIAL} from "../../navigation/Routes";
 import Container from "../../components/Container";
 import {testNotification} from "../../utils/notifications";
 import Colors from "../../constants/Colors";
@@ -220,6 +220,10 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
         {
             __DEV__ &&
             <TouchableOpacity onPress={() => navigation.navigate(ONBOARDING)}><QuestionText>onboarding</QuestionText></TouchableOpacity>
+        }
+        {
+            __DEV__ &&
+            <TouchableOpacity onPress={() => navigation.navigate(TUTORIAL)}><QuestionText>tutorial</QuestionText></TouchableOpacity>
         }
         {
             __DEV__ &&

@@ -8,7 +8,7 @@ import RouteGuard from "../navigation/RouteGuard";
 import Swipe from "../components/Swipe";
 import Row from "../components/Row";
 import Colors from "../constants/Colors";
-import {marginStyle} from "../constants/Styles";
+import {marginStyle, paddingStyle} from "../constants/Styles";
 
 
 export default ({navigation}) => {
@@ -35,7 +35,7 @@ export default ({navigation}) => {
                 <Image name={`onboarding${screenId}`} height={250} width={250}/>
             </Row>
             <Text alignCenter size={13} color={Colors.purple}>{localization(`onboarding.${screenId}.title`)}</Text>
-            <Text style={marginStyle(20, 'top')} alignCenter>{localization(`onboarding.${screenId}.text`)}</Text>
+            <Text size={9} style={[paddingStyle(20)]}>{localization(`onboarding.${screenId}.text`)}</Text>
             <Row center style={marginStyle(50, 'top')}>
                 <Dot color={screenId === 1 ? Colors.purple : Colors.grayDark} style={marginStyle(10, 'right')}/>
                 <Dot color={screenId === 2 ? Colors.purple : Colors.grayDark} style={marginStyle(10, 'right')}/>

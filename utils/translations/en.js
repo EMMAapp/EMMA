@@ -174,16 +174,16 @@ Odeilia Asher-Eisenkeit, lawyer.
 
     'onboarding': {
         '1': {
-            'title': 'Fertility Journey',
-            'text': 'Insert your treatment plan by selecting your medications and lab appointments'
+            'title': 'Treatment plan',
+            'text': 'Insert your treatment plan by selecting your medications and appointments. You may set alarms and edit your plan as needed and in accordance to your menstruation date.'
         },
         '2': {
-            'title': 'Fertility Journey',
-            'text': 'Insert your'
+            'title': 'Results',
+            'text': 'Record your Labs and Ultrasound results . Accurate numbers will help you keep track and have a good documentation of your medical history.'
         },
         '3': {
-            'title': 'Fertility Journey',
-            'text': 'Insert your'
+            'title': 'Follow up',
+            'text': 'View your medical record and follow up in an easy and comfortable way. You may use this during the cycle when talking to your doctor, or when planning a new cycle.'
         }
     }
 }

@@ -15,11 +15,6 @@ import Loading from "../../components/Loading";
 import Image from "../../components/Image";
 import Card from "../../components/Card";
 
-let Tips = TipsEn;
-if (i18n.locale === "he") {
-    Tips = TipsHe;
-}
-
 const YoutubeVideo = ({videoId}) => {
     const [isReady, setReady] = useState(false);
     return <View>
@@ -66,6 +61,11 @@ const Tip = ({tip}) => {
 
 const TipsTab = ({navigation}) => {
     RouteGuard(navigation);
+
+    let Tips = TipsEn;
+    if (i18n.locale === "he") {
+        Tips = TipsHe;
+    }
 
     return <Container widthPercentage={90} style={{backgroundColor: Colors.grayLight}}>
         <Text color={Colors.purple} size={13}>{localization('tipsTitle')}</Text>

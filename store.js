@@ -23,7 +23,7 @@ try {
 }
 catch (e) {
     if (!_.includes(e.message, "already exists")) {
-        logError(e);
+        logError("initialize store", e);
     }
 }
 
@@ -59,7 +59,7 @@ export async function retrievePatient() {
                 })
             }
             catch (e) {
-                logError(e)
+                logError("onAuthStateChanged", e)
             }
         }));
         const isAuthenticated = !!store.patientId;
@@ -72,7 +72,7 @@ export async function retrievePatient() {
         return isAuthenticated;
     }
     catch (e) {
-        logError(e)
+        logError("retrievePatient", e)
     }
 }
 
@@ -90,7 +90,7 @@ export async function retrievePatientData() {
     }
     catch (e) {
         if (!_.includes(e.message, "the client is offline")) {
-            logError(e.message);
+            logError("get patientDoc", e.message);
         }
         else {
             logInfo(e.message)
@@ -127,7 +127,7 @@ export async function syncPatientData(updatedPatientData) {
     }
     catch (e) {
         if (!_.includes(e.message, "the client is offline")) {
-            logError(e.message);
+            logError("syncPatientData", e.message);
         }
         else {
             logInfo(e.message)
@@ -161,7 +161,7 @@ export async function logInWithFacebook() {
         return true;
     }
     catch (e) {
-        logError(e.message);
+        logError("logInWithFacebook", e.message);
         return false;
     }
 }
@@ -182,8 +182,7 @@ export async function logInWithGoogle() {
         return true;
     }
     catch (e) {
-        alert(e.message);
-        logError(e.message);
+        logError("logInWithGoogle", e.message);
         return e.message;
     }
 }
@@ -195,8 +194,7 @@ export async function loginWithEmail({email, password}) {
         return true;
     }
     catch (e) {
-        alert(e.message);
-        logError(e.message);
+        logError("loginWithEmail", e.message);
         return e.message;
     }
 }

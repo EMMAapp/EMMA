@@ -107,4 +107,4 @@ async function loadResourcesAsync() {
     ]);
 }
 
-const handleLoadingError = (error) => logError(error);
+const handleLoadingError = (error) => logError("loading", error);

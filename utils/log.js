@@ -12,7 +12,7 @@ export function logWarn(message) {
     console.warn(message)
 }
 
-export function logError(message) {
+export function logError(context, message) {
     // In this case, you might want to report the error to your error reporting service, for example Sentry
-    console.error(message)
+    console.error(context, message)
 }

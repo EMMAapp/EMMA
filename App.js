@@ -1,4 +1,4 @@
-import {AppLoading} from 'expo';
+import AppLoading from 'expo-app-loading';
 import styled from 'styled-components';
 import {Asset} from 'expo-asset';
 import * as Font from 'expo-font';
@@ -16,6 +16,7 @@ import appContext from "./utils/context";
 import * as Sentry from 'sentry-expo';
 import {ErrorBoundary} from "./utils/ErrorBoundary";
 import {initializeLocalization} from "./utils/localization";
+import Text from "./components/Text";
 
 Sentry.init({
     dsn: 'https://86a7a4948882456d86293f5068bdc427@sentry.io/5179072',
@@ -34,7 +35,7 @@ const Container = styled(View)`
   background-color: #fff;
 `;
 
-export default function App(props) {
+const App = (props) => {
     const [isStartupLoadingComplete, setStartupLoadingComplete] = useState(false);
     const [mainCalendarRefresh, setMainCalendarRefresh] = useState(null);
     const [currentEditedEventId, setCurrentEditedEventId] = useState(null);
@@ -45,7 +46,7 @@ export default function App(props) {
     if (!isStartupLoadingComplete && !props.skipLoadingScreen) {
         return (
             <AppLoading
-                startAsync={async () => loadResourcesAsync()}
+                startAsync={async () => await loadResourcesAsync()}
                 onError={handleLoadingError}
                 onFinish={() => setStartupLoadingComplete(true)}
             />
@@ -108,3 +109,5 @@ async function loadResourcesAsync() {
 }
 
 const handleLoadingError = (error) => logError("loading", error);
+
+export default App

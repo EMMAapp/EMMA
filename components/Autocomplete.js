@@ -3,10 +3,10 @@ import SearchableDropdown from 'react-native-searchable-dropdown';
 import localization from "../utils/localization";
 import {borderRadiusStyle, marginStyle, paddingStyle} from "../constants/Styles";
 import Colors from "../constants/Colors";
-import {YellowBox} from 'react-native'
+import {LogBox} from 'react-native'
 import {flipIfRtl} from "../utils/utils";
 
-YellowBox.ignoreWarnings([
+LogBox.ignoreLogs([
     'VirtualizedLists should never be nested'
 ]);
 

@@ -1,17 +1,27 @@
 import store from "../store";
-import {MAIN, ONBOARDING, LOGIN} from "./Routes";
+import {LOGIN, MAIN, ONBOARDING} from "./Routes";
 import _ from "lodash";
+import {logInfo} from "../utils/log";
 
-export default function RouteGuard(navigation) {
+export default function RouteGuard(navigation, current) {
+
+    const navigate = (targetRouteName) => targetRouteName !== current && navigation.navigate(targetRouteName);
+
+    logInfo(`RouteGuard acting when now on '${current}'`)
+
     if (!store.patientId) {
-        navigation.navigate(LOGIN);
+        logInfo("Navigating to LOGIN");
+        navigate(LOGIN);
         return;
     }
 
     if (_.isEmpty(store.patientData.periods)) {
-        navigation.navigate(ONBOARDING);
+        logInfo("Navigating to ONBOARDING")
+        navigate(ONBOARDING);
         return;
     }
 
-    navigation.navigate(MAIN);
+    logInfo("Navigating to MAIN")
+
+    navigate(MAIN);
 }

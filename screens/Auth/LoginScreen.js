@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Platform, TouchableOpacity} from 'react-native'
+import {Platform, TouchableOpacity} from 'react-native';
 import {loginWithEmail, logInWithFacebook, logInWithGoogle} from '../../store';
 import RouteGuard from "../../navigation/RouteGuard";
 import localization from "../../utils/localization";
@@ -14,9 +14,10 @@ import Text from "../../components/Text";
 import appContext from "../../utils/context";
 import privacy from "../../assets/legal/privacy";
 import terms from "../../assets/legal/terms";
+import {LOGIN} from "../../navigation/Routes";
 
 const LoginScreen = ({navigation, setIsLoading}) => {
-    RouteGuard(navigation);
+    RouteGuard(navigation, LOGIN);
 
     const [termsIsVisible, setTermsIsVisible] = useState(false);
     const [privacyIsVisible, setPrivacyIsVisible] = useState(false);
@@ -27,7 +28,7 @@ const LoginScreen = ({navigation, setIsLoading}) => {
         const success = await loginLogic();
         setIsLoading(false);
         if (success) {
-            RouteGuard(navigation);
+            RouteGuard(navigation, LOGIN);
         }
         else {
             setHasError(true);

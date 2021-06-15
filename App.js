@@ -8,15 +8,14 @@ import {Ionicons} from '@expo/vector-icons';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 import AppNavigator from './navigation/AppNavigator';
-import {retrievePatient} from './store';
-import {logError} from "./utils/log";
+import store, {retrievePatient} from './store';
+import {logError, logInfo} from "./utils/log";
 import LoadingModal from "./components/LoadingModal";
 import androidWarningFix from './utils/androidWarningFix';
 import appContext from "./utils/context";
 import * as Sentry from 'sentry-expo';
 import {ErrorBoundary} from "./utils/ErrorBoundary";
 import {initializeLocalization} from "./utils/localization";
-import Text from "./components/Text";
 
 Sentry.init({
     dsn: 'https://86a7a4948882456d86293f5068bdc427@sentry.io/5179072',
@@ -44,6 +43,7 @@ const App = (props) => {
     const {Provider} = appContext;
 
     if (!isStartupLoadingComplete && !props.skipLoadingScreen) {
+        logInfo("Loading...")
         return (
             <AppLoading
                 startAsync={async () => await loadResourcesAsync()}
@@ -53,6 +53,7 @@ const App = (props) => {
         );
     }
     else {
+        logInfo(`Starting up: ${JSON.stringify(store.patientData)}`)
         return (
             <ErrorBoundary>
                 <Container>

@@ -1,19 +1,12 @@
 import React, {Component} from "react";
-import styled from 'styled-components';
 import Text from "../components/Text";
 import {marginStyle} from "../constants/Styles";
-import Row from "../components/Row";
 import Colors from "../constants/Colors";
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import * as Sentry from 'sentry-expo';
 import Modal from "../components/Modal";
-import {Updates} from "expo";
+import * as Updates from 'expo-updates';
 import localization from "./localization";
 import Button from "../components/Button";
-
-const Container = styled(KeyboardAwareScrollView)`
-  flex: 1;
-`;
 
 export class ErrorBoundary extends Component {
     constructor(props) {
@@ -32,7 +25,7 @@ export class ErrorBoundary extends Component {
 
     render() {
 
-        const closeModal = async () => await Updates.reload();
+        const closeModal = async () => await Updates.reloadAsync();
 
         return this.state.hasError
             ?

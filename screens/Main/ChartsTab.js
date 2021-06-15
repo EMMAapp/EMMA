@@ -18,6 +18,7 @@ import appContext from "../../utils/context";
 import RouteGuard from "../../navigation/RouteGuard";
 import Swipe from "../../components/Swipe";
 import {flipIfRtl} from "../../utils/utils";
+import {CHARTS} from "../../navigation/Routes";
 
 const extractResults = (events, periodStartMoment, nextPeriodStartMoment) => {
     const bloodResults = {};
@@ -62,7 +63,7 @@ const BloodChart = ({title, bloodResults, resultName}) => (
 );
 
 const ChartsTab = ({navigation, mainCalendarRefresh}) => {
-    RouteGuard(navigation);
+    RouteGuard(navigation, CHARTS);
     if (store.noData()) {
         return <View/>
     }

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import store, {logoutPatient, purgePatient, syncPatientData} from "../../store";
 import RouteGuard from "../../navigation/RouteGuard";
 import localization, {changeLanguage} from "../../utils/localization";
-import {ONBOARDING, TUTORIAL} from "../../navigation/Routes";
+import {ONBOARDING, PROFILE, TUTORIAL} from "../../navigation/Routes";
 import Container from "../../components/Container";
 import {testNotification} from "../../utils/notifications";
 import Colors from "../../constants/Colors";
@@ -49,7 +49,7 @@ const AboutModal = ({isVisible, dismiss}) =>
     </Modal>;
 
 const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
-    RouteGuard(navigation);
+    RouteGuard(navigation, PROFILE);
     if (store.noData()) {
         return <View/>
     }
@@ -74,12 +74,12 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
 
     const logout = async () => {
         await logoutPatient();
-        RouteGuard(navigation);
+        RouteGuard(navigation, PROFILE);
     };
 
     const purge = async () => {
         await purgePatient();
-        RouteGuard(navigation);
+        RouteGuard(navigation, PROFILE);
     };
 
     const setStoredData = async (keyValues) => {

@@ -9,7 +9,7 @@ import 'moment/locale/he';
 import {LocaleConfig} from 'react-native-calendars';
 import _ from "lodash";
 import {getItem, setItem} from "./storage";
-import {Updates} from "expo";
+import * as Updates from 'expo-updates';
 import {getLocaleOrDefault} from "./locales";
 
 export let isRTL = false;
@@ -47,7 +47,7 @@ export const initializeLocalization = async () => {
 export const changeLanguage = async (locale) => {
     await setItem("locale", locale);
     applyLocale(locale);
-    await Updates.reload();
+    await Updates.reloadAsync();
 };
 
 export default (key, options) => i18n.translate(key, options);

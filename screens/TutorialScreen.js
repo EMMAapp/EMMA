@@ -9,6 +9,7 @@ import Swipe from "../components/Swipe";
 import Row from "../components/Row";
 import Colors from "../constants/Colors";
 import {marginStyle, paddingStyle} from "../constants/Styles";
+import {TUTORIAL} from "../navigation/Routes";
 
 
 export default ({navigation}) => {
@@ -16,7 +17,7 @@ export default ({navigation}) => {
 
     const moveForward = () => {
         if (screenId === 3) {
-            RouteGuard(navigation);
+            RouteGuard(navigation, TUTORIAL);
         }
         else {
             setScreenId(screenId + 1);

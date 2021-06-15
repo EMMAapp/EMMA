@@ -14,6 +14,7 @@ import YoutubePlayer from 'react-native-youtube-iframe';
 import Loading from "../../components/Loading";
 import Image from "../../components/Image";
 import Card from "../../components/Card";
+import {TIPS} from "../../navigation/Routes";
 
 const YoutubeVideo = ({videoId}) => {
     const [isReady, setReady] = useState(false);
@@ -60,7 +61,7 @@ const Tip = ({tip}) => {
 };
 
 const TipsTab = ({navigation}) => {
-    RouteGuard(navigation);
+    RouteGuard(navigation, TIPS);
 
     let Tips = TipsEn;
     if (i18n.locale === "he") {

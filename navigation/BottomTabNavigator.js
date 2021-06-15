@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Keyboard, Platform} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {useNavigation} from '@react-navigation/core';
 import CalendarTabWrapper from '../screens/Main/Calendar/CalendarTabWrapper';
 import EditEventTab from '../screens/Main/EditEvent/EditEventTab';
 import ProfileTab from '../screens/Main/ProfileTab';
@@ -10,7 +9,7 @@ import Colors from "../constants/Colors";
 import {paddingStyle} from "../constants/Styles";
 import JourneyTab from "../screens/Main/TipsTab";
 import ChartsTab from "../screens/Main/ChartsTab";
-import {CALENDAR, CHARTS, EDIT_EVENT, TIPS, PROFILE} from "./Routes";
+import {CALENDAR, CHARTS, EDIT_EVENT, PROFILE, TIPS} from "./Routes";
 import localization from "../utils/localization";
 
 const icons = {
@@ -23,7 +22,6 @@ const icons = {
 
 const Tab = createBottomTabNavigator();
 export default ({}) => {
-    const navigation = useNavigation();
     const [keyboardVisible, setKeyboardVisible] = useState(false);
 
     useEffect(() => {

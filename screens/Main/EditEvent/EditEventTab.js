@@ -7,7 +7,7 @@ import {checkupsService} from '../../../constants/Checkups';
 import NumericInput from "../../../components/NumericInput";
 import CalendarDayPicker from "./CalendarDayPicker";
 import CalendarOvulationDayPicker from "./CalendarOvulationDayPicker";
-import {CALENDAR} from "../../../navigation/Routes";
+import {CALENDAR, EDIT_EVENT} from "../../../navigation/Routes";
 import {store, syncPatientData} from "../../../store";
 import EventDetailsPicker from "./EventDetailsPicker";
 import shortid from 'shortid';
@@ -49,7 +49,7 @@ const EVENT_TYPE_MEDICATION = 'MEDICATION';
 const EVENT_TYPE_CHECKUP = 'CHECKUP';
 
 const EditEventTab = ({navigation, setMainCalendarRefresh, currentEditedEventId, setCurrentEditedEventId, setIsLoading}) => {
-    RouteGuard(navigation);
+    RouteGuard(navigation, EDIT_EVENT);
     if (store.noData()) {
         return <View/>
     }

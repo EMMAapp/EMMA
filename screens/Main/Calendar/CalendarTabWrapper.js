@@ -15,6 +15,7 @@ import {eventColor} from "../../../constants/Styles";
 import {Dot} from "../../../components/Dot";
 import appContext from "../../../utils/context";
 import RouteGuard from "../../../navigation/RouteGuard";
+import {MAIN} from "../../../navigation/Routes";
 
 const medicationDot = {key: shortid.generate(), color: eventColor(true)};
 const checkupDot = {key: shortid.generate(), color: eventColor(false)};
@@ -30,7 +31,7 @@ function collectByDay(events) {
 }
 
 const CalendarTabWrapper = ({navigation, mainCalendarRefresh, setCurrentEditedEventId, setMainCalendarRefresh, setIsLoading}) => {
-    RouteGuard(navigation);
+    RouteGuard(navigation, MAIN);
     if (store.noData()) {
         return <View/>
     }

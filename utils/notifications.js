@@ -1,5 +1,5 @@
 import {Platform} from 'react-native';
-import {Notifications} from 'expo';
+import * as Notifications from "expo-notifications";
 import * as Permissions from 'expo-permissions';
 import {logError, logInfo} from "./log";
 
@@ -24,7 +24,7 @@ const createNotification = (title, body) => {
 
 const setup = async () => {
     if (Platform.OS === 'android') {
-        await Notifications.createChannelAndroidAsync(NOTIFICATIONS_CHANNEL, {
+        await Notifications.setNotificationChannelAsync(NOTIFICATIONS_CHANNEL, {
             name: NOTIFICATIONS_CHANNEL,
             sound: true,
             vibrate: true,
@@ -37,14 +37,14 @@ const setup = async () => {
 
 export const testNotification = async () => {
     await setup();
-    await Notifications.presentLocalNotificationAsync(createNotification("Test", "test!"));
+    await Notifications.scheduleNotificationAsync(createNotification("Test", "test!"));
 };
 
 export const setNotification = async (title, body, dateMoment) => {
     try {
         await setup();
         const epochTimestamp = dateMoment.valueOf() + localOffsetMilliSec;
-        const id = await Notifications.scheduleLocalNotificationAsync(createNotification(title, body), {time: epochTimestamp});
+        const id = await Notifications.scheduleNotificationAsync(null, createNotification(title, body), {timestamp: epochTimestamp});
         logInfo(`Registered notification ${id} at ${epochTimestamp}`);
         return id;
     }

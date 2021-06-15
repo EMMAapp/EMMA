@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import {Asset} from 'expo-asset';
 import * as Font from 'expo-font';
 import React, {useState} from 'react';
-import {Platform, StatusBar, View} from 'react-native';
+import {LogBox, Platform, StatusBar, View} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 import AppNavigator from './navigation/AppNavigator';
-import store, {retrievePatient} from './store';
+import {retrievePatient} from './store';
 import {logError, logInfo} from "./utils/log";
 import LoadingModal from "./components/LoadingModal";
 import androidWarningFix from './utils/androidWarningFix';
@@ -22,6 +22,10 @@ Sentry.init({
     enableInExpoDevelopment: true,
     debug: true
 });
+
+LogBox.ignoreLogs([
+    'Warning: Cannot update a component from inside the function body of a different component'
+])
 
 EStyleSheet.build({
     $rem: Platform.OS === 'ios' ? 16 : 14
@@ -53,7 +57,7 @@ const App = (props) => {
         );
     }
     else {
-        logInfo(`Starting up: ${JSON.stringify(store.patientData)}`)
+        logInfo("Starting up")
         return (
             <ErrorBoundary>
                 <Container>

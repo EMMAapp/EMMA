@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react'
+import React, {useState} from 'react'
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import localization from "../utils/localization";
 import {borderRadiusStyle, marginStyle, paddingStyle} from "../constants/Styles";
@@ -12,25 +12,7 @@ LogBox.ignoreLogs([
 
 export default ({items, selectedItem, setSelectedItem, itemWidth, center, style, keyboardType, placeholderKey}) => {
     const {item} = selectedItem;
-    const textInputRef = useRef(null);
-
-    const setNativeText = (text) => {
-        if (Platform.OS === 'ios') {
-            setTimeout(() => {
-                textInputRef.current?.setNativeProps({text});
-            }, 500);
-        }
-        else {
-            textInputRef.current.setNativeProps({text});
-        }
-    };
-
-    useEffect(
-        () => {
-            if (item && textInputRef.current && item !== textInputRef.current.props.value) {
-                setNativeText(item);
-            }
-        }, [selectedItem, textInputRef]);
+    const [textValue, setTextValue] = useState(item || '');
 
     const itemStyle = {
         backgroundColor: Colors.grayLight,
@@ -56,20 +38,20 @@ export default ({items, selectedItem, setSelectedItem, itemWidth, center, style,
         items={items}
         textInputProps={
             {
-                ref: textInputRef,
                 placeholder: localization(placeholderKey || 'autocompletePlaceholder'),
                 underlineColorAndroid: "transparent",
                 autoCapitalize: "none",
                 style: {...itemStyle, ...borderRadiusStyle(5), borderWidth: 1},
                 keyboardType: keyboardType,
                 defaultValue: item || '',
-                onEndEditing: (e) => {
-                    const {text} = e.nativeEvent;
-                    if (!text) {
-                        setNativeText(item);
-                    }
+                onTextChange: () => {
+                    setTextValue(undefined)
                 },
-                textAlign: center ? 'center' : flipIfRtl('left')
+                onEndEditing: (e) => {
+                    setTextValue(item)
+                },
+                textAlign: center ? 'center' : flipIfRtl('left'),
+                value: textValue
             }
         }
         listProps={

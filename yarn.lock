@@ -2414,7 +2414,7 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/masked-view/-/masked-view-0.1.10.tgz#5dda643e19e587793bc2034dd9bf7398ad43d401"
   integrity sha512-rk4sWFsmtOw8oyx8SD3KSvawwaK7gRBSEIy2TAwURyGt+3TizssXP1r8nx3zY+R7v2vYYHXZ+k2/GULAT/bcaQ==
 
-"@react-navigation/bottom-tabs@^5.11.11":
+"@react-navigation/bottom-tabs@5.11.11":
   version "5.11.11"
   resolved "https://registry.yarnpkg.com/@react-navigation/bottom-tabs/-/bottom-tabs-5.11.11.tgz#ad4dfee4316522d8c05b5a8ad460f597bddb9e3c"
   integrity sha512-hThj6Vfw+ITzAVj5TgLEoxkVEcBD+gYeieWOe6FryBRgokgKNCzFQzqArJ5UCmNMxklNH0rstJfcdyHflLuPtw==
@@ -2433,7 +2433,7 @@
     query-string "^6.13.6"
     react-is "^16.13.0"
 
-"@react-navigation/native@^5.9.4":
+"@react-navigation/native@5.9.4":
   version "5.9.4"
   resolved "https://registry.yarnpkg.com/@react-navigation/native/-/native-5.9.4.tgz#414c044423c58aa1cdde1b6494309e0b51da08b8"
   integrity sha512-BUCrOXfZDdKWBqM8OhOKQhCX5we4HUo5XG6tCQtVqQAep+7UcApZmMUuemUXDxVe8NPESUpoUlB0RaEpyIdfTQ==
@@ -2449,7 +2449,7 @@
   dependencies:
     nanoid "^3.1.15"
 
-"@react-navigation/stack@^5.14.5":
+"@react-navigation/stack@5.14.5":
   version "5.14.5"
   resolved "https://registry.yarnpkg.com/@react-navigation/stack/-/stack-5.14.5.tgz#dc615cd7d270ba79e3330dcb50c2819d0e1f3850"
   integrity sha512-hpdn1SS0tc3/3atkV2Q2y++n5B4e0rUcCj4W43PODMu72yX2m0LkKAAcpkPDCWAvwnLLIoLAEl5BEifZigl/6A==
@@ -2457,7 +2457,7 @@
     color "^3.1.3"
     react-native-iphone-x-helper "^1.3.0"
 
-"@react-navigation/web@^1.0.0-alpha.9":
+"@react-navigation/web@1.0.0-alpha.9":
   version "1.0.0-alpha.9"
   resolved "https://registry.yarnpkg.com/@react-navigation/web/-/web-1.0.0-alpha.9.tgz#bb960fe7040a0cd1359b84b9921212a9468bace3"
   integrity sha512-1UugAcTbJ/yJNLVvEIJ+hAp/KcwBiRU76vPvNXD1NLrU0ZzK1+GrxvzR7p4effMTJgPRkRzvz8tRNklv8YLLHQ==
@@ -8273,10 +8273,10 @@ react-native-animatable@1.3.3:
   dependencies:
     prop-types "^15.7.2"
 
-react-native-calendars@1.1262.0:
-  version "1.1262.0"
-  resolved "https://registry.yarnpkg.com/react-native-calendars/-/react-native-calendars-1.1262.0.tgz#bb6ac91995a7102dacae4375859bee8cb8bb90a6"
-  integrity sha512-6E45gVOHh8LHCTsnH5YgwOB4/B7H6o/JZ8QHBrPJiq1/3hFOUR2O2QCjVdmo7QAl2OmCcWLdjgrJrTqSebjiVA==
+react-native-calendars@^1.1263.0:
+  version "1.1263.0"
+  resolved "https://registry.yarnpkg.com/react-native-calendars/-/react-native-calendars-1.1263.0.tgz#f69f1696629fd9b7c0222ecd1e5a6647041616e3"
+  integrity sha512-O9Pl9YeV3SVeXoXnuxgf4itl+hhJceLu4cCvxX+rcI/2FgIDGD30R/cblxGmSXznbLGj9SZtuJDXmG9Bnd7TEA==
   dependencies:
     hoist-non-react-statics "^3.3.1"
     immutable "^4.0.0-rc.12"
@@ -8288,10 +8288,10 @@ react-native-calendars@1.1262.0:
   optionalDependencies:
     moment "^2.24.0"
 
-react-native-chart-kit@5.3.0:
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/react-native-chart-kit/-/react-native-chart-kit-5.3.0.tgz#39c8ca9486ef9c2c5f7b72950ec814d9320abad0"
-  integrity sha512-iYXYbGXA/JTjSt2PmqwEr48bF0UI2pcE6zE8GP+rFzGuHyP3sMUEQRkMd/6HjakOL6F3FISzTy47g0xCLc68gw==
+react-native-chart-kit@^6.11.0:
+  version "6.11.0"
+  resolved "https://registry.yarnpkg.com/react-native-chart-kit/-/react-native-chart-kit-6.11.0.tgz#513e0944cd8f946e1827facc17fe766ae487d91b"
+  integrity sha512-mRSfW+mcyVSi0UZKFucru5h5TPB6UcWrMi/DphICRpPJWlvIVAv/6VYGFA57NFDLoRVufFjbsRRrms+TOq61jw==
   dependencies:
     lodash "^4.17.13"
     paths-js "^0.4.10"
@@ -8321,7 +8321,7 @@ react-native-iphone-x-helper@^1.0.3, react-native-iphone-x-helper@^1.3.0:
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz#20c603e9a0e765fd6f97396638bdeb0e5a60b010"
   integrity sha512-HOf0jzRnq2/aFUcdCJ9w9JGzN3gdEg0zFE4FyYlp4jtidqU03D5X7ZegGKfT1EWteR0gPBGp9ye5T5FvSWi9Yg==
 
-react-native-keyboard-aware-scroll-view@^0.9.4:
+react-native-keyboard-aware-scroll-view@0.9.4:
   version "0.9.4"
   resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-0.9.4.tgz#83b356062123070c4b75f57d34dd276b9dd5796a"
   integrity sha512-9Q8lxGvUdEnyL2Q0/VZdcEjHUGjm1lOAMd/3bNnhknoA7RqjJDaRGOQDhOAjVW1iwrKUct+B1old87nIsiX6iw==
@@ -8364,10 +8364,10 @@ react-native-screens@3.0.0:
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-3.0.0.tgz#ee4c2d69abf7411603868b57214feec5e8f637fa"
   integrity sha512-35II5oxTaVp3OP8y0eLPOPpQkxG4fRKQ+dL1YSE1we5kCZFOU0l/Rn0T79HbyUu1LPwUZr6lZupPs0ULnRyMuQ==
 
-react-native-searchable-dropdown@1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/react-native-searchable-dropdown/-/react-native-searchable-dropdown-1.1.1.tgz#73d2cdd71b82af1299b2fe280ce4b7102797e826"
-  integrity sha512-A7vGyOlYGpXyMws71qwVuYwPzr7CXFDZfVFVhm44r3yxbohzpAC8PnoA644S6yUloyj9NauVNDcZTrVlcHVxcw==
+react-native-searchable-dropdown@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/react-native-searchable-dropdown/-/react-native-searchable-dropdown-1.1.3.tgz#dace445ab8696fc90438a5b3d05b4d5e569f9ea6"
+  integrity sha512-ip6YwjKED/h27oRQGN3f62usFMj5IfS6tr/zZWfQItCAV/XAq5E9P0Exvg/86gSlcGJnnZdoixK+PS1sElxcyA==
 
 react-native-svg-transformer@0.14.3:
   version "0.14.3"

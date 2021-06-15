@@ -88,7 +88,7 @@ const CalendarTabWrapper = ({navigation, mainCalendarRefresh, setCurrentEditedEv
         if (!_.has(titlesCache, dateString)) {
             titlesCache[dateString] = getDayTitle(dateString);
         }
-        const {dots} = props.marking;
+        const dots = props.marking?.dots;
         const title = titlesCache[dateString];
         return <View>
             <BasicDay {...props}/>

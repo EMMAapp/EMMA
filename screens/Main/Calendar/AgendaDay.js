@@ -18,6 +18,8 @@ import BloodTestResults from "../../../components/BloodTestResults";
 import UltrasoundResults from "../../../components/UltrasoundResults";
 import store, {syncPatientData} from "../../../store";
 
+const ANIMATION_USE_NATIVE_DRIVER = false;
+
 const NoItems = () => {
     const [marginTopAnimation] = useState(new Animated.Value(0));
     useEffect(() => {
@@ -27,17 +29,20 @@ const NoItems = () => {
                     marginTopAnimation,
                     {
                         toValue: 10,
-                        duration: 800
+                        duration: 800,
+                        useNativeDriver: ANIMATION_USE_NATIVE_DRIVER
                     }
                 ),
                 Animated.timing(
                     marginTopAnimation,
                     {
                         toValue: 0,
-                        duration: 800
+                        duration: 800,
+                        useNativeDriver: ANIMATION_USE_NATIVE_DRIVER
                     }
                 )
-            ])
+            ]),
+            {useNativeDriver: ANIMATION_USE_NATIVE_DRIVER}
         ).start()
     }, []);
 

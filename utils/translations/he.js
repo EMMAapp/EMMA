@@ -2,8 +2,6 @@ export default {
     'journeyDayFormat': 'dddd',
     'journeyDateFormat': 'MMMM D',
 
-    'connectFacebook': 'התחברות באמצעות פייסבוק',
-    'connectGoogle': 'התחברות באמצעות גוגל',
     'fertilityJourney': 'המסע שלי',
     'chooseDate': 'בחרי תאריך לצפייה במשימות הרלוונטיות',
     'addTreatmentPlan': 'לחצי על כפתור הוספה לתכנון משימותיך',
@@ -93,7 +91,6 @@ export default {
     'deleteAllData': 'מחיקת כל המידע שלי',
     'areYouSureDeleteAllData': 'האם את בטוחה שאת רוצה למחוק את המידע? המידע לא יהיה ניתן לשיחזור',
     'openAboutRef': 'אודות EMMA',
-    'openSourceRef': 'רשיונות קוד פתוח בשימוש על ידי EMMA',
     'openSourceTitle': 'רשימת רשיונות הקוד הפתוח, לפי חבילה, אשר בשימוש על ידי EMMA',
     'selectMonth': 'בחרי חודש',
     'selectYear': 'בחרי שנה',

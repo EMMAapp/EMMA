@@ -46,35 +46,12 @@
       "bundleIdentifier": "com.emma.app",
       "buildNumber": "0.0.14",
       "supportsTablet": true,
-      "requireFullScreen": false,
-      "config": {
-        "googleSignIn": {
-          "reservedClientId": "com.googleusercontent.apps.1091629470495-bojd6ud8nfu85ku7b0vkng1uam23isl1"
-        }
-      }
+      "requireFullScreen": false
     },
     "android": {
       "package": "com.emma.app",
       "versionCode": 14,
-      "googleServicesFile": "./google-services.json",
-      "config": {
-        "googleSignIn": {
-          "certificateHash": "90B157F797F377138F6E9141E9BCED8E88935AAD"
-        }
-      },
       "permissions": []
-    },
-    "hooks": {
-      "postPublish": [
-        {
-          "file": "sentry-expo/upload-sourcemaps",
-          "config": {
-            "organization": "reallyliri",
-            "project": "emma",
-            "authToken": "b1d1c3271714498a99ca1fa05c88883866f9cd54afdf445fb713b7a823dc251d"
-          }
-        }
-      ]
     }
   }
 }

@@ -12,8 +12,6 @@ import Profile from "../assets/icons/profile.svg"
 import Right from "../assets/icons/right.svg"
 import Left from "../assets/icons/left.svg"
 import Drop from "../assets/icons/drop.svg"
-import Facebook from "../assets/icons/facebook.svg"
-import Google from "../assets/icons/google.svg"
 import Today from "../assets/icons/today.svg"
 import Folder from "../assets/icons/folder.svg"
 import DrawerHandle from "../assets/icons/drawer-handle.svg"
@@ -42,10 +40,6 @@ const getIconByName = (name, style) => {
             return <Profile style={style}/>;
         case "drop":
             return <Drop style={style}/>;
-        case "facebook":
-            return <Facebook style={style}/>;
-        case "google":
-            return <Google style={style}/>;
         case "today":
             return <Today style={style}/>;
         case "folder":

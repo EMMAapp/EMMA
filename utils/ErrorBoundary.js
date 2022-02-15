@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import Text from "../components/Text";
 import {marginStyle} from "../constants/Styles";
 import Colors from "../constants/Colors";
-import * as Sentry from 'sentry-expo';
 import Modal from "../components/Modal";
 import * as Updates from 'expo-updates';
 import localization from "./localization";
@@ -17,9 +16,6 @@ export class ErrorBoundary extends Component {
     componentDidCatch(error, info) {
         this.setState({hasError: true, error});
         console.error(error, info);
-        if (!__DEV__) {
-            Sentry.captureException(error, {extra: info});
-        }
     }
 
 

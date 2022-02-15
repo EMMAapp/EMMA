@@ -13,15 +13,8 @@ import {logError, logInfo} from "./utils/log";
 import LoadingModal from "./components/LoadingModal";
 import androidWarningFix from './utils/androidWarningFix';
 import appContext from "./utils/context";
-import * as Sentry from 'sentry-expo';
 import {ErrorBoundary} from "./utils/ErrorBoundary";
 import {initializeLocalization} from "./utils/localization";
-
-Sentry.init({
-    dsn: 'https://86a7a4948882456d86293f5068bdc427@sentry.io/5179072',
-    enableInExpoDevelopment: true,
-    debug: true
-});
 
 LogBox.ignoreLogs([
     'Warning: Cannot update a component from inside the function body of a different component'

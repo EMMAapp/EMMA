@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import store, {logoutPatient, purgePatient, syncPatientData} from "../../store";
+import store, {syncPatientData} from "../../store";
 import RouteGuard from "../../navigation/RouteGuard";
 import localization, {changeLanguage} from "../../utils/localization";
 import {ONBOARDING, PROFILE, TUTORIAL} from "../../navigation/Routes";
@@ -16,8 +16,6 @@ import BinaryBoxes from "../../components/BinaryBoxes";
 import LongTextModal from "../../components/LongTextModal";
 import {TouchableOpacity, View} from "react-native";
 import Image from "../../components/Image";
-import ValidationModal from "../../components/ValidationModal";
-import LicensesModal from "../../components/LicensesModal";
 import appContext from "../../utils/context";
 import ButtonPrimary from "../../components/ButtonPrimary";
 import _ from "lodash";
@@ -57,8 +55,6 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
     const [updateToken, setUpdateToken] = useState(null);
     const [termsIsVisible, setTermsIsVisible] = useState(false);
     const [privacyIsVisible, setPrivacyIsVisible] = useState(false);
-    const [licensesIsVisible, setLicensesIsVisible] = useState(false);
-    const [showDeleteValidationModal, setShowDeleteValidationModal] = useState(false);
     const [newAveragePeriodCycleDays, setAveragePeriodCycleDays] = useState(null);
     const [newWeekStartDay, setWeekStartDay] = useState(null);
     const [locale, setLocale] = useState(i18n.locale);
@@ -71,16 +67,6 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
     }
 
     const {averagePeriodCycleDays, weekStartDay} = patientData;
-
-    const logout = async () => {
-        await logoutPatient();
-        RouteGuard(navigation, PROFILE);
-    };
-
-    const purge = async () => {
-        await purgePatient();
-        RouteGuard(navigation, PROFILE);
-    };
 
     const setStoredData = async (keyValues) => {
         try {
@@ -175,13 +161,6 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
             </TouchableOpacity>
         </Row>
 
-        <LicensesModal isVisible={licensesIsVisible} dismiss={() => setLicensesIsVisible(false)}/>
-        <Row>
-            <TouchableOpacity activeOpacity={1} onPress={() => setLicensesIsVisible(true)} style={paddingStyle(3, 'bottom')}>
-                <QuestionText underline color={Colors.purple}>{localization('openSourceRef')}</QuestionText>
-            </TouchableOpacity>
-        </Row>
-
         <LongTextModal text={terms} isVisible={termsIsVisible} dismiss={() => setTermsIsVisible(false)}/>
         <LongTextModal text={privacy} isVisible={privacyIsVisible} dismiss={() => setPrivacyIsVisible(false)}/>
 
@@ -193,30 +172,6 @@ const ProfileTab = ({navigation, setMainCalendarRefresh, setIsLoading}) => {
             <QuestionText underline color={Colors.purple}>{localization('privacyPolicy')}</QuestionText>
         </TouchableOpacity>
 
-        <ValidationModal
-            isVisible={showDeleteValidationModal}
-            title={localization('areYouSureDeleteAllData')}
-            positive={localization('delete')}
-            setResult={async (shouldDelete) => {
-                if (!shouldDelete) {
-                    setShowDeleteValidationModal(false);
-                }
-                else {
-                    await purge();
-                }
-            }}
-        />
-
-        <Row>
-            <TouchableOpacity activeOpacity={1} onPress={() => setShowDeleteValidationModal(true)} style={[paddingStyle(20, 'top')]}>
-                <QuestionText color={Colors.pink}>{localization('deleteAllData')}</QuestionText>
-            </TouchableOpacity>
-        </Row>
-
-        {
-            __DEV__ &&
-            <TouchableOpacity onPress={() => logout()}><QuestionText>logout</QuestionText></TouchableOpacity>
-        }
         {
             __DEV__ &&
             <TouchableOpacity onPress={() => navigation.navigate(ONBOARDING)}><QuestionText>onboarding</QuestionText></TouchableOpacity>

@@ -10,9 +10,7 @@ Emma is a free app, specially designed to assist women with organizing their fer
 
 Built using React Native on Expo
 
-<img src="https://i.imgur.com/lAiBgCH.png" height="400px">
-
-<img src="https://i.imgur.com/UQdgdNqm.png" height="400px">
+<img src="https://i.imgur.com/lAiBgCH.png" height="400px"> <img src="https://i.imgur.com/UQdgdNq.png" height="400px">
 
 ## Talented developers - your help is needed!
 

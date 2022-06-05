@@ -103,9 +103,9 @@ export default {
     'link': 'לינק',
 
     'navbar': {
-        'journey': 'מסע',
+        'journey': 'יומן',
         'results': 'תוצאות',
-        'edit': 'הוספה',
+        'edit': 'אירוע חדש',
         'tips': 'טיפים',
         'profile': 'פרופיל'
     },
